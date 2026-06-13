@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 450">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#07111F"/>
+      <stop offset="100%" stop-color="#0D1F35"/>
+    </linearGradient>
+    <linearGradient id="cakeGold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F5D76E"/>
+      <stop offset="100%" stop-color="#D4AF37"/>
+    </linearGradient>
+    <radialGradient id="candle" cx="50%" cy="0%" r="80%">
+      <stop offset="0%" stop-color="#FFE566" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#FFE566" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="600" height="450" fill="url(#bg)"/>
+
+  <!-- Stars -->
+  <circle cx="45" cy="35" r="1.5" fill="white" opacity="0.5"/>
+  <circle cx="155" cy="20" r="1" fill="white" opacity="0.4"/>
+  <circle cx="450" cy="40" r="1.5" fill="white" opacity="0.6"/>
+  <circle cx="555" cy="25" r="1" fill="white" opacity="0.5"/>
+  <circle cx="300" cy="20" r="1" fill="white" opacity="0.4"/>
+
+  <!-- Balloons -->
+  <ellipse cx="120" cy="165" rx="32" ry="38" fill="#D4AF37" opacity="0.75"/>
+  <line x1="120" y1="203" x2="125" y2="255" stroke="#D4AF37" stroke-width="1.5" opacity="0.5"/>
+  <path d="M120,205 Q115,215 120,208" stroke="#D4AF37" stroke-width="1.5" fill="none" opacity="0.5"/>
+
+  <ellipse cx="480" cy="155" rx="28" ry="34" fill="#4A7C59" opacity="0.7"/>
+  <line x1="480" y1="189" x2="475" y2="245" stroke="#4A7C59" stroke-width="1.5" opacity="0.5"/>
+
+  <ellipse cx="550" cy="180" rx="24" ry="30" fill="#2D5282" opacity="0.7"/>
+  <line x1="550" y1="210" x2="545" y2="255" stroke="#2D5282" stroke-width="1.5" opacity="0.5"/>
+
+  <!-- Confetti -->
+  <rect x="200" y="130" width="7" height="4" fill="#D4AF37" rx="1" opacity="0.8" transform="rotate(25 203 132)"/>
+  <rect x="360" y="120" width="6" height="3" fill="#4A7C59" rx="1" opacity="0.7" transform="rotate(-35 363 121)"/>
+  <rect x="430" y="145" width="8" height="4" fill="#D4AF37" rx="1" opacity="0.8" transform="rotate(50 434 147)"/>
+  <rect x="165" y="155" width="5" height="3" fill="#9333EA" rx="1" opacity="0.6" transform="rotate(-20 167 156)"/>
+  <rect x="510" y="130" width="6" height="3" fill="#D4AF37" rx="1" opacity="0.7" transform="rotate(40 513 131)"/>
+
+  <!-- Cake bottom layer -->
+  <rect x="195" y="280" width="210" height="55" rx="8" fill="url(#cakeGold)"/>
+  <!-- Cake middle layer -->
+  <rect x="215" y="230" width="170" height="55" rx="8" fill="#FFD700" opacity="0.9"/>
+  <!-- Cake top layer -->
+  <rect x="235" y="188" width="130" height="48" rx="8" fill="#F5D76E" opacity="0.9"/>
+  <!-- Frosting waves -->
+  <path d="M215,228 Q225,218 235,228 Q245,218 255,228 Q265,218 275,228 Q285,218 295,228 Q305,218 315,228 Q325,218 335,228 Q345,218 355,228 Q365,218 375,228 Q385,218 385,228" fill="white" opacity="0.7"/>
+  <path d="M235,186 Q243,177 251,186 Q259,177 267,186 Q275,177 283,186 Q291,177 299,186 Q307,177 315,186 Q323,177 331,186 Q339,177 347,186 Q355,177 365,186" fill="white" opacity="0.7"/>
+
+  <!-- Candles -->
+  <rect x="290" y="160" width="8" height="30" rx="3" fill="#9333EA" opacity="0.8"/>
+  <ellipse cx="294" cy="158" rx="5" ry="8" fill="url(#candle)"/>
+  <circle cx="294" cy="157" r="3" fill="#FFE566" opacity="0.9"/>
+
+  <rect x="270" y="165" width="7" height="25" rx="3" fill="#D4AF37" opacity="0.8"/>
+  <circle cx="273" cy="163" r="3" fill="#FFE566" opacity="0.9"/>
+
+  <rect x="315" y="162" width="7" height="28" rx="3" fill="#4A7C59" opacity="0.8"/>
+  <circle cx="318" cy="160" r="3" fill="#FFE566" opacity="0.9"/>
+
+  <!-- "Vision Success" on cake -->
+  <text x="300" y="262" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#0A1628" font-weight="bold" letter-spacing="1">Vision Success</text>
+  <text x="300" y="310" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#0A1628" opacity="0.8">🎂 FAMILY VIBES</text>
+
+  <!-- Caption -->
+  <rect x="130" y="358" width="340" height="52" rx="8" fill="rgba(212,175,55,0.07)" stroke="#D4AF37" stroke-width="0.5" stroke-opacity="0.3"/>
+  <text x="300" y="379" text-anchor="middle" font-family="Georgia, serif" font-size="15" fill="#D4AF37" font-weight="bold" letter-spacing="3">FAMILY VIBES</text>
+  <text x="300" y="400" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#9AA0AB" letter-spacing="1">Celebrating Together — Vision Success</text>
+</svg>

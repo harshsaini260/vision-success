@@ -1,0 +1,67 @@
+// ════════════════════════════════════════════════════════════════
+// VISION SUCCESS — Firestore Security Rules
+// Paste this in: Firebase Console → Firestore Database → Rules → Publish
+//
+// These rules match exactly how the website queries data:
+//  • Public pages read ONLY published materials / approved reviews
+//  • Anyone can submit appointments, enrollments, and reviews
+//  • Admin panel needs a Firebase Auth login (README → "Admin Setup")
+// ════════════════════════════════════════════════════════════════
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Any signed-in Firebase Auth user counts as admin.
+    // You create exactly ONE such user (yourself) in the Console,
+    // and self sign-up is never exposed anywhere on the site.
+    function isAdmin() {
+      return request.auth != null;
+    }
+
+    // ── Counseling bookings (from /appointment) ──
+    match /appointments/{docId} {
+      allow create: if true;                       // public form
+      allow read, update, delete: if isAdmin();    // admin panel only
+    }
+
+    // ── Admission requests (from /enroll) ──
+    match /enrollments/{docId} {
+      allow create: if true;                       // public form
+      allow read, update, delete: if isAdmin();
+    }
+
+    // ── Student reviews (from /reviews) ──
+    match /reviews/{docId} {
+      // New reviews must arrive unapproved; admin flips the switch
+      allow create: if request.resource.data.approved == false;
+      allow read: if resource.data.approved == true || isAdmin();
+      allow update, delete: if isAdmin();
+    }
+
+    // ── Study materials (shown on /materials) ──
+    match /materials/{docId} {
+      allow read: if resource.data.published == true || isAdmin();
+      allow create, update, delete: if isAdmin();
+    }
+
+    // Everything else: locked.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
+
+// ────────────────────────────────────────────────────────────────
+// TEMPORARY OPEN MODE (only if you haven't set up Firebase Auth yet
+// and want the admin "legacy password" to work — NOT recommended,
+// anyone technical could edit your data):
+//
+// rules_version = '2';
+// service cloud.firestore {
+//   match /databases/{database}/documents {
+//     match /{document=**} {
+//       allow read, write: if true;
+//     }
+//   }
+// }
+// ────────────────────────────────────────────────────────────────

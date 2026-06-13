@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 450">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#04090F"/>
+      <stop offset="100%" stop-color="#0A1628"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#D4AF37"/>
+      <stop offset="50%" stop-color="#FFD700"/>
+      <stop offset="100%" stop-color="#D4AF37"/>
+    </linearGradient>
+    <linearGradient id="logoGold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFD700"/>
+      <stop offset="100%" stop-color="#B8941F"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="45%" r="40%">
+      <stop offset="0%" stop-color="#D4AF37" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#D4AF37" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="600" height="450" fill="url(#bg)"/>
+  <rect width="600" height="450" fill="url(#glow)"/>
+
+  <!-- Grid pattern background -->
+  <g opacity="0.04" stroke="#D4AF37" stroke-width="1">
+    <line x1="0" y1="50" x2="600" y2="50"/>
+    <line x1="0" y1="100" x2="600" y2="100"/>
+    <line x1="0" y1="150" x2="600" y2="150"/>
+    <line x1="0" y1="200" x2="600" y2="200"/>
+    <line x1="0" y1="250" x2="600" y2="250"/>
+    <line x1="0" y1="300" x2="600" y2="300"/>
+    <line x1="0" y1="350" x2="600" y2="350"/>
+    <line x1="0" y1="400" x2="600" y2="400"/>
+    <line x1="100" y1="0" x2="100" y2="450"/>
+    <line x1="200" y1="0" x2="200" y2="450"/>
+    <line x1="300" y1="0" x2="300" y2="450"/>
+    <line x1="400" y1="0" x2="400" y2="450"/>
+    <line x1="500" y1="0" x2="500" y2="450"/>
+  </g>
+
+  <!-- Stars -->
+  <circle cx="40" cy="35" r="1.5" fill="white" opacity="0.5"/>
+  <circle cx="180" cy="20" r="1" fill="white" opacity="0.4"/>
+  <circle cx="420" cy="30" r="1.5" fill="white" opacity="0.6"/>
+  <circle cx="560" cy="50" r="1" fill="white" opacity="0.4"/>
+
+  <!-- Logo Triangle -->
+  <polygon points="300,80 360,170 240,170" fill="url(#logoGold)" opacity="0.95"/>
+  <circle cx="300" cy="155" r="12" fill="#0A1628"/>
+  <circle cx="300" cy="155" r="8" fill="#D4AF37" opacity="0.8"/>
+
+  <!-- Decorative lines from triangle -->
+  <line x1="240" y1="170" x2="80" y2="170" stroke="#D4AF37" stroke-width="1" opacity="0.3"/>
+  <line x1="360" y1="170" x2="520" y2="170" stroke="#D4AF37" stroke-width="1" opacity="0.3"/>
+
+  <!-- Main title -->
+  <text x="300" y="210" text-anchor="middle" font-family="Georgia, serif" font-size="32" fill="url(#gold)" font-weight="bold" letter-spacing="6">VISION SUCCESS</text>
+
+  <!-- Subtitle -->
+  <text x="300" y="240" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#9AA0AB" letter-spacing="4">COACHING INSTITUTE</text>
+
+  <!-- Gold divider -->
+  <rect x="180" y="254" width="240" height="1.5" rx="1" fill="url(#gold)" opacity="0.6"/>
+
+  <!-- Tagline -->
+  <text x="300" y="285" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="white" letter-spacing="2" font-style="italic">Where Officers Are Forged</text>
+
+  <!-- Location -->
+  <text x="300" y="318" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#9AA0AB" letter-spacing="1">📍 Una, Himachal Pradesh</text>
+
+  <!-- Achievement badges -->
+  <rect x="135" y="340" width="100" height="36" rx="18" fill="rgba(212,175,55,0.1)" stroke="#D4AF37" stroke-width="1" stroke-opacity="0.4"/>
+  <text x="185" y="362" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#D4AF37" font-weight="bold">500+ Officers</text>
+
+  <rect x="250" y="340" width="100" height="36" rx="18" fill="rgba(212,175,55,0.1)" stroke="#D4AF37" stroke-width="1" stroke-opacity="0.4"/>
+  <text x="300" y="362" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#D4AF37" font-weight="bold">15+ Years</text>
+
+  <rect x="365" y="340" width="100" height="36" rx="18" fill="rgba(212,175,55,0.1)" stroke="#D4AF37" stroke-width="1" stroke-opacity="0.4"/>
+  <text x="415" y="362" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#D4AF37" font-weight="bold">Una's #1</text>
+
+  <!-- Phone -->
+  <text x="300" y="415" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" fill="rgba(240,234,214,0.5)" letter-spacing="1">+91 82192 54332</text>
+</svg>

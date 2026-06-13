@@ -1,0 +1,9 @@
+node_modules/
+.next/
+out/
+*.log
+.DS_Store
+# NOTE: .env.local is intentionally NOT ignored here so the beginner
+# "git add . → push → Vercel" flow just works. All values inside are
+# NEXT_PUBLIC (browser-visible by design). If you ever add a real
+# secret, move it to Vercel env vars and add .env.local below.

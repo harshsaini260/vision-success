@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 450">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#07111F"/>
+      <stop offset="100%" stop-color="#0A1628"/>
+    </linearGradient>
+    <linearGradient id="mugGold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F5D76E"/>
+      <stop offset="100%" stop-color="#B8941F"/>
+    </linearGradient>
+    <radialGradient id="glowCenter" cx="50%" cy="40%" r="40%">
+      <stop offset="0%" stop-color="#D4AF37" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#D4AF37" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="600" height="450" fill="url(#bg)"/>
+  <rect width="600" height="450" fill="url(#glowCenter)"/>
+
+  <!-- Stars -->
+  <circle cx="80" cy="50" r="1.5" fill="white" opacity="0.5"/>
+  <circle cx="160" cy="30" r="1" fill="white" opacity="0.6"/>
+  <circle cx="440" cy="45" r="1.5" fill="white" opacity="0.4"/>
+  <circle cx="520" cy="70" r="1" fill="white" opacity="0.5"/>
+  <circle cx="50" cy="150" r="1" fill="white" opacity="0.3"/>
+  <circle cx="550" cy="120" r="1.5" fill="white" opacity="0.4"/>
+  <circle cx="310" cy="25" r="1" fill="white" opacity="0.6"/>
+
+  <!-- Outer decorative circles -->
+  <circle cx="300" cy="200" r="145" fill="none" stroke="#D4AF37" stroke-width="0.8" stroke-dasharray="4 8" opacity="0.2"/>
+  <circle cx="300" cy="200" r="125" fill="none" stroke="#D4AF37" stroke-width="1" stroke-dasharray="2 6" opacity="0.15"/>
+
+  <!-- NDA Mug body -->
+  <path d="M220,120 Q220,100 240,100 L360,100 Q380,100 380,120 L370,290 Q370,310 350,310 L250,310 Q230,310 230,290 Z" fill="url(#mugGold)" opacity="0.9"/>
+
+  <!-- Mug highlight -->
+  <path d="M240,110 Q240,105 250,105 L270,105 L265,295 L250,295 Q240,295 240,285 Z" fill="white" opacity="0.08"/>
+
+  <!-- Mug handle -->
+  <path d="M370,150 Q420,150 420,190 Q420,230 370,230" stroke="url(#mugGold)" stroke-width="18" fill="none" stroke-linecap="round"/>
+
+  <!-- NDA Emblem circle on mug -->
+  <circle cx="300" cy="200" r="55" fill="#0A1628" opacity="0.85"/>
+  <circle cx="300" cy="200" r="50" fill="none" stroke="#D4AF37" stroke-width="2" opacity="0.8"/>
+
+  <!-- Ashoka Chakra style -->
+  <circle cx="300" cy="200" r="25" fill="none" stroke="#D4AF37" stroke-width="1.5" opacity="0.9"/>
+  <circle cx="300" cy="200" r="6" fill="#D4AF37" opacity="0.9"/>
+  <!-- Spokes -->
+  <line x1="300" y1="175" x2="300" y2="225" stroke="#D4AF37" stroke-width="1.2" opacity="0.7"/>
+  <line x1="275" y1="200" x2="325" y2="200" stroke="#D4AF37" stroke-width="1.2" opacity="0.7"/>
+  <line x1="282" y1="182" x2="318" y2="218" stroke="#D4AF37" stroke-width="1" opacity="0.6"/>
+  <line x1="318" y1="182" x2="282" y2="218" stroke="#D4AF37" stroke-width="1" opacity="0.6"/>
+
+  <!-- NDA text on mug -->
+  <text x="300" y="166" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#D4AF37" font-weight="bold" letter-spacing="4">N · D · A</text>
+
+  <!-- Bottom of mug -->
+  <ellipse cx="300" cy="310" rx="75" ry="10" fill="#B8941F" opacity="0.7"/>
+
+  <!-- Ground shine -->
+  <ellipse cx="300" cy="325" rx="90" ry="8" fill="#D4AF37" opacity="0.06"/>
+
+  <!-- Caption -->
+  <rect x="130" y="355" width="340" height="52" rx="8" fill="rgba(212,175,55,0.07)" stroke="#D4AF37" stroke-width="0.5" stroke-opacity="0.3"/>
+  <text x="300" y="376" text-anchor="middle" font-family="Georgia, serif" font-size="15" fill="#D4AF37" font-weight="bold" letter-spacing="4">NDA PROUD</text>
+  <text x="300" y="397" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#9AA0AB" letter-spacing="1">National Defence Academy — Vision Success</text>
+</svg>

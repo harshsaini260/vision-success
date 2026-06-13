@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 450">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0A1628"/>
+      <stop offset="100%" stop-color="#04090F"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#D4AF37"/>
+      <stop offset="50%" stop-color="#FFD700"/>
+      <stop offset="100%" stop-color="#D4AF37"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#D4AF37" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#D4AF37" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="600" height="450" fill="url(#bg)"/>
+  <rect width="600" height="450" fill="url(#glow)"/>
+
+  <!-- Stars -->
+  <circle cx="60" cy="40" r="1.5" fill="white" opacity="0.5"/>
+  <circle cx="140" cy="70" r="1" fill="white" opacity="0.4"/>
+  <circle cx="220" cy="30" r="1.5" fill="white" opacity="0.6"/>
+  <circle cx="380" cy="55" r="1" fill="white" opacity="0.5"/>
+  <circle cx="480" cy="35" r="1.5" fill="white" opacity="0.4"/>
+  <circle cx="540" cy="80" r="1" fill="white" opacity="0.6"/>
+  <circle cx="30" cy="120" r="1" fill="white" opacity="0.3"/>
+  <circle cx="570" cy="150" r="1.5" fill="white" opacity="0.4"/>
+  <circle cx="100" cy="200" r="1" fill="white" opacity="0.3"/>
+  <circle cx="500" cy="180" r="1" fill="white" opacity="0.5"/>
+
+  <!-- Decorative ring -->
+  <circle cx="300" cy="180" r="110" fill="none" stroke="#D4AF37" stroke-width="1" stroke-dasharray="8 6" opacity="0.25"/>
+  <circle cx="300" cy="180" r="85" fill="none" stroke="#D4AF37" stroke-width="0.5" opacity="0.15"/>
+
+  <!-- Medal shape -->
+  <polygon points="300,80 320,130 375,130 330,160 350,210 300,180 250,210 270,160 225,130 280,130" fill="#D4AF37" opacity="0.9"/>
+  <polygon points="300,92 315,133 365,133 325,158 342,203 300,178 258,203 275,158 235,133 285,133" fill="#B8941F" opacity="0.6"/>
+
+  <!-- Star in medal -->
+  <polygon points="300,108 307,128 328,128 312,141 318,161 300,149 282,161 288,141 272,128 293,128" fill="#FFD700"/>
+
+  <!-- Ribbon below medal -->
+  <rect x="285" y="210" width="30" height="40" fill="#D4AF37" rx="2"/>
+  <polygon points="285,250 300,265 315,250" fill="#B8941F"/>
+
+  <!-- Two silhouettes -->
+  <!-- Left person (teacher) -->
+  <ellipse cx="175" cy="240" rx="22" ry="22" fill="#1A3A5C"/>
+  <rect x="153" y="262" width="44" height="60" fill="#1A3A5C" rx="8"/>
+  <line x1="175" y1="280" x2="200" y2="300" stroke="#1A3A5C" stroke-width="12" stroke-linecap="round"/>
+
+  <!-- Right person (student) -->
+  <ellipse cx="425" cy="240" rx="22" ry="22" fill="#0A2040"/>
+  <rect x="403" y="262" width="44" height="60" fill="#0A2040" rx="8"/>
+
+  <!-- Handshake/exchange gesture -->
+  <path d="M197,295 Q300,275 403,295" stroke="#D4AF37" stroke-width="2" fill="none" stroke-dasharray="6 4" opacity="0.6"/>
+
+  <!-- Text -->
+  <rect x="120" y="350" width="360" height="50" rx="8" fill="rgba(212,175,55,0.08)"/>
+  <text x="300" y="370" text-anchor="middle" font-family="Georgia, serif" font-size="15" fill="#D4AF37" font-weight="bold" letter-spacing="3">NDA AWARD CEREMONY</text>
+  <text x="300" y="392" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#9AA0AB" letter-spacing="1">Rewarding Excellence — Vision Success</text>
+</svg>
