@@ -794,7 +794,7 @@ export default function HomePage() {
             </div>
             <p className="text-gray-500 text-sm mt-6">
               📞 Call directly: <a href="tel:+918219254332" className="text-gold-400 hover:underline">+91 82192 54332</a>
-              &nbsp;|&nbsp; Mon–Sat, 7 AM – 7 PM
+              &nbsp;|&nbsp; Mon–Sat, 9 AM – 2 PM
             </p>
           </FadeIn>
         </div>

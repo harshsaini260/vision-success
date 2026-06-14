@@ -12,11 +12,11 @@ const COURSES = [
     badge: 'FLAGSHIP',
     tagline: "Where India's Officers Are Born",
     description:
-      'Our most celebrated program. Comprehensive preparation for NDA written exam (Mathematics + GAT), physical fitness training, and complete SSB interview coaching. We have produced 500+ serving officers.',
+      'Our most celebrated program. Comprehensive preparation for NDA written exam (Mathematics + GAT), and complete SSB interview coaching. We have produced 500+ serving officers.',
     details: [
       'Full Written Exam Syllabus (Math + GAT)',
       'SSB Interview & Personality Development',
-      'Physical Fitness & Conditioning',
+      'We prepare you like an officer — not just for the exam',
       'Weekly Mock Tests & Analysis',
       'Study Material & Practice Papers',
       'Group Discussions & Debates',

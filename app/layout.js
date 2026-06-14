@@ -63,7 +63,7 @@ const jsonLd = {
   slogan: SITE.tagline,
   address: {
     '@type': 'PostalAddress',
-    streetAddress: 'Near District Hospital, Main Bazaar',
+    streetAddress: 'Near Old Bus Stand, Near Sabji Mandi, Una, Himachal Pradesh 174303.',
     addressLocality: 'Una',
     addressRegion: 'Himachal Pradesh',
     postalCode: '174303',
@@ -72,8 +72,8 @@ const jsonLd = {
   openingHoursSpecification: {
     '@type': 'OpeningHoursSpecification',
     dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-    opens: '07:00',
-    closes: '19:00',
+    opens: '09:00',
+    closes: '14:00',
   },
   sameAs: [SITE.social.facebook, SITE.social.instagram, SITE.social.youtube],
 }
