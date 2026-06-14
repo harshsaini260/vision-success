@@ -75,13 +75,13 @@ const GALLERY = [
 ]
 
 const TICKER_ITEMS = [
-  '🎖️ 500+ NDA Officers Trained',
-  '🏅 AIR 142 JEE Advanced 2024',
+  '🎖️ 7+ NDA Officers Trained',
+  '🏅 ITs Not Hard To Be Someone In This World',
   '🩺 50+ MBBS Admissions',
   '⭐ Best Institute Una HP 2024',
-  '🎓 1200+ Students Shaped',
+  '🎓 229+ Students Shaped',
   '🏆 98% Board Success Rate',
-  '🎖️ NDA 154 — 12 Selections',
+  '🎖️ It Is Never Too Late To Be Great',
   '📞 Free Counseling Available',
 ]
 
@@ -477,7 +477,7 @@ export default function HomePage() {
                   <p className="text-gray-300 mb-6 leading-relaxed">
                     Our most celebrated program. Full-spectrum NDA preparation — written exam
                     (Mathematics + GAT), physical fitness, and SSB interview coaching. We have sent
-                    500+ students to serve this nation as officers.
+                    7+ students to serve this nation as officers.
                   </p>
                   <div className="flex flex-wrap gap-3 mb-8">
                     {['Written Exam', 'Mathematics', 'GAT', 'SSB Prep', 'Physical Training', 'Personality Dev'].map(
@@ -513,8 +513,8 @@ export default function HomePage() {
                 </div>
                 <div className="hidden md:grid grid-cols-2 gap-4">
                   {[
-                    { n: '500+', l: 'Officers Trained' },
-                    { n: '15+', l: 'Years Experience' },
+                    { n: '7+', l: 'Officers Trained' },
+                    { n: '13+', l: 'Years Experience' },
                     { n: '100%', l: 'Guidance Focus' },
                     { n: 'FREE', l: 'First Counseling' },
                   ].map((s) => (
@@ -715,19 +715,19 @@ export default function HomePage() {
                 },
                 {
                   q: 'What are the class timings?',
-                  a: 'The institute runs Monday to Saturday, 7:00 AM to 7:00 PM. Exact batch timings depend on your course and class — we finalize them with you during counseling so they fit around school.',
+                  a: 'The institute runs Monday to Saturday, 9:00 AM to 2:00 PM. Exact batch timings depend on your course and class — we finalize them with you during counseling so they fit around school.',
                 },
                 {
                   q: 'Is the first counseling session really free?',
-                  a: 'Yes — 30 minutes, one-on-one with our expert, completely free, with zero pressure to join. We assess your goal, current level, and build a clear roadmap. You decide everything after that.',
+                  a: 'Yes — Time depend on you if you are talktive even 2 hours seems less but we will provide best counselling we could, one-on-one with our expert, completely free, with zero pressure to join. We assess your goal, current level, and build a clear roadmap. You decide everything after that.',
                 },
                 {
                   q: 'Which courses do you offer?',
-                  a: 'NDA coaching is our flagship (written + SSB + physical training). We also run JEE Mains & Advanced, NEET, Dropper batches, and Class 9–12 Foundation for HPBOSE and CBSE boards.',
+                  a: 'NDA coaching is our flagship (written + SSB). We also run JEE Mains & Advanced, NEET, Dropper batches, and Class 9–12 Foundation for HPBOSE and CBSE boards.',
                 },
                 {
                   q: 'Where is the institute located?',
-                  a: 'Near District Hospital, Main Bazaar, Una, Himachal Pradesh 174303. Students join us from Una, Amb, Bangana, Haroli, Hoshiarpur, Nangal, and nearby areas.',
+                  a: 'Near Old Bus Stand, Near Sabji Mandi, Una, Himachal Pradesh 174303. Students join us from Una, Amb, Bangana, Haroli, Hoshiarpur, Nangal, and nearby areas.',
                 },
               ].map((item) => (
                 <details key={item.q} className="faq-item">
