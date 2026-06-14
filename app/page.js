@@ -8,9 +8,9 @@ import { db } from '@/lib/firebase'
 
 /* ─── CONSTANTS ─── */
 const STATS = [
-  { value: 500, suffix: '+', label: 'NDA Officers', icon: '🎖️' },
-  { value: 15, suffix: '+', label: 'Years of Excellence', icon: '⭐' },
-  { value: 1200, suffix: '+', label: 'Lives Shaped', icon: '🎓' },
+  { value: 7, suffix: '+', label: 'NDA Officers', icon: '🎖️' },
+  { value: 13, suffix: '+', label: 'Years of Excellence', icon: '⭐' },
+  { value: 229, suffix: '+', label: 'Lives Shaped', icon: '🎓' },
   { value: 98, suffix: '%', label: 'Success Rate', icon: '🏆' },
 ]
 
@@ -21,7 +21,7 @@ const COURSES = [
     subtitle: 'National Defence Academy',
     emoji: '🎖️',
     description:
-      'Complete preparation — written exam, mathematics, GAT, physical fitness, and SSB interview coaching. Join the ranks of 500+ Vision Success officers.',
+      'Complete preparation — written exam, mathematics, GAT,and SSB interview coaching. Join the ranks of 500+ Vision Success officers.',
     highlights: ['Written Exam & GAT', 'SSB Interview Prep', 'Physical Fitness', 'Mock Tests', 'Personality Dev'],
     badge: 'FLAGSHIP',
     featured: true,
