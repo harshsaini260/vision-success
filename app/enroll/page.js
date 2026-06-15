@@ -9,7 +9,7 @@ import { collection, addDoc, serverTimestamp } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
 import { SITE, wa, COURSE_OPTIONS } from '@/lib/site'
 
-const CLASSES = ['Class 9', 'Class 10', 'Class 11', 'Class 12', 'Dropper', 'Other']
+const CLASSES = ['Class 10', 'Class 11', 'Class 12', 'Dropper', 'Other']
 const MODES = ['Offline (Una Centre)', 'Online (Live Classes)', 'Not sure yet']
 
 const BENEFITS = [
