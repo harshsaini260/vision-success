@@ -14,7 +14,6 @@ const COURSES = [
   'JEE Mains',
   'JEE Advanced',
   'NEET Coaching',
-  'Class 9 Foundation',
   'Class 10 Coaching',
   'Class 11 Coaching',
   'Class 12 Coaching',
