@@ -21,7 +21,7 @@ const COURSES = [
     subtitle: 'National Defence Academy',
     emoji: '🎖️',
     description:
-      'Complete preparation — written exam, mathematics, GAT,and SSB interview coaching. Join the ranks of 500+ Vision Success officers.',
+      'Complete preparation — written exam, mathematics, GAT,and SSB interview coaching. Join the ranks of 7+ Vision Success officers.',
     highlights: ['Written Exam & GAT', 'SSB Interview Prep', 'Physical Fitness', 'Mock Tests', 'Personality Dev'],
     badge: 'FLAGSHIP',
     featured: true,
@@ -54,7 +54,7 @@ const COURSES = [
   {
     id: 'foundation',
     title: 'Foundation',
-    subtitle: 'Class 9, 10, 11, 12',
+    subtitle: 'Class 10, 11, 12',
     emoji: '📚',
     description:
       'Strong academic foundation for board exams. HPBOSE & CBSE curriculum with integrated entrance exam preparation.',

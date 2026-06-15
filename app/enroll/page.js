@@ -33,7 +33,7 @@ function EnrollForm() {
     course: '',
     mode: '',
     message: '',
-    website: '', // honeypot — humans never see or fill this
+    website: '', // honeypot
   })
   const [submitting, setSubmitting] = useState(false)
   const [done, setDone] = useState(false)

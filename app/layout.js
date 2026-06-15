@@ -14,13 +14,13 @@ export const metadata = {
     template: '%s | Vision Success Una',
   },
   description:
-    'Best NDA, JEE, NEET & Foundation coaching in Una, Himachal Pradesh. 500+ NDA selections, small batches, expert faculty, fees per ability. Book a free counseling session today.',
+    'Best NDA, JEE, NEET & Foundation coaching in Una, Himachal Pradesh. 7+ NDA selections, small batches, expert faculty, fees per ability. Book a free counseling session today.',
   keywords:
     'NDA coaching Una, JEE coaching Una HP, NEET coaching Himachal Pradesh, best coaching institute Una, SSB interview coaching, foundation coaching Una',
   alternates: { canonical: '/' },
   openGraph: {
     title: 'Vision Success Coaching Institute — Una, HP',
-    description: 'Where Officers Are Forged. 500+ NDA Selections from Una, Himachal Pradesh.',
+    description: 'Where Officers Are Forged. 7+ NDA Selections from Una, Himachal Pradesh.',
     url: SITE.url,
     siteName: SITE.name,
     type: 'website',
