@@ -13,7 +13,7 @@ const CLASSES = ['Class 9', 'Class 10', 'Class 11', 'Class 12', 'Dropper', 'Othe
 const MODES = ['Offline (Una Centre)', 'Online (Live Classes)', 'Not sure yet']
 
 const BENEFITS = [
-  { icon: '🎖️', title: '500+ Selections', desc: 'NDA officers trained and serving' },
+  { icon: '🎖️', title: '7+ Selections', desc: 'NDA officers trained and serving' },
   { icon: '👥', title: 'Max 25 / Batch', desc: 'Personal attention, guaranteed' },
   { icon: '💛', title: 'Fees Per Ability', desc: 'Money never blocks a deserving student' },
   { icon: '📞', title: '24hr Confirmation', desc: 'We call you within one day' },

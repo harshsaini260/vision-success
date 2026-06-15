@@ -45,7 +45,7 @@ export default function Footer() {
             <div className="flex flex-col gap-2 text-sm text-gray-400">
               <div className="flex items-center gap-2">
                 <span>📍</span>
-                <span>Near District Hospital, Main Bazaar, Una HP 174303</span>
+                <span>Near Old Bus Stand,opposite to sabji mandi, Una HP 174303</span>
               </div>
               <a href="tel:+918219254332" className="flex items-center gap-2 hover:text-gold-400 transition-colors">
                 <span>📞</span>
@@ -57,7 +57,7 @@ export default function Footer() {
               </a>
               <div className="flex items-center gap-2">
                 <span>🕐</span>
-                <span>Mon–Sat: 7:00 AM – 7:00 PM</span>
+                <span>Mon–Sat: 9:00 AM – 2:00 PM</span>
               </div>
             </div>
           </div>
