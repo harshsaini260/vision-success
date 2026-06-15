@@ -10,7 +10,7 @@ import { db } from '@/lib/firebase'
 import { SITE, wa, COURSE_OPTIONS } from '@/lib/site'
 
 const CLASSES = ['Class 10', 'Class 11', 'Class 12', 'Dropper', 'Other']
-const MODES = ['Offline (Una Centre)', 'Online (Live Classes)', 'Not sure yet']
+const MODES = ['Offline (Una Centre)','Not sure yet']
 
 const BENEFITS = [
   { icon: '🎖️', title: '7+ Selections', desc: 'NDA officers trained and serving' },
