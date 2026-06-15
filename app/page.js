@@ -276,7 +276,7 @@ export default function HomePage() {
               transition={{ duration: 0.8, delay: 0.25 }}
               className="text-lg md:text-xl text-gray-300 mb-10 max-w-2xl mx-auto leading-relaxed"
             >
-              Best NDA, JEE & Foundation Coaching in Una, Himachal Pradesh.{' '}
+              Best NDA & Foundation Coaching in Una, Himachal Pradesh.{' '}
               <span className="text-gold-400 font-semibold">7+ officers.</span>{' '}
               Small batches. Expert faculty. Real results.
             </motion.p>
