@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { SITE } from '@/lib/site'
 
 export default function Footer() {
   return (
@@ -39,27 +40,42 @@ export default function Footer() {
               </div>
             </div>
             <p className="text-gray-400 text-sm leading-relaxed max-w-sm mb-5">
-              Una's leading NDA, JEE & Foundation coaching institute. We don't just teach — we
-              build officers, engineers, and doctors. One student at a time.
+              Una's leading coaching institute. We don't just teach — we build officers,
+              engineers, and doctors. One student at a time.
             </p>
             <div className="flex flex-col gap-2 text-sm text-gray-400">
               <div className="flex items-center gap-2">
                 <span>📍</span>
-                <span>Near Old Bus Stand,opposite to sabji mandi, Una HP 174303</span>
+                <span>{SITE.address}</span>
               </div>
-              <a href="tel:+918219254332" className="flex items-center gap-2 hover:text-gold-400 transition-colors">
+              <a href={`tel:${SITE.phoneTel}`} className="phone-cta flex items-center gap-2 hover:text-gold-400 transition-colors">
                 <span>📞</span>
-                <span>+91 82192 54332</span>
+                <span>{SITE.phoneDisplay}</span>
               </a>
-              <a href="mailto:info@visionsuccessuna.com" className="flex items-center gap-2 hover:text-gold-400 transition-colors">
+              <a
+                href={`https://wa.me/${SITE.whatsapp}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="whatsapp-cta flex items-center gap-2 hover:text-gold-400 transition-colors"
+              >
+                <span>💬</span>
+                <span>WhatsApp Us</span>
+              </a>
+              <a href={`mailto:${SITE.email}`} className="flex items-center gap-2 hover:text-gold-400 transition-colors">
                 <span>✉️</span>
-                <span>info@visionsuccessuna.com</span>
+                <span>{SITE.email}</span>
               </a>
               <div className="flex items-center gap-2">
                 <span>🕐</span>
-                <span>Mon–Sat: 9:00 AM – 2:00 PM</span>
+                <span>{SITE.hours}</span>
               </div>
             </div>
+            {/* NAP + subjects text — local SEO signal (brief C6) */}
+            <p className="text-xs text-gray-500 leading-relaxed max-w-sm mt-5">
+              We offer coaching for: Mathematics · Physics · Chemistry · Biology · Class 10 ·
+              Class 11 · Class 12 · JEE · NEET · NDA · CUET · Merchant Navy — in Una, Amb,
+              Bangana, Haroli, Himachal Pradesh.
+            </p>
           </div>
 
           {/* QUICK LINKS */}
@@ -74,6 +90,14 @@ export default function Footer() {
               {[
                 { href: '/', label: 'Home' },
                 { href: '/courses', label: 'Courses' },
+                { href: '/coaching-in-una', label: 'Coaching in Una' },
+                { href: '/nda-coaching-una', label: 'NDA Coaching' },
+                { href: '/jee-coaching-una', label: 'JEE Coaching' },
+                { href: '/neet-coaching-una', label: 'NEET Coaching' },
+                { href: '/maths-coaching-una', label: 'Maths Coaching' },
+                { href: '/physics-coaching-una', label: 'Physics Coaching' },
+                { href: '/chemistry-coaching-una', label: 'Chemistry Coaching' },
+                { href: '/biology-coaching-una', label: 'Biology Coaching' },
                 { href: '/enroll', label: 'Enroll Now' },
                 { href: '/materials', label: 'Materials' },
                 { href: '/reviews', label: 'Reviews' },
@@ -172,7 +196,7 @@ export default function Footer() {
           className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-gray-600"
           style={{ borderTop: '1px solid rgba(var(--accent-rgb),0.08)' }}
         >
-          <p>© {new Date().getFullYear()} Vision Success Coaching Institute, Una HP. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Vision Success Coaching Institute, Una, Himachal Pradesh. All rights reserved.</p>
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-1">
               <span>Built with</span>

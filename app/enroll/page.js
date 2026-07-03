@@ -43,8 +43,10 @@ function EnrollForm() {
   useEffect(() => {
     const c = searchParams.get('course')
     if (c) {
+      // Slugs use hyphens (e.g. merchant-navy) — normalize before matching
+      const cNorm = c.replace(/-/g, ' ').toLowerCase()
       const match = COURSE_OPTIONS.find(
-        (opt) => opt.toLowerCase() === c.toLowerCase() || opt.toLowerCase().includes(c.toLowerCase())
+        (opt) => opt.toLowerCase() === cNorm || opt.toLowerCase().includes(cNorm)
       )
       if (match) setForm((p) => ({ ...p, course: match }))
     }

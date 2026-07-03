@@ -2,109 +2,8 @@
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-
-const COURSES = [
-  {
-    id: 'nda',
-    emoji: '🎖️',
-    title: 'NDA Coaching',
-    subtitle: 'National Defence Academy',
-    badge: 'FLAGSHIP',
-    tagline: "Where India's Officers Are Born",
-    description:
-      'Our most celebrated program. Comprehensive preparation for NDA written exam (Mathematics + GAT), and complete SSB interview coaching. We have produced 500+ serving officers.',
-    details: [
-      'Full Written Exam Syllabus (Math + GAT)',
-      'SSB Interview & Personality Development',
-      'We prepare you like an officer — not just for the exam',
-      'Weekly Mock Tests & Analysis',
-      'Study Material & Practice Papers',
-      'Group Discussions & Debates',
-      'Officer-level English Communication',
-      'Previous Year NDA Paper Solving',
-    ],
-    eligibility: 'Class 10 passed / Class 11-12 / Any age under 19.5 yrs',
-    color: '#D4AF37',
-    bgColor: 'rgba(var(--accent-rgb),0.06)',
-    borderColor: 'rgba(var(--accent-rgb),0.35)',
-    featured: true,
-  },
-  {
-    id: 'jee',
-    emoji: '⚗️',
-    title: 'JEE Mains & Advanced',
-    subtitle: 'IIT Entrance Coaching',
-    badge: 'POPULAR',
-    tagline: 'IIT Dreams. Expert Guidance.',
-    description:
-      'Deep conceptual coaching for JEE Mains and JEE Advanced. Physics, Chemistry, and Mathematics taught by experienced faculty. Regular mock tests with detailed performance analysis.',
-    details: [
-      'Physics, Chemistry, Math — Full Syllabus',
-      'Concept-First Teaching Methodology',
-      'JEE Mock Test Series',
-      'Previous Year Paper Analysis',
-      'Chapter-wise Study Material',
-      'Doubt Sessions (Daily)',
-      'Rank Predictor Tests',
-      'Board + JEE Integration',
-    ],
-    eligibility: 'Class 11 / Class 12 / Dropper Batch',
-    color: '#4A7C59',
-    bgColor: 'rgba(74,124,89,0.06)',
-    borderColor: 'rgba(74,124,89,0.35)',
-    featured: false,
-  },
-  {
-    id: 'neet',
-    emoji: '🩺',
-    title: 'NEET Coaching',
-    subtitle: 'Medical Entrance — MBBS Dream',
-    badge: 'IN DEMAND',
-    tagline: 'From Una to AIIMS',
-    description:
-      'Structured NEET preparation with focus on Biology, Chemistry, and Physics. Diagram-based learning, NCERTs deep dive, and question bank practice. 50+ MBBS admissions and growing.',
-    details: [
-      'Biology — NCERT + Diagrams',
-      'Chemistry — Physical, Organic, Inorganic',
-      'Physics — Conceptual Clarity',
-      '5000+ Question Bank',
-      'NEET Mock Test Series',
-      'Previous Year NEET Papers',
-      'Medical College Admission Guidance',
-      'Revision Cycles Before Exam',
-    ],
-    eligibility: 'Class 11 / Class 12 / Dropper Batch',
-    color: '#2D5282',
-    bgColor: 'rgba(45,82,130,0.06)',
-    borderColor: 'rgba(45,82,130,0.35)',
-    featured: false,
-  },
-  {
-    id: 'foundation',
-    emoji: '📚',
-    title: 'Foundation Coaching',
-    subtitle: 'Class 10 to 12 — Boards + Entrance',
-    badge: 'FOUNDATION',
-    tagline: 'Build Strong. Aim Higher.',
-    description:
-      'Comprehensive coaching for HPBOSE and CBSE board exams with simultaneous preparation for JEE/NEET foundations. Build the habit of excellence from Class 9 itself.',
-    details: [
-      'HPBOSE & CBSE Full Syllabus',
-      'Maths, Science, English',
-      'Chapter-wise Tests',
-      'Board Sample Papers',
-      'JEE/NEET Foundation for Class 11',
-      'Homework & Progress Tracking',
-      'Parent Progress Reports',
-      'Doubt Resolution Sessions',
-    ],
-    eligibility: 'Class 10, 11, 12 students',
-    color: '#7B5EA7',
-    bgColor: 'rgba(123,94,167,0.06)',
-    borderColor: 'rgba(123,94,167,0.35)',
-    featured: false,
-  },
-]
+import { COURSES } from '@/lib/courses'
+import CourseFinder from '@/components/CourseFinder'
 
 function FadeIn({ children, delay = 0 }) {
   return (
@@ -152,9 +51,16 @@ export default function CoursesPage() {
             </span>
           </h1>
           <p className="text-gray-400 max-w-xl mx-auto text-lg">
-            NDA is our flagship. JEE, NEET, and Foundation complete your journey.
+            NDA is our flagship. JEE, NEET, CUET, Merchant Navy, and Foundation complete your journey.
           </p>
         </motion.div>
+      </div>
+
+      {/* COURSE FINDER QUIZ */}
+      <div className="max-w-4xl mx-auto px-4 pt-10">
+        <FadeIn>
+          <CourseFinder />
+        </FadeIn>
       </div>
 
       {/* FEES BANNER */}
@@ -171,7 +77,7 @@ export default function CoursesPage() {
               Fees are always <strong className="text-white">negotiated based on your ability and financial situation</strong>.
               Every capable student deserves the best coaching — regardless of economic background.
               <br />
-              <span className="text-gold-400 font-semibold">Come talk to us first. We'll work something out.</span>
+              <span className="text-gold-400 font-semibold">Come talk to us first. We&apos;ll work something out.</span>
             </p>
           </div>
         </FadeIn>
@@ -197,7 +103,9 @@ export default function CoursesPage() {
                         className="text-3xl md:text-4xl font-black text-white"
                         style={{ fontFamily: 'Rajdhani, sans-serif' }}
                       >
-                        {course.title}
+                        <Link href={`/courses/${course.id}`} className="hover:text-gold-400 transition-colors">
+                          {course.title}
+                        </Link>
                       </h2>
                       <span
                         className="text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full"
@@ -213,7 +121,7 @@ export default function CoursesPage() {
                     </div>
                     <p className="text-gray-400 text-sm">{course.subtitle}</p>
                     <p className="font-semibold mt-1" style={{ color: course.color }}>
-                      "{course.tagline}"
+                      &ldquo;{course.tagline}&rdquo;
                     </p>
                   </div>
                 </div>
@@ -237,18 +145,18 @@ export default function CoursesPage() {
                     <span className="text-xs text-gray-500 uppercase tracking-wider">Eligibility: </span>
                     <span className="text-sm text-gray-300">{course.eligibility}</span>
                   </div>
-                  <div className="flex gap-3">
+                  <div className="flex flex-wrap gap-3">
                     <Link
-                      href={`/enroll?course=${course.id}`}
+                      href={`/courses/${course.id}`}
                       className="btn-gold px-6 py-3 rounded-xl text-sm"
                     >
-                      Enroll Now →
+                      Full Details, Schedule & Fun Facts →
                     </Link>
                     <Link
-                      href="/appointment"
-                      className="btn-ghost px-6 py-3 rounded-xl text-sm hidden sm:inline-flex items-center"
+                      href={`/enroll?course=${course.id}`}
+                      className="btn-ghost px-6 py-3 rounded-xl text-sm inline-flex items-center"
                     >
-                      Free Counseling
+                      Enroll Now
                     </Link>
                   </div>
                 </div>
@@ -271,7 +179,7 @@ export default function CoursesPage() {
             Still confused which course is right?
           </h2>
           <p className="text-gray-400 mb-8">
-            Book a free 30-minute counseling session. We'll guide you to the perfect path.
+            Book a free 30-minute counseling session. We&apos;ll guide you to the perfect path.
           </p>
           <Link
             href="/appointment"

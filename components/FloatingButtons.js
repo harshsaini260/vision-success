@@ -1,11 +1,17 @@
 'use client'
 
+import { SITE, wa } from '@/lib/site'
+
+const WELCOME_MSG = wa(
+  'Namaste! Vision Success Coaching Institute Una se contact karna hai. Please share: Student naam, Class, Target exam 🙏'
+)
+
 export default function FloatingButtons() {
   return (
     <>
       <a
-        href="https://wa.me/918219254332?text=Hi, I want to book a free counseling session at Vision Success"
-        className="floating-whatsapp"
+        href={WELCOME_MSG}
+        className="floating-whatsapp whatsapp-cta"
         target="_blank"
         rel="noopener noreferrer"
         title="Chat on WhatsApp"
@@ -16,8 +22,8 @@ export default function FloatingButtons() {
       </a>
 
       <a
-        href="tel:+918219254332"
-        className="floating-call"
+        href={`tel:${SITE.phoneTel}`}
+        className="floating-call phone-cta"
         title="Call us"
       >
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

@@ -1,7 +1,7 @@
 export const metadata = {
-  title: 'Book Free Counseling',
+  title: 'Contact Us — Book Free Demo & Counseling',
   description:
-    'Book a free 30-minute one-on-one counseling session at Vision Success, Una HP. NDA, JEE, NEET & Foundation guidance. Zero pressure, 24-hour response.',
+    'Contact Vision Success Coaching Institute, Una HP for admissions, free demo class, and fee details. Call or WhatsApp — NDA, JEE, NEET, CUET & Class 10-12 coaching.',
   alternates: { canonical: '/appointment' },
 }
 

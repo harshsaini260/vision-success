@@ -5,65 +5,82 @@ import { motion, useInView, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
 import { collection, getDocs, query, where } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
+import { COURSES } from '@/lib/courses'
+import { SITE, wa, DEMO_WA } from '@/lib/site'
+import QuickLeadForm from '@/components/QuickLeadForm'
 
 /* ─── CONSTANTS ─── */
-const STATS = [
-  { value: 7, suffix: '+', label: 'NDA Officers', icon: '🎖️' },
-  { value: 13, suffix: '+', label: 'Years of Excellence', icon: '⭐' },
-  { value: 229, suffix: '+', label: 'Lives Shaped', icon: '🎓' },
-  { value: 98, suffix: '%', label: 'Success Rate', icon: '🏆' },
+/* Trust bar (brief C8) — static values, not counters */
+const TRUST_STATS = [
+  { big: 'NIT', label: 'Hamirpur Faculty', icon: '🎓' },
+  { big: '90%+', label: 'Board Results', icon: '🏆' },
+  { big: '4.9★', label: 'Google Rating', icon: '⭐' },
+  { big: '15', label: 'Max Per Batch', icon: '👥' },
 ]
 
-const COURSES = [
+/* Subject & local landing pages (brief Section E) */
+const SUBJECT_LINKS = [
+  { href: '/maths-coaching-una', label: '📐 Maths' },
+  { href: '/physics-coaching-una', label: '⚡ Physics' },
+  { href: '/chemistry-coaching-una', label: '🧪 Chemistry' },
+  { href: '/biology-coaching-una', label: '🧬 Biology' },
+  { href: '/science-coaching-una', label: '🔬 Science' },
+  { href: '/class-10-coaching-una', label: '📘 Class 10' },
+  { href: '/class-11-coaching-una', label: '📗 Class 11' },
+  { href: '/class-12-coaching-una', label: '📕 Class 12' },
+  { href: '/hp-board-coaching-una', label: '🏔️ HP Board' },
+  { href: '/cuet-coaching-una', label: '🏛️ CUET' },
+  { href: '/merchant-navy-coaching-una', label: '🚢 Merchant Navy' },
+  { href: '/board-crash-course-una', label: '🚀 Board Crash Course' },
+  { href: '/online-nda-course', label: '🇮🇳 Online NDA Course' },
+  { href: '/tuition-una', label: '✏️ Tuition in Una' },
+]
+
+/* Homepage FAQ (brief D3) — rendered below AND emitted as FAQPage schema */
+const HOME_FAQS = [
   {
-    id: 'nda',
-    title: 'NDA Coaching',
-    subtitle: 'National Defence Academy',
-    emoji: '🎖️',
-    description:
-      'Complete preparation — written exam, mathematics, GAT,and SSB interview coaching. Join the ranks of 7+ Vision Success officers.',
-    highlights: ['Written Exam & GAT', 'SSB Interview Prep', 'Physical Fitness', 'Mock Tests', 'Personality Dev'],
-    badge: 'FLAGSHIP',
-    featured: true,
-    color: '#D4AF37',
+    q: 'Which courses does Vision Success Una offer?',
+    a: 'NDA coaching is our flagship (written + SSB). We also run JEE Mains & Advanced, NEET, CUET, Merchant Navy (IMU CET), and Class 9–12 coaching for HPBOSE and CBSE — plus subject tuition for Maths, Physics, Chemistry, and Biology.',
   },
   {
-    id: 'jee',
-    title: 'JEE Coaching',
-    subtitle: 'Mains & Advanced',
-    emoji: '⚗️',
-    description:
-      'IIT-level teaching for JEE Mains & Advanced. Physics, Chemistry, Maths — deep conceptual clarity with problem-solving mastery.',
-    highlights: ['Physics Mastery', 'Chemistry Deep Dive', 'Math Shortcuts', 'Mock Test Series', 'Rank Predictor'],
-    badge: 'POPULAR',
-    featured: false,
-    color: '#4A7C59',
+    q: 'Is there Physics, Chemistry and Biology coaching in Una?',
+    a: 'Yes — we offer Physics coaching (Class 11–12, JEE/NEET level), Chemistry coaching (Physical, Organic, Inorganic), and Biology coaching (Botany + Zoology, NEET-focused) in Una, Himachal Pradesh. Both CBSE and HP Board students are welcome.',
   },
   {
-    id: 'neet',
-    title: 'NEET Coaching',
-    subtitle: 'MBBS Dream',
-    emoji: '🩺',
-    description:
-      'Biology, Chemistry, Physics — complete NEET preparation with diagram-based learning, question banks, and revision strategy.',
-    highlights: ['Biology Mastery', 'Clinical Case Study', 'Question Bank', 'Revision Sessions', '50+ MBBS Results'],
-    badge: 'IN DEMAND',
-    featured: false,
-    color: '#2D5282',
+    q: 'Is there NDA coaching in Una, HP?',
+    a: 'Yes — we specialize in NDA coaching in Una. Our NIT Hamirpur faculty covers the complete written NDA Maths syllabus with shortcut techniques, GAT preparation, previous year papers, and SSB interview training.',
   },
   {
-    id: 'foundation',
-    title: 'Foundation',
-    subtitle: 'Class 10, 11, 12',
-    emoji: '📚',
-    description:
-      'Strong academic foundation for board exams. HPBOSE & CBSE curriculum with integrated entrance exam preparation.',
-    highlights: ['Board Exam Prep', 'Chapter Tests', 'Sample Papers', 'Concept Building', 'Personal Attention'],
-    badge: 'FOUNDATION',
-    featured: false,
-    color: '#6B2D2D',
+    q: 'Do you offer CUET coaching near Una?',
+    a: 'Yes — Vision Success provides CUET coaching for domain subjects (Maths, Physics, Chemistry, Biology) and the General Test. Ideal for students targeting DU, BHU, JNU, and other top central universities.',
+  },
+  {
+    q: 'Is Merchant Navy coaching available in Una?',
+    a: 'Yes — we offer IMU CET Merchant Navy entrance coaching (Maths, Physics, English, aptitude). We are one of very few institutes in Himachal Pradesh offering this.',
+  },
+  {
+    q: 'How much are the fees?',
+    a: 'Fees are never fixed at Vision Success — they are negotiated based on your ability and financial situation. As a guide: Class 10 around ₹1,500–2,000/month, Class 11–12 Science ₹2,000–3,500/month, JEE/NEET/NDA ₹3,000–5,000/month. No capable student is ever turned away because of money.',
+  },
+  {
+    q: 'Is there a free demo class available?',
+    a: 'Yes — every new student gets a free demo class. No payment required. Call or WhatsApp us to schedule your demo.',
+  },
+  {
+    q: 'Do students from Amb, Bangana and Haroli come to Vision Success?',
+    a: 'Yes — we have students from Una, Amb, Bangana, Haroli, Daulatpur, Mehatpur, and nearby areas. We are near the Old Bus Stand, so HRTC bus commutes are easy.',
   },
 ]
+
+const HOME_FAQ_SCHEMA = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: HOME_FAQS.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+}
 
 const GALLERY = [
   { src: '/images/award1.jpg', fallback: '/images/gallery-award1.svg', alt: 'NDA Mug Award Ceremony', caption: 'Rewarding Excellence', emoji: '🎖️' },
@@ -76,45 +93,14 @@ const GALLERY = [
 
 const TICKER_ITEMS = [
   '🎖️ 7+ NDA Officers Trained',
-  '🏅 ITs Not Hard To Be Someone In This World',
+  '🎓 NIT Hamirpur Faculty',
   '🩺 50+ MBBS Admissions',
-  '⭐ Best Institute Una HP 2024',
-  '🎓 229+ Students Shaped',
-  '🏆 98% Board Success Rate',
+  '⭐ 4.9★ Google Rating',
+  '🏆 90%+ Board Results',
+  '👥 Small Batches — Max 15',
+  '🎁 Free Demo Class Available',
   '🎖️ It Is Never Too Late To Be Great',
-  '📞 Free Counseling Available',
 ]
-
-/* ─── ANIMATED COUNTER ─── */
-function Counter({ value, suffix }) {
-  const [count, setCount] = useState(0)
-  const ref = useRef()
-  const inView = useInView(ref, { once: true, margin: '-100px' })
-
-  useEffect(() => {
-    if (!inView) return
-    const duration = 1800
-    const steps = 60
-    const increment = value / steps
-    let current = 0
-    const timer = setInterval(() => {
-      current += increment
-      if (current >= value) {
-        setCount(value)
-        clearInterval(timer)
-      } else {
-        setCount(Math.floor(current))
-      }
-    }, duration / steps)
-    return () => clearInterval(timer)
-  }, [inView, value])
-
-  return (
-    <span ref={ref} className="stat-number text-4xl md:text-5xl font-black">
-      {count.toLocaleString()}{suffix}
-    </span>
-  )
-}
 
 /* ─── STARS BACKGROUND — client-only, performance-aware ───
    Old version spawned 80 animated DOM nodes on every device.
@@ -207,6 +193,11 @@ export default function HomePage() {
 
   return (
     <>
+      {/* FAQPage rich-result schema (brief D3) */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(HOME_FAQ_SCHEMA) }}
+      />
       <Stars />
 
       {/* ─── HERO ─── */}
@@ -239,7 +230,7 @@ export default function HomePage() {
               className="flex justify-center mb-6"
             >
               <span className="section-tag">
-                🎖️ &nbsp; Una's #1 NDA Coaching Institute
+                🏆 &nbsp; Best Coaching Institute in Una, Himachal Pradesh
               </span>
             </motion.div>
 
@@ -276,9 +267,10 @@ export default function HomePage() {
               transition={{ duration: 0.8, delay: 0.25 }}
               className="text-lg md:text-xl text-gray-300 mb-10 max-w-2xl mx-auto leading-relaxed"
             >
-              Best NDA & Foundation Coaching in Una, Himachal Pradesh.{' '}
-              <span className="text-gold-400 font-semibold">7+ officers.</span>{' '}
-              Small batches. Expert faculty. Real results.
+              Maths · Physics · Chemistry · Biology&nbsp;&nbsp;|&nbsp;&nbsp;Class 10–12&nbsp;&nbsp;|&nbsp;&nbsp;
+              JEE · NEET · NDA · CUET · Merchant Navy.{' '}
+              <span className="text-gold-400 font-semibold">7+ officers trained.</span>{' '}
+              Small batches. NIT Hamirpur faculty. Real results.
             </motion.p>
 
             {/* CTA BUTTONS */}
@@ -288,12 +280,20 @@ export default function HomePage() {
               transition={{ duration: 0.8, delay: 0.4 }}
               className="flex flex-col sm:flex-row gap-4 justify-center"
             >
-              <Link
-                href="/appointment"
-                className="btn-gold inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl text-lg shadow-gold animate-pulse-gold"
+              <a
+                href={DEMO_WA}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-gold whatsapp-cta inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl text-lg shadow-gold animate-pulse-gold"
               >
-                📅 Book Free Counseling
-              </Link>
+                📅 Book Free Demo
+              </a>
+              <a
+                href={`tel:${SITE.phoneTel}`}
+                className="btn-ghost phone-cta inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl text-lg"
+              >
+                📞 Call Now
+              </a>
               <Link
                 href="/courses"
                 className="btn-ghost inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl text-lg"
@@ -309,13 +309,18 @@ export default function HomePage() {
               transition={{ duration: 0.8, delay: 0.6 }}
               className="mt-14 grid grid-cols-2 sm:grid-cols-4 gap-4 md:gap-6"
             >
-              {STATS.map((stat) => (
+              {TRUST_STATS.map((stat) => (
                 <div
                   key={stat.label}
                   className="glass-card rounded-2xl p-4 text-center"
                 >
                   <div className="text-2xl mb-1">{stat.icon}</div>
-                  <Counter value={stat.value} suffix={stat.suffix} />
+                  <div
+                    className="text-3xl font-black stat-number"
+                    style={{ fontFamily: 'Orbitron, monospace' }}
+                  >
+                    {stat.big}
+                  </div>
                   <div className="text-xs text-gray-400 mt-1 font-medium">{stat.label}</div>
                 </div>
               ))}
@@ -498,16 +503,16 @@ export default function HomePage() {
                   </div>
                   <div className="flex flex-col sm:flex-row gap-4">
                     <Link
-                      href="/enroll?course=NDA"
+                      href="/enroll?course=nda"
                       className="btn-gold inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl text-base"
                     >
                       Enroll in NDA →
                     </Link>
                     <Link
-                      href="/courses"
+                      href="/courses/nda"
                       className="btn-ghost inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl text-base"
                     >
-                      Full Details
+                      Full Details, Schedule & Fun Facts
                     </Link>
                   </div>
                 </div>
@@ -541,11 +546,12 @@ export default function HomePage() {
           </FadeIn>
 
           {/* OTHER COURSES */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {COURSES.filter((c) => c.id !== 'nda').map((course, i) => (
               <FadeIn key={course.id} delay={i * 0.1}>
-                <div
-                  className="glass-card glass-card-hover rounded-2xl p-6 h-full transition-all duration-300 cursor-pointer group"
+                <Link
+                  href={`/courses/${course.id}`}
+                  className="glass-card glass-card-hover rounded-2xl p-6 h-full transition-all duration-300 cursor-pointer group block"
                 >
                   <div className="text-4xl mb-3">{course.emoji}</div>
                   <div
@@ -562,17 +568,41 @@ export default function HomePage() {
                   </h3>
                   <p className="text-xs text-gray-500 mb-3">{course.subtitle}</p>
                   <p className="text-gray-400 text-sm mb-4 leading-relaxed">{course.description}</p>
-                  <Link
-                    href={`/enroll?course=${course.id}`}
+                  <span
                     className="text-sm font-semibold group-hover:translate-x-1 transition-transform inline-flex items-center gap-1"
                     style={{ color: course.color }}
                   >
-                    Enroll Now →
-                  </Link>
-                </div>
+                    Details, Schedule & Fun Facts →
+                  </span>
+                </Link>
               </FadeIn>
             ))}
           </div>
+
+          {/* SUBJECT & LOCAL PAGES */}
+          <FadeIn delay={0.1}>
+            <div className="mt-10 text-center">
+              <p className="text-sm text-gray-400 mb-4 uppercase tracking-widest" style={{ fontFamily: 'Orbitron, monospace' }}>
+                Single-Subject Tuition & More
+              </p>
+              <div className="flex flex-wrap justify-center gap-2">
+                {SUBJECT_LINKS.map((s) => (
+                  <Link
+                    key={s.href}
+                    href={s.href}
+                    className="px-4 py-2 rounded-full text-sm font-semibold text-gray-300 hover:text-gold-400 transition-all hover:-translate-y-0.5"
+                    style={{
+                      background: 'rgba(255,255,255,0.04)',
+                      border: '1px solid rgba(var(--accent-rgb),0.2)',
+                      fontFamily: 'Rajdhani, sans-serif',
+                    }}
+                  >
+                    {s.label}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </FadeIn>
 
           {/* FEES NOTE */}
           <FadeIn delay={0.2}>
@@ -590,6 +620,58 @@ export default function HomePage() {
                 We believe talent doesn't come with a price tag. Fees are always{' '}
                 <strong className="text-white">negotiated based on your ability and situation</strong>. No capable student will ever be turned away.
               </p>
+            </div>
+          </FadeIn>
+        </div>
+      </section>
+
+      {/* ─── HOW IT WORKS ─── */}
+      <section className="section-padding" style={{ background: '#07111F' }}>
+        <div className="max-w-5xl mx-auto">
+          <FadeIn>
+            <div className="text-center mb-12">
+              <span className="section-tag mb-4 inline-block">Simple Process</span>
+              <h2
+                className="text-4xl md:text-5xl font-black text-white"
+                style={{ fontFamily: 'Rajdhani, sans-serif' }}
+              >
+                How It Works — 3 Easy Steps
+              </h2>
+            </div>
+          </FadeIn>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            {[
+              { icon: '📞', step: 'Step 1', title: 'Call or WhatsApp Us', text: 'Tell us your class and target exam. Takes 2 minutes.' },
+              { icon: '🎓', step: 'Step 2', title: 'Attend a FREE Demo Class', text: 'No payment. No obligation. Just see the teaching yourself.' },
+              { icon: '🚀', step: 'Step 3', title: 'Enroll & Start Learning', text: 'Join the right batch and start your journey to success.' },
+            ].map((s, i) => (
+              <FadeIn key={s.step} delay={i * 0.1}>
+                <div className="glass-card rounded-2xl p-8 text-center h-full relative">
+                  <div
+                    className="absolute top-4 right-4 text-xs font-bold uppercase tracking-widest text-gold-400/60"
+                    style={{ fontFamily: 'Orbitron, monospace' }}
+                  >
+                    {s.step}
+                  </div>
+                  <div className="text-5xl mb-4">{s.icon}</div>
+                  <h3 className="text-xl font-bold text-white mb-2" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+                    {s.title}
+                  </h3>
+                  <p className="text-sm text-gray-400">{s.text}</p>
+                </div>
+              </FadeIn>
+            ))}
+          </div>
+          <FadeIn delay={0.2}>
+            <div className="text-center mt-10">
+              <a
+                href={DEMO_WA}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-gold whatsapp-cta inline-flex items-center gap-2 px-8 py-4 rounded-2xl text-base"
+              >
+                💬 Start with Step 1 — WhatsApp Us
+              </a>
             </div>
           </FadeIn>
         </div>
@@ -704,32 +786,7 @@ export default function HomePage() {
           </FadeIn>
           <FadeIn delay={0.1}>
             <div className="space-y-3">
-              {[
-                {
-                  q: 'How much are the fees?',
-                  a: 'Fees are never fixed at Vision Success — they are negotiated based on your ability and financial situation. No capable student is ever turned away because of money. Come for a free counseling session and we will work something out together.',
-                },
-                {
-                  q: 'How big are the batches?',
-                  a: 'Maximum 25 students per batch. This is non-negotiable for us — it guarantees every student gets personal attention, daily doubt resolution, and individual tracking.',
-                },
-                {
-                  q: 'What are the class timings?',
-                  a: 'The institute runs Monday to Saturday, 9:00 AM to 2:00 PM. Exact batch timings depend on your course and class — we finalize them with you during counseling so they fit around school.',
-                },
-                {
-                  q: 'Is the first counseling session really free?',
-                  a: 'Yes — Time depend on you if you are talktive even 2 hours seems less but we will provide best counselling we could, one-on-one with our expert, completely free, with zero pressure to join. We assess your goal, current level, and build a clear roadmap. You decide everything after that.',
-                },
-                {
-                  q: 'Which courses do you offer?',
-                  a: 'NDA coaching is our flagship (written + SSB). We also run JEE Mains & Advanced, NEET, Dropper batches, and Class 9–12 Foundation for HPBOSE and CBSE boards.',
-                },
-                {
-                  q: 'Where is the institute located?',
-                  a: 'Near Old Bus Stand, Near Sabji Mandi, Una, Himachal Pradesh 174303. Students join us from Una, Amb, Bangana, Haroli, Hoshiarpur, Nangal, and nearby areas.',
-                },
-              ].map((item) => (
+              {HOME_FAQS.map((item) => (
                 <details key={item.q} className="faq-item">
                   <summary>{item.q}</summary>
                   <div className="faq-body">{item.a}</div>
@@ -737,6 +794,70 @@ export default function HomePage() {
               ))}
             </div>
           </FadeIn>
+        </div>
+      </section>
+
+      {/* ─── CONTACT + MAP ─── */}
+      <section
+        className="section-padding"
+        style={{ background: 'linear-gradient(180deg, #07111F 0%, #0A1628 100%)' }}
+      >
+        <div className="max-w-6xl mx-auto">
+          <FadeIn>
+            <div className="text-center mb-12">
+              <span className="section-tag mb-4 inline-block">Find Us</span>
+              <h2
+                className="text-4xl md:text-5xl font-black text-white"
+                style={{ fontFamily: 'Rajdhani, sans-serif' }}
+              >
+                Visit Us or Say Hello
+              </h2>
+            </div>
+          </FadeIn>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+            <FadeIn>
+              <QuickLeadForm />
+            </FadeIn>
+            <FadeIn delay={0.1}>
+              <div>
+                <div className="rounded-2xl overflow-hidden mb-5" style={{ border: '1px solid rgba(var(--accent-rgb),0.2)' }}>
+                  <iframe
+                    src={`https://www.google.com/maps?q=${encodeURIComponent(`Vision Success Coaching Institute, ${SITE.address}`)}&output=embed`}
+                    width="100%"
+                    height="300"
+                    style={{ border: 0, display: 'block' }}
+                    allowFullScreen
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    title="Vision Success Coaching Institute location map"
+                  />
+                </div>
+                <div className="flex flex-col gap-3 text-sm text-gray-300">
+                  <div className="flex items-start gap-3">
+                    <span className="text-xl">📍</span>
+                    <span>{SITE.address}</span>
+                  </div>
+                  <a href={`tel:${SITE.phoneTel}`} className="phone-cta flex items-center gap-3 hover:text-gold-400 transition-colors">
+                    <span className="text-xl">📞</span>
+                    <span className="font-semibold">{SITE.phoneDisplay}</span>
+                  </a>
+                  <a
+                    href={wa('Namaste! Institute ke baare mein jaanna hai')}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="whatsapp-cta flex items-center gap-3 hover:text-gold-400 transition-colors"
+                  >
+                    <span className="text-xl">💬</span>
+                    <span className="font-semibold">WhatsApp Us</span>
+                  </a>
+                  <div className="flex items-center gap-3">
+                    <span className="text-xl">🕐</span>
+                    <span>{SITE.hours}</span>
+                  </div>
+                </div>
+              </div>
+            </FadeIn>
+          </div>
         </div>
       </section>
 
@@ -784,17 +905,17 @@ export default function HomePage() {
                 📅 Book Free Session Now
               </Link>
               <a
-                href="https://wa.me/918219254332?text=Hi, I want to know about NDA coaching at Vision Success"
+                href={wa('Hi, I want to know about coaching at Vision Success')}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-ghost inline-flex items-center justify-center gap-2 px-10 py-5 rounded-2xl text-xl"
+                className="btn-ghost whatsapp-cta inline-flex items-center justify-center gap-2 px-10 py-5 rounded-2xl text-xl"
               >
                 <span>💬</span> WhatsApp Us
               </a>
             </div>
             <p className="text-gray-500 text-sm mt-6">
-              📞 Call directly: <a href="tel:+918219254332" className="text-gold-400 hover:underline">+91 82192 54332</a>
-              &nbsp;|&nbsp; Mon–Sat, 9 AM – 2 PM
+              📞 Call directly: <a href={`tel:${SITE.phoneTel}`} className="phone-cta text-gold-400 hover:underline">{SITE.phoneDisplay}</a>
+              &nbsp;|&nbsp; {SITE.hours}
             </p>
           </FadeIn>
         </div>

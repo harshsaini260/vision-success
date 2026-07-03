@@ -7,18 +7,9 @@ import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
-import { wa } from '@/lib/site'
+import { SITE, wa, COURSE_OPTIONS } from '@/lib/site'
 
-const COURSES = [
-  'NDA Coaching',
-  'JEE Mains',
-  'JEE Advanced',
-  'NEET Coaching',
-  'Class 10 Coaching',
-  'Class 11 Coaching',
-  'Class 12 Coaching',
-  'Dropper Batch',
-]
+const COURSES = COURSE_OPTIONS
 
 const TIME_SLOTS = ['8:00 AM', '9:00 AM', '10:00 AM', '11:00 AM', '2:00 PM', '3:00 PM', '4:00 PM', '5:00 PM']
 
@@ -755,6 +746,34 @@ function BookingFlow() {
               <div className="text-xs text-gray-500">{item.text}</div>
             </div>
           ))}
+        </motion.div>
+
+        {/* LOCATION MAP (brief C7 — map on contact page) */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.6 }}
+          className="mt-8"
+        >
+          <div className="rounded-2xl overflow-hidden mb-3" style={{ border: '1px solid rgba(var(--accent-rgb),0.2)' }}>
+            <iframe
+              src={`https://www.google.com/maps?q=${encodeURIComponent(`Vision Success Coaching Institute, ${SITE.address}`)}&output=embed`}
+              width="100%"
+              height="260"
+              style={{ border: 0, display: 'block' }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              title="Vision Success Coaching Institute location map"
+            />
+          </div>
+          <p className="text-xs text-gray-500 text-center">
+            📍 {SITE.address} ·{' '}
+            <a href={`tel:${SITE.phoneTel}`} className="phone-cta text-gold-400 hover:underline">
+              {SITE.phoneDisplay}
+            </a>{' '}
+            · {SITE.hours}
+          </p>
         </motion.div>
       </div>
     </div>

@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { DEMO_WA } from '@/lib/site'
 
 export const metadata = { title: 'Page Not Found' }
 
@@ -25,11 +26,19 @@ export default function NotFound() {
           Mission Coordinates Not Found
         </h1>
         <p className="text-gray-400 mb-8 text-sm">
-          This page doesn&apos;t exist. Let&apos;s get you back on track.
+          Oops! Yeh page nahi mila. Par aap yahan hain — toh kya hum help kar sakte hain?
         </p>
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
-          <Link href="/" className="btn-gold px-7 py-3.5 rounded-xl text-sm">🏠 Back Home</Link>
-          <Link href="/appointment" className="btn-ghost px-7 py-3.5 rounded-xl text-sm">📞 Free Counseling</Link>
+          <a
+            href={DEMO_WA}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-gold whatsapp-cta px-7 py-3.5 rounded-xl text-sm"
+          >
+            📅 Book Free Demo
+          </a>
+          <Link href="/" className="btn-ghost px-7 py-3.5 rounded-xl text-sm">🏠 Back Home</Link>
+          <Link href="/courses" className="btn-ghost px-7 py-3.5 rounded-xl text-sm">📚 See Courses</Link>
         </div>
       </div>
     </div>

@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
+import { SITE, DEMO_WA } from '@/lib/site'
 
 const navLinks = [
   { href: '/', label: 'Home' },
@@ -94,20 +95,33 @@ export default function Navigation() {
 
           {/* CTA + HAMBURGER */}
           <div className="flex items-center gap-2">
-            <Link
-              href="/appointment"
-              className="btn-gold hidden sm:flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm"
+            {/* Clickable phone — tap to call on mobile (brief C3) */}
+            <a
+              href={`tel:${SITE.phoneTel}`}
+              className="phone-cta hidden lg:flex items-center gap-1.5 text-sm font-bold text-gold-400 hover:text-gold-300 transition-colors mr-1"
+              style={{ fontFamily: 'Rajdhani, sans-serif' }}
             >
               <span>📞</span>
-              Book Free Counseling
-            </Link>
-            {/* Compact button for phones */}
-            <Link
-              href="/appointment"
-              className="btn-gold sm:hidden flex items-center gap-1 px-3 py-2 rounded-lg text-xs"
+              {SITE.phoneDisplay}
+            </a>
+            <a
+              href={DEMO_WA}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-gold whatsapp-cta hidden sm:flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm"
             >
-              Book Now
-            </Link>
+              <span>📅</span>
+              Book Free Demo
+            </a>
+            {/* Compact button for phones */}
+            <a
+              href={DEMO_WA}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-gold whatsapp-cta sm:hidden flex items-center gap-1 px-3 py-2 rounded-lg text-xs"
+            >
+              Free Demo
+            </a>
 
             <button
               onClick={() => setMenuOpen(!menuOpen)}
@@ -190,11 +204,19 @@ export default function Navigation() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.35 }}
-                className="mt-4"
+                className="mt-4 space-y-3"
               >
+                <a
+                  href={DEMO_WA}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-gold whatsapp-cta block text-center py-4 px-6 rounded-xl text-base w-full"
+                >
+                  📅 Book Free Demo
+                </a>
                 <Link
                   href="/appointment"
-                  className="btn-gold block text-center py-4 px-6 rounded-xl text-base w-full"
+                  className="btn-ghost block text-center py-3.5 px-6 rounded-xl text-sm w-full"
                 >
                   📞 Book Free Counseling
                 </Link>
@@ -202,12 +224,12 @@ export default function Navigation() {
 
               <div className="mt-8 pt-8 border-t border-gold-500/10">
                 <a
-                  href="tel:+918219254332"
-                  className="flex items-center gap-3 text-gold-400"
+                  href={`tel:${SITE.phoneTel}`}
+                  className="phone-cta flex items-center gap-3 text-gold-400"
                   style={{ fontFamily: 'Rajdhani, sans-serif', fontWeight: 600 }}
                 >
                   <span className="text-2xl">📞</span>
-                  +91 82192 54332
+                  {SITE.phoneDisplay}
                 </a>
               </div>
             </div>
