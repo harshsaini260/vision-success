@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { SEO_PAGES, getSeoPage, WHY_US, FEES_NOTE } from '@/lib/seoPages'
-import { SITE, wa, DEMO_WA } from '@/lib/site'
+import { SITE, wa } from '@/lib/site'
 
 /* Static SEO landing pages (developer brief, Section E).
    Registered static routes always win over this dynamic segment,
@@ -116,14 +116,12 @@ export default async function SeoLandingPage({ params }) {
           ))}
 
           <div className="flex flex-wrap gap-3 mt-8">
-            <a
-              href={DEMO_WA}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-gold whatsapp-cta px-7 py-3.5 rounded-xl text-sm inline-flex items-center gap-2"
+            <Link
+              href="/appointment"
+              className="btn-gold px-7 py-3.5 rounded-xl text-sm inline-flex items-center gap-2"
             >
               📅 Book Free Demo Class
-            </a>
+            </Link>
             <a href={`tel:${SITE.phoneTel}`} className="btn-ghost phone-cta px-7 py-3.5 rounded-xl text-sm inline-flex items-center gap-2">
               📞 Call {SITE.phoneDisplay}
             </a>

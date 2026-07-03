@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import Link from 'next/link'
 import { AnimatePresence, motion } from 'framer-motion'
 import { DEMO_WA } from '@/lib/site'
 
@@ -74,14 +75,21 @@ export default function ExitIntentPopup() {
               Jaane se pehle — ek free demo class try karo. No payment, no obligation.
               Bas WhatsApp karo, baaki hum sambhal lenge.
             </p>
+            <Link
+              href="/appointment"
+              className="btn-gold block w-full py-4 rounded-xl text-base mb-3"
+              onClick={() => setOpen(false)}
+            >
+              📅 Book Free Demo — 60 Seconds
+            </Link>
             <a
               href={DEMO_WA}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-gold whatsapp-cta block w-full py-4 rounded-xl text-base mb-3"
+              className="whatsapp-cta block text-sm font-semibold text-gold-400 hover:underline mb-3"
               onClick={() => setOpen(false)}
             >
-              💬 WhatsApp Now — Book Free Demo
+              💬 or WhatsApp us directly
             </a>
             <button onClick={() => setOpen(false)} className="text-xs text-gray-500 hover:text-gray-300 transition-colors">
               No thanks, I&apos;ll keep browsing

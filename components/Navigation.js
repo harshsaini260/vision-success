@@ -4,7 +4,8 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
-import { SITE, DEMO_WA } from '@/lib/site'
+import { SITE } from '@/lib/site'
+import Logo from '@/components/Logo'
 
 const navLinks = [
   { href: '/', label: 'Home' },
@@ -47,18 +48,13 @@ export default function Navigation() {
         }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16 md:h-20">
-          {/* LOGO */}
+          {/* LOGO — The Watchful Tree of Una */}
           <Link href="/" className="flex items-center gap-3 group">
             <div
-              className="w-10 h-10 md:w-12 md:h-12 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-300 group-hover:shadow-gold"
-              style={{
-                background: 'linear-gradient(135deg, var(--accent), var(--accent-light))',
-              }}
+              className="flex-shrink-0 transition-transform duration-500 group-hover:rotate-[360deg]"
+              style={{ filter: 'drop-shadow(0 0 6px rgba(var(--accent-rgb),0.45))' }}
             >
-              <svg width="24" height="24" viewBox="0 0 40 40" fill="none">
-                <path d="M20 4L36 32H4Z" fill="#0A1628" opacity="0.9" />
-                <circle cx="20" cy="28" r="4" fill="#0A1628" />
-              </svg>
+              <Logo size={44} id="nav" />
             </div>
             <div>
               <div
@@ -104,24 +100,20 @@ export default function Navigation() {
               <span>📞</span>
               {SITE.phoneDisplay}
             </a>
-            <a
-              href={DEMO_WA}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-gold whatsapp-cta hidden sm:flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm"
+            <Link
+              href="/appointment"
+              className="btn-gold hidden sm:flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm"
             >
               <span>📅</span>
               Book Free Demo
-            </a>
+            </Link>
             {/* Compact button for phones */}
-            <a
-              href={DEMO_WA}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-gold whatsapp-cta sm:hidden flex items-center gap-1 px-3 py-2 rounded-lg text-xs"
+            <Link
+              href="/appointment"
+              className="btn-gold sm:hidden flex items-center gap-1 px-3 py-2 rounded-lg text-xs"
             >
               Free Demo
-            </a>
+            </Link>
 
             <button
               onClick={() => setMenuOpen(!menuOpen)}
@@ -206,19 +198,11 @@ export default function Navigation() {
                 transition={{ delay: 0.35 }}
                 className="mt-4 space-y-3"
               >
-                <a
-                  href={DEMO_WA}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-gold whatsapp-cta block text-center py-4 px-6 rounded-xl text-base w-full"
-                >
-                  📅 Book Free Demo
-                </a>
                 <Link
                   href="/appointment"
-                  className="btn-ghost block text-center py-3.5 px-6 rounded-xl text-sm w-full"
+                  className="btn-gold block text-center py-4 px-6 rounded-xl text-base w-full"
                 >
-                  📞 Book Free Counseling
+                  📅 Book Free Demo
                 </Link>
               </motion.div>
 

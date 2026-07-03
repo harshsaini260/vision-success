@@ -41,10 +41,21 @@ function friendlyLoadError(e) {
 
 /* ─── AUTH ─── */
 function LoginScreen({ onLegacyLogin }) {
-  const [email, setEmail] = useState('')
+  const [email, setEmail] = useState('harshsaini0502@gmail.com')
   const [password, setPassword] = useState('')
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
+
+  const forgotPassword = async () => {
+    if (!email.trim()) { setError('Enter your email first'); return }
+    try {
+      const { sendPasswordResetEmail } = await import('firebase/auth')
+      await sendPasswordResetEmail(auth, email.trim())
+      toast.success('Password reset email sent — check your inbox 📧')
+    } catch (e) {
+      setError(AUTH_ERRORS[e?.code] || 'Could not send reset email')
+    }
+  }
 
   const handleLogin = async () => {
     setError('')
@@ -113,9 +124,6 @@ function LoginScreen({ onLegacyLogin }) {
                 placeholder="admin@yourdomain.com"
                 autoComplete="username"
               />
-              <p className="text-[11px] text-gray-600 mt-1">
-                Leave empty to use the legacy site password instead.
-              </p>
             </div>
             <div>
               <label className="form-label">Password</label>
@@ -132,6 +140,12 @@ function LoginScreen({ onLegacyLogin }) {
             {error && <p className="text-red-400 text-xs text-center leading-relaxed">{error}</p>}
             <button onClick={handleLogin} disabled={busy} className="btn-gold w-full py-3 rounded-xl disabled:opacity-60">
               {busy ? 'Signing in…' : 'Enter Admin Panel'}
+            </button>
+            <button
+              onClick={forgotPassword}
+              className="w-full text-center text-xs text-gray-500 hover:text-gold-400 transition-colors"
+            >
+              Forgot password? Send reset email
             </button>
           </div>
         </div>

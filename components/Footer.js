@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { SITE } from '@/lib/site'
+import Logo from '@/components/Logo'
 
 export default function Footer() {
   return (
@@ -14,14 +15,8 @@ export default function Footer() {
           {/* BRAND */}
           <div className="lg:col-span-2">
             <div className="flex items-center gap-3 mb-4">
-              <div
-                className="w-12 h-12 rounded-xl flex items-center justify-center"
-                style={{ background: 'linear-gradient(135deg, var(--accent), var(--accent-light))' }}
-              >
-                <svg width="24" height="24" viewBox="0 0 40 40" fill="none">
-                  <path d="M20 4L36 32H4Z" fill="#0A1628" opacity="0.9" />
-                  <circle cx="20" cy="28" r="4" fill="#0A1628" />
-                </svg>
+              <div style={{ filter: 'drop-shadow(0 0 6px rgba(var(--accent-rgb),0.4))' }}>
+                <Logo size={52} id="foot" />
               </div>
               <div>
                 <div

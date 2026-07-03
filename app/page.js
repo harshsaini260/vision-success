@@ -8,6 +8,7 @@ import { db } from '@/lib/firebase'
 import { COURSES } from '@/lib/courses'
 import { SITE, wa, DEMO_WA } from '@/lib/site'
 import QuickLeadForm from '@/components/QuickLeadForm'
+import BrainFuel from '@/components/BrainFuel'
 
 /* ─── CONSTANTS ─── */
 /* Trust bar (brief C8) — static values, not counters */
@@ -280,14 +281,12 @@ export default function HomePage() {
               transition={{ duration: 0.8, delay: 0.4 }}
               className="flex flex-col sm:flex-row gap-4 justify-center"
             >
-              <a
-                href={DEMO_WA}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-gold whatsapp-cta inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl text-lg shadow-gold animate-pulse-gold"
+              <Link
+                href="/appointment"
+                className="btn-gold inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl text-lg shadow-gold animate-pulse-gold"
               >
                 📅 Book Free Demo
-              </a>
+              </Link>
               <a
                 href={`tel:${SITE.phoneTel}`}
                 className="btn-ghost phone-cta inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl text-lg"
@@ -677,6 +676,90 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ─── HOW WE LEARN — THE VISION SUCCESS METHOD ─── */}
+      <section
+        className="section-padding"
+        style={{ background: 'linear-gradient(180deg, #07111F 0%, #0A1628 100%)' }}
+      >
+        <div className="max-w-6xl mx-auto">
+          <FadeIn>
+            <div className="text-center mb-12">
+              <span className="section-tag mb-4 inline-block">What We Do</span>
+              <h2
+                className="text-4xl md:text-5xl font-black text-white mb-3"
+                style={{ fontFamily: 'Rajdhani, sans-serif' }}
+              >
+                How We Learn at Vision Success
+              </h2>
+              <p className="text-gray-400 max-w-xl mx-auto">
+                No ratta. No fear. Just a method that has forged officers, engineers, and doctors —
+                one honest week at a time.
+              </p>
+            </div>
+          </FadeIn>
+
+          {/* horizontal snap-scroll on phones, grid on desktop */}
+          <div className="flex lg:grid lg:grid-cols-5 gap-4 overflow-x-auto lg:overflow-visible pb-4 lg:pb-0 snap-x snap-mandatory -mx-4 px-4 lg:mx-0 lg:px-0">
+            {[
+              { icon: '💡', step: '01', title: 'Concept First', text: 'Every topic starts with WHY it works — in Hindi + English — until it clicks. Ratta is banned here.' },
+              { icon: '✏️', step: '02', title: 'Drill It Same Day', text: 'Problems from easy to exam-level, solved in class the same day. Learning without doing is forgetting.' },
+              { icon: '🧪', step: '03', title: 'Test Every Week', text: 'Friday = exam conditions. The fear of tests dies when tests become a habit.' },
+              { icon: '🔍', step: '04', title: 'Analyze & Fix', text: 'Every test gets a post-mortem — which topic, which mistake, what is the fix. Personal weak-spot tracking.' },
+              { icon: '🔁', step: '05', title: 'Repeat & Rise', text: 'Spaced revision cycles keep month-1 topics fresh in month 10. That is how ranks are quietly built.' },
+            ].map((s, i) => (
+              <FadeIn key={s.step} delay={i * 0.08}>
+                <div
+                  className="glass-card rounded-2xl p-6 h-full min-w-[240px] lg:min-w-0 snap-center relative"
+                >
+                  <div
+                    className="absolute top-4 right-4 text-2xl font-black opacity-20"
+                    style={{ fontFamily: 'Orbitron, monospace', color: 'var(--accent)' }}
+                  >
+                    {s.step}
+                  </div>
+                  <div className="text-4xl mb-3">{s.icon}</div>
+                  <h3 className="text-lg font-bold text-white mb-2" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+                    {s.title}
+                  </h3>
+                  <p className="text-sm text-gray-400 leading-relaxed">{s.text}</p>
+                </div>
+              </FadeIn>
+            ))}
+          </div>
+
+          {/* beyond the classroom */}
+          <FadeIn delay={0.15}>
+            <div className="mt-10 text-center">
+              <p className="text-sm text-gray-400 mb-4 uppercase tracking-widest" style={{ fontFamily: 'Orbitron, monospace' }}>
+                And Beyond the Classroom
+              </p>
+              <div className="flex flex-wrap justify-center gap-2">
+                {[
+                  '🗣️ Daily doubt sessions',
+                  '📊 Parent progress reports',
+                  '🎤 Public speaking & GDs',
+                  '🎖️ SSB-style personality drills',
+                  '🧭 Career counselling',
+                  '🎂 Birthday & result celebrations',
+                ].map((t) => (
+                  <span
+                    key={t}
+                    className="px-4 py-2 rounded-full text-sm font-semibold text-gray-300"
+                    style={{
+                      background: 'rgba(255,255,255,0.04)',
+                      border: '1px solid rgba(var(--accent-rgb),0.2)',
+                      fontFamily: 'Rajdhani, sans-serif',
+                    }}
+                  >
+                    {t}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </FadeIn>
+        </div>
+      </section>
+
       {/* ─── GALLERY ─── */}
       <section className="section-padding" style={{ background: '#07111F' }}>
         <div className="max-w-7xl mx-auto">
@@ -725,6 +808,15 @@ export default function HomePage() {
               </FadeIn>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* ─── BRAIN FUEL — facts & study humor ─── */}
+      <section className="section-padding" style={{ background: '#07111F' }}>
+        <div className="max-w-4xl mx-auto">
+          <FadeIn>
+            <BrainFuel />
+          </FadeIn>
         </div>
       </section>
 

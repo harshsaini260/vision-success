@@ -11,11 +11,11 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // Any signed-in Firebase Auth user counts as admin.
-    // You create exactly ONE such user (yourself) in the Console,
-    // and self sign-up is never exposed anywhere on the site.
+    // ONLY the owner's account counts as admin — even if someone
+    // manages to create another Auth user, they get nothing.
     function isAdmin() {
-      return request.auth != null;
+      return request.auth != null
+        && request.auth.token.email == 'harshsaini0502@gmail.com';
     }
 
     // ── Counseling bookings (from /appointment) ──

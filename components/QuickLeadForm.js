@@ -1,8 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import { SITE } from '@/lib/site'
-import { COURSE_OPTIONS } from '@/lib/site'
+import { SITE, COURSE_OPTIONS } from '@/lib/site'
+import { playFanfare } from '@/lib/fanfare'
 
 /* 3-field lead form (brief H1). More fields = fewer leads, so it's
    name + phone + course only. Submission opens WhatsApp with the
@@ -20,8 +20,15 @@ export default function QuickLeadForm({ heading = 'Book Your FREE Demo Class' })
     if (digits.length < 10) return setError('Please enter a valid 10-digit phone number')
     if (!course) return setError('Please select a class / course')
     setError('')
-    const msg = `Namaste! Free Demo Class book karna hai 🙏\n\nStudent: ${name.trim()}\nPhone: ${digits.slice(-10)}\nCourse: ${course}`
-    window.open(`https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener')
+    playFanfare() // 🏴‍☠️ celebrate the decision
+    import('canvas-confetti')
+      .then((m) => m.default({ particleCount: 100, spread: 80, origin: { y: 0.7 } }))
+      .catch(() => {})
+    const msg = `🎖️ NEW FREE DEMO BOOKING — Vision Success\n\n👤 Student: ${name.trim()}\n📞 Phone: ${digits.slice(-10)}\n📚 Course: ${course}\n\nPlease confirm my demo class!`
+    // Small delay so the fanfare + confetti land before WhatsApp opens
+    setTimeout(() => {
+      window.open(`https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener')
+    }, 900)
   }
 
   return (

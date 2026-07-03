@@ -8,6 +8,7 @@ import toast from 'react-hot-toast'
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
 import { SITE, wa, COURSE_OPTIONS } from '@/lib/site'
+import { playFanfare } from '@/lib/fanfare'
 
 const COURSES = COURSE_OPTIONS
 
@@ -129,8 +130,21 @@ function StepProgress({ current }) {
 }
 
 /* ─── SUCCESS SCREEN ─── */
-function SuccessScreen({ name, course }) {
+function SuccessScreen({ name, course, booking }) {
+  // Full booking details, prefilled for the institute's WhatsApp
+  const notifyWa = wa(
+    `🎖️ NEW FREE DEMO BOOKING — Vision Success\n\n` +
+      `👤 Student: ${booking?.fullName || name}\n` +
+      `📞 Phone: ${booking?.phone || '-'}\n` +
+      `🏫 Class: ${booking?.currentClass || '-'}\n` +
+      `📍 City: ${booking?.city || '-'}\n` +
+      `📚 Course: ${course}\n` +
+      `🗓️ Preferred: ${booking?.preferredDate || '-'} at ${booking?.preferredTime || '-'}\n\n` +
+      `Please confirm my slot!`
+  )
+
   useEffect(() => {
+    playFanfare() // 🏴‍☠️ the victory theme
     const fire = async () => {
       try {
         const confetti = (await import('canvas-confetti')).default
@@ -147,7 +161,15 @@ function SuccessScreen({ name, course }) {
     fire()
     const t2 = setTimeout(fire, 600)
     const t3 = setTimeout(fire, 1200)
-    return () => { clearTimeout(t2); clearTimeout(t3) }
+    // Best-effort auto-open WhatsApp with the booking details — if the
+    // browser blocks the popup, the big green button below covers it.
+    const t4 = setTimeout(() => {
+      try {
+        window.open(notifyWa, '_blank', 'noopener')
+      } catch (e) {}
+    }, 1600)
+    return () => { clearTimeout(t2); clearTimeout(t3); clearTimeout(t4) }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
@@ -174,7 +196,7 @@ function SuccessScreen({ name, course }) {
         You&apos;re All Set, {name}! 🎖️
       </motion.h2>
       <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }} className="text-gray-300 mb-2">
-        Your free counseling request for{' '}
+        Your free demo class request for{' '}
         <span className="font-semibold" style={{ color: 'var(--accent)' }}>{course}</span> has been received.
       </motion.p>
       <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.8 }} className="text-gray-400 text-sm mb-8">
@@ -188,13 +210,13 @@ function SuccessScreen({ name, course }) {
         className="flex flex-col gap-3"
       >
         <a
-          href="https://wa.me/918219254332?text=Hi! I just booked a counseling session at Vision Success. Looking forward to it!"
+          href={notifyWa}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl font-bold text-white text-base"
+          className="whatsapp-cta inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl font-bold text-white text-base animate-pulse-gold"
           style={{ background: '#25D366', fontFamily: 'Rajdhani, sans-serif', letterSpacing: '0.05em' }}
         >
-          💬 Chat on WhatsApp
+          📤 Send My Booking on WhatsApp
         </a>
         <a href="/" className="btn-ghost inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl">
           ← Back to Home
@@ -229,6 +251,7 @@ function BookingFlow() {
   const [selectedTime, setSelectedTime] = useState('')
   const [selectedCourse, setSelectedCourse] = useState('')
   const [failedData, setFailedData] = useState(null)
+  const [bookedData, setBookedData] = useState(null)
   const [todayStr, setTodayStr] = useState('')
 
   const { register, handleSubmit, trigger, getValues, formState: { errors } } = useForm({ mode: 'onChange' })
@@ -278,6 +301,7 @@ function BookingFlow() {
         createdAtISO: new Date().toISOString(),
       })
       toast.success("Booking confirmed! We'll call you soon.")
+      setBookedData(payload)
       setSubmitted(true)
     } catch (err) {
       console.error('Booking submit failed:', err)
@@ -310,7 +334,7 @@ function BookingFlow() {
               backdropFilter: 'blur(16px)',
             }}
           >
-            <SuccessScreen name={formData.fullName || 'Champion'} course={selectedCourse} />
+            <SuccessScreen name={formData.fullName || 'Champion'} course={selectedCourse} booking={bookedData} />
           </div>
         </div>
       </div>
@@ -349,11 +373,11 @@ function BookingFlow() {
                 backgroundClip: 'text',
               }}
             >
-              Counseling
+              Demo Class
             </span>
           </h1>
           <p className="text-gray-400 max-w-md mx-auto text-base">
-            30 minutes. One-on-one with our expert. Zero pressure.
+            Free demo class + one-on-one counseling. No payment. Zero pressure.
           </p>
         </motion.div>
       </div>

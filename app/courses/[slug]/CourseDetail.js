@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { COURSES } from '@/lib/courses'
-import { SITE, wa, DEMO_WA } from '@/lib/site'
+import { SITE, wa } from '@/lib/site'
 
 function FadeIn({ children, delay = 0 }) {
   return (
@@ -131,14 +131,12 @@ export default function CourseDetail({ course }) {
             <p className="text-gray-300 leading-relaxed max-w-3xl mb-8">{course.longDescription}</p>
 
             <div className="flex flex-wrap gap-3 mb-10">
-              <a
-                href={DEMO_WA}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-gold whatsapp-cta px-7 py-3.5 rounded-xl text-sm inline-flex items-center gap-2"
+              <Link
+                href={`/appointment?course=${course.id}`}
+                className="btn-gold px-7 py-3.5 rounded-xl text-sm inline-flex items-center gap-2"
               >
                 📅 Book Free Demo Class
-              </a>
+              </Link>
               <Link href={`/enroll?course=${course.id}`} className="btn-ghost px-7 py-3.5 rounded-xl text-sm inline-flex items-center">
                 Enroll Now →
               </Link>

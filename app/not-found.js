@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import { DEMO_WA } from '@/lib/site'
 
 export const metadata = { title: 'Page Not Found' }
 
@@ -29,14 +28,9 @@ export default function NotFound() {
           Oops! Yeh page nahi mila. Par aap yahan hain — toh kya hum help kar sakte hain?
         </p>
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
-          <a
-            href={DEMO_WA}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-gold whatsapp-cta px-7 py-3.5 rounded-xl text-sm"
-          >
+          <Link href="/appointment" className="btn-gold px-7 py-3.5 rounded-xl text-sm">
             📅 Book Free Demo
-          </a>
+          </Link>
           <Link href="/" className="btn-ghost px-7 py-3.5 rounded-xl text-sm">🏠 Back Home</Link>
           <Link href="/courses" className="btn-ghost px-7 py-3.5 rounded-xl text-sm">📚 See Courses</Link>
         </div>
