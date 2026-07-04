@@ -9,6 +9,7 @@ import { COURSES } from '@/lib/courses'
 import { SITE, wa } from '@/lib/site'
 import QuickLeadForm from '@/components/QuickLeadForm'
 import BrainFuel from '@/components/BrainFuel'
+import AnimatedJourney from '@/components/AnimatedJourney'
 
 /* ─── CONSTANTS ─── */
 /* Trust bar (brief C8) — static values, not counters */
@@ -141,6 +142,13 @@ function Stars() {
           }}
         />
       ))}
+      {/* occasional shooting stars — only when motion is welcome */}
+      {stars.length > 0 && (
+        <>
+          <div className="meteor" style={{ top: '12%', left: '70%' }} />
+          <div className="meteor" style={{ top: '28%', left: '35%', animationDelay: '4.5s' }} />
+        </>
+      )}
     </div>
   )
 }
@@ -671,6 +679,27 @@ export default function HomePage() {
                 Start Now →
               </Link>
             </div>
+          </FadeIn>
+        </div>
+      </section>
+
+      {/* ─── THE JOURNEY — auto-playing animated scene ─── */}
+      <section className="section-padding" style={{ background: '#07111F' }}>
+        <div className="max-w-4xl mx-auto">
+          <FadeIn>
+            <div className="text-center mb-10">
+              <span className="section-tag mb-4 inline-block">🎬 Watch It Happen</span>
+              <h2
+                className="text-4xl md:text-5xl font-black text-white mb-2"
+                style={{ fontFamily: 'Rajdhani, sans-serif' }}
+              >
+                Your Journey, From Una to the Top
+              </h2>
+              <p className="text-gray-500 text-sm">Every selection follows the same path. Watch it play out. ⛰️</p>
+            </div>
+          </FadeIn>
+          <FadeIn delay={0.1}>
+            <AnimatedJourney />
           </FadeIn>
         </div>
       </section>

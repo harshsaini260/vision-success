@@ -6,6 +6,7 @@ import FloatingButtons from '@/components/FloatingButtons'
 import { ThemeProvider } from '@/components/ThemeProvider'
 import ThemeSwitcher from '@/components/ThemeSwitcher'
 import DemoPrompt from '@/components/DemoPrompt'
+import ScrollProgress from '@/components/ScrollProgress'
 import { SITE } from '@/lib/site'
 
 export const metadata = {
@@ -156,6 +157,7 @@ export default function RootLayout({ children }) {
       </head>
       <body>
         <ThemeProvider>
+          <ScrollProgress />
           <Navigation />
           <main>{children}</main>
           <Footer />

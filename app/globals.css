@@ -480,6 +480,35 @@ body {
   50% { opacity: 0.9; transform: scale(1.4); }
 }
 
+/* ===== SHOOTING STAR ===== */
+.meteor {
+  position: absolute;
+  width: 110px;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(245,215,110,0.9), transparent);
+  border-radius: 2px;
+  transform: rotate(-35deg);
+  opacity: 0;
+  animation: meteorFly 9s linear infinite;
+  pointer-events: none;
+}
+@keyframes meteorFly {
+  0%, 82% { opacity: 0; transform: translate3d(0, 0, 0) rotate(-35deg); }
+  84% { opacity: 1; }
+  92%, 100% { opacity: 0; transform: translate3d(-340px, 240px, 0) rotate(-35deg); }
+}
+
+/* ===== WHATSAPP ATTENTION WIGGLE (every ~9s) ===== */
+@keyframes waWiggle {
+  0%, 88%, 100% { transform: rotate(0); }
+  90% { transform: rotate(10deg) scale(1.06); }
+  93% { transform: rotate(-9deg) scale(1.06); }
+  96% { transform: rotate(5deg); }
+  98% { transform: rotate(-3deg); }
+}
+.floating-whatsapp { animation: waWiggle 9s ease-in-out infinite; }
+.floating-whatsapp:hover { animation: none; }
+
 @keyframes glow {
   0%, 100% { text-shadow: 0 0 10px rgba(var(--accent-rgb),0.4); }
   50% { text-shadow: 0 0 25px rgba(var(--accent-rgb),1), 0 0 50px rgba(var(--accent-rgb),0.5); }

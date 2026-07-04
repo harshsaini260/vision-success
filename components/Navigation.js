@@ -48,8 +48,29 @@ export default function Navigation() {
         }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16 md:h-20">
-          {/* LOGO — The Watchful Tree of Una */}
-          <Link href="/" className="flex items-center gap-3 group">
+          {/* LOGO — The Watchful Tree of Una (tap for a little magic ✨) */}
+          <Link
+            href="/"
+            className="flex items-center gap-3 group"
+            onClick={(e) => {
+              // Easter egg: gold sparkles burst from the sigil
+              const r = e.currentTarget.getBoundingClientRect()
+              import('canvas-confetti')
+                .then((m) =>
+                  m.default({
+                    particleCount: 40,
+                    spread: 70,
+                    startVelocity: 22,
+                    colors: ['#D4AF37', '#F5D76E', '#FFD700', '#ffffff'],
+                    origin: {
+                      x: (r.left + 30) / window.innerWidth,
+                      y: (r.top + r.height / 2) / window.innerHeight,
+                    },
+                  })
+                )
+                .catch(() => {})
+            }}
+          >
             <div
               className="flex-shrink-0 transition-transform duration-500 group-hover:rotate-[360deg]"
               style={{ filter: 'drop-shadow(0 0 6px rgba(var(--accent-rgb),0.45))' }}
