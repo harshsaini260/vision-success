@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { collection, getDocs, query, where } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
 import { COURSES } from '@/lib/courses'
-import { SITE, wa, DEMO_WA } from '@/lib/site'
+import { SITE, wa } from '@/lib/site'
 import QuickLeadForm from '@/components/QuickLeadForm'
 import BrainFuel from '@/components/BrainFuel'
 
@@ -175,6 +175,7 @@ function FadeIn({ children, delay = 0, direction = 'up' }) {
 /* ─── MAIN PAGE ─── */
 export default function HomePage() {
   const [reviews, setReviews] = useState([])
+  const [lightbox, setLightbox] = useState(null)
 
   useEffect(() => {
     async function loadReviews() {
@@ -221,128 +222,181 @@ export default function HomePage() {
           style={{ background: 'linear-gradient(90deg, transparent, var(--accent), transparent)' }}
         />
 
-        <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 py-24 md:py-32 relative z-10">
-          <div className="max-w-4xl mx-auto text-center">
-            {/* BADGE */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="flex justify-center mb-6"
-            >
-              <span className="section-tag">
-                🏆 &nbsp; Best Coaching Institute in Una, Himachal Pradesh
-              </span>
-            </motion.div>
-
-            {/* HEADLINE */}
-            <motion.h1
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.1 }}
-              className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black leading-tight mb-6"
-              style={{ fontFamily: 'Rajdhani, sans-serif', letterSpacing: '-0.02em' }}
-            >
-              <span className="text-white">WHERE </span>
-              <span className="text-gold-shimmer">OFFICERS</span>
-              <br />
-              <span className="text-white">ARE </span>
-              <span
-                className="inline-block"
-                style={{
-                  background: 'linear-gradient(135deg, var(--accent), var(--accent-light))',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  backgroundClip: 'text',
-                  filter: 'drop-shadow(0 0 18px rgba(var(--accent-rgb),0.35))',
-                }}
+        <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 pt-24 pb-16 md:py-28 relative z-10">
+          <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-10 items-center">
+            {/* LEFT — the pitch */}
+            <div className="text-center lg:text-left">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                className="flex justify-center lg:justify-start mb-5"
               >
-                FORGED
-              </span>
-            </motion.h1>
+                <span className="section-tag">
+                  🏆 &nbsp; Best Coaching Institute in Una, HP
+                </span>
+              </motion.div>
 
-            {/* SUBHEADLINE */}
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.25 }}
-              className="text-lg md:text-xl text-gray-300 mb-10 max-w-2xl mx-auto leading-relaxed"
-            >
-              Maths · Physics · Chemistry · Biology&nbsp;&nbsp;|&nbsp;&nbsp;Class 10–12&nbsp;&nbsp;|&nbsp;&nbsp;
-              JEE · NEET · NDA · CUET · Merchant Navy.{' '}
-              <span className="text-gold-400 font-semibold">7+ officers trained.</span>{' '}
-              Small batches. NIT Hamirpur faculty. Real results.
-            </motion.p>
-
-            {/* CTA BUTTONS */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              className="flex flex-col sm:flex-row gap-4 justify-center"
-            >
-              <Link
-                href="/appointment"
-                className="btn-gold inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl text-lg shadow-gold animate-pulse-gold"
+              <motion.h1
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.1 }}
+                className="text-5xl sm:text-6xl lg:text-7xl font-black leading-tight mb-5"
+                style={{ fontFamily: 'Rajdhani, sans-serif', letterSpacing: '-0.02em' }}
               >
-                📅 Book Free Demo
-              </Link>
-              <a
-                href={`tel:${SITE.phoneTel}`}
-                className="btn-ghost phone-cta inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl text-lg"
-              >
-                📞 Call Now
-              </a>
-              <Link
-                href="/courses"
-                className="btn-ghost inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl text-lg"
-              >
-                Explore Courses →
-              </Link>
-            </motion.div>
-
-            {/* QUICK STATS */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
-              className="mt-14 grid grid-cols-2 sm:grid-cols-4 gap-4 md:gap-6"
-            >
-              {TRUST_STATS.map((stat) => (
-                <div
-                  key={stat.label}
-                  className="glass-card rounded-2xl p-4 text-center"
+                <span className="text-white">WHERE </span>
+                <span className="text-gold-shimmer">OFFICERS</span>
+                <br />
+                <span className="text-white">ARE </span>
+                <span
+                  className="inline-block"
+                  style={{
+                    background: 'linear-gradient(135deg, var(--accent), var(--accent-light))',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    backgroundClip: 'text',
+                    filter: 'drop-shadow(0 0 18px rgba(var(--accent-rgb),0.35))',
+                  }}
                 >
-                  <div className="text-2xl mb-1">{stat.icon}</div>
+                  FORGED
+                </span>
+              </motion.h1>
+
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.25 }}
+                className="text-base md:text-lg text-gray-300 mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed"
+              >
+                Maths · Physics · Chemistry · Biology | Class 10–12 | JEE · NEET · NDA · CUET · Merchant Navy.{' '}
+                <span className="text-gold-400 font-semibold">7+ officers trained.</span>{' '}
+                NIT Hamirpur faculty.
+              </motion.p>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+                className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start"
+              >
+                <Link
+                  href="/appointment"
+                  className="btn-gold inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl text-lg shadow-gold animate-pulse-gold"
+                >
+                  📅 Book Free Demo
+                </Link>
+                <a
+                  href={`tel:${SITE.phoneTel}`}
+                  className="btn-ghost phone-cta inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl text-lg"
+                >
+                  📞 Call Now
+                </a>
+              </motion.div>
+            </div>
+
+            {/* RIGHT — real moments, tilted polaroid stack (desktop) */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.92 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.9, delay: 0.3 }}
+              className="hidden lg:block relative h-[460px]"
+              aria-hidden
+            >
+              {[
+                { src: '/images/group.jpg', fallback: '/images/gallery-group.svg', caption: 'Our champions 🎓', rot: -6, cls: 'top-0 left-0 w-72', dur: 6 },
+                { src: '/images/award1.jpg', fallback: '/images/gallery-award1.svg', caption: 'NDA mug ceremony 🎖️', rot: 5, cls: 'top-16 right-0 w-56', dur: 7 },
+                { src: '/images/birthday.jpg', fallback: '/images/gallery-birthday.svg', caption: 'Family vibes 🎂', rot: -3, cls: 'bottom-0 left-20 w-64', dur: 8 },
+              ].map((p) => (
+                <motion.div
+                  key={p.src}
+                  animate={{ y: [0, -9, 0] }}
+                  transition={{ duration: p.dur, repeat: Infinity, ease: 'easeInOut' }}
+                  className={`absolute ${p.cls} rounded-sm p-2 pb-8`}
+                  style={{
+                    background: '#F5F0E4',
+                    transform: `rotate(${p.rot}deg)`,
+                    boxShadow: '0 18px 50px rgba(0,0,0,0.55), 0 0 30px rgba(var(--accent-rgb),0.12)',
+                  }}
+                >
+                  <img
+                    src={p.src}
+                    alt=""
+                    loading="eager"
+                    className="w-full object-cover"
+                    style={{ aspectRatio: '4/3' }}
+                    onError={(e) => { e.target.onerror = null; e.target.src = p.fallback }}
+                  />
                   <div
-                    className="text-3xl font-black stat-number"
-                    style={{ fontFamily: 'Orbitron, monospace' }}
+                    className="absolute bottom-1.5 left-0 right-0 text-center text-sm font-semibold"
+                    style={{ color: '#3B3325', fontFamily: 'Rajdhani, sans-serif' }}
                   >
-                    {stat.big}
+                    {p.caption}
                   </div>
-                  <div className="text-xs text-gray-400 mt-1 font-medium">{stat.label}</div>
-                </div>
+                </motion.div>
               ))}
             </motion.div>
           </div>
+
+          {/* Mobile film strip — real faces above the fold */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.55 }}
+            className="lg:hidden mt-8 -mx-4 px-4 flex gap-3 overflow-x-auto snap-x snap-mandatory pb-2"
+          >
+            {GALLERY.slice(0, 5).map((p, i) => (
+              <div
+                key={p.src}
+                className="flex-shrink-0 w-44 snap-center rounded-sm p-1.5 pb-6 relative"
+                style={{
+                  background: '#F5F0E4',
+                  transform: `rotate(${i % 2 === 0 ? -2 : 2}deg)`,
+                  boxShadow: '0 8px 24px rgba(0,0,0,0.5)',
+                }}
+              >
+                <img
+                  src={p.src}
+                  alt={p.alt}
+                  loading={i < 2 ? 'eager' : 'lazy'}
+                  className="w-full object-cover"
+                  style={{ aspectRatio: '4/3' }}
+                  onError={(e) => { e.target.onerror = null; e.target.src = p.fallback }}
+                />
+                <div
+                  className="absolute bottom-1 left-0 right-0 text-center text-[11px] font-semibold"
+                  style={{ color: '#3B3325', fontFamily: 'Rajdhani, sans-serif' }}
+                >
+                  {p.caption} {p.emoji}
+                </div>
+              </div>
+            ))}
+          </motion.div>
+
+          {/* QUICK STATS */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+            className="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-3 md:gap-6"
+          >
+            {TRUST_STATS.map((stat) => (
+              <div
+                key={stat.label}
+                className="glass-card rounded-2xl p-4 text-center"
+              >
+                <div className="text-2xl mb-1">{stat.icon}</div>
+                <div
+                  className="text-3xl font-black stat-number"
+                  style={{ fontFamily: 'Orbitron, monospace' }}
+                >
+                  {stat.big}
+                </div>
+                <div className="text-xs text-gray-400 mt-1 font-medium">{stat.label}</div>
+              </div>
+            ))}
+          </motion.div>
         </div>
 
-        {/* SCROLL INDICATOR */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.5 }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-        >
-          <span className="text-xs text-gray-500 uppercase tracking-widest">Scroll</span>
-          <motion.div
-            animate={{ y: [0, 8, 0] }}
-            transition={{ duration: 1.5, repeat: Infinity }}
-            className="w-5 h-8 rounded-full border border-gray-600 flex items-start justify-center pt-1.5"
-          >
-            <div className="w-1 h-2 rounded-full bg-gold-500" />
-          </motion.div>
-        </motion.div>
       </section>
 
       {/* ─── ACHIEVEMENT TICKER ─── */}
@@ -364,74 +418,6 @@ export default function HomePage() {
           </div>
         </div>
       </div>
-
-      {/* ─── WHY VISION SUCCESS ─── */}
-      <section className="section-padding relative" style={{ background: '#07111F' }}>
-        <div className="max-w-7xl mx-auto">
-          <FadeIn>
-            <div className="text-center mb-16">
-              <span className="section-tag mb-4 inline-block">Why Choose Us</span>
-              <h2
-                className="text-4xl md:text-5xl font-black text-white mb-4"
-                style={{ fontFamily: 'Rajdhani, sans-serif' }}
-              >
-                The Vision Difference
-              </h2>
-              <p className="text-gray-400 max-w-xl mx-auto">
-                We don't just teach — we build officers, engineers, and doctors from Una, HP.
-              </p>
-            </div>
-          </FadeIn>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[
-              {
-                icon: '🎯',
-                title: 'NDA-First Approach',
-                desc: 'Every lesson is engineered for the officer selection process — written, physical, and personality.',
-              },
-              {
-                icon: '👥',
-                title: 'Small Batches',
-                desc: 'Maximum 25 students per batch ensures every student gets personal attention and doubt resolution.',
-              },
-              {
-                icon: '📋',
-                title: 'Result-Proven Faculty',
-                desc: 'Faculty trained at IIT & defence academies. Our instructors have seen the inside of SSB.',
-              },
-              {
-                icon: '💪',
-                title: 'Personality Development',
-                desc: 'Group discussions, debates, and leadership training — skills that make you stand out at SSB.',
-              },
-              {
-                icon: '📱',
-                title: 'Study Materials',
-                desc: 'Chapter-wise notes, previous year papers, and mock tests — all crafted in-house.',
-              },
-              {
-                icon: '❤️',
-                title: 'Fees Per Ability',
-                desc: 'We believe financial barriers should never stop a capable student. Fees are adjusted to your situation.',
-              },
-            ].map((item, i) => (
-              <FadeIn key={item.title} delay={i * 0.08}>
-                <div className="glass-card glass-card-hover rounded-2xl p-6 h-full transition-all duration-300">
-                  <div className="text-4xl mb-4">{item.icon}</div>
-                  <h3
-                    className="text-lg font-bold text-white mb-2"
-                    style={{ fontFamily: 'Rajdhani, sans-serif' }}
-                  >
-                    {item.title}
-                  </h3>
-                  <p className="text-gray-400 text-sm leading-relaxed">{item.desc}</p>
-                </div>
-              </FadeIn>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* ─── COURSES ─── */}
       <section
@@ -603,75 +589,12 @@ export default function HomePage() {
             </div>
           </FadeIn>
 
-          {/* FEES NOTE */}
+          {/* FEES NOTE — one line, big promise */}
           <FadeIn delay={0.2}>
-            <div
-              className="mt-10 rounded-2xl p-6 text-center"
-              style={{
-                background: 'rgba(var(--accent-rgb),0.06)',
-                border: '1px solid rgba(var(--accent-rgb),0.2)',
-              }}
-            >
-              <p className="text-gold-400 font-semibold text-lg mb-1" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
-                💛 Fees Are Never a Barrier Here
-              </p>
-              <p className="text-gray-400 text-sm max-w-xl mx-auto">
-                We believe talent doesn't come with a price tag. Fees are always{' '}
-                <strong className="text-white">negotiated based on your ability and situation</strong>. No capable student will ever be turned away.
-              </p>
-            </div>
-          </FadeIn>
-        </div>
-      </section>
-
-      {/* ─── HOW IT WORKS ─── */}
-      <section className="section-padding" style={{ background: '#07111F' }}>
-        <div className="max-w-5xl mx-auto">
-          <FadeIn>
-            <div className="text-center mb-12">
-              <span className="section-tag mb-4 inline-block">Simple Process</span>
-              <h2
-                className="text-4xl md:text-5xl font-black text-white"
-                style={{ fontFamily: 'Rajdhani, sans-serif' }}
-              >
-                How It Works — 3 Easy Steps
-              </h2>
-            </div>
-          </FadeIn>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-            {[
-              { icon: '📞', step: 'Step 1', title: 'Call or WhatsApp Us', text: 'Tell us your class and target exam. Takes 2 minutes.' },
-              { icon: '🎓', step: 'Step 2', title: 'Attend a FREE Demo Class', text: 'No payment. No obligation. Just see the teaching yourself.' },
-              { icon: '🚀', step: 'Step 3', title: 'Enroll & Start Learning', text: 'Join the right batch and start your journey to success.' },
-            ].map((s, i) => (
-              <FadeIn key={s.step} delay={i * 0.1}>
-                <div className="glass-card rounded-2xl p-8 text-center h-full relative">
-                  <div
-                    className="absolute top-4 right-4 text-xs font-bold uppercase tracking-widest text-gold-400/60"
-                    style={{ fontFamily: 'Orbitron, monospace' }}
-                  >
-                    {s.step}
-                  </div>
-                  <div className="text-5xl mb-4">{s.icon}</div>
-                  <h3 className="text-xl font-bold text-white mb-2" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
-                    {s.title}
-                  </h3>
-                  <p className="text-sm text-gray-400">{s.text}</p>
-                </div>
-              </FadeIn>
-            ))}
-          </div>
-          <FadeIn delay={0.2}>
-            <div className="text-center mt-10">
-              <a
-                href={DEMO_WA}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-gold whatsapp-cta inline-flex items-center gap-2 px-8 py-4 rounded-2xl text-base"
-              >
-                💬 Start with Step 1 — WhatsApp Us
-              </a>
-            </div>
+            <p className="mt-8 text-center text-sm text-gray-400">
+              💛 <strong className="text-gold-400">Fees are never a barrier here</strong> — always
+              negotiated on your ability. No capable student is ever turned away.
+            </p>
           </FadeIn>
         </div>
       </section>
@@ -727,84 +650,83 @@ export default function HomePage() {
             ))}
           </div>
 
-          {/* beyond the classroom */}
+          {/* joining is 3 taps */}
           <FadeIn delay={0.15}>
-            <div className="mt-10 text-center">
-              <p className="text-sm text-gray-400 mb-4 uppercase tracking-widest" style={{ fontFamily: 'Orbitron, monospace' }}>
-                And Beyond the Classroom
-              </p>
-              <div className="flex flex-wrap justify-center gap-2">
-                {[
-                  '🗣️ Daily doubt sessions',
-                  '📊 Parent progress reports',
-                  '🎤 Public speaking & GDs',
-                  '🎖️ SSB-style personality drills',
-                  '🧭 Career counselling',
-                  '🎂 Birthday & result celebrations',
-                ].map((t) => (
-                  <span
-                    key={t}
-                    className="px-4 py-2 rounded-full text-sm font-semibold text-gray-300"
-                    style={{
-                      background: 'rgba(255,255,255,0.04)',
-                      border: '1px solid rgba(var(--accent-rgb),0.2)',
-                      fontFamily: 'Rajdhani, sans-serif',
-                    }}
-                  >
-                    {t}
-                  </span>
-                ))}
-              </div>
+            <div
+              className="mt-10 rounded-2xl p-5 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 text-center"
+              style={{ background: 'rgba(var(--accent-rgb),0.06)', border: '1px solid rgba(var(--accent-rgb),0.2)' }}
+            >
+              <span className="text-sm font-bold text-white" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+                📞 1. Call / WhatsApp
+              </span>
+              <span className="text-gold-400 hidden sm:inline">→</span>
+              <span className="text-sm font-bold text-white" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+                🎓 2. FREE Demo Class
+              </span>
+              <span className="text-gold-400 hidden sm:inline">→</span>
+              <span className="text-sm font-bold text-white" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+                🚀 3. Enroll & Rise
+              </span>
+              <Link href="/appointment" className="btn-gold px-5 py-2.5 rounded-xl text-xs sm:ml-4">
+                Start Now →
+              </Link>
             </div>
           </FadeIn>
         </div>
       </section>
 
-      {/* ─── GALLERY ─── */}
-      <section className="section-padding" style={{ background: '#07111F' }}>
-        <div className="max-w-7xl mx-auto">
+      {/* ─── WALL OF MOMENTS — real photos, polaroid wall ─── */}
+      <section className="section-padding overflow-hidden" style={{ background: '#07111F' }}>
+        <div className="max-w-6xl mx-auto">
           <FadeIn>
             <div className="text-center mb-12">
               <span className="section-tag mb-4 inline-block">Inside Vision Success</span>
               <h2
-                className="text-4xl md:text-5xl font-black text-white"
+                className="text-4xl md:text-5xl font-black text-white mb-2"
                 style={{ fontFamily: 'Rajdhani, sans-serif' }}
               >
-                Real Moments, Real People
+                The Wall of Moments
               </h2>
+              <p className="text-gray-500 text-sm">Real students. Real celebrations. Tap any photo. 📌</p>
             </div>
           </FadeIn>
-          <div className="gallery-grid">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-8">
             {GALLERY.map((photo, i) => (
               <FadeIn key={photo.src} delay={i * 0.07}>
-                <div
-                  className="relative rounded-2xl overflow-hidden group cursor-pointer"
-                  style={{ aspectRatio: '4/3', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(var(--accent-rgb),0.15)' }}
+                <button
+                  onClick={() => setLightbox(photo)}
+                  className="block w-full rounded-sm p-1.5 md:p-2 pb-7 md:pb-9 relative cursor-zoom-in transition-transform duration-300 hover:scale-[1.04] hover:z-10"
+                  style={{
+                    background: '#F5F0E4',
+                    transform: `rotate(${[-2.5, 2, -1.5, 2.5, -2, 1.5][i % 6]}deg)`,
+                    boxShadow: '0 12px 34px rgba(0,0,0,0.5)',
+                  }}
+                  aria-label={`View photo: ${photo.alt}`}
                 >
+                  {/* gold tape */}
+                  <span
+                    className="absolute -top-2 left-1/2 -translate-x-1/2 w-14 h-4 opacity-80"
+                    style={{ background: 'rgba(var(--accent-rgb),0.55)', transform: 'translateX(-50%) rotate(-4deg)' }}
+                  />
                   <img
                     src={photo.src}
                     alt={photo.alt}
                     loading="lazy"
                     decoding="async"
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    className="w-full object-cover"
+                    style={{ aspectRatio: '4/3' }}
                     onError={(e) => {
                       e.target.onerror = null
                       e.target.src = photo.fallback
                     }}
                   />
-                  <div
-                    className="absolute inset-0"
-                    style={{ background: 'linear-gradient(to top, rgba(4,9,15,0.7) 0%, transparent 60%)' }}
-                  />
-                  <div className="absolute bottom-3 left-3 z-10">
-                    <span
-                      className="text-xs font-semibold text-white px-3 py-1 rounded-full"
-                      style={{ background: 'rgba(4,9,15,0.7)', backdropFilter: 'blur(8px)' }}
-                    >
-                      {photo.caption}
-                    </span>
-                  </div>
-                </div>
+                  <span
+                    className="absolute bottom-1.5 md:bottom-2.5 left-0 right-0 text-center text-[11px] md:text-sm font-semibold"
+                    style={{ color: '#3B3325', fontFamily: 'Rajdhani, sans-serif' }}
+                  >
+                    {photo.emoji} {photo.caption}
+                  </span>
+                </button>
               </FadeIn>
             ))}
           </div>
@@ -1012,6 +934,51 @@ export default function HomePage() {
           </FadeIn>
         </div>
       </section>
+
+      {/* ─── PHOTO LIGHTBOX ─── */}
+      <AnimatePresence>
+        {lightbox && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[300] flex items-center justify-center p-4 cursor-zoom-out"
+            style={{ background: 'rgba(4,9,15,0.92)' }}
+            onClick={() => setLightbox(null)}
+          >
+            <motion.div
+              initial={{ scale: 0.85, rotate: -2 }}
+              animate={{ scale: 1, rotate: 0 }}
+              exit={{ scale: 0.85 }}
+              transition={{ type: 'spring', stiffness: 220, damping: 22 }}
+              className="rounded-sm p-2 md:p-3 pb-10 md:pb-12 max-w-2xl w-full relative"
+              style={{ background: '#F5F0E4', boxShadow: '0 30px 90px rgba(0,0,0,0.8)' }}
+            >
+              <img
+                src={lightbox.src}
+                alt={lightbox.alt}
+                className="w-full object-contain"
+                style={{ maxHeight: '72vh' }}
+                onError={(e) => { e.target.onerror = null; e.target.src = lightbox.fallback }}
+              />
+              <div
+                className="absolute bottom-2.5 md:bottom-4 left-0 right-0 text-center text-base md:text-lg font-bold"
+                style={{ color: '#3B3325', fontFamily: 'Rajdhani, sans-serif' }}
+              >
+                {lightbox.emoji} {lightbox.caption}
+              </div>
+              <button
+                aria-label="Close photo"
+                className="absolute -top-3 -right-3 w-9 h-9 rounded-full text-white font-bold"
+                style={{ background: 'var(--accent)', color: '#07111F' }}
+                onClick={() => setLightbox(null)}
+              >
+                ✕
+              </button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   )
 }

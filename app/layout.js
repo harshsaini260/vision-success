@@ -5,7 +5,7 @@ import Footer from '@/components/Footer'
 import FloatingButtons from '@/components/FloatingButtons'
 import { ThemeProvider } from '@/components/ThemeProvider'
 import ThemeSwitcher from '@/components/ThemeSwitcher'
-import ExitIntentPopup from '@/components/ExitIntentPopup'
+import DemoPrompt from '@/components/DemoPrompt'
 import { SITE } from '@/lib/site'
 
 export const metadata = {
@@ -160,7 +160,7 @@ export default function RootLayout({ children }) {
           <main>{children}</main>
           <Footer />
           <FloatingButtons />
-          <ExitIntentPopup />
+          <DemoPrompt />
           <ThemeSwitcher />
           <Toaster
             position="top-center"
