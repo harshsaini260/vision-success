@@ -19,6 +19,7 @@ export default function sitemap() {
       changeFrequency: 'monthly',
       priority: p.slug === 'coaching-in-una' ? 0.9 : 0.8,
     })),
+    { url: `${SITE.url}/sat`, lastModified: now, changeFrequency: 'weekly', priority: 0.9 },
     { url: `${SITE.url}/enroll`, lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
     { url: `${SITE.url}/appointment`, lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
     { url: `${SITE.url}/materials`, lastModified: now, changeFrequency: 'weekly', priority: 0.7 },

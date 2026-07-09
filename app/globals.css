@@ -598,3 +598,169 @@ img { max-width: 100%; height: auto; }
   font-size: 0.92rem;
   line-height: 1.7;
 }
+
+/* ===== SAT — PAPER CINEMATIC WAR ROOM ===== */
+/* aged mission paper — matches the polaroid #F5F0E4 family */
+.paper-note {
+  background:
+    radial-gradient(ellipse 120% 90% at 20% 0%, rgba(59,51,37,0.06) 0%, transparent 55%),
+    radial-gradient(ellipse 100% 80% at 85% 100%, rgba(59,51,37,0.08) 0%, transparent 50%),
+    #F5F0E4;
+  color: #3B3325;
+  box-shadow: 0 18px 50px rgba(0,0,0,0.55), 0 0 30px rgba(var(--accent-rgb),0.08);
+}
+
+/* rubber-ink stamp, slightly crooked like it was slammed on */
+.ink-stamp {
+  display: inline-block;
+  padding: 4px 10px;
+  border: 2.5px double #B3402E;
+  border-radius: 4px;
+  color: #B3402E;
+  font-family: 'Orbitron', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  transform: rotate(4deg);
+  opacity: 0.85;
+  white-space: nowrap;
+}
+
+/* amber LED digits — pacific-rim war clock */
+.war-clock {
+  font-family: 'Orbitron', monospace;
+  color: var(--accent-light);
+  font-variant-numeric: tabular-nums;
+  text-shadow:
+    0 0 10px rgba(var(--accent-rgb), 0.85),
+    0 0 34px rgba(var(--accent-rgb), 0.35);
+  animation: clock-flicker 7s infinite;
+}
+
+@keyframes clock-flicker {
+  0%, 91%, 94%, 96%, 100% { opacity: 1; }
+  92% { opacity: 0.55; }
+  93% { opacity: 0.9; }
+  95% { opacity: 0.7; }
+}
+
+/* faint CRT scanlines over the clock panel */
+.war-scanlines::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(255,255,255,0.03) 0 1px,
+    transparent 1px 3px
+  );
+}
+
+/* ===== SAT — KAWAII "CLICK ME" BUTTON ===== */
+.kawaii-btn {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.65rem;
+  text-decoration: none;
+  animation: kawaii-wiggle 3.2s ease-in-out infinite;
+}
+.kawaii-face {
+  display: block; /* spans ignore width/height otherwise */
+  position: relative;
+  width: 92px;
+  height: 92px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, var(--accent-light), var(--accent) 72%);
+  box-shadow:
+    0 10px 30px rgba(var(--accent-rgb), 0.45),
+    inset 0 -8px 14px rgba(0,0,0,0.18),
+    inset 0 6px 10px rgba(255,255,255,0.35);
+  transition: transform 0.2s ease;
+}
+.kawaii-btn:hover .kawaii-face,
+.kawaii-btn:active .kawaii-face {
+  animation: kawaii-bounce 0.5s ease;
+}
+.kawaii-eye {
+  position: absolute;
+  top: 37px;
+  width: 9px;
+  height: 13px;
+  border-radius: 50%;
+  background: #07111F;
+  animation: kawaii-blink 4.2s infinite;
+}
+.kawaii-eye.left { left: 27px; }
+.kawaii-eye.right { right: 27px; }
+.kawaii-blush {
+  position: absolute;
+  top: 54px;
+  width: 13px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(224, 92, 66, 0.55);
+}
+.kawaii-blush.left { left: 15px; }
+.kawaii-blush.right { right: 15px; }
+.kawaii-mouth {
+  position: absolute;
+  top: 52px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 16px;
+  height: 9px;
+  border: 2.5px solid #07111F;
+  border-top: none;
+  border-radius: 0 0 16px 16px;
+}
+.kawaii-label {
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 700;
+  font-size: 0.82rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent-light);
+  animation: kawaii-label-float 2s ease-in-out infinite;
+}
+.kawaii-sparkle {
+  position: absolute;
+  font-size: 14px;
+  color: var(--accent-light);
+  animation: kawaii-sparkle 2.6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes kawaii-wiggle {
+  0%, 100% { transform: rotate(0deg) translateY(0); }
+  25% { transform: rotate(-3deg) translateY(-3px); }
+  50% { transform: rotate(0deg) translateY(0); }
+  75% { transform: rotate(3deg) translateY(-3px); }
+}
+@keyframes kawaii-blink {
+  0%, 44%, 50%, 100% { transform: scaleY(1); }
+  47% { transform: scaleY(0.08); }
+}
+@keyframes kawaii-bounce {
+  0% { transform: scale(1); }
+  35% { transform: scale(1.15, 0.85); }
+  65% { transform: scale(0.92, 1.08); }
+  100% { transform: scale(1); }
+}
+@keyframes kawaii-label-float {
+  0%, 100% { transform: translateY(0); opacity: 1; }
+  50% { transform: translateY(3px); opacity: 0.75; }
+}
+@keyframes kawaii-sparkle {
+  0%, 100% { opacity: 0; transform: scale(0.4) rotate(0deg); }
+  50% { opacity: 1; transform: scale(1.1) rotate(25deg); }
+}
+
+/* calm mode — respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .kawaii-btn, .kawaii-eye, .kawaii-label, .kawaii-sparkle, .war-clock {
+    animation: none;
+  }
+}

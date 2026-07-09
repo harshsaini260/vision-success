@@ -10,6 +10,7 @@ import Logo from '@/components/Logo'
 const navLinks = [
   { href: '/', label: 'Home' },
   { href: '/courses', label: 'Courses' },
+  { href: '/sat', label: 'SAT ✨' },
   { href: '/enroll', label: 'Enroll' },
   { href: '/materials', label: 'Materials' },
   { href: '/reviews', label: 'Reviews' },

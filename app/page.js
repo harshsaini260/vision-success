@@ -7,6 +7,7 @@ import { collection, getDocs, query, where } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
 import { COURSES } from '@/lib/courses'
 import { SITE, wa } from '@/lib/site'
+import { nextSat, satMoment } from '@/lib/sat'
 import QuickLeadForm from '@/components/QuickLeadForm'
 import BrainFuel from '@/components/BrainFuel'
 import AnimatedJourney from '@/components/AnimatedJourney'
@@ -177,6 +178,99 @@ function FadeIn({ children, delay = 0, direction = 'up' }) {
     >
       {children}
     </motion.div>
+  )
+}
+
+/* ─── SAT TEASER — a cozy mystery note + kawaii click-me ───
+   Deliberately vague up top, warm in the middle, one adorable
+   button at the end. Curiosity does the rest. Mobile-first. */
+function SatTeaser() {
+  const [days, setDays] = useState(null)
+
+  useEffect(() => {
+    /* computed after mount so SSR HTML never goes stale */
+    const t = nextSat()
+    setDays(Math.max(0, Math.ceil((satMoment(t) - Date.now()) / 86400000)))
+  }, [])
+
+  return (
+    <section className="relative overflow-hidden py-16 md:py-24 px-4" style={{ background: '#0A1628' }}>
+      {/* soft dawn glow — this section looks like a warm secret */}
+      <div
+        aria-hidden
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            'radial-gradient(ellipse 70% 60% at 50% 110%, rgba(var(--accent-rgb),0.1) 0%, transparent 65%)',
+        }}
+      />
+      <div className="max-w-2xl mx-auto text-center relative z-10">
+        <FadeIn>
+          <span className="section-tag mb-5 inline-block">🤫 Psst… Something New</span>
+          <h2
+            className="text-4xl md:text-5xl font-black text-white mb-8 leading-tight"
+            style={{ fontFamily: 'Rajdhani, sans-serif' }}
+          >
+            Dreams Bigger Than{' '}
+            <span className="text-gold-shimmer">Borders?</span>
+          </h2>
+        </FadeIn>
+
+        {/* the cozy paper note */}
+        <FadeIn delay={0.1}>
+          <div
+            className="paper-note rounded-sm px-5 py-6 sm:px-8 sm:py-7 max-w-md mx-auto relative mb-8"
+            style={{ transform: 'rotate(-1.5deg)' }}
+          >
+            <span
+              aria-hidden
+              className="absolute -top-2.5 left-1/2 w-20 h-5 opacity-80"
+              style={{ background: 'rgba(var(--accent-rgb),0.55)', transform: 'translateX(-50%) rotate(-3deg)' }}
+            />
+            <p
+              className="text-xl sm:text-2xl font-bold leading-snug mb-3"
+              style={{ fontFamily: 'Rajdhani, sans-serif' }}
+            >
+              “Some exams give you marks.
+              <br />
+              This one gives you <em>the world</em>.”
+            </p>
+            <p className="text-sm opacity-80 leading-relaxed">
+              It's called the <strong>SAT</strong> — one cozy 2-hour digital test, one score out
+              of 1600, and 4,000+ universities across the planet suddenly know your name.
+            </p>
+            {days !== null && (
+              <p
+                className="mt-4 text-xs font-bold uppercase tracking-[0.2em]"
+                style={{ color: '#B3402E', fontFamily: 'Orbitron, monospace' }}
+              >
+                ⏳ Next one drops in {days} days…
+              </p>
+            )}
+          </div>
+        </FadeIn>
+
+        {/* the kawaii recruit — tap the lil guy */}
+        <FadeIn delay={0.2}>
+          <Link href="/sat" className="kawaii-btn" aria-label="Curious? Open the SAT mission page">
+            <span className="relative inline-block" aria-hidden>
+              <span className="kawaii-sparkle" style={{ top: -8, left: -20 }}>✦</span>
+              <span className="kawaii-sparkle" style={{ top: -16, right: -16, animationDelay: '0.9s' }}>✧</span>
+              <span className="kawaii-sparkle" style={{ bottom: 2, left: -24, animationDelay: '1.7s' }}>✦</span>
+              <span className="kawaii-sparkle" style={{ bottom: -6, right: -20, animationDelay: '2.2s' }}>✧</span>
+              <span className="kawaii-face">
+                <span className="kawaii-eye left" />
+                <span className="kawaii-eye right" />
+                <span className="kawaii-blush left" />
+                <span className="kawaii-blush right" />
+                <span className="kawaii-mouth" />
+              </span>
+            </span>
+            <span className="kawaii-label">click me!! 👉👈</span>
+          </Link>
+        </FadeIn>
+      </div>
+    </section>
   )
 }
 
@@ -426,6 +520,9 @@ export default function HomePage() {
           </div>
         </div>
       </div>
+
+      {/* ─── SAT — THE CURIOUS NEW THING ─── */}
+      <SatTeaser />
 
       {/* ─── COURSES ─── */}
       <section
