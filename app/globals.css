@@ -758,9 +758,66 @@ img { max-width: 100%; height: auto; }
   50% { opacity: 1; transform: scale(1.1) rotate(25deg); }
 }
 
+/* ===== SAT — CINEMATIC LAYER ===== */
+/* static film grain — one tiled SVG, zero repaints */
+.film-grain::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* widescreen letterbox bars on the cold open */
+.letterbox-bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 34px;
+  background: #000;
+  z-index: 2;
+  pointer-events: none;
+}
+.letterbox-bar.top-0 { box-shadow: 0 1px 0 rgba(var(--accent-rgb),0.15); }
+.letterbox-bar.bottom-0 { box-shadow: 0 -1px 0 rgba(var(--accent-rgb),0.15); }
+
+/* typewriter caret */
+.tw-caret {
+  animation: tw-blink 0.85s step-end infinite;
+  color: var(--accent);
+}
+@keyframes tw-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* seconds digit drop-in on every tick */
+.tick { animation: tick-in 0.28s ease-out; }
+@keyframes tick-in {
+  from { transform: translateY(-26%); opacity: 0.2; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* beacon breathing behind the war clock */
+.beacon { animation: beacon-breathe 3.4s ease-in-out infinite; }
+@keyframes beacon-breathe {
+  0%, 100% { opacity: 0.55; transform: scale(0.97); }
+  50% { opacity: 1; transform: scale(1.03); }
+}
+
+/* FINAL CALL chip — red alert pulse */
+.final-call { animation: final-call-pulse 1.6s ease-in-out infinite; }
+@keyframes final-call-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.45; }
+}
+
 /* calm mode — respect reduced motion */
 @media (prefers-reduced-motion: reduce) {
-  .kawaii-btn, .kawaii-eye, .kawaii-label, .kawaii-sparkle, .war-clock {
+  .kawaii-btn, .kawaii-eye, .kawaii-label, .kawaii-sparkle, .war-clock,
+  .tick, .beacon, .final-call, .tw-caret {
     animation: none;
   }
 }

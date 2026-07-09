@@ -227,6 +227,13 @@ function SatTeaser() {
               className="absolute -top-2.5 left-1/2 w-20 h-5 opacity-80"
               style={{ background: 'rgba(var(--accent-rgb),0.55)', transform: 'translateX(-50%) rotate(-3deg)' }}
             />
+            <span
+              className="ink-stamp absolute -top-1 -right-2"
+              style={{ fontSize: 9, transform: 'rotate(8deg)' }}
+              aria-hidden
+            >
+              ★ FIRST IN UNA ★
+            </span>
             <p
               className="text-xl sm:text-2xl font-bold leading-snug mb-3"
               style={{ fontFamily: 'Rajdhani, sans-serif' }}
@@ -236,8 +243,9 @@ function SatTeaser() {
               This one gives you <em>the world</em>.”
             </p>
             <p className="text-sm opacity-80 leading-relaxed">
-              It's called the <strong>SAT</strong> — one cozy 2-hour digital test, one score out
-              of 1600, and 4,000+ universities across the planet suddenly know your name.
+              It's called the <strong>SAT</strong> — one 2-hour digital test, one score out of
+              1600, and 4,000+ universities across the planet suddenly know your name. And right
+              now, exactly <strong>one</strong> institute in Una teaches it. <em>(Hi. 👋)</em>
             </p>
             {days !== null && (
               <p

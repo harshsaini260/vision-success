@@ -1,5 +1,6 @@
 'use client'
 
+import { usePathname } from 'next/navigation'
 import { SITE, wa } from '@/lib/site'
 
 const WELCOME_MSG = wa(
@@ -7,6 +8,10 @@ const WELCOME_MSG = wa(
 )
 
 export default function FloatingButtons() {
+  const pathname = usePathname()
+  /* /sat has its own sticky mission bar — floats would collide with it */
+  if (pathname === '/sat') return null
+
   return (
     <>
       <a
