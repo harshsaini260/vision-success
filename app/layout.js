@@ -12,18 +12,18 @@ import { SITE } from '@/lib/site'
 export const metadata = {
   metadataBase: new URL(SITE.url),
   title: {
-    default: 'Best Coaching Institute in Una HP | Maths, Physics, Chemistry, Biology | Vision Success',
+    default: 'NDA, NEET, JEE, SAT & IELTS Coaching in Una HP | Vision Success',
     template: '%s | Vision Success Una',
   },
   description:
-    'Vision Success Coaching Institute Una — Expert coaching for Class 10, 11, 12, JEE, NEET, NDA, CUET, Merchant Navy. Physics, Chemistry, Biology, Maths by NIT Hamirpur faculty. Free demo class. Call now.',
+    'Vision Success Coaching Institute Una — NDA coaching (7+ officers trained), NEET & JEE prep, and Una\'s first study-abroad desk with SAT & IELTS training. Class 10–12 Maths, Physics, Chemistry, Biology by NIT Hamirpur faculty. Free demo class.',
   keywords:
-    'coaching institute Una, NDA coaching Una, JEE coaching Una HP, NEET coaching Himachal Pradesh, physics coaching Una, chemistry coaching Una, biology coaching Una, maths coaching Una, CUET coaching Una, merchant navy coaching Una, tuition Una',
+    'NDA coaching Una, NEET coaching Una HP, JEE coaching Una, SAT coaching Una, SAT coaching Himachal Pradesh, IELTS coaching Una, IELTS Una HP, study abroad Una, coaching institute Una, physics coaching Una, chemistry coaching Una, biology coaching Una, maths coaching Una, CUET coaching Una, merchant navy coaching Una, tuition Una',
   alternates: { canonical: '/' },
   openGraph: {
-    title: 'Best Coaching Institute in Una, HP — Vision Success',
+    title: 'NDA · NEET · JEE · SAT · IELTS — Vision Success Una',
     description:
-      'Maths, Physics, Chemistry, Biology · Class 10–12 · JEE, NEET, NDA, CUET, Merchant Navy. NIT Hamirpur faculty. Free demo class.',
+      'NDA (7+ officers) · NEET · JEE · Class 10–12 · plus Una\'s first study-abroad desk: SAT & IELTS. NIT Hamirpur faculty. Free demo class.',
     url: SITE.url,
     siteName: SITE.name,
     type: 'website',
@@ -31,9 +31,9 @@ export const metadata = {
   },
   twitter: {
     card: 'summary',
-    title: 'Best Coaching Institute in Una, HP — Vision Success',
+    title: 'NDA · NEET · JEE · SAT · IELTS — Vision Success Una',
     description:
-      'Maths, Physics, Chemistry, Biology · Class 10–12 · JEE, NEET, NDA, CUET, Merchant Navy. Free demo class.',
+      'NDA (7+ officers) · NEET · JEE · Class 10–12 · SAT & IELTS study-abroad desk. Free demo class.',
   },
   robots: { index: true, follow: true },
 }
@@ -68,7 +68,7 @@ const jsonLd = {
   slogan: SITE.tagline,
   priceRange: '₹₹',
   description:
-    'Best coaching institute in Una, Himachal Pradesh. Expert Maths, Physics, Chemistry, Biology coaching for Class 10, 11, 12. JEE, NEET, NDA, CUET, Merchant Navy preparation by NIT Hamirpur alumnus.',
+    'Best coaching institute in Una, Himachal Pradesh. NDA, JEE, NEET, CUET, Merchant Navy preparation plus Una\'s first study-abroad desk (SAT & IELTS). Expert Maths, Physics, Chemistry, Biology coaching for Class 10, 11, 12 by NIT Hamirpur alumnus.',
   address: {
     '@type': 'PostalAddress',
     streetAddress: 'Near Old Bus Stand, Near Sabji Mandi',
@@ -105,6 +105,8 @@ const jsonLd = {
       'NDA Coaching Una',
       'JEE Coaching Una',
       'NEET Coaching Una',
+      'SAT Coaching Una',
+      'IELTS Coaching Una',
       'CUET Coaching Una',
       'Merchant Navy Coaching Una',
       'Class 10 Coaching Una',

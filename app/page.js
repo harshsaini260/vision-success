@@ -7,9 +7,8 @@ import { collection, getDocs, query, where } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
 import { COURSES } from '@/lib/courses'
 import { SITE, wa } from '@/lib/site'
-import { nextSat, satMoment } from '@/lib/sat'
+import { nextSat, satMoment, daysTo } from '@/lib/sat'
 import QuickLeadForm from '@/components/QuickLeadForm'
-import BrainFuel from '@/components/BrainFuel'
 import AnimatedJourney from '@/components/AnimatedJourney'
 
 /* ─── CONSTANTS ─── */
@@ -23,6 +22,8 @@ const TRUST_STATS = [
 
 /* Subject & local landing pages (brief Section E) */
 const SUBJECT_LINKS = [
+  { href: '/sat', label: '🌍 SAT (Study Abroad)' },
+  { href: '/ielts-coaching-una', label: '🗣️ IELTS' },
   { href: '/maths-coaching-una', label: '📐 Maths' },
   { href: '/physics-coaching-una', label: '⚡ Physics' },
   { href: '/chemistry-coaching-una', label: '🧪 Chemistry' },
@@ -43,7 +44,11 @@ const SUBJECT_LINKS = [
 const HOME_FAQS = [
   {
     q: 'Which courses does Vision Success Una offer?',
-    a: 'NDA coaching is our flagship (written + SSB). We also run JEE Mains & Advanced, NEET, CUET, Merchant Navy (IMU CET), and Class 9–12 coaching for HPBOSE and CBSE — plus subject tuition for Maths, Physics, Chemistry, and Biology.',
+    a: 'NDA coaching is our flagship (written + SSB). We also run JEE Mains & Advanced, NEET, CUET, Merchant Navy (IMU CET), and Class 9–12 coaching for HPBOSE and CBSE — plus subject tuition for Maths, Physics, Chemistry, and Biology. And we are Una\'s first study-abroad desk: Digital SAT and IELTS preparation under one roof.',
+  },
+  {
+    q: 'Is there SAT or IELTS coaching in Una for studying abroad?',
+    a: 'Yes — Vision Success runs Una\'s first study-abroad desk. We prepare students for the Digital SAT (Math + Reading & Writing, with full-length adaptive mocks) and IELTS (Listening, Reading, Writing, Speaking with band-score strategy). Your first class is a free demo.',
   },
   {
     q: 'Is there Physics, Chemistry and Biology coaching in Una?',
@@ -178,6 +183,114 @@ function FadeIn({ children, delay = 0, direction = 'up' }) {
     >
       {children}
     </motion.div>
+  )
+}
+
+/* ─── DEADLINE STRIP — every dream has a deadline ───
+   Live days-left chips for the four big exams, soonest first.
+   Urgency is the hook; each chip links to its battle plan. */
+const MONTHS = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']
+
+function DeadlineStrip() {
+  const [items, setItems] = useState(null)
+
+  useEffect(() => {
+    const now = Date.now()
+    const fmt = (iso) => {
+      const d = new Date(`${iso}T08:00:00+05:30`)
+      return `${String(d.getDate()).padStart(2, '0')} ${MONTHS[d.getMonth()]} ${d.getFullYear()}`
+    }
+    const fromCourse = (id, emoji, label, href) => {
+      const c = COURSES.find((x) => x.id === id)
+      const exam = c?.exams?.find((e) => new Date(`${e.date}T08:00:00+05:30`).getTime() > now)
+      if (!exam) return null
+      return {
+        id, emoji, label, href,
+        days: daysTo(new Date(`${exam.date}T08:00:00+05:30`).getTime(), now),
+        date: fmt(exam.date),
+        expected: (exam.note || '').includes('expected'),
+      }
+    }
+    const sat = nextSat(now)
+    setItems(
+      [
+        { id: 'sat', emoji: '🌍', label: 'SAT', href: '/sat', days: daysTo(satMoment(sat), now), date: sat.label, expected: false },
+        fromCourse('nda', '🎖️', 'NDA WRITTEN', '/courses/nda'),
+        fromCourse('jee', '⚙️', 'JEE MAINS', '/courses/jee'),
+        fromCourse('neet', '🩺', 'NEET UG', '/courses/neet'),
+      ]
+        .filter(Boolean)
+        .sort((a, b) => a.days - b.days)
+    )
+  }, [])
+
+  return (
+    <section
+      className="py-12 md:py-16 px-4 relative overflow-hidden"
+      style={{ background: '#04090F', borderBottom: '1px solid rgba(var(--accent-rgb),0.12)' }}
+    >
+      <div className="max-w-5xl mx-auto">
+        <FadeIn>
+          <div className="text-center mb-8">
+            <h2
+              className="text-3xl md:text-5xl font-black text-white leading-tight"
+              style={{ fontFamily: 'Rajdhani, sans-serif' }}
+            >
+              ⏳ EVERY DREAM HAS A{' '}
+              <span style={{ color: '#E05C42', textShadow: '0 0 24px rgba(224,92,66,0.4)' }}>DEADLINE</span>
+            </h2>
+            <p className="text-gray-500 text-xs md:text-sm mt-2">
+              Live countdowns. No exam waits for anyone. Tap yours. →
+            </p>
+          </div>
+        </FadeIn>
+
+        <div className="flex lg:grid lg:grid-cols-4 gap-3 overflow-x-auto snap-x snap-mandatory pb-3 -mx-4 px-4 lg:mx-0 lg:px-0 lg:overflow-visible">
+          {(items || []).map((ex, i) => (
+            <Link
+              key={ex.id}
+              href={ex.href}
+              className="glass-card glass-card-hover rounded-2xl p-4 flex-shrink-0 snap-center min-w-[164px] relative block transition-all duration-300"
+              style={i === 0 ? { border: '1.5px solid rgba(var(--accent-rgb),0.55)' } : undefined}
+            >
+              {i === 0 && (
+                <span
+                  className="absolute -top-2 right-3 text-[8px] font-black px-2 py-0.5 rounded-full uppercase tracking-widest"
+                  style={{ background: 'var(--accent)', color: '#07111F', fontFamily: 'Orbitron, monospace' }}
+                >
+                  Closest ▸
+                </span>
+              )}
+              <div className="text-xl mb-1">{ex.emoji}</div>
+              <div
+                className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400 mb-2"
+                style={{ fontFamily: 'Orbitron, monospace' }}
+              >
+                {ex.label}
+              </div>
+              <div className="flex items-baseline gap-1">
+                <span
+                  className="text-4xl font-black stat-number leading-none"
+                  style={{ fontFamily: 'Orbitron, monospace' }}
+                >
+                  {ex.days}
+                </span>
+                <span className="text-[10px] text-gray-500 uppercase tracking-wider">days</span>
+              </div>
+              <div className="text-[10px] text-gray-500 mt-2">
+                {ex.date}
+                {ex.expected && <span title="expected date"> *</span>}
+              </div>
+            </Link>
+          ))}
+          {!items &&
+            [0, 1, 2, 3].map((i) => (
+              <div key={i} className="glass-card rounded-2xl p-4 flex-shrink-0 min-w-[164px] h-[130px] opacity-40" />
+            ))}
+        </div>
+        <p className="text-[10px] text-gray-600 mt-2 text-center">* expected date — official announcement pending</p>
+      </div>
+    </section>
   )
 }
 
@@ -378,9 +491,9 @@ export default function HomePage() {
                 transition={{ duration: 0.8, delay: 0.25 }}
                 className="text-base md:text-lg text-gray-300 mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed"
               >
-                Maths · Physics · Chemistry · Biology | Class 10–12 | JEE · NEET · NDA · CUET · Merchant Navy.{' '}
+                NDA · JEE · NEET · CUET · <span className="text-gold-400 font-semibold">SAT · IELTS</span> | Class 10–12.{' '}
                 <span className="text-gold-400 font-semibold">7+ officers trained.</span>{' '}
-                NIT Hamirpur faculty.
+                NIT Hamirpur faculty. From Una to anywhere.
               </motion.p>
 
               <motion.div
@@ -401,6 +514,52 @@ export default function HomePage() {
                 >
                   📞 Call Now
                 </a>
+              </motion.div>
+
+              {/* PICK YOUR BATTLEFIELD — instant self-segmentation */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.55 }}
+                className="mt-8"
+              >
+                <p
+                  className="text-[10px] uppercase tracking-[0.3em] text-gray-500 mb-3 text-center lg:text-left"
+                  style={{ fontFamily: 'Orbitron, monospace' }}
+                >
+                  Pick your battlefield ↓
+                </p>
+                <div className="grid grid-cols-2 gap-2 max-w-md mx-auto lg:mx-0">
+                  {[
+                    { emoji: '🎖️', big: 'DEFENCE', small: 'NDA · SSB', href: '/courses/nda' },
+                    { emoji: '🩺', big: 'DOCTOR', small: 'NEET', href: '/courses/neet' },
+                    { emoji: '⚙️', big: 'ENGINEER', small: 'JEE Mains + Adv', href: '/courses/jee' },
+                    { emoji: '🌍', big: 'ABROAD', small: 'SAT · IELTS', href: '/sat', hot: true },
+                  ].map((p) => (
+                    <Link
+                      key={p.big}
+                      href={p.href}
+                      className="glass-card glass-card-hover rounded-xl px-3 py-3 flex items-center gap-2.5 transition-all duration-300 relative"
+                      style={p.hot ? { border: '1px solid rgba(var(--accent-rgb),0.5)' } : undefined}
+                    >
+                      {p.hot && (
+                        <span
+                          className="absolute -top-2 right-2 text-[8px] font-black px-1.5 py-0.5 rounded-full uppercase tracking-widest"
+                          style={{ background: 'var(--accent)', color: '#07111F', fontFamily: 'Orbitron, monospace' }}
+                        >
+                          New
+                        </span>
+                      )}
+                      <span className="text-2xl">{p.emoji}</span>
+                      <span className="text-left leading-tight">
+                        <span className="block text-sm font-black text-white" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+                          {p.big}
+                        </span>
+                        <span className="block text-[10px] text-gray-400">{p.small}</span>
+                      </span>
+                    </Link>
+                  ))}
+                </div>
               </motion.div>
             </div>
 
@@ -529,6 +688,9 @@ export default function HomePage() {
         </div>
       </div>
 
+      {/* ─── DEADLINES — URGENCY FIRST ─── */}
+      <DeadlineStrip />
+
       {/* ─── SAT — THE CURIOUS NEW THING ─── */}
       <SatTeaser />
 
@@ -550,7 +712,11 @@ export default function HomePage() {
                 Choose Your Path
               </h2>
               <p className="text-gray-400 max-w-xl mx-auto">
-                NDA is our flagship. JEE, NEET, and Foundation complete your options.
+                NDA is our flagship. JEE, NEET, CUET and Foundation complete the map — and the{' '}
+                <Link href="/sat" className="text-gold-400 font-semibold hover:underline">
+                  SAT · IELTS study-abroad desk
+                </Link>{' '}
+                extends it past the border.
               </p>
             </div>
           </FadeIn>
@@ -709,64 +875,11 @@ export default function HomePage() {
               negotiated on your ability. No capable student is ever turned away.
             </p>
           </FadeIn>
-        </div>
-      </section>
-
-      {/* ─── HOW WE LEARN — THE VISION SUCCESS METHOD ─── */}
-      <section
-        className="section-padding"
-        style={{ background: 'linear-gradient(180deg, #07111F 0%, #0A1628 100%)' }}
-      >
-        <div className="max-w-6xl mx-auto">
-          <FadeIn>
-            <div className="text-center mb-12">
-              <span className="section-tag mb-4 inline-block">What We Do</span>
-              <h2
-                className="text-4xl md:text-5xl font-black text-white mb-3"
-                style={{ fontFamily: 'Rajdhani, sans-serif' }}
-              >
-                How We Learn at Vision Success
-              </h2>
-              <p className="text-gray-400 max-w-xl mx-auto">
-                No ratta. No fear. Just a method that has forged officers, engineers, and doctors —
-                one honest week at a time.
-              </p>
-            </div>
-          </FadeIn>
-
-          {/* horizontal snap-scroll on phones, grid on desktop */}
-          <div className="flex lg:grid lg:grid-cols-5 gap-4 overflow-x-auto lg:overflow-visible pb-4 lg:pb-0 snap-x snap-mandatory -mx-4 px-4 lg:mx-0 lg:px-0">
-            {[
-              { icon: '💡', step: '01', title: 'Concept First', text: 'Every topic starts with WHY it works — in Hindi + English — until it clicks. Ratta is banned here.' },
-              { icon: '✏️', step: '02', title: 'Drill It Same Day', text: 'Problems from easy to exam-level, solved in class the same day. Learning without doing is forgetting.' },
-              { icon: '🧪', step: '03', title: 'Test Every Week', text: 'Friday = exam conditions. The fear of tests dies when tests become a habit.' },
-              { icon: '🔍', step: '04', title: 'Analyze & Fix', text: 'Every test gets a post-mortem — which topic, which mistake, what is the fix. Personal weak-spot tracking.' },
-              { icon: '🔁', step: '05', title: 'Repeat & Rise', text: 'Spaced revision cycles keep month-1 topics fresh in month 10. That is how ranks are quietly built.' },
-            ].map((s, i) => (
-              <FadeIn key={s.step} delay={i * 0.08}>
-                <div
-                  className="glass-card rounded-2xl p-6 h-full min-w-[240px] lg:min-w-0 snap-center relative"
-                >
-                  <div
-                    className="absolute top-4 right-4 text-2xl font-black opacity-20"
-                    style={{ fontFamily: 'Orbitron, monospace', color: 'var(--accent)' }}
-                  >
-                    {s.step}
-                  </div>
-                  <div className="text-4xl mb-3">{s.icon}</div>
-                  <h3 className="text-lg font-bold text-white mb-2" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
-                    {s.title}
-                  </h3>
-                  <p className="text-sm text-gray-400 leading-relaxed">{s.text}</p>
-                </div>
-              </FadeIn>
-            ))}
-          </div>
 
           {/* joining is 3 taps */}
-          <FadeIn delay={0.15}>
+          <FadeIn delay={0.25}>
             <div
-              className="mt-10 rounded-2xl p-5 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 text-center"
+              className="mt-8 rounded-2xl p-5 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 text-center"
               style={{ background: 'rgba(var(--accent-rgb),0.06)', border: '1px solid rgba(var(--accent-rgb),0.2)' }}
             >
               <span className="text-sm font-bold text-white" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
@@ -864,15 +977,6 @@ export default function HomePage() {
               </FadeIn>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* ─── BRAIN FUEL — facts & study humor ─── */}
-      <section className="section-padding" style={{ background: '#07111F' }}>
-        <div className="max-w-4xl mx-auto">
-          <FadeIn>
-            <BrainFuel />
-          </FadeIn>
         </div>
       </section>
 
