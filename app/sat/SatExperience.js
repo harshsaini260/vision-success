@@ -425,7 +425,8 @@ export default function SatExperience({ faqs = [] }) {
             transition={{ delay: 2.3, duration: 0.8 }}
             className="text-sm sm:text-base text-gray-400 max-w-sm mx-auto leading-relaxed"
           >
-            Una's <strong className="text-gold-400">first and only</strong> SAT launch desk.
+            Una's <strong className="text-gold-400">first and only</strong> SAT launch desk — led
+            by a mentor who scored <strong className="text-gold-400">1540</strong> on it himself.
             Not another coaching class — <em className="text-gray-300">an extraction plan.</em>
           </motion.p>
 
@@ -480,8 +481,10 @@ export default function SatExperience({ faqs = [] }) {
               fighting over the same three exams.
             </p>
             <p className="text-gray-300 text-sm sm:text-base leading-relaxed max-w-md mx-auto mb-8">
-              Meanwhile our students quietly prep for the one exam that boards a flight.{' '}
-              <strong className="text-white">That's not a gap — that's your head start.</strong>
+              Meanwhile our students quietly prep for the one exam that boards a flight — trained
+              by the one person in this district who has{' '}
+              <strong className="text-white">actually scored 1540 on it.</strong> Not studied it.
+              Not watched videos about it. <strong className="text-white">Scored it.</strong>
             </p>
           </FadeIn>
 
@@ -616,9 +619,10 @@ export default function SatExperience({ faqs = [] }) {
               Zero precedent in this district
             </p>
             <p className="text-sm opacity-80 mb-6 max-w-sm mx-auto leading-relaxed">
-              Math mastery, Reading &amp; Writing strategy, full-length adaptive mocks, and
-              college application guidance. When these {SQUAD_SEATS} seats fill, the door closes.
-              The first squad from Una will be the story everyone else hears later.
+              Trained <strong>personally by a 1540 scorer</strong> — Math mastery, Reading &amp;
+              Writing strategy, full-length adaptive mocks, and college application guidance.
+              When these {SQUAD_SEATS} seats fill, the door closes. The first squad from Una will
+              be the story everyone else hears later.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Link

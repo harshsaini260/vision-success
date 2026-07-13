@@ -14,10 +14,10 @@ import AnimatedJourney from '@/components/AnimatedJourney'
 /* ─── CONSTANTS ─── */
 /* Trust bar (brief C8) — static values, not counters */
 const TRUST_STATS = [
+  { big: '1540', label: "Mentor's Own SAT Score", icon: '🌍' },
   { big: 'NIT', label: 'Hamirpur Faculty', icon: '🎓' },
   { big: '90%+', label: 'Board Results', icon: '🏆' },
   { big: '4.9★', label: 'Google Rating', icon: '⭐' },
-  { big: '15', label: 'Max Per Batch', icon: '👥' },
 ]
 
 /* Subject & local landing pages (brief Section E) */
@@ -100,6 +100,7 @@ const GALLERY = [
 ]
 
 const TICKER_ITEMS = [
+  '🌍 SAT Mentor Scored 1540 Himself — Top 1% Worldwide',
   '🎖️ 7+ NDA Officers Trained',
   '🎓 NIT Hamirpur Faculty',
   '🩺 50+ MBBS Admissions',
@@ -357,8 +358,9 @@ function SatTeaser() {
             </p>
             <p className="text-sm opacity-80 leading-relaxed">
               It's called the <strong>SAT</strong> — one 2-hour digital test, one score out of
-              1600, and 4,000+ universities across the planet suddenly know your name. And right
-              now, exactly <strong>one</strong> institute in Una teaches it. <em>(Hi. 👋)</em>
+              1600, and 4,000+ universities across the planet suddenly know your name. Exactly{' '}
+              <strong>one</strong> institute in Una teaches it — and the man teaching it{' '}
+              <strong>scored 1540 himself</strong>. <em>(Hi. 👋)</em>
             </p>
             {days !== null && (
               <p
@@ -491,9 +493,9 @@ export default function HomePage() {
                 transition={{ duration: 0.8, delay: 0.25 }}
                 className="text-base md:text-lg text-gray-300 mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed"
               >
-                NDA · JEE · NEET · CUET · <span className="text-gold-400 font-semibold">SAT · IELTS</span> | Class 10–12.{' '}
-                <span className="text-gold-400 font-semibold">7+ officers trained.</span>{' '}
-                NIT Hamirpur faculty. From Una to anywhere.
+                <span className="text-gold-400 font-semibold">SAT · IELTS</span> · NDA · JEE · NEET · CUET | Class 10–12.{' '}
+                <span className="text-gold-400 font-semibold">Mentor's own SAT: 1540.</span>{' '}
+                7+ officers trained. From Una to anywhere.
               </motion.p>
 
               <motion.div
@@ -721,7 +723,7 @@ export default function HomePage() {
             </div>
           </FadeIn>
 
-          {/* NDA — FEATURED BIG */}
+          {/* SAT — FEATURED BIG. Sold by the man who scored it. */}
           <FadeIn>
             <div
               className="relative rounded-3xl overflow-hidden mb-8 p-8 md:p-12"
@@ -735,21 +737,26 @@ export default function HomePage() {
               </div>
               <div className="grid md:grid-cols-2 gap-8 items-center">
                 <div>
-                  <div className="text-5xl mb-4">🎖️</div>
+                  <div className="text-5xl mb-4">🌍</div>
                   <h3
                     className="text-4xl md:text-5xl font-black text-white mb-2"
                     style={{ fontFamily: 'Rajdhani, sans-serif' }}
                   >
-                    NDA Coaching
+                    SAT — Operation 1600
                   </h3>
-                  <div className="text-gold-400 font-semibold mb-4">National Defence Academy</div>
+                  <div className="text-gold-400 font-semibold mb-4">
+                    Taught by a mentor who scored <span className="text-gold-shimmer font-black">1540</span> himself
+                  </div>
                   <p className="text-gray-300 mb-6 leading-relaxed">
-                    Our most celebrated program. Full-spectrum NDA preparation — written exam
-                    (Mathematics + GAT), physical fitness, and SSB interview coaching. We have sent
-                    7+ students to serve this nation as officers.
+                    Most teachers <em>read</em> about this exam. Your mentor{' '}
+                    <strong className="text-white">walked out of it with a 1540</strong> — top 1%
+                    worldwide. Now he's taking 15 students from Una across the 1500 line, and the
+                    world does not ignore a 1500. The only question:{' '}
+                    <strong className="text-gold-400">is one of those seats yours, or do you watch
+                    someone else take it?</strong>
                   </p>
                   <div className="flex flex-wrap gap-3 mb-8">
-                    {['Written Exam', 'Mathematics', 'GAT', 'SSB Prep', 'Physical Training', 'Personality Dev'].map(
+                    {['1540 Mentor', 'Digital SAT', 'Math + Reading & Writing', 'Adaptive Mocks', 'IELTS Add-on', 'Abroad Guidance'].map(
                       (tag) => (
                         <span
                           key={tag}
@@ -767,25 +774,26 @@ export default function HomePage() {
                   </div>
                   <div className="flex flex-col sm:flex-row gap-4">
                     <Link
-                      href="/enroll?course=nda"
-                      className="btn-gold inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl text-base"
+                      href="/enroll?course=sat"
+                      className="btn-gold inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl text-base animate-pulse-gold"
                     >
-                      Enroll in NDA →
+                      Claim Your Seat →
                     </Link>
                     <Link
-                      href="/courses/nda"
+                      href="/sat"
                       className="btn-ghost inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl text-base"
                     >
-                      Full Details, Schedule & Fun Facts
+                      🎬 Watch the Mission Brief
                     </Link>
                   </div>
                 </div>
-                <div className="hidden md:grid grid-cols-2 gap-4">
+                {/* visible on mobile too — 1540 is the money stat */}
+                <div className="grid grid-cols-2 gap-3 md:gap-4">
                   {[
-                    { n: '7+', l: 'Officers Trained' },
-                    { n: '13+', l: 'Years Experience' },
-                    { n: '100%', l: 'Guidance Focus' },
-                    { n: 'FREE', l: 'First Counseling' },
+                    { n: '1540', l: "Mentor's Own Score" },
+                    { n: 'TOP 1%', l: 'Worldwide' },
+                    { n: '8×', l: 'Exams a Year' },
+                    { n: '15', l: 'Seats. That\'s It.' },
                   ].map((s) => (
                     <div
                       key={s.l}
@@ -809,9 +817,9 @@ export default function HomePage() {
             </div>
           </FadeIn>
 
-          {/* OTHER COURSES */}
+          {/* OTHER COURSES — NDA leads the grid, legacy intact */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {COURSES.filter((c) => c.id !== 'nda').map((course, i) => (
+            {COURSES.map((course, i) => (
               <FadeIn key={course.id} delay={i * 0.1}>
                 <Link
                   href={`/courses/${course.id}`}

@@ -8,7 +8,7 @@ import SatExperience from './SatExperience'
 export const metadata = {
   title: 'SAT Coaching in Una, HP | Digital SAT Prep & Next Exam Countdown',
   description:
-    'What is the SAT? One digital exam, one score out of 1600, 4,000+ universities worldwide. See all 8 SAT test dates a year, a live countdown to the next one, and start Digital SAT prep in Una with a free demo class.',
+    'What is the SAT? One digital exam, one score out of 1600, 4,000+ universities worldwide. Learn from a mentor who scored 1540 himself. All 8 SAT test dates a year, a live countdown to the next one, and Digital SAT prep in Una — free demo class.',
   alternates: { canonical: `${SITE.url}/sat` },
   openGraph: {
     title: 'SAT — One Score. Every Border. | Vision Success Una',
@@ -35,6 +35,10 @@ const SAT_FAQS = [
   {
     q: 'Is SAT coaching available in Una, Himachal Pradesh?',
     a: 'Yes — Vision Success Coaching Institute in Una offers Digital SAT preparation: Math mastery, Reading & Writing strategy, full-length adaptive mock tests, and college application guidance. Your first class is a free demo.',
+  },
+  {
+    q: 'Who teaches the SAT at Vision Success Una?',
+    a: 'Your SAT mentor scored 1540 out of 1600 on the SAT himself — a top 1% score worldwide. You learn the exam from someone who has actually beaten it, not just read about it.',
   },
 ]
 
