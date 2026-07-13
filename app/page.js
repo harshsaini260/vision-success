@@ -187,6 +187,71 @@ function FadeIn({ children, delay = 0, direction = 'up' }) {
   )
 }
 
+/* ─── ROTATING FORGE WORD — the hero never sits still ─── */
+const FORGE_WORDS = ['OFFICERS', 'DOCTORS', 'IITIANS', '1540s']
+
+function RotatingWord() {
+  const [i, setI] = useState(0)
+
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    const id = setInterval(() => setI((v) => (v + 1) % FORGE_WORDS.length), 2200)
+    return () => clearInterval(id)
+  }, [])
+
+  return (
+    <span className="inline-block" style={{ minWidth: '5.2ch' }}>
+      <AnimatePresence mode="popLayout" initial={false}>
+        <motion.span
+          key={FORGE_WORDS[i]}
+          initial={{ y: '0.55em', opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: '-0.55em', opacity: 0 }}
+          transition={{ duration: 0.32, ease: 'easeOut' }}
+          className="inline-block text-gold-shimmer"
+        >
+          {FORGE_WORDS[i]}
+        </motion.span>
+      </AnimatePresence>
+    </span>
+  )
+}
+
+/* ─── TWO ENDINGS — the button that refuses to let you settle ─── */
+function TwoEndings() {
+  const [shaking, setShaking] = useState(false)
+  const [nopeIdx, setNopeIdx] = useState(-1)
+  const NOPE = ['😏 Really?', '🙅 Wrong button.', '😤 We both know better.', "🚪 It's the other one."]
+
+  return (
+    <div className="flex flex-col sm:flex-row gap-3 justify-center">
+      <button
+        type="button"
+        onClick={() => {
+          setShaking(true)
+          setNopeIdx((v) => v + 1)
+        }}
+        onAnimationEnd={() => setShaking(false)}
+        className={`inline-flex items-center justify-center px-7 py-4 rounded-xl text-base font-bold uppercase tracking-wider ${shaking ? 'shake-no' : ''}`}
+        style={{
+          fontFamily: 'Rajdhani, sans-serif',
+          border: '2px solid rgba(59,51,37,0.55)',
+          color: 'rgba(59,51,37,0.75)',
+          background: 'transparent',
+        }}
+      >
+        {nopeIdx < 0 ? '😴 Stay comfortable' : NOPE[nopeIdx % NOPE.length]}
+      </button>
+      <Link
+        href="/enroll?course=sat"
+        className="btn-gold inline-flex items-center justify-center gap-2 px-7 py-4 rounded-xl text-base animate-pulse-gold"
+      >
+        🛫 Get On The Plane
+      </Link>
+    </div>
+  )
+}
+
 /* ─── DEADLINE STRIP — every dream has a deadline ───
    Live days-left chips for the four big exams, soonest first.
    Urgency is the hook; each chip links to its battle plan. */
@@ -470,7 +535,7 @@ export default function HomePage() {
                 style={{ fontFamily: 'Rajdhani, sans-serif', letterSpacing: '-0.02em' }}
               >
                 <span className="text-white">WHERE </span>
-                <span className="text-gold-shimmer">OFFICERS</span>
+                <RotatingWord />
                 <br />
                 <span className="text-white">ARE </span>
                 <span
@@ -786,6 +851,12 @@ export default function HomePage() {
                       🎬 Watch the Mission Brief
                     </Link>
                   </div>
+                  {/* objection killers — close like a wolf */}
+                  <p className="mt-5 text-xs text-gray-500 leading-relaxed">
+                    <em>"Fees?"</em> Negotiated. &nbsp;<em>"English weak?"</em> We build it. &nbsp;
+                    <em>"Not a topper?"</em> Neither were half our selections.{' '}
+                    <strong className="text-gold-400 not-italic">Out of excuses? Good.</strong>
+                  </p>
                 </div>
                 {/* visible on mobile too — 1540 is the money stat */}
                 <div className="grid grid-cols-2 gap-3 md:gap-4">
@@ -1135,48 +1206,64 @@ export default function HomePage() {
               'radial-gradient(ellipse 80% 80% at 50% 50%, rgba(var(--accent-rgb),0.08) 0%, transparent 70%)',
           }}
         />
-        <div className="max-w-3xl mx-auto text-center relative z-10">
+        <div className="max-w-2xl mx-auto relative z-10">
           <FadeIn>
-            <div className="text-6xl mb-6">🎖️</div>
-            <h2
-              className="text-4xl md:text-5xl font-black text-white mb-4"
-              style={{ fontFamily: 'Rajdhani, sans-serif' }}
+            <div
+              className="paper-note rounded-sm px-5 py-8 sm:px-10 sm:py-10 text-center relative"
+              style={{ transform: 'rotate(-0.8deg)' }}
             >
-              Your Officer Journey Starts{' '}
               <span
-                style={{
-                  background: 'linear-gradient(135deg, var(--accent), var(--accent-light))',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  backgroundClip: 'text',
-                }}
-              >
-                Today
+                aria-hidden
+                className="absolute -top-2.5 left-1/2 w-24 h-5 opacity-80"
+                style={{ background: 'rgba(var(--accent-rgb),0.55)', transform: 'translateX(-50%) rotate(-2deg)' }}
+              />
+              <span className="ink-stamp absolute top-4 right-3 sm:right-5" style={{ fontSize: 9 }} aria-hidden>
+                BATCH Nº 001
               </span>
-            </h2>
-            <p className="text-gray-300 text-lg mb-8 max-w-xl mx-auto">
-              Book a free 30-minute counseling session. No commitment. No pressure. Just clarity.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                href="/appointment"
-                className="btn-gold inline-flex items-center justify-center gap-2 px-10 py-5 rounded-2xl text-xl animate-pulse-gold"
+
+              <p
+                className="text-[10px] font-bold tracking-[0.3em] uppercase opacity-60 mb-2"
+                style={{ fontFamily: 'Orbitron, monospace' }}
               >
-                📅 Book Free Session Now
-              </Link>
-              <a
-                href={wa('Hi, I want to know about coaching at Vision Success')}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-ghost whatsapp-cta inline-flex items-center justify-center gap-2 px-10 py-5 rounded-2xl text-xl"
+                ★ Notice · Vision Success · Una ★
+              </p>
+              <h2
+                className="text-6xl sm:text-7xl font-black leading-none mb-3"
+                style={{ fontFamily: 'Rajdhani, sans-serif', letterSpacing: '0.04em' }}
               >
-                <span>💬</span> WhatsApp Us
-              </a>
+                WANTED
+              </h2>
+              <p
+                className="text-xs sm:text-sm font-bold uppercase tracking-[0.18em] mb-5"
+                style={{ color: '#B3402E', fontFamily: 'Orbitron, monospace' }}
+              >
+                15 students crazy enough to leave Una
+              </p>
+              <p className="text-sm sm:text-base opacity-80 max-w-md mx-auto leading-relaxed mb-2">
+                Reward: <strong>the world.</strong> SAT training by a mentor who scored{' '}
+                <strong>1540 himself</strong>, IELTS under the same roof, fees negotiated,
+                excuses not accepted.
+              </p>
+              <p className="text-sm opacity-70 max-w-md mx-auto leading-relaxed mb-7">
+                In five years you'll be telling one of two stories. Pick it now — it takes one tap:
+              </p>
+
+              <TwoEndings />
+
+              <p className="text-[11px] opacity-60 mt-6">
+                📞 <a href={`tel:${SITE.phoneTel}`} className="phone-cta font-semibold">{SITE.phoneDisplay}</a>
+                &nbsp;·&nbsp;
+                <a
+                  href={wa('Hi! SAT / coaching ke baare mein baat karni hai 🌍')}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="whatsapp-cta font-semibold underline"
+                >
+                  💬 WhatsApp us
+                </a>
+                &nbsp;·&nbsp; {SITE.hours}
+              </p>
             </div>
-            <p className="text-gray-500 text-sm mt-6">
-              📞 Call directly: <a href={`tel:${SITE.phoneTel}`} className="phone-cta text-gold-400 hover:underline">{SITE.phoneDisplay}</a>
-              &nbsp;|&nbsp; {SITE.hours}
-            </p>
           </FadeIn>
         </div>
       </section>

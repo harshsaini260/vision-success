@@ -807,6 +807,15 @@ img { max-width: 100%; height: auto; }
   50% { opacity: 1; transform: scale(1.03); }
 }
 
+/* "stay comfortable" button shakes its head no */
+.shake-no { animation: shake-no 0.5s ease-in-out; }
+@keyframes shake-no {
+  10%, 90% { transform: translateX(-2px); }
+  20%, 80% { transform: translateX(4px); }
+  30%, 50%, 70% { transform: translateX(-6px); }
+  40%, 60% { transform: translateX(6px); }
+}
+
 /* FINAL CALL chip — red alert pulse */
 .final-call { animation: final-call-pulse 1.6s ease-in-out infinite; }
 @keyframes final-call-pulse {
