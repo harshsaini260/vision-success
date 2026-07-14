@@ -10,6 +10,7 @@ import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { motion, useInView, AnimatePresence } from 'framer-motion'
 import { SITE, wa } from '@/lib/site'
+import { sfxStamp } from '@/lib/sfx'
 import {
   SAT_DATES,
   SAT_PER_YEAR,
@@ -121,6 +122,7 @@ function useWarClock() {
 /* ─── SCENE 01 — THE WAR CLOCK ─── */
 function WarClock() {
   const { ready, target, d, h, m, s, examDays, regDays } = useWarClock()
+  const [slammed, setSlammed] = useState(false)
   const u = urgency(examDays ?? 99)
   const toneColor = u.tone === 'red' ? '#E05C42' : u.tone === 'amber' ? '#E0912E' : 'var(--accent-light)'
   const units = [
@@ -172,9 +174,11 @@ function WarClock() {
           </span>
         </div>
 
-        {/* the black LED panel */}
+        {/* the black LED panel — slam it, soldier */}
         <div
-          className="war-scanlines relative rounded-lg px-3 py-5 sm:px-6 sm:py-7 overflow-hidden"
+          onClick={() => { sfxStamp(); setSlammed(true) }}
+          onAnimationEnd={() => setSlammed(false)}
+          className={`war-scanlines relative rounded-lg px-3 py-5 sm:px-6 sm:py-7 overflow-hidden cursor-pointer ${slammed ? 'clock-slam' : ''}`}
           style={{
             background: 'linear-gradient(180deg, #04090F 0%, #0A1628 130%)',
             boxShadow: 'inset 0 0 30px rgba(0,0,0,0.9), inset 0 1px 0 rgba(255,255,255,0.06)',

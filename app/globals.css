@@ -851,8 +851,23 @@ img { max-width: 100%; height: auto; }
   50% { transform: rotate(3deg) translateY(-6px); }
 }
 
+/* poked! — a happy squash-and-jump */
+.paper-chan.paper-poke {
+  animation: paper-poke 0.45s ease;
+}
+@keyframes paper-poke {
+  0% { transform: rotate(-3deg) scale(1); }
+  30% { transform: rotate(0deg) scale(1.14, 0.82) translateY(4px); }
+  60% { transform: rotate(2deg) scale(0.92, 1.12) translateY(-10px); }
+  100% { transform: rotate(-3deg) scale(1) translateY(0); }
+}
+
+/* snappy tap feedback on every primary button (mobile feel) */
+.btn-gold:active { transform: scale(0.96); }
+.btn-ghost:active { transform: scale(0.96); }
+
 @media (prefers-reduced-motion: reduce) {
-  .paper-chan { animation: none; }
+  .paper-chan, .paper-chan.paper-poke { animation: none; }
 }
 
 /* "stay comfortable" button shakes its head no */
@@ -862,6 +877,14 @@ img { max-width: 100%; height: auto; }
   20%, 80% { transform: translateX(4px); }
   30%, 50%, 70% { transform: translateX(-6px); }
   40%, 60% { transform: translateX(6px); }
+}
+
+/* war-clock slam — a quick red pressure flash when tapped */
+.clock-slam { animation: clock-slam 0.4s ease-out; }
+@keyframes clock-slam {
+  0% { transform: scale(1); box-shadow: inset 0 0 30px rgba(0,0,0,0.9); }
+  25% { transform: scale(0.985); box-shadow: inset 0 0 60px rgba(224,92,66,0.55); }
+  100% { transform: scale(1); box-shadow: inset 0 0 30px rgba(0,0,0,0.9); }
 }
 
 /* FINAL CALL chip — red alert pulse */

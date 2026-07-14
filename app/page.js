@@ -9,6 +9,9 @@ import { COURSES } from '@/lib/courses'
 import { SITE, wa } from '@/lib/site'
 import { nextSat, satMoment, daysTo } from '@/lib/sat'
 import QuickLeadForm from '@/components/QuickLeadForm'
+import BattlefieldQuiz from '@/components/BattlefieldQuiz'
+import { playFanfare } from '@/lib/fanfare'
+import { sfxPop, sfxNope, sfxWhoosh, sfxChime } from '@/lib/sfx'
 
 /* ─── CONSTANTS ─── */
 /* Trust bar (brief C8) — static values, not counters */
@@ -48,6 +51,18 @@ const HOME_FAQS = [
   {
     q: 'Is there SAT or IELTS coaching in Una for studying abroad?',
     a: 'Yes — Vision Success runs Una\'s first study-abroad desk. We prepare students for the Digital SAT (Math + Reading & Writing, with full-length adaptive mocks) and IELTS (Listening, Reading, Writing, Speaking with band-score strategy). Your first class is a free demo.',
+  },
+  {
+    q: 'Who teaches the SAT at Vision Success?',
+    a: 'Your SAT mentor scored 1540 out of 1600 himself — a top 1% score worldwide. You learn the exam from someone who has actually beaten it, alongside our NIT Hamirpur faculty for Math.',
+  },
+  {
+    q: 'Can college students also prepare for the SAT?',
+    a: 'Yes — the SAT has no age limit and no eligibility bar. Many bachelor\'s students use it to transfer abroad or restart in a global university. Whether you are in Class 10 or mid-degree, the door is open.',
+  },
+  {
+    q: 'What is the free SAT Blueprint?',
+    a: 'A 7-page guide we wrote covering the Digital SAT format, the Desmos calculator strategy, the scholarship math, a 10-week roadmap to 1400+, and every 2026–27 test date. Download it free from the homepage with just your name and phone number.',
   },
   {
     q: 'Is there Physics, Chemistry and Biology coaching in Una?',
@@ -216,6 +231,58 @@ function RotatingWord() {
   )
 }
 
+/* ─── INTEL FEED — rotating one-line hooks, film-ticker style ─── */
+const INTEL = [
+  "MIT's average SAT is ~1550. Your mentor scored 1540. Ask him anything.",
+  'The Digital SAT hands you a Desmos calculator for EVERY math question.',
+  'Zero negative marking on the SAT — a brave guess never hurts you.',
+  "Universities 'superscore' — your best Math + best English, combined.",
+  'A strong SAT score can unlock scholarships worth tens of lakhs.',
+  '8 SAT windows a year. Miss one? The next is only weeks away.',
+  'NDA Maths is 300 marks — and shortcuts win it. We teach the shortcuts.',
+  'NEET Biology = 360 of 720 marks. Half the exam is one subject.',
+]
+
+function IntelFeed() {
+  const [i, setI] = useState(0)
+
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    const id = setInterval(() => setI((v) => (v + 1) % INTEL.length), 4500)
+    return () => clearInterval(id)
+  }, [])
+
+  return (
+    <div
+      className="py-3.5 px-4 relative overflow-hidden"
+      style={{ background: '#050505', borderTop: '1px solid rgba(224,92,66,0.3)', borderBottom: '1px solid rgba(224,92,66,0.3)' }}
+    >
+      <div className="max-w-3xl mx-auto flex items-center gap-3">
+        <span
+          className="flex-shrink-0 text-[9px] font-black uppercase tracking-[0.2em] px-2 py-1 rounded"
+          style={{ background: 'rgba(224,92,66,0.15)', color: '#E05C42', fontFamily: 'Orbitron, monospace', border: '1px solid rgba(224,92,66,0.4)' }}
+        >
+          📡 Intel
+        </span>
+        <div className="relative flex-1 h-5 overflow-hidden">
+          <AnimatePresence mode="wait">
+            <motion.p
+              key={i}
+              initial={{ y: 16, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: -16, opacity: 0 }}
+              transition={{ duration: 0.35 }}
+              className="absolute inset-0 text-xs text-gray-300 truncate leading-5"
+            >
+              {INTEL[i]}
+            </motion.p>
+          </AnimatePresence>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 /* ─── TWO ENDINGS — the button that refuses to let you settle ─── */
 function TwoEndings() {
   const [shaking, setShaking] = useState(false)
@@ -227,6 +294,7 @@ function TwoEndings() {
       <button
         type="button"
         onClick={() => {
+          sfxNope()
           setShaking(true)
           setNopeIdx((v) => v + 1)
         }}
@@ -243,6 +311,7 @@ function TwoEndings() {
       </button>
       <Link
         href="/enroll?course=sat"
+        onClick={() => sfxWhoosh()}
         className="btn-gold inline-flex items-center justify-center gap-2 px-7 py-4 rounded-xl text-base animate-pulse-gold"
       >
         🛫 Get On The Plane
@@ -263,12 +332,20 @@ function BrochureMagnet() {
   const [error, setError] = useState('')
   const [status, setStatus] = useState('idle') // idle | saving | done
   const [days, setDays] = useState(null)
+  const [poked, setPoked] = useState(false)
+  const [pokeCount, setPokeCount] = useState(0)
 
   useEffect(() => {
     /* computed after mount so SSR HTML never goes stale */
     const t = nextSat()
     setDays(daysTo(satMoment(t)))
   }, [])
+
+  const poke = () => {
+    sfxChime()
+    setPoked(true)
+    setPokeCount((c) => c + 1)
+  }
 
   const unlock = async (e) => {
     e.preventDefault()
@@ -291,6 +368,7 @@ function BrochureMagnet() {
     } catch (err) {
       console.error('Brochure lead save failed:', err)
     }
+    playFanfare()
     import('canvas-confetti')
       .then((m) =>
         m.default({
@@ -355,12 +433,16 @@ function BrochureMagnet() {
         <FadeIn delay={0.1}>
           <div className="glass-card rounded-3xl p-6 sm:p-8 max-w-xl mx-auto" style={{ border: '1.5px solid rgba(var(--accent-rgb),0.3)' }}>
             <div className="flex flex-col sm:flex-row items-center gap-6">
-              {/* Paper-chan, the little guardian */}
+              {/* Paper-chan, the little guardian — poke for a chime */}
               <div className="flex-shrink-0 relative" aria-hidden>
                 <span className="kawaii-sparkle" style={{ top: -12, left: -16 }}>✦</span>
                 <span className="kawaii-sparkle" style={{ top: -4, right: -18, animationDelay: '1.1s' }}>✧</span>
                 <span className="kawaii-sparkle" style={{ bottom: 6, left: -20, animationDelay: '2s' }}>✦</span>
-                <div className="paper-chan">
+                <div
+                  className={`paper-chan cursor-pointer ${poked ? 'paper-poke' : ''}`}
+                  onClick={poke}
+                  onAnimationEnd={() => setPoked(false)}
+                >
                   <span className="kawaii-eye left" />
                   <span className="kawaii-eye right" />
                   <span className="kawaii-blush left" />
@@ -371,7 +453,15 @@ function BrochureMagnet() {
                   className="text-center text-[10px] mt-2 text-gray-500 uppercase tracking-[0.2em]"
                   style={{ fontFamily: 'Orbitron, monospace' }}
                 >
-                  {status === 'done' ? 'yayy!! 🎉' : 'unlock me~'}
+                  {status === 'done'
+                    ? 'yayy!! 🎉'
+                    : pokeCount === 0
+                    ? 'unlock me~'
+                    : pokeCount < 3
+                    ? 'hehe~ 💛'
+                    : pokeCount < 6
+                    ? 'that tickles!!'
+                    : 'ok ok, fill the form!! 😤'}
                 </p>
               </div>
 
@@ -1070,6 +1160,32 @@ export default function HomePage() {
                 Start Now →
               </Link>
             </div>
+          </FadeIn>
+        </div>
+      </section>
+
+      {/* ─── INTEL FEED — one-liners that keep eyes moving ─── */}
+      <IntelFeed />
+
+      {/* ─── FIND YOUR BATTLEFIELD — the 4-question sorter ─── */}
+      <section className="section-padding" style={{ background: 'linear-gradient(180deg, #07111F 0%, #0A1628 100%)' }}>
+        <div className="max-w-3xl mx-auto">
+          <FadeIn>
+            <div className="text-center mb-8">
+              <span className="section-tag mb-4 inline-block">🎯 30 Seconds · 4 Questions</span>
+              <h2
+                className="text-4xl md:text-5xl font-black text-white mb-2"
+                style={{ fontFamily: 'Rajdhani, sans-serif' }}
+              >
+                Find Your <span className="text-gold-shimmer">Battlefield</span>
+              </h2>
+              <p className="text-gray-400 text-sm max-w-md mx-auto">
+                Four questions. Zero wrong answers. One verdict — stamped, sealed, and yours.
+              </p>
+            </div>
+          </FadeIn>
+          <FadeIn delay={0.1}>
+            <BattlefieldQuiz />
           </FadeIn>
         </div>
       </section>
