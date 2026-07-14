@@ -310,7 +310,7 @@ function TwoEndings() {
         {nopeIdx < 0 ? '😴 Stay comfortable' : NOPE[nopeIdx % NOPE.length]}
       </button>
       <Link
-        href="/enroll?course=sat"
+        href="/enroll/sat"
         onClick={() => sfxWhoosh()}
         className="btn-gold inline-flex items-center justify-center gap-2 px-7 py-4 rounded-xl text-base animate-pulse-gold"
       >
@@ -368,6 +368,11 @@ function BrochureMagnet() {
     } catch (err) {
       console.error('Brochure lead save failed:', err)
     }
+    try {
+      if (typeof window.gtag === 'function') {
+        window.gtag('event', 'generate_lead', { event_category: 'conversion', event_label: 'sat-blueprint' })
+      }
+    } catch {}
     playFanfare()
     import('canvas-confetti')
       .then((m) =>
@@ -1023,7 +1028,7 @@ export default function HomePage() {
                   </div>
                   <div className="flex flex-col sm:flex-row gap-4">
                     <Link
-                      href="/enroll?course=sat"
+                      href="/enroll/sat"
                       className="btn-gold inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl text-base animate-pulse-gold"
                     >
                       Claim Your Seat →

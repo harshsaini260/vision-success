@@ -329,7 +329,7 @@ function StickyMissionBar() {
               </div>
             </div>
             <Link
-              href="/appointment"
+              href="/enroll/sat"
               className="btn-gold flex-shrink-0 px-4 py-2.5 rounded-xl text-xs"
             >
               Claim Seat →
@@ -630,10 +630,10 @@ export default function SatExperience({ faqs = [] }) {
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Link
-                href="/appointment"
+                href="/enroll/sat"
                 className="btn-gold inline-flex items-center justify-center gap-2 px-7 py-4 rounded-xl text-base animate-pulse-gold"
               >
-                🎯 Claim Your Seat — Free Demo
+                🎯 Claim Your Seat — Free Session
               </Link>
               <a
                 href={wa(SAT_WA_TEXT)}

@@ -57,7 +57,7 @@ const VERDICTS = {
     sub: 'Your battlefield has no borders. SAT + IELTS — Operation 1600 is calling.',
     href: '/sat',
     hrefLabel: '🎬 Watch Your Mission Brief',
-    enroll: '/enroll?course=sat',
+    enroll: '/enroll/sat',
   },
   nda: {
     emoji: '🎖️',
@@ -65,7 +65,7 @@ const VERDICTS = {
     sub: 'Discipline, honour, adrenaline. NDA — where 7+ of our officers began.',
     href: '/courses/nda',
     hrefLabel: '🎖️ See The NDA Battle Plan',
-    enroll: '/enroll?course=nda',
+    enroll: '/enroll/nda',
   },
   neet: {
     emoji: '🩺',
@@ -73,7 +73,7 @@ const VERDICTS = {
     sub: 'Half the NEET paper is Biology — and Biology is exactly your language.',
     href: '/courses/neet',
     hrefLabel: '🩺 See The NEET Battle Plan',
-    enroll: '/enroll?course=neet',
+    enroll: '/enroll/neet',
   },
   jee: {
     emoji: '⚙️',

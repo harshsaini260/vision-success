@@ -120,9 +120,11 @@ const jsonLd = {
   sameAs: [SITE.social.facebook, SITE.social.instagram, SITE.social.youtube],
 }
 
-/* GA4 + Meta Pixel load only when their IDs are set as env vars —
-   add NEXT_PUBLIC_GA_ID / NEXT_PUBLIC_META_PIXEL_ID in Vercel to enable. */
-const GA_ID = process.env.NEXT_PUBLIC_GA_ID
+/* GA4 measurement id — public by design, it ships in the browser bundle
+   either way (same reasoning as the Firebase keys in lib/firebase.js).
+   Hardcoded fallback so analytics always works; NEXT_PUBLIC_GA_ID in
+   Vercel overrides it if ever set. Meta Pixel stays env-only. */
+const GA_ID = process.env.NEXT_PUBLIC_GA_ID || 'G-K10JSW896P'
 const PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID
 
 const gaScript = GA_ID
