@@ -807,6 +807,54 @@ img { max-width: 100%; height: auto; }
   50% { opacity: 1; transform: scale(1.03); }
 }
 
+/* ===== PAPER-CHAN — the kawaii brochure mascot ===== */
+.paper-chan {
+  position: relative;
+  width: 84px;
+  height: 104px;
+  background: linear-gradient(160deg, #FBF7EA 0%, #F5F0E4 60%, #E9E2CF 100%);
+  border-radius: 8px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.5), 0 0 24px rgba(var(--accent-rgb),0.15);
+  animation: paper-chan-bob 3.4s ease-in-out infinite;
+}
+/* folded gold corner */
+.paper-chan::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-style: solid;
+  border-width: 0 22px 22px 0;
+  border-color: transparent rgba(var(--accent-rgb),0.85) transparent transparent;
+  filter: drop-shadow(-1px 1px 1px rgba(0,0,0,0.15));
+}
+/* faint text lines at the bottom of the page */
+.paper-chan::after {
+  content: '';
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 12px;
+  height: 22px;
+  background: repeating-linear-gradient(0deg, rgba(59,51,37,0.22) 0 2px, transparent 2px 8px);
+}
+.paper-chan .kawaii-eye { top: 38px; background: #3B3325; }
+.paper-chan .kawaii-eye.left { left: 22px; }
+.paper-chan .kawaii-eye.right { right: 22px; }
+.paper-chan .kawaii-blush { top: 54px; }
+.paper-chan .kawaii-blush.left { left: 12px; }
+.paper-chan .kawaii-blush.right { right: 12px; }
+.paper-chan .kawaii-mouth { top: 52px; border-color: #3B3325; border-top: none; }
+
+@keyframes paper-chan-bob {
+  0%, 100% { transform: rotate(-3deg) translateY(0); }
+  50% { transform: rotate(3deg) translateY(-6px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .paper-chan { animation: none; }
+}
+
 /* "stay comfortable" button shakes its head no */
 .shake-no { animation: shake-no 0.5s ease-in-out; }
 @keyframes shake-no {

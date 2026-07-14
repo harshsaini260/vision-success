@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { motion, useInView, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
-import { collection, getDocs, query, where } from 'firebase/firestore'
+import { addDoc, collection, getDocs, query, serverTimestamp, where } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
 import { COURSES } from '@/lib/courses'
 import { SITE, wa } from '@/lib/site'
@@ -249,6 +249,170 @@ function TwoEndings() {
         🛫 Get On The Plane
       </Link>
     </div>
+  )
+}
+
+/* ─── BROCHURE MAGNET — Paper-chan guards the Blueprint ───
+   The 7-page SAT Blueprint PDF, unlocked by name + phone.
+   Lead lands in the enrollments collection (visible in /admin);
+   a Firestore hiccup never blocks the student's download. */
+const BROCHURE_PATH = '/brochure/Vision-Success-SAT-Blueprint.pdf'
+
+function BrochureMagnet() {
+  const [name, setName] = useState('')
+  const [phone, setPhone] = useState('')
+  const [error, setError] = useState('')
+  const [status, setStatus] = useState('idle') // idle | saving | done
+
+  const unlock = async (e) => {
+    e.preventDefault()
+    const digits = phone.replace(/\D/g, '')
+    if (!name.trim()) return setError('Please tell us your name')
+    if (digits.length < 10) return setError('Please enter a valid 10-digit phone number')
+    setError('')
+    setStatus('saving')
+    try {
+      await addDoc(collection(db, 'enrollments'), {
+        fullName: name.trim(),
+        phone: digits.slice(-10),
+        city: '',
+        course: 'SAT Blueprint (Brochure Download)',
+        source: 'brochure-magnet',
+        status: 'new',
+        timestamp: serverTimestamp(),
+        createdAtISO: new Date().toISOString(),
+      })
+    } catch (err) {
+      console.error('Brochure lead save failed:', err)
+    }
+    import('canvas-confetti')
+      .then((m) =>
+        m.default({
+          particleCount: 90,
+          spread: 75,
+          origin: { y: 0.75 },
+          colors: ['#D4AF37', '#F5D76E', '#ffffff'],
+        })
+      )
+      .catch(() => {})
+    const a = document.createElement('a')
+    a.href = BROCHURE_PATH
+    a.download = 'Vision-Success-SAT-Blueprint.pdf'
+    document.body.appendChild(a)
+    a.click()
+    a.remove()
+    setStatus('done')
+  }
+
+  return (
+    <section
+      className="relative overflow-hidden py-16 md:py-24 px-4"
+      style={{ background: 'linear-gradient(180deg, #07111F 0%, #04090F 100%)' }}
+    >
+      <div
+        aria-hidden
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            'radial-gradient(ellipse 65% 55% at 50% 0%, rgba(var(--accent-rgb),0.09) 0%, transparent 65%)',
+        }}
+      />
+      <div className="max-w-3xl mx-auto relative z-10">
+        <FadeIn>
+          <div className="text-center mb-8">
+            <span className="section-tag mb-4 inline-block">📕 Free Intel Drop</span>
+            <h2
+              className="text-4xl md:text-5xl font-black text-white mb-3"
+              style={{ fontFamily: 'Rajdhani, sans-serif' }}
+            >
+              Steal Our <span className="text-gold-shimmer">SAT Blueprint</span>
+            </h2>
+            <p className="text-gray-400 text-sm max-w-md mx-auto">
+              7 pages of pure intel — the Desmos hack, the scholarship math, the 10-week roadmap to
+              1400+, every 2026–27 date. <strong className="text-gold-400">Free.</strong> Your name
+              and number unlock it.
+            </p>
+          </div>
+        </FadeIn>
+
+        <FadeIn delay={0.1}>
+          <div className="glass-card rounded-3xl p-6 sm:p-8 max-w-xl mx-auto" style={{ border: '1.5px solid rgba(var(--accent-rgb),0.3)' }}>
+            <div className="flex flex-col sm:flex-row items-center gap-6">
+              {/* Paper-chan, the little guardian */}
+              <div className="flex-shrink-0 relative" aria-hidden>
+                <span className="kawaii-sparkle" style={{ top: -12, left: -16 }}>✦</span>
+                <span className="kawaii-sparkle" style={{ top: -4, right: -18, animationDelay: '1.1s' }}>✧</span>
+                <span className="kawaii-sparkle" style={{ bottom: 6, left: -20, animationDelay: '2s' }}>✦</span>
+                <div className="paper-chan">
+                  <span className="kawaii-eye left" />
+                  <span className="kawaii-eye right" />
+                  <span className="kawaii-blush left" />
+                  <span className="kawaii-blush right" />
+                  <span className="kawaii-mouth" />
+                </div>
+                <p
+                  className="text-center text-[10px] mt-2 text-gray-500 uppercase tracking-[0.2em]"
+                  style={{ fontFamily: 'Orbitron, monospace' }}
+                >
+                  {status === 'done' ? 'yayy!! 🎉' : 'unlock me~'}
+                </p>
+              </div>
+
+              {/* the gate */}
+              {status === 'done' ? (
+                <div className="flex-1 text-center sm:text-left">
+                  <h3 className="text-xl font-black text-white mb-2" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+                    📖 Blueprint unlocked!
+                  </h3>
+                  <p className="text-sm text-gray-400 mb-4">
+                    Your download has started. Read page 3 twice — that's where the money is. 😉
+                  </p>
+                  <a
+                    href={BROCHURE_PATH}
+                    download
+                    className="btn-ghost inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl text-xs"
+                  >
+                    ⬇ Tap here if it didn't start
+                  </a>
+                </div>
+              ) : (
+                <form onSubmit={unlock} className="flex-1 w-full space-y-3">
+                  <input
+                    className="form-input"
+                    placeholder="Your name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    autoComplete="name"
+                    aria-label="Your name"
+                  />
+                  <input
+                    className="form-input"
+                    type="tel"
+                    inputMode="numeric"
+                    placeholder="10-digit phone number"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    autoComplete="tel"
+                    aria-label="Phone number"
+                  />
+                  {error && <p className="text-sm" style={{ color: '#F87171' }}>{error}</p>}
+                  <button
+                    type="submit"
+                    disabled={status === 'saving'}
+                    className="btn-gold w-full py-3.5 rounded-xl text-sm disabled:opacity-60"
+                  >
+                    {status === 'saving' ? 'Unlocking…' : '🔓 Unlock My Blueprint'}
+                  </button>
+                  <p className="text-[10px] text-gray-500 text-center">
+                    No spam, ever. One call from us about your SAT plan — that's it. 🤝
+                  </p>
+                </form>
+              )}
+            </div>
+          </div>
+        </FadeIn>
+      </div>
+    </section>
   )
 }
 
@@ -979,6 +1143,9 @@ export default function HomePage() {
           </FadeIn>
         </div>
       </section>
+
+      {/* ─── THE BLUEPRINT — free intel, gated by Paper-chan ─── */}
+      <BrochureMagnet />
 
       {/* ─── THE JOURNEY — auto-playing animated scene ─── */}
       <section className="section-padding" style={{ background: '#07111F' }}>
