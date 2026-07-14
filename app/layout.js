@@ -7,6 +7,7 @@ import { ThemeProvider } from '@/components/ThemeProvider'
 import ThemeSwitcher from '@/components/ThemeSwitcher'
 import DemoPrompt from '@/components/DemoPrompt'
 import ScrollProgress from '@/components/ScrollProgress'
+import Analytics from '@/components/Analytics'
 import { SITE } from '@/lib/site'
 
 export const metadata = {
@@ -128,7 +129,7 @@ const GA_ID = process.env.NEXT_PUBLIC_GA_ID || 'G-K10JSW896P'
 const PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID
 
 const gaScript = GA_ID
-  ? `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${GA_ID}');
+  ? `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${GA_ID}',{send_page_view:false});
 document.addEventListener('click',function(e){var a=e.target.closest('a.whatsapp-cta,button.whatsapp-cta');if(a){gtag('event','whatsapp_click',{event_category:'conversion'});}var p=e.target.closest('a.phone-cta');if(p){gtag('event','phone_click',{event_category:'conversion'});}});`
   : ''
 
@@ -161,6 +162,7 @@ export default function RootLayout({ children }) {
       </head>
       <body>
         <ThemeProvider>
+          <Analytics />
           <ScrollProgress />
           <Navigation />
           <main>{children}</main>

@@ -23,6 +23,7 @@ export default function sitemap() {
     { url: `${SITE.url}/enroll/sat`, lastModified: now, changeFrequency: 'weekly', priority: 0.9 },
     { url: `${SITE.url}/enroll/nda`, lastModified: now, changeFrequency: 'weekly', priority: 0.9 },
     { url: `${SITE.url}/enroll/neet`, lastModified: now, changeFrequency: 'weekly', priority: 0.9 },
+    { url: `${SITE.url}/enroll/jee`, lastModified: now, changeFrequency: 'weekly', priority: 0.9 },
     { url: `${SITE.url}/enroll`, lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
     { url: `${SITE.url}/appointment`, lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
     { url: `${SITE.url}/materials`, lastModified: now, changeFrequency: 'weekly', priority: 0.7 },

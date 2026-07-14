@@ -44,8 +44,20 @@ function LeadForm({ cfg, compact = false }) {
   const [form, setForm] = useState({ name: '', phone: '', email: '', extra: '' })
   const [error, setError] = useState('')
   const [status, setStatus] = useState('idle') // idle | saving | done
+  const started = useRef(false)
 
   const set = (k) => (e) => setForm({ ...form, [k]: e.target.value })
+
+  /* form_start vs generate_lead = the abandonment rate GA4 will show */
+  const markStart = () => {
+    if (started.current) return
+    started.current = true
+    try {
+      if (typeof window.gtag === 'function') {
+        window.gtag('event', 'form_start', { event_category: 'conversion', event_label: cfg.id })
+      }
+    } catch {}
+  }
 
   const submit = async (e) => {
     e.preventDefault()
@@ -129,7 +141,7 @@ function LeadForm({ cfg, compact = false }) {
         </>
       )}
       <div className="space-y-3.5">
-        <input className="form-input" placeholder="Your name" value={form.name} onChange={set('name')} autoComplete="name" aria-label="Your name" />
+        <input className="form-input" placeholder="Your name" value={form.name} onChange={set('name')} onFocus={markStart} autoComplete="name" aria-label="Your name" />
         <input className="form-input" type="tel" inputMode="numeric" placeholder="10-digit phone number" value={form.phone} onChange={set('phone')} autoComplete="tel" aria-label="Phone number" />
         <input className="form-input" type="email" placeholder="Email address" value={form.email} onChange={set('email')} autoComplete="email" aria-label="Email" />
         <input className="form-input" placeholder={cfg.extraField.placeholder} value={form.extra} onChange={set('extra')} aria-label={cfg.extraField.label} />

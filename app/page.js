@@ -494,6 +494,13 @@ function BrochureMagnet() {
                     placeholder="Your name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
+                    onFocus={() => {
+                      try {
+                        if (typeof window.gtag === 'function') {
+                          window.gtag('event', 'form_start', { event_category: 'conversion', event_label: 'sat-blueprint' })
+                        }
+                      } catch {}
+                    }}
                     autoComplete="name"
                     aria-label="Your name"
                   />

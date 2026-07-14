@@ -81,7 +81,7 @@ const VERDICTS = {
     sub: 'You see systems where others see chaos. JEE was built for brains like yours.',
     href: '/courses/jee',
     hrefLabel: '⚙️ See The JEE Battle Plan',
-    enroll: '/enroll?course=jee',
+    enroll: '/enroll/jee',
   },
 }
 
