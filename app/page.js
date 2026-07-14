@@ -9,7 +9,6 @@ import { COURSES } from '@/lib/courses'
 import { SITE, wa } from '@/lib/site'
 import { nextSat, satMoment, daysTo } from '@/lib/sat'
 import QuickLeadForm from '@/components/QuickLeadForm'
-import AnimatedJourney from '@/components/AnimatedJourney'
 
 /* ─── CONSTANTS ─── */
 /* Trust bar (brief C8) — static values, not counters */
@@ -263,6 +262,13 @@ function BrochureMagnet() {
   const [phone, setPhone] = useState('')
   const [error, setError] = useState('')
   const [status, setStatus] = useState('idle') // idle | saving | done
+  const [days, setDays] = useState(null)
+
+  useEffect(() => {
+    /* computed after mount so SSR HTML never goes stale */
+    const t = nextSat()
+    setDays(daysTo(satMoment(t)))
+  }, [])
 
   const unlock = async (e) => {
     e.preventDefault()
@@ -320,18 +326,29 @@ function BrochureMagnet() {
       <div className="max-w-3xl mx-auto relative z-10">
         <FadeIn>
           <div className="text-center mb-8">
-            <span className="section-tag mb-4 inline-block">📕 Free Intel Drop</span>
+            <span className="section-tag mb-4 inline-block">🤫 Psst… Steal Our SAT Blueprint</span>
             <h2
-              className="text-4xl md:text-5xl font-black text-white mb-3"
+              className="text-4xl md:text-5xl font-black text-white mb-3 leading-tight"
               style={{ fontFamily: 'Rajdhani, sans-serif' }}
             >
-              Steal Our <span className="text-gold-shimmer">SAT Blueprint</span>
+              Dreams Bigger Than{' '}
+              <span className="text-gold-shimmer">Borders?</span>
             </h2>
             <p className="text-gray-400 text-sm max-w-md mx-auto">
-              7 pages of pure intel — the Desmos hack, the scholarship math, the 10-week roadmap to
-              1400+, every 2026–27 date. <strong className="text-gold-400">Free.</strong> Your name
-              and number unlock it.
+              <em className="text-gray-300">“Some exams give you marks. This one gives you the world.”</em>
+              <br />
+              Our free 7-page Blueprint has the whole heist — the Desmos hack, the scholarship
+              math, the 10-week road to 1400+ — written by the mentor who{' '}
+              <strong className="text-gold-400">scored 1540 himself</strong>.
             </p>
+            {days !== null && (
+              <p
+                className="mt-3 text-xs font-bold uppercase tracking-[0.2em]"
+                style={{ color: '#E05C42', fontFamily: 'Orbitron, monospace' }}
+              >
+                ⏳ Next SAT drops in {days} days…
+              </p>
+            )}
           </div>
         </FadeIn>
 
@@ -411,6 +428,18 @@ function BrochureMagnet() {
             </div>
           </div>
         </FadeIn>
+
+        <FadeIn delay={0.18}>
+          <p className="text-center mt-6">
+            <Link
+              href="/sat"
+              className="inline-flex items-center gap-2 text-sm font-bold text-gold-400 hover:text-gold-300 transition-colors"
+              style={{ fontFamily: 'Rajdhani, sans-serif', letterSpacing: '0.06em' }}
+            >
+              🎬 CURIOUS? WATCH THE FULL MISSION BRIEF — THE WAR CLOCK IS TICKING →
+            </Link>
+          </p>
+        </FadeIn>
       </div>
     </section>
   )
@@ -480,7 +509,7 @@ function DeadlineStrip() {
             <Link
               key={ex.id}
               href={ex.href}
-              className="glass-card glass-card-hover rounded-2xl p-4 flex-shrink-0 snap-center min-w-[164px] relative block transition-all duration-300"
+              className={`glass-card glass-card-hover rounded-2xl p-4 flex-shrink-0 snap-center min-w-[164px] relative block transition-all duration-300 ${i === 0 ? 'animate-pulse-gold' : ''}`}
               style={i === 0 ? { border: '1.5px solid rgba(var(--accent-rgb),0.55)' } : undefined}
             >
               {i === 0 && (
@@ -519,108 +548,6 @@ function DeadlineStrip() {
             ))}
         </div>
         <p className="text-[10px] text-gray-600 mt-2 text-center">* expected date — official announcement pending</p>
-      </div>
-    </section>
-  )
-}
-
-/* ─── SAT TEASER — a cozy mystery note + kawaii click-me ───
-   Deliberately vague up top, warm in the middle, one adorable
-   button at the end. Curiosity does the rest. Mobile-first. */
-function SatTeaser() {
-  const [days, setDays] = useState(null)
-
-  useEffect(() => {
-    /* computed after mount so SSR HTML never goes stale */
-    const t = nextSat()
-    setDays(Math.max(0, Math.ceil((satMoment(t) - Date.now()) / 86400000)))
-  }, [])
-
-  return (
-    <section className="relative overflow-hidden py-16 md:py-24 px-4" style={{ background: '#0A1628' }}>
-      {/* soft dawn glow — this section looks like a warm secret */}
-      <div
-        aria-hidden
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background:
-            'radial-gradient(ellipse 70% 60% at 50% 110%, rgba(var(--accent-rgb),0.1) 0%, transparent 65%)',
-        }}
-      />
-      <div className="max-w-2xl mx-auto text-center relative z-10">
-        <FadeIn>
-          <span className="section-tag mb-5 inline-block">🤫 Psst… Something New</span>
-          <h2
-            className="text-4xl md:text-5xl font-black text-white mb-8 leading-tight"
-            style={{ fontFamily: 'Rajdhani, sans-serif' }}
-          >
-            Dreams Bigger Than{' '}
-            <span className="text-gold-shimmer">Borders?</span>
-          </h2>
-        </FadeIn>
-
-        {/* the cozy paper note */}
-        <FadeIn delay={0.1}>
-          <div
-            className="paper-note rounded-sm px-5 py-6 sm:px-8 sm:py-7 max-w-md mx-auto relative mb-8"
-            style={{ transform: 'rotate(-1.5deg)' }}
-          >
-            <span
-              aria-hidden
-              className="absolute -top-2.5 left-1/2 w-20 h-5 opacity-80"
-              style={{ background: 'rgba(var(--accent-rgb),0.55)', transform: 'translateX(-50%) rotate(-3deg)' }}
-            />
-            <span
-              className="ink-stamp absolute -top-1 -right-2"
-              style={{ fontSize: 9, transform: 'rotate(8deg)' }}
-              aria-hidden
-            >
-              ★ FIRST IN UNA ★
-            </span>
-            <p
-              className="text-xl sm:text-2xl font-bold leading-snug mb-3"
-              style={{ fontFamily: 'Rajdhani, sans-serif' }}
-            >
-              “Some exams give you marks.
-              <br />
-              This one gives you <em>the world</em>.”
-            </p>
-            <p className="text-sm opacity-80 leading-relaxed">
-              It's called the <strong>SAT</strong> — one 2-hour digital test, one score out of
-              1600, and 4,000+ universities across the planet suddenly know your name. Exactly{' '}
-              <strong>one</strong> institute in Una teaches it — and the man teaching it{' '}
-              <strong>scored 1540 himself</strong>. <em>(Hi. 👋)</em>
-            </p>
-            {days !== null && (
-              <p
-                className="mt-4 text-xs font-bold uppercase tracking-[0.2em]"
-                style={{ color: '#B3402E', fontFamily: 'Orbitron, monospace' }}
-              >
-                ⏳ Next one drops in {days} days…
-              </p>
-            )}
-          </div>
-        </FadeIn>
-
-        {/* the kawaii recruit — tap the lil guy */}
-        <FadeIn delay={0.2}>
-          <Link href="/sat" className="kawaii-btn" aria-label="Curious? Open the SAT mission page">
-            <span className="relative inline-block" aria-hidden>
-              <span className="kawaii-sparkle" style={{ top: -8, left: -20 }}>✦</span>
-              <span className="kawaii-sparkle" style={{ top: -16, right: -16, animationDelay: '0.9s' }}>✧</span>
-              <span className="kawaii-sparkle" style={{ bottom: 2, left: -24, animationDelay: '1.7s' }}>✦</span>
-              <span className="kawaii-sparkle" style={{ bottom: -6, right: -20, animationDelay: '2.2s' }}>✧</span>
-              <span className="kawaii-face">
-                <span className="kawaii-eye left" />
-                <span className="kawaii-eye right" />
-                <span className="kawaii-blush left" />
-                <span className="kawaii-blush right" />
-                <span className="kawaii-mouth" />
-              </span>
-            </span>
-            <span className="kawaii-label">click me!! 👉👈</span>
-          </Link>
-        </FadeIn>
       </div>
     </section>
   )
@@ -879,9 +806,12 @@ export default function HomePage() {
             transition={{ duration: 0.8, delay: 0.6 }}
             className="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-3 md:gap-6"
           >
-            {TRUST_STATS.map((stat) => (
-              <div
+            {TRUST_STATS.map((stat, i) => (
+              <motion.div
                 key={stat.label}
+                initial={{ opacity: 0, scale: 0.6, y: 14 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                transition={{ type: 'spring', stiffness: 240, damping: 16, delay: 0.7 + i * 0.12 }}
                 className="glass-card rounded-2xl p-4 text-center"
               >
                 <div className="text-2xl mb-1">{stat.icon}</div>
@@ -892,7 +822,7 @@ export default function HomePage() {
                   {stat.big}
                 </div>
                 <div className="text-xs text-gray-400 mt-1 font-medium">{stat.label}</div>
-              </div>
+              </motion.div>
             ))}
           </motion.div>
         </div>
@@ -922,8 +852,8 @@ export default function HomePage() {
       {/* ─── DEADLINES — URGENCY FIRST ─── */}
       <DeadlineStrip />
 
-      {/* ─── SAT — THE CURIOUS NEW THING ─── */}
-      <SatTeaser />
+      {/* ─── THE BLUEPRINT — grab it before you even reach the courses ─── */}
+      <BrochureMagnet />
 
       {/* ─── COURSES ─── */}
       <section
@@ -1140,30 +1070,6 @@ export default function HomePage() {
                 Start Now →
               </Link>
             </div>
-          </FadeIn>
-        </div>
-      </section>
-
-      {/* ─── THE BLUEPRINT — free intel, gated by Paper-chan ─── */}
-      <BrochureMagnet />
-
-      {/* ─── THE JOURNEY — auto-playing animated scene ─── */}
-      <section className="section-padding" style={{ background: '#07111F' }}>
-        <div className="max-w-4xl mx-auto">
-          <FadeIn>
-            <div className="text-center mb-10">
-              <span className="section-tag mb-4 inline-block">🎬 Watch It Happen</span>
-              <h2
-                className="text-4xl md:text-5xl font-black text-white mb-2"
-                style={{ fontFamily: 'Rajdhani, sans-serif' }}
-              >
-                Your Journey, From Una to the Top
-              </h2>
-              <p className="text-gray-500 text-sm">Every selection follows the same path. Watch it play out. ⛰️</p>
-            </div>
-          </FadeIn>
-          <FadeIn delay={0.1}>
-            <AnimatedJourney />
           </FadeIn>
         </div>
       </section>
