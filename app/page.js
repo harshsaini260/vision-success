@@ -10,6 +10,7 @@ import { SITE, wa } from '@/lib/site'
 import { nextSat, satMoment, daysTo } from '@/lib/sat'
 import QuickLeadForm from '@/components/QuickLeadForm'
 import BattlefieldPopup from '@/components/BattlefieldPopup'
+import DepartureBoard from '@/components/DepartureBoard'
 import { playFanfare } from '@/lib/fanfare'
 import { sfxPop, sfxNope, sfxWhoosh, sfxChime } from '@/lib/sfx'
 
@@ -664,10 +665,93 @@ function DeadlineStrip() {
   )
 }
 
+/* ─── THE DREAMERS' MANIFESTO ───
+   The emotional centrepiece. Bold, cinematic, original copy that
+   celebrates the "crazy" ones who dream past their town's borders. */
+function Manifesto() {
+  const LINES = [
+    { t: 'Some students in Una are handed three roads.', big: false },
+    { t: 'Ours draw a fourth — the one that leaves the map.', big: true },
+    { t: 'People call it crazy.', big: false },
+    { t: 'We call it Tuesday.', big: true },
+  ]
+  return (
+    <section className="relative overflow-hidden py-20 md:py-28 px-4" style={{ background: '#04090F' }}>
+      <div
+        aria-hidden
+        className="absolute inset-0 pointer-events-none"
+        style={{ background: 'radial-gradient(ellipse 70% 60% at 50% 50%, rgba(var(--accent-rgb),0.09) 0%, transparent 70%)' }}
+      />
+      <div className="max-w-3xl mx-auto relative z-10 text-center">
+        <FadeIn>
+          <span
+            className="inline-block text-[10px] uppercase tracking-[0.35em] mb-8"
+            style={{ fontFamily: 'Orbitron, monospace', color: 'rgba(var(--accent-rgb),0.7)' }}
+          >
+            ✦ The Dreamers&apos; Manifesto ✦
+          </span>
+        </FadeIn>
+        <div className="space-y-3 sm:space-y-4">
+          {LINES.map((l, i) => (
+            <FadeIn key={l.t} delay={i * 0.15}>
+              <p
+                className={l.big ? 'text-3xl sm:text-5xl font-black leading-tight' : 'text-lg sm:text-2xl text-gray-400 font-semibold'}
+                style={l.big ? { fontFamily: 'Rajdhani, sans-serif' } : undefined}
+              >
+                {l.big ? <span className="text-gold-shimmer">{l.t}</span> : l.t}
+              </p>
+            </FadeIn>
+          ))}
+        </div>
+        <FadeIn delay={0.7}>
+          <p className="text-gray-400 max-w-xl mx-auto mt-10 leading-relaxed">
+            The students who rewrite their whole family&apos;s story are never the &ldquo;realistic&rdquo;
+            ones. They&apos;re the ones stubborn enough to believe a small town is a starting line —
+            <strong className="text-white"> not a ceiling.</strong>
+          </p>
+        </FadeIn>
+        <FadeIn delay={0.85}>
+          <div className="mt-8">
+            <Link href="/enroll/sat" className="btn-gold inline-flex items-center gap-2 px-8 py-4 rounded-xl text-base animate-pulse-gold">
+              🚀 Start Dreaming Louder
+            </Link>
+          </div>
+        </FadeIn>
+      </div>
+    </section>
+  )
+}
+
+/* ─── DEPARTURES — Una to the World ───
+   Split-flap airport board (components/DepartureBoard) framed as a
+   showpiece: where our SAT/IELTS dreamers actually land. */
+function DeparturesSection() {
+  return (
+    <section className="section-padding" style={{ background: 'linear-gradient(180deg, #07111F 0%, #04090F 100%)' }}>
+      <div className="max-w-3xl mx-auto">
+        <FadeIn>
+          <div className="text-center mb-8">
+            <span className="section-tag mb-4 inline-block">🛫 Now Boarding</span>
+            <h2 className="text-4xl md:text-5xl font-black text-white mb-2" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+              Departures: <span className="text-gold-shimmer">Una → The World</span>
+            </h2>
+            <p className="text-gray-400 text-sm max-w-md mx-auto">
+              One SAT score is a boarding pass. Watch the board — every city on it is reachable from a
+              classroom in Una.
+            </p>
+          </div>
+        </FadeIn>
+        <FadeIn delay={0.1}>
+          <DepartureBoard />
+        </FadeIn>
+      </div>
+    </section>
+  )
+}
+
 /* ─── A NOTE FROM THE MENTOR'S DESK ───
    Warm, handwritten letter. Humanises the whole site and reassures
-   the parent reading over a student's shoulder. Signed line is
-   meant to be personalised with the owner's real name. */
+   the parent reading over a student's shoulder. */
 function MentorLetter() {
   return (
     <section className="py-16 md:py-24 px-4" style={{ background: 'linear-gradient(180deg, #0A1628 0%, #0C1A2E 100%)' }}>
@@ -694,21 +778,24 @@ function MentorLetter() {
             >
               <p>Dear parent, dear student,</p>
               <p>
-                I grew up in these same hills. I went abroad to study in Canada, sat the SAT myself,
-                and walked out with a 1540 — top 1% in the world. I know exactly how far a student
-                from Una can go, because I have already made that journey.
+                When I told people in Una I&apos;d sit an American exam and build a life across an
+                ocean, most of them smiled — the kind of smile you give a child&apos;s daydream.
+                <em> &ldquo;That&apos;s not for people like us,&rdquo;</em> they said.
               </p>
               <p>
-                Now I bring it home. Vision Success is founded and led by an NIT Hamirpur alumnus,
-                and together we keep our batches small — fifteen students, never more — so we know
-                every child by name, catch every doubt the day it appears, and call you when it
-                matters. No child of ours is ever just a roll number.
+                I sat it anyway. 1540 — top 1% on Earth — and a one-way ticket to Canada, just to
+                prove a small-town kid could stand anywhere in the world. I&apos;m not a genius. I
+                was simply too stubborn to let someone else decide the size of my dream.
               </p>
               <p>
-                Come sit with us before you decide anything. Watch a class, ask the hard questions,
-                have a cup of chai. If we&apos;re the right fit, we&apos;ll build the plan together —
-                and fees will never be the reason a capable child is turned away.
+                That stubbornness — the quiet, unreasonable belief that you are meant for more — is
+                the only thing I really teach. Our institute is founded and led by an NIT Hamirpur
+                alumnus, and we keep our batches to fifteen, never more, so no child is ever a roll
+                number. Come watch a class, drink a cup of chai, ask your hardest question. If
+                we&apos;re the right fit we&apos;ll build the plan together — and fees will never be
+                the reason a capable dreamer is turned away.
               </p>
+              <p className="font-bold">Dream louder than your town. I did. So can you.</p>
             </div>
             <p
               className="mt-6 text-2xl sm:text-3xl leading-tight"
@@ -717,7 +804,7 @@ function MentorLetter() {
               — Harsh Saini
             </p>
             <p className="text-xs text-gray-600 mt-1" style={{ fontFamily: 'Inter, sans-serif' }}>
-              SAT Mentor · scored 1540 · studied in Canada · Vision Success, Una
+              SAT Mentor · scored 1540 (top 1%) · the small-town kid who chased the dream to Canada
             </p>
           </div>
         </FadeIn>
@@ -1165,7 +1252,8 @@ export default function HomePage() {
       {/* ─── THE BLUEPRINT — grab it before you even reach the courses ─── */}
       <BrochureMagnet />
 
-      {/* ─── A NOTE FROM THE MENTOR'S DESK — warm human beat, up high ─── */}
+      {/* ─── EMOTIONAL ARC: dream → the person who did it → where it lands ─── */}
+      <Manifesto />
       <MentorLetter />
 
       {/* ─── COURSES ─── */}
@@ -1386,6 +1474,9 @@ export default function HomePage() {
           </FadeIn>
         </div>
       </section>
+
+      {/* ─── DEPARTURES — the split-flap showpiece ─── */}
+      <DeparturesSection />
 
       {/* ─── INTEL FEED — one-liners that keep eyes moving ─── */}
       <IntelFeed />
