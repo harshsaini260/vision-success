@@ -9,7 +9,7 @@ import { COURSES } from '@/lib/courses'
 import { SITE, wa } from '@/lib/site'
 import { nextSat, satMoment, daysTo } from '@/lib/sat'
 import QuickLeadForm from '@/components/QuickLeadForm'
-import BattlefieldQuiz from '@/components/BattlefieldQuiz'
+import BattlefieldPopup from '@/components/BattlefieldPopup'
 import { playFanfare } from '@/lib/fanfare'
 import { sfxPop, sfxNope, sfxWhoosh, sfxChime } from '@/lib/sfx'
 
@@ -694,26 +694,30 @@ function MentorLetter() {
             >
               <p>Dear parent, dear student,</p>
               <p>
-                I grew up in these hills, sat the same exams your child is preparing for, and made
-                it to NIT — and later, to a 1540 on the SAT. I know exactly how heavy the pressure
-                feels, and how quietly a good teacher can lift it.
+                I grew up in these same hills. I went abroad to study in Canada, sat the SAT myself,
+                and walked out with a 1540 — top 1% in the world. I know exactly how far a student
+                from Una can go, because I have already made that journey.
               </p>
               <p>
-                We keep our batches small — fifteen students, never more — because I want to know
-                every child by name, catch every doubt on the day it appears, and call you when it
-                matters. No child of ours is ever a roll number.
+                Now I bring it home. Vision Success is founded and led by an NIT Hamirpur alumnus,
+                and together we keep our batches small — fifteen students, never more — so we know
+                every child by name, catch every doubt the day it appears, and call you when it
+                matters. No child of ours is ever just a roll number.
               </p>
               <p>
-                Come sit with us before you decide anything. Watch a class, ask hard questions, have
-                a cup of chai. If we&apos;re the right fit, we&apos;ll build the plan together — and
-                fees will never be the reason a capable child is turned away.
+                Come sit with us before you decide anything. Watch a class, ask the hard questions,
+                have a cup of chai. If we&apos;re the right fit, we&apos;ll build the plan together —
+                and fees will never be the reason a capable child is turned away.
               </p>
             </div>
             <p
-              className="mt-6 text-2xl sm:text-3xl"
+              className="mt-6 text-2xl sm:text-3xl leading-tight"
               style={{ fontFamily: "'Caveat', cursive", color: '#7A2F1E' }}
             >
-              — Your mentor, Vision Success Coaching Institute, Una
+              — Harsh Saini
+            </p>
+            <p className="text-xs text-gray-600 mt-1" style={{ fontFamily: 'Inter, sans-serif' }}>
+              SAT Mentor · scored 1540 · studied in Canada · Vision Success, Una
             </p>
           </div>
         </FadeIn>
@@ -729,8 +733,8 @@ function MentorLetter() {
 const TRUST_PILLARS = [
   {
     icon: '🎓',
-    title: 'Taught by an NIT Hamirpur alumnus',
-    text: 'Concept-first teaching from someone who cleared these exams himself — and scored 1540 on the SAT. Not tutors reading from a guidebook.',
+    title: 'Founder from NIT · SAT mentor scored 1540',
+    text: 'Led by an NIT Hamirpur alumnus for the core exams, with a SAT mentor who studied in Canada and scored 1540. You learn from people who cleared these exams themselves — not tutors reading from a guidebook.',
   },
   {
     icon: '🎖️',
@@ -875,6 +879,7 @@ export default function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(HOME_FAQ_SCHEMA) }}
       />
       <GiftTab />
+      <BattlefieldPopup />
       <Stars />
 
       {/* ─── HERO ─── */}
@@ -1160,6 +1165,9 @@ export default function HomePage() {
       {/* ─── THE BLUEPRINT — grab it before you even reach the courses ─── */}
       <BrochureMagnet />
 
+      {/* ─── A NOTE FROM THE MENTOR'S DESK — warm human beat, up high ─── */}
+      <MentorLetter />
+
       {/* ─── COURSES ─── */}
       <section
         className="section-padding relative"
@@ -1382,11 +1390,16 @@ export default function HomePage() {
       {/* ─── INTEL FEED — one-liners that keep eyes moving ─── */}
       <IntelFeed />
 
-      {/* ─── FIND YOUR BATTLEFIELD — the 4-question sorter ─── */}
+      {/* ─── FIND YOUR BATTLEFIELD — invite card that opens the popup ─── */}
       <section className="section-padding" style={{ background: 'linear-gradient(180deg, #07111F 0%, #0A1628 100%)' }}>
-        <div className="max-w-3xl mx-auto">
+        <div className="max-w-2xl mx-auto">
           <FadeIn>
-            <div className="text-center mb-8">
+            <button
+              type="button"
+              onClick={() => { try { window.dispatchEvent(new Event('open-battlefield')) } catch {} }}
+              className="w-full rounded-3xl p-8 sm:p-10 text-center transition-all duration-300 hover:-translate-y-1 group"
+              style={{ background: 'rgba(var(--accent-rgb),0.05)', border: '1.5px solid rgba(var(--accent-rgb),0.3)' }}
+            >
               <span className="section-tag mb-4 inline-block">🎯 30 Seconds · 4 Questions</span>
               <h2
                 className="text-4xl md:text-5xl font-black text-white mb-2"
@@ -1394,13 +1407,13 @@ export default function HomePage() {
               >
                 Find Your <span className="text-gold-shimmer">Battlefield</span>
               </h2>
-              <p className="text-gray-400 text-sm max-w-md mx-auto">
+              <p className="text-gray-400 text-sm max-w-md mx-auto mb-6">
                 Four questions. Zero wrong answers. One verdict — stamped, sealed, and yours.
               </p>
-            </div>
-          </FadeIn>
-          <FadeIn delay={0.1}>
-            <BattlefieldQuiz />
+              <span className="btn-gold inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl text-base group-hover:scale-105 transition-transform">
+                🎮 Play the 30-Second Quiz
+              </span>
+            </button>
           </FadeIn>
         </div>
       </section>
@@ -1462,9 +1475,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
-      {/* ─── A NOTE FROM THE MENTOR'S DESK — warm, human, trust ─── */}
-      <MentorLetter />
 
       {/* ─── WHY FAMILIES TRUST US — credibility (shows always) ─── */}
       <TrustPillars />
