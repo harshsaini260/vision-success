@@ -143,10 +143,15 @@ function LoginScreen({ onLegacyLogin }) {
             </button>
             <button
               onClick={forgotPassword}
-              className="w-full text-center text-xs text-gray-500 hover:text-gold-400 transition-colors"
+              className="w-full text-center py-2.5 rounded-xl text-sm font-semibold text-gold-400 transition-colors"
+              style={{ border: '1px solid rgba(var(--accent-rgb),0.3)' }}
             >
-              Forgot password? Send reset email
+              🔑 Forgot / never set password? Email me a reset link
             </button>
+            <p className="text-[11px] text-gray-600 text-center leading-relaxed">
+              The reset link goes to your admin email above. Open it, set a new
+              password, then sign in with that.
+            </p>
           </div>
         </div>
       </motion.div>

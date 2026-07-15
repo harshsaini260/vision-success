@@ -192,16 +192,10 @@ export default function Footer() {
           style={{ borderTop: '1px solid rgba(var(--accent-rgb),0.08)' }}
         >
           <p>© {new Date().getFullYear()} Vision Success Coaching Institute, Una, Himachal Pradesh. All rights reserved.</p>
-          <div className="flex items-center gap-3">
-            <div className="flex items-center gap-1">
-              <span>Built with</span>
-              <span className="text-red-500">❤️</span>
-              <span>for Una&apos;s future officers</span>
-            </div>
-            <span aria-hidden="true">·</span>
-            <Link href="/admin" className="hover:text-gold-400 transition-colors">
-              Admin
-            </Link>
+          <div className="flex items-center gap-1">
+            <span>Built with</span>
+            <span className="text-red-500">❤️</span>
+            <span>for Una&apos;s future officers</span>
           </div>
         </div>
       </div>

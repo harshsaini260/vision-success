@@ -244,6 +244,10 @@ function WarClock() {
           ⚠ ENLISTMENT CLOSES {ready && regDays > 0 ? `IN ${regDays} DAYS` : 'SOON'} — {target.reg}.
           <span className="font-semibold opacity-80"> After that, this window is gone.</span>
         </p>
+        {/* honesty note — these are real, official dates (reassurance, not a guess) */}
+        <p className="mt-2 text-center text-[10px] tracking-wide" style={{ color: '#8A7B5E' }}>
+          🗓️ Official College Board 2026–27 dates — exact and confirmed, not an estimate.
+        </p>
       </div>
     </div>
   )

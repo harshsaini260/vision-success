@@ -75,7 +75,11 @@ function ExamCountdown({ exams, color }) {
           </div>
         ))}
       </div>
-      <p className="text-xs text-gray-500">Date is {next.note}. Every day counts — start today.</p>
+      <p className="text-xs text-gray-500 max-w-md mx-auto leading-relaxed">
+        <span className="text-gray-400 font-semibold">Estimated date</span>, based on last year&apos;s
+        cycle — we lock the exact day the moment the board announces it. Either way, every day of
+        prep counts, so the smart move is to start now.
+      </p>
     </div>
   )
 }

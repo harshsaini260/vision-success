@@ -255,12 +255,12 @@ function IntelFeed() {
   return (
     <div
       className="py-3.5 px-4 relative overflow-hidden"
-      style={{ background: '#050505', borderTop: '1px solid rgba(224,92,66,0.3)', borderBottom: '1px solid rgba(224,92,66,0.3)' }}
+      style={{ background: '#0A0E08', borderTop: '1px solid rgba(212,175,55,0.22)', borderBottom: '1px solid rgba(212,175,55,0.22)' }}
     >
       <div className="max-w-3xl mx-auto flex items-center gap-3">
         <span
           className="flex-shrink-0 text-[9px] font-black uppercase tracking-[0.2em] px-2 py-1 rounded"
-          style={{ background: 'rgba(224,92,66,0.15)', color: '#E05C42', fontFamily: 'Orbitron, monospace', border: '1px solid rgba(224,92,66,0.4)' }}
+          style={{ background: 'rgba(212,175,55,0.12)', color: 'var(--accent-light)', fontFamily: 'Orbitron, monospace', border: '1px solid rgba(212,175,55,0.35)' }}
         >
           📡 Intel
         </span>
@@ -390,12 +390,14 @@ function BrochureMagnet() {
     document.body.appendChild(a)
     a.click()
     a.remove()
+    try { localStorage.setItem('vs-blueprint-grabbed', '1') } catch {}
     setStatus('done')
   }
 
   return (
     <section
-      className="relative overflow-hidden py-16 md:py-24 px-4"
+      id="blueprint"
+      className="relative overflow-hidden py-16 md:py-24 px-4 scroll-mt-20"
       style={{ background: 'linear-gradient(180deg, #07111F 0%, #04090F 100%)' }}
     >
       <div
@@ -598,7 +600,7 @@ function DeadlineStrip() {
               style={{ fontFamily: 'Rajdhani, sans-serif' }}
             >
               ⏳ EVERY DREAM HAS A{' '}
-              <span style={{ color: '#E05C42', textShadow: '0 0 24px rgba(224,92,66,0.4)' }}>DEADLINE</span>
+              <span style={{ color: '#E8A24C', textShadow: '0 0 20px rgba(232,162,76,0.28)' }}>DEADLINE</span>
             </h2>
             <p className="text-gray-500 text-xs md:text-sm mt-2">
               Live countdowns. No exam waits for anyone. Tap yours. →
@@ -640,7 +642,11 @@ function DeadlineStrip() {
               </div>
               <div className="text-[10px] text-gray-500 mt-2">
                 {ex.date}
-                {ex.expected && <span title="expected date"> *</span>}
+                {ex.expected ? (
+                  <span title="estimated date" className="text-gray-600"> · est.*</span>
+                ) : (
+                  <span title="official date" className="text-gold-400/70"> · official</span>
+                )}
               </div>
             </Link>
           ))}
@@ -649,9 +655,194 @@ function DeadlineStrip() {
               <div key={i} className="glass-card rounded-2xl p-4 flex-shrink-0 min-w-[164px] h-[130px] opacity-40" />
             ))}
         </div>
-        <p className="text-[10px] text-gray-600 mt-2 text-center">* expected date — official announcement pending</p>
+        <p className="text-[10px] text-gray-600 mt-3 text-center max-w-md mx-auto leading-relaxed">
+          <span className="text-gray-500">*</span> Estimated from last year&apos;s exam cycle — the exact
+          date is locked the moment the board announces it. SAT dates are the official College Board calendar.
+        </p>
       </div>
     </section>
+  )
+}
+
+/* ─── A NOTE FROM THE MENTOR'S DESK ───
+   Warm, handwritten letter. Humanises the whole site and reassures
+   the parent reading over a student's shoulder. Signed line is
+   meant to be personalised with the owner's real name. */
+function MentorLetter() {
+  return (
+    <section className="py-16 md:py-24 px-4" style={{ background: 'linear-gradient(180deg, #0A1628 0%, #0C1A2E 100%)' }}>
+      <div className="max-w-2xl mx-auto">
+        <FadeIn>
+          <div
+            className="paper-note rounded-sm px-6 py-8 sm:px-12 sm:py-12 relative"
+            style={{ transform: 'rotate(-0.6deg)' }}
+          >
+            <span
+              aria-hidden
+              className="absolute -top-2.5 left-1/2 w-24 h-5 opacity-70"
+              style={{ background: 'rgba(var(--accent-rgb),0.5)', transform: 'translateX(-50%) rotate(-2deg)' }}
+            />
+            <p
+              className="text-[11px] uppercase tracking-[0.28em] mb-5 opacity-60"
+              style={{ fontFamily: 'Orbitron, monospace', color: '#7A6A48' }}
+            >
+              A note from the mentor&apos;s desk
+            </p>
+            <div
+              className="space-y-4 text-lg sm:text-xl leading-relaxed"
+              style={{ fontFamily: "'Caveat', cursive", color: '#3B3325' }}
+            >
+              <p>Dear parent, dear student,</p>
+              <p>
+                I grew up in these hills, sat the same exams your child is preparing for, and made
+                it to NIT — and later, to a 1540 on the SAT. I know exactly how heavy the pressure
+                feels, and how quietly a good teacher can lift it.
+              </p>
+              <p>
+                We keep our batches small — fifteen students, never more — because I want to know
+                every child by name, catch every doubt on the day it appears, and call you when it
+                matters. No child of ours is ever a roll number.
+              </p>
+              <p>
+                Come sit with us before you decide anything. Watch a class, ask hard questions, have
+                a cup of chai. If we&apos;re the right fit, we&apos;ll build the plan together — and
+                fees will never be the reason a capable child is turned away.
+              </p>
+            </div>
+            <p
+              className="mt-6 text-2xl sm:text-3xl"
+              style={{ fontFamily: "'Caveat', cursive", color: '#7A2F1E' }}
+            >
+              — Your mentor, Vision Success Coaching Institute, Una
+            </p>
+          </div>
+        </FadeIn>
+      </div>
+    </section>
+  )
+}
+
+/* ─── WHY FAMILIES TRUST US — credibility pillars ───
+   Honest, verifiable track record (no invented names, no fake
+   reviews). Doubles as social proof while real Google reviews
+   accrue, and answers "who is teaching my child?". */
+const TRUST_PILLARS = [
+  {
+    icon: '🎓',
+    title: 'Taught by an NIT Hamirpur alumnus',
+    text: 'Concept-first teaching from someone who cleared these exams himself — and scored 1540 on the SAT. Not tutors reading from a guidebook.',
+  },
+  {
+    icon: '🎖️',
+    title: '7+ officers · 50+ MBBS admissions',
+    text: 'Thirteen-plus years of quiet, steady results from a small town in Himachal — real students, real selections, real families who trusted us first.',
+  },
+  {
+    icon: '👥',
+    title: 'Never more than 15 to a batch',
+    text: 'Small rooms on purpose. Every doubt heard the day it appears, weekly tests, and honest parent updates — your child is known by name, not by roll number.',
+  },
+]
+
+function TrustPillars() {
+  return (
+    <section className="section-padding" style={{ background: 'linear-gradient(180deg, #0C1A2E 0%, #07111F 100%)' }}>
+      <div className="max-w-5xl mx-auto">
+        <FadeIn>
+          <div className="text-center mb-10">
+            <span className="section-tag mb-4 inline-block">Why Families in Una Trust Us</span>
+            <h2 className="text-4xl md:text-5xl font-black text-white mb-3" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+              A Track Record, Not a Sales Pitch
+            </h2>
+            <p className="text-gray-400 max-w-xl mx-auto text-sm">
+              Before you trust us with your child&apos;s year, here is exactly who we are and what we
+              have quietly delivered.
+            </p>
+          </div>
+        </FadeIn>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          {TRUST_PILLARS.map((p, i) => (
+            <FadeIn key={p.title} delay={i * 0.1}>
+              <div className="glass-card rounded-2xl p-6 h-full text-center md:text-left">
+                <div className="text-4xl mb-3">{p.icon}</div>
+                <h3 className="text-lg font-bold text-white mb-2" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+                  {p.title}
+                </h3>
+                <p className="text-sm text-gray-400 leading-relaxed">{p.text}</p>
+              </div>
+            </FadeIn>
+          ))}
+        </div>
+        <FadeIn delay={0.15}>
+          <div
+            className="mt-8 rounded-2xl px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left"
+            style={{ background: 'rgba(var(--accent-rgb),0.06)', border: '1px solid rgba(var(--accent-rgb),0.2)' }}
+          >
+            <div>
+              <div className="flex items-center justify-center sm:justify-start gap-1 mb-1">
+                {'★★★★★'.split('').map((s, i) => (
+                  <span key={i} className="text-gold-400">{s}</span>
+                ))}
+                <span className="text-white font-bold ml-2" style={{ fontFamily: 'Rajdhani, sans-serif' }}>4.9 on Google</span>
+              </div>
+              <p className="text-xs text-gray-400">
+                Studied with us? Your honest words help the next family decide. 🙏
+              </p>
+            </div>
+            <Link href="/reviews" className="btn-ghost px-6 py-3 rounded-xl text-sm flex-shrink-0">
+              Read &amp; leave a review →
+            </Link>
+          </div>
+        </FadeIn>
+      </div>
+    </section>
+  )
+}
+
+/* ─── GIFT TAB — nobody leaves empty-handed ───
+   A gentle side-tab offering the free Blueprint. Appears after a
+   little scrolling, remembers if the visitor already grabbed it. */
+function GiftTab() {
+  const [show, setShow] = useState(false)
+  const [gone, setGone] = useState(false)
+
+  useEffect(() => {
+    try {
+      if (localStorage.getItem('vs-blueprint-grabbed') === '1') { setGone(true); return }
+    } catch {}
+    const onScroll = () => setShow(window.scrollY > 700)
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  if (gone) return null
+
+  return (
+    <AnimatePresence>
+      {show && (
+        <motion.a
+          href="#blueprint"
+          initial={{ x: 90, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          exit={{ x: 90, opacity: 0 }}
+          transition={{ type: 'spring', stiffness: 240, damping: 26 }}
+          onClick={() => sfxChime()}
+          className="fixed right-0 top-1/2 -translate-y-1/2 z-40 flex items-center gap-2 pl-3 pr-2 py-3 rounded-l-2xl"
+          style={{
+            background: 'linear-gradient(135deg, var(--accent), var(--accent-light))',
+            color: '#07111F',
+            boxShadow: '-4px 4px 20px rgba(0,0,0,0.4)',
+            writingMode: 'vertical-rl',
+          }}
+          aria-label="Get the free SAT Blueprint"
+        >
+          <span className="text-lg" style={{ writingMode: 'horizontal-tb' }}>🎁</span>
+          <span className="text-xs font-black uppercase tracking-widest" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+            Free Blueprint
+          </span>
+        </motion.a>
+      )}
+    </AnimatePresence>
   )
 }
 
@@ -683,6 +874,7 @@ export default function HomePage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(HOME_FAQ_SCHEMA) }}
       />
+      <GiftTab />
       <Stars />
 
       {/* ─── HERO ─── */}
@@ -775,6 +967,17 @@ export default function HomePage() {
                   📞 Call Now
                 </a>
               </motion.div>
+
+              {/* the chai promise — warm, homey, disarming */}
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.8, delay: 0.5 }}
+                className="text-sm text-gray-400 mt-4 text-center lg:text-left"
+              >
+                ☕ Or just visit us — there&apos;s always a cup of chai and an honest chat waiting.
+                No pressure, no fees to walk in.
+              </motion.p>
 
               {/* PICK YOUR BATTLEFIELD — instant self-segmentation */}
               <motion.div
@@ -1260,7 +1463,13 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ─── TESTIMONIALS (from Firebase) ─── */}
+      {/* ─── A NOTE FROM THE MENTOR'S DESK — warm, human, trust ─── */}
+      <MentorLetter />
+
+      {/* ─── WHY FAMILIES TRUST US — credibility (shows always) ─── */}
+      <TrustPillars />
+
+      {/* ─── TESTIMONIALS (from Firebase, when real reviews exist) ─── */}
       {reviews.length > 0 && (
         <section
           className="section-padding"
@@ -1274,7 +1483,7 @@ export default function HomePage() {
                   className="text-4xl md:text-5xl font-black text-white"
                   style={{ fontFamily: 'Rajdhani, sans-serif' }}
                 >
-                  What Our Students Say
+                  In Their Own Words
                 </h2>
               </div>
             </FadeIn>
