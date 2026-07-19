@@ -12,6 +12,7 @@ import QuickLeadForm from '@/components/QuickLeadForm'
 import BattlefieldPopup from '@/components/BattlefieldPopup'
 import DepartureBoard from '@/components/DepartureBoard'
 import PolarBuddy from '@/components/PolarBuddy'
+import Scribble from '@/components/Scribble'
 import { playFanfare } from '@/lib/fanfare'
 import { sfxPop, sfxNope, sfxWhoosh, sfxChime } from '@/lib/sfx'
 
@@ -529,6 +530,11 @@ function BrochureMagnet() {
                   <p className="text-[10px] text-gray-500 text-center">
                     No spam, ever. One call from us about your SAT plan — that's it. 🤝
                   </p>
+                  <p className="text-center pt-1">
+                    <Scribble color="gold" rotate={2} size="sm">
+                      I wrote every page of it myself — H. ✎
+                    </Scribble>
+                  </p>
                 </form>
               )}
             </div>
@@ -661,6 +667,9 @@ function DeadlineStrip() {
           <span className="text-gray-500">*</span> Estimated from last year&apos;s exam cycle — the exact
           date is locked the moment the board announces it. SAT dates are the official College Board calendar.
         </p>
+        <p className="text-center mt-2">
+          <Scribble color="gold" rotate={-2}>tick tock, dost… ⏳</Scribble>
+        </p>
       </div>
     </section>
   )
@@ -745,6 +754,9 @@ function DeparturesSection() {
         <FadeIn delay={0.1}>
           <DepartureBoard />
         </FadeIn>
+        <p className="text-center mt-3">
+          <Scribble color="gold" rotate={2} size="sm">your city goes on this board next ✈</Scribble>
+        </p>
       </div>
     </section>
   )
@@ -1091,7 +1103,15 @@ export default function HomePage() {
                 >
                   Pick your battlefield ↓
                 </p>
-                <div className="grid grid-cols-2 gap-2 max-w-md mx-auto lg:mx-0">
+                <div className="grid grid-cols-2 gap-2 max-w-md mx-auto lg:mx-0 relative">
+                  <Scribble
+                    color="gold"
+                    rotate={-4}
+                    size="sm"
+                    className="absolute -top-6 right-0 z-10"
+                  >
+                    pick one… I dare you ✎
+                  </Scribble>
                   {[
                     { emoji: '🎖️', big: 'DEFENCE', small: 'NDA · SSB', href: '/courses/nda' },
                     { emoji: '🩺', big: 'DOCTOR', small: 'NEET', href: '/courses/neet' },
@@ -1311,8 +1331,11 @@ export default function HomePage() {
                   >
                     SAT — Operation 1600
                   </h3>
-                  <div className="text-gold-400 font-semibold mb-4">
+                  <div className="text-gold-400 font-semibold mb-1">
                     Taught by a mentor who scored <span className="text-gold-shimmer font-black">1540</span> himself
+                  </div>
+                  <div className="mb-4">
+                    <Scribble color="red" rotate={-2} size="sm">my favourite classroom ♥</Scribble>
                   </div>
                   <p className="text-gray-300 mb-6 leading-relaxed">
                     Most teachers <em>read</em> about this exam. Your mentor{' '}
@@ -1529,6 +1552,9 @@ export default function HomePage() {
                 The Wall of Moments
               </h2>
               <p className="text-gray-500 text-sm">Real students. Real celebrations. Tap any photo. 📌</p>
+              <p className="mt-1">
+                <Scribble color="gold" rotate={-2} size="sm">no stock photos — pinky promise ✎</Scribble>
+              </p>
             </div>
           </FadeIn>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-8">
@@ -1768,7 +1794,11 @@ export default function HomePage() {
 
               <TwoEndings />
 
-              <p className="text-[11px] opacity-60 mt-6">
+              <p className="mt-4">
+                <Scribble color="ink" rotate={-2}>P.S. — the chai is real ☕</Scribble>
+              </p>
+
+              <p className="text-[11px] opacity-60 mt-3">
                 📞 <a href={`tel:${SITE.phoneTel}`} className="phone-cta font-semibold">{SITE.phoneDisplay}</a>
                 &nbsp;·&nbsp;
                 <a

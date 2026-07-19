@@ -19,7 +19,7 @@ export const metadata = {
   description:
     'Vision Success Coaching Institute Una — NDA coaching (7+ officers trained), NEET & JEE prep, and Una\'s first study-abroad desk with SAT & IELTS training. Class 10–12 Maths, Physics, Chemistry, Biology by NIT Hamirpur faculty. Free demo class.',
   keywords:
-    'NDA coaching Una, NEET coaching Una HP, JEE coaching Una, SAT coaching Una, SAT coaching Himachal Pradesh, IELTS coaching Una, IELTS Una HP, study abroad Una, coaching institute Una, physics coaching Una, chemistry coaching Una, biology coaching Una, maths coaching Una, CUET coaching Una, merchant navy coaching Una, tuition Una',
+    'NDA coaching Una, NEET coaching Una HP, JEE coaching Una, SAT coaching Una, SAT coaching Himachal Pradesh, IELTS coaching Una, IELTS Una HP, study abroad Una, study abroad consultant Himachal, coaching institute Una, best coaching institute Una, coaching centre near me Una, physics coaching Una, chemistry coaching Una, biology coaching Una, maths coaching Una, CUET coaching Una, merchant navy coaching Una, tuition Una, coaching Amb, coaching Mehatpur, coaching Gagret, entrance exam coaching Himachal, SAT classes near Chandigarh, digital SAT prep India',
   alternates: { canonical: '/' },
   openGraph: {
     title: 'NDA · NEET · JEE · SAT · IELTS — Vision Success Una',

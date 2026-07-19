@@ -36,6 +36,9 @@ export default function Navigation() {
     return () => { document.body.style.overflow = '' }
   }, [menuOpen])
 
+  /* /hello is Pola's secret door — no chrome, pure moment */
+  if (pathname === '/hello') return null
+
   return (
     <>
       <nav
@@ -48,7 +51,7 @@ export default function Navigation() {
           borderBottom: scrolled ? '1px solid rgba(var(--accent-rgb),0.15)' : 'none',
         }}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16 md:h-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between gap-3 h-16 md:h-20">
           {/* LOGO — The Bear & The North Star (tap for a little magic ✨) */}
           <Link
             href="/"
@@ -112,7 +115,7 @@ export default function Navigation() {
           </div>
 
           {/* CTA + HAMBURGER */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 flex-shrink-0">
             {/* Clickable phone — tap to call on mobile (brief C3) */}
             <a
               href={`tel:${SITE.phoneTel}`}

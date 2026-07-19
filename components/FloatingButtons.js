@@ -9,8 +9,8 @@ const WELCOME_MSG = wa(
 
 export default function FloatingButtons() {
   const pathname = usePathname()
-  /* /sat has its own sticky mission bar — floats would collide with it */
-  if (pathname === '/sat') return null
+  /* /sat has its own sticky mission bar; /hello is Pola's pure moment */
+  if (pathname === '/sat' || pathname === '/hello') return null
 
   return (
     <>
