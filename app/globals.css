@@ -354,6 +354,10 @@ body {
 }
 
 /* ===== FLOATING ELEMENTS ===== */
+/* on phones the sticky bottom bar covers contact — hide the floats */
+@media (max-width: 767px) {
+  .floating-whatsapp, .floating-call { display: none !important; }
+}
 .floating-whatsapp {
   position: fixed;
   bottom: 24px;
@@ -842,6 +846,91 @@ img { max-width: 100%; height: auto; }
   from { transform: translate(-6%, -3%) rotate(-5deg) scale(1); opacity: 0.7; }
   to { transform: translate(8%, 5%) rotate(4deg) scale(1.18); opacity: 1; }
 }
+
+/* ===== SAT PREDICTOR SLIDERS ===== */
+.sat-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent) 0%, rgba(255,255,255,0.12) 0%);
+  background: rgba(255,255,255,0.12);
+  outline: none;
+  cursor: pointer;
+}
+.sat-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent-light), var(--accent));
+  border: 2px solid #07111F;
+  box-shadow: 0 0 0 3px rgba(var(--accent-rgb),0.25), 0 2px 8px rgba(0,0,0,0.5);
+  cursor: pointer;
+}
+.sat-slider::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent-light), var(--accent));
+  border: 2px solid #07111F;
+  box-shadow: 0 0 0 3px rgba(var(--accent-rgb),0.25);
+  cursor: pointer;
+}
+
+/* ===== WHATSAPP HERO BUTTON — the primary action, green ===== */
+.whatsapp-hero {
+  background: linear-gradient(135deg, #25D366, #1EBE57);
+  color: #05320f;
+  border: none;
+  font-family: 'Rajdhani', sans-serif;
+  letter-spacing: 0.03em;
+  box-shadow: 0 8px 30px rgba(37,211,102,0.35);
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+  animation: wa-hero-pulse 2.4s ease-in-out infinite;
+}
+.whatsapp-hero:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(37,211,102,0.5); }
+.whatsapp-hero:active { transform: scale(0.97); }
+@keyframes wa-hero-pulse {
+  0%, 100% { box-shadow: 0 8px 30px rgba(37,211,102,0.35); }
+  50% { box-shadow: 0 8px 30px rgba(37,211,102,0.35), 0 0 0 8px rgba(37,211,102,0.0); }
+}
+
+/* leave room for the sticky bar so it never covers the footer */
+@media (max-width: 767px) {
+  body { padding-bottom: 66px; }
+}
+
+/* ===== STICKY BOTTOM ACTION BAR — mobile, always one tap away ===== */
+.sticky-action-bar {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  z-index: 45;
+  display: flex;
+  gap: 8px;
+  padding: 8px 10px calc(8px + env(safe-area-inset-bottom));
+  background: rgba(4,9,15,0.94);
+  border-top: 1px solid rgba(var(--accent-rgb),0.22);
+  box-shadow: 0 -8px 30px rgba(0,0,0,0.55);
+}
+.sticky-action-bar a {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 13px 8px;
+  border-radius: 14px;
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+  min-height: 48px;
+}
+.sticky-action-bar .sab-wa { background: #25D366; color: #05320f; flex: 1.4; }
+.sticky-action-bar .sab-call { background: transparent; color: var(--accent); border: 1.5px solid rgba(var(--accent-rgb),0.5); }
+.sticky-action-bar .sab-wa:active, .sticky-action-bar .sab-call:active { transform: scale(0.97); }
 
 /* ===== SNOWFALL — gentle polar flurry (pure CSS) ===== */
 .snowfall { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }

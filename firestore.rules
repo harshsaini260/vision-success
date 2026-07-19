@@ -44,6 +44,12 @@ service cloud.firestore {
       allow create, update, delete: if isAdmin();
     }
 
+    // ── SAT Predictor leads (from the homepage predictor tool) ──
+    match /predictions/{docId} {
+      allow create: if true;                       // public tool
+      allow read, update, delete: if isAdmin();
+    }
+
     // Everything else: locked.
     match /{document=**} {
       allow read, write: if false;

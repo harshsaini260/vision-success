@@ -8,6 +8,7 @@ import ThemeSwitcher from '@/components/ThemeSwitcher'
 import DemoPrompt from '@/components/DemoPrompt'
 import ScrollProgress from '@/components/ScrollProgress'
 import Analytics from '@/components/Analytics'
+import StickyActionBar from '@/components/StickyActionBar'
 import { SITE } from '@/lib/site'
 
 export const metadata = {
@@ -168,6 +169,7 @@ export default function RootLayout({ children }) {
           <main>{children}</main>
           <Footer />
           <FloatingButtons />
+          <StickyActionBar />
           <DemoPrompt />
           <ThemeSwitcher />
           <Toaster

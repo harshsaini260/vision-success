@@ -13,6 +13,7 @@ import BattlefieldPopup from '@/components/BattlefieldPopup'
 import DepartureBoard from '@/components/DepartureBoard'
 import PolarBuddy from '@/components/PolarBuddy'
 import Scribble from '@/components/Scribble'
+import SATPredictor from '@/components/SATPredictor'
 import { playFanfare } from '@/lib/fanfare'
 import { sfxPop, sfxNope, sfxWhoosh, sfxChime } from '@/lib/sfx'
 
@@ -204,20 +205,20 @@ function FadeIn({ children, delay = 0, direction = 'up' }) {
   )
 }
 
-/* ─── ROTATING FORGE WORD — the hero never sits still ─── */
-const FORGE_WORDS = ['OFFICERS', 'DOCTORS', 'IITIANS', '1540s']
+/* ─── ROTATING OUTCOME — the destination keeps changing ─── */
+const FORGE_WORDS = ['THE SAT (1540)', 'IIT', 'AIIMS', 'THE NDA', 'A SARKARI JOB', 'CANADA']
 
 function RotatingWord() {
   const [i, setI] = useState(0)
 
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
-    const id = setInterval(() => setI((v) => (v + 1) % FORGE_WORDS.length), 2200)
+    const id = setInterval(() => setI((v) => (v + 1) % FORGE_WORDS.length), 2000)
     return () => clearInterval(id)
   }, [])
 
   return (
-    <span className="inline-block" style={{ minWidth: '5.2ch' }}>
+    <span className="inline-block align-bottom" style={{ minWidth: '6ch' }}>
       <AnimatePresence mode="popLayout" initial={false}>
         <motion.span
           key={FORGE_WORDS[i]}
@@ -231,6 +232,50 @@ function RotatingWord() {
         </motion.span>
       </AnimatePresence>
     </span>
+  )
+}
+
+/* ─── LIVE PULSE — a green-dot status that rotates TRUE facts ───
+   Honest "alive" feel without a fake occupancy counter. */
+const PULSE_FACTS = [
+  'Mentor on the desk scored 1540 — top 1% worldwide',
+  '7+ students now serve as NDA officers',
+  '50+ MBBS admissions from this classroom',
+  'Una’s first & only SAT + IELTS desk',
+  'Small batches — never more than 15 students',
+]
+function LivePulse() {
+  const [i, setI] = useState(0)
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    const id = setInterval(() => setI((v) => (v + 1) % PULSE_FACTS.length), 3200)
+    return () => clearInterval(id)
+  }, [])
+  return (
+    <div
+      className="inline-flex items-center gap-2 rounded-full pl-3 pr-4 py-1.5 max-w-full"
+      style={{ background: 'rgba(111,170,122,0.1)', border: '1px solid rgba(111,170,122,0.35)' }}
+    >
+      <span className="relative flex h-2.5 w-2.5 flex-shrink-0">
+        <span className="absolute inline-flex h-full w-full rounded-full opacity-70 animate-ping" style={{ background: '#6FAA7A' }} />
+        <span className="relative inline-flex rounded-full h-2.5 w-2.5" style={{ background: '#6FAA7A' }} />
+      </span>
+      <span className="text-[11px] sm:text-xs text-gray-300 truncate" style={{ minWidth: 0 }}>
+        <span className="font-bold text-olive-400" style={{ color: '#6FAA7A' }}>LIVE ·</span>{' '}
+        <AnimatePresence mode="wait">
+          <motion.span
+            key={i}
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.3 }}
+            className="inline-block"
+          >
+            {PULSE_FACTS[i]}
+          </motion.span>
+        </AnimatePresence>
+      </span>
+    </div>
   )
 }
 
@@ -1019,7 +1064,7 @@ export default function HomePage() {
                 {/* Pola says hi */}
                 <PolarBuddy size={78} />
                 <span className="section-tag">
-                  🏆 &nbsp; Best Coaching Institute in Una, HP
+                  ⚡ &nbsp; 10-Second Promise
                 </span>
               </motion.div>
 
@@ -1027,50 +1072,50 @@ export default function HomePage() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.1 }}
-                className="text-5xl sm:text-6xl lg:text-7xl font-black leading-tight mb-5"
+                className="text-5xl sm:text-6xl lg:text-7xl font-black leading-[0.95] mb-5"
                 style={{ fontFamily: 'Rajdhani, sans-serif', letterSpacing: '-0.02em' }}
               >
-                <span className="text-white">WHERE </span>
-                <RotatingWord />
+                <span className="text-white">FROM UNA,</span>
                 <br />
-                <span className="text-white">ARE </span>
-                <span
-                  className="inline-block"
-                  style={{
-                    background: 'linear-gradient(135deg, var(--accent), var(--accent-light))',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                    backgroundClip: 'text',
-                    filter: 'drop-shadow(0 0 18px rgba(var(--accent-rgb),0.35))',
-                  }}
-                >
-                  FORGED
-                </span>
+                <span className="text-white">TO </span>
+                <RotatingWord />
               </motion.h1>
 
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.25 }}
-                className="text-base md:text-lg text-gray-300 mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed"
+                className="text-base md:text-lg text-gray-300 mb-5 max-w-xl mx-auto lg:mx-0 leading-relaxed"
               >
-                <span className="text-gold-400 font-semibold">SAT · IELTS</span> · NDA · JEE · NEET · CUET | Class 10–12.{' '}
-                <span className="text-gold-400 font-semibold">Mentor's own SAT: 1540.</span>{' '}
-                7+ officers trained. From Una to anywhere.
+                <span className="text-gold-400 font-semibold">SAT · IELTS · NDA · JEE · NEET · HP TET · Govt Jobs</span> —
+                all under one roof, with a mentor who scored{' '}
+                <span className="text-gold-400 font-semibold">1540 himself</span>. No fluff. Just results.
               </motion.p>
+
+              {/* live pulse — honest, rotating, alive */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.8, delay: 0.35 }}
+                className="mb-6 flex justify-center lg:justify-start"
+              >
+                <LivePulse />
+              </motion.div>
 
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.4 }}
+                transition={{ duration: 0.8, delay: 0.45 }}
                 className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start"
               >
-                <Link
-                  href="/appointment"
-                  className="btn-gold inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl text-lg shadow-gold animate-pulse-gold"
+                <a
+                  href={wa('Namaste! Vision Success ke baare mein jaanna hai 🙏 (Course: ___, Class: ___)')}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="whatsapp-hero whatsapp-cta inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl text-lg font-bold"
                 >
-                  📅 Book Free Demo
-                </Link>
+                  💬 WhatsApp Us
+                </a>
                 <a
                   href={`tel:${SITE.phoneTel}`}
                   className="btn-ghost phone-cta inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl text-lg"
@@ -1083,7 +1128,7 @@ export default function HomePage() {
               <motion.p
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ duration: 0.8, delay: 0.5 }}
+                transition={{ duration: 0.8, delay: 0.55 }}
                 className="text-sm text-gray-400 mt-4 text-center lg:text-left"
               >
                 ☕ Or just visit us — there&apos;s always a cup of chai and an honest chat waiting.
@@ -1101,7 +1146,7 @@ export default function HomePage() {
                   className="text-[10px] uppercase tracking-[0.3em] text-gray-500 mb-3 text-center lg:text-left"
                   style={{ fontFamily: 'Orbitron, monospace' }}
                 >
-                  Pick your battlefield ↓
+                  What&apos;s your dream? Tap it ↓
                 </p>
                 <div className="grid grid-cols-2 gap-2 max-w-md mx-auto lg:mx-0 relative">
                   <Scribble
@@ -1113,10 +1158,10 @@ export default function HomePage() {
                     pick one… I dare you ✎
                   </Scribble>
                   {[
-                    { emoji: '🎖️', big: 'DEFENCE', small: 'NDA · SSB', href: '/courses/nda' },
-                    { emoji: '🩺', big: 'DOCTOR', small: 'NEET', href: '/courses/neet' },
-                    { emoji: '⚙️', big: 'ENGINEER', small: 'JEE Mains + Adv', href: '/courses/jee' },
-                    { emoji: '🌍', big: 'ABROAD', small: 'SAT · IELTS', href: '/sat', hot: true },
+                    { emoji: '🌍', big: 'STUDY ABROAD', small: 'SAT · IELTS', href: '/sat', hot: true },
+                    { emoji: '🎖️', big: 'DEFENCE', small: 'NDA · SSB', href: '/enroll/nda' },
+                    { emoji: '🩺', big: 'MED · ENGG', small: 'NEET · JEE', href: '/courses' },
+                    { emoji: '🏛️', big: 'SARKARI', small: 'HP TET · Govt Jobs', href: '/courses/govt-jobs' },
                   ].map((p) => (
                     <Link
                       key={p.big}
@@ -1282,6 +1327,15 @@ export default function HomePage() {
       {/* ─── EMOTIONAL ARC: dream → the person who did it → where it lands ─── */}
       <Manifesto />
       <MentorLetter />
+
+      {/* ─── SAT PREDICTOR — the 10-second tool + lead magnet ─── */}
+      <section className="section-padding" style={{ background: 'linear-gradient(180deg, #0A1628 0%, #07111F 100%)' }}>
+        <div className="max-w-2xl mx-auto">
+          <FadeIn>
+            <SATPredictor />
+          </FadeIn>
+        </div>
+      </section>
 
       {/* ─── COURSES ─── */}
       <section
