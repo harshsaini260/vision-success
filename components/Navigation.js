@@ -49,7 +49,7 @@ export default function Navigation() {
         }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16 md:h-20">
-          {/* LOGO — The Watchful Tree of Una (tap for a little magic ✨) */}
+          {/* LOGO — The Bear & The North Star (tap for a little magic ✨) */}
           <Link
             href="/"
             className="flex items-center gap-3 group"

@@ -11,6 +11,7 @@ import { nextSat, satMoment, daysTo } from '@/lib/sat'
 import QuickLeadForm from '@/components/QuickLeadForm'
 import BattlefieldPopup from '@/components/BattlefieldPopup'
 import DepartureBoard from '@/components/DepartureBoard'
+import PolarBuddy from '@/components/PolarBuddy'
 import { playFanfare } from '@/lib/fanfare'
 import { sfxPop, sfxNope, sfxWhoosh, sfxChime } from '@/lib/sfx'
 
@@ -984,6 +985,10 @@ export default function HomePage() {
               'radial-gradient(ellipse 80% 60% at 50% -10%, rgba(var(--accent-rgb),0.08) 0%, transparent 70%)',
           }}
         />
+        {/* aurora borealis — the polar sky */}
+        <div className="aurora" aria-hidden>
+          <i /><i /><i />
+        </div>
         <div
           className="absolute bottom-0 left-0 right-0 h-px"
           style={{ background: 'linear-gradient(90deg, transparent, var(--accent), transparent)' }}
@@ -997,8 +1002,10 @@ export default function HomePage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
-                className="flex justify-center lg:justify-start mb-5"
+                className="flex items-center justify-center lg:justify-start gap-3 mb-5"
               >
+                {/* Pola says hi */}
+                <PolarBuddy size={78} />
                 <span className="section-tag">
                   🏆 &nbsp; Best Coaching Institute in Una, HP
                 </span>
