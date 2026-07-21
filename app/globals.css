@@ -32,6 +32,23 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* ===== ELEGANCE DETAILS ===== */
+::selection {
+  background: rgba(var(--accent-rgb), 0.35);
+  color: #FFFDF5;
+}
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+h1, h2, h3 {
+  text-wrap: balance; /* headlines never orphan a single word */
+}
+p {
+  text-wrap: pretty;
+}
+
 /* ===== SCROLLBAR ===== */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: #0A1628; }

@@ -31,13 +31,15 @@ export default function BattlefieldPopup() {
     const onOpen = () => show()
     window.addEventListener('open-battlefield', onOpen)
 
+    /* 12s: let the hero's 10-second promise finish its job first —
+       the invite should feel like a knock, not an interruption. */
     let timer
     try {
       if (!sessionStorage.getItem(SESSION_KEY)) {
-        timer = setTimeout(show, 5000)
+        timer = setTimeout(show, 12000)
       }
     } catch {
-      timer = setTimeout(show, 5000)
+      timer = setTimeout(show, 12000)
     }
     return () => {
       window.removeEventListener('open-battlefield', onOpen)

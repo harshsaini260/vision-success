@@ -9,8 +9,7 @@
 
 import { useRef, useState } from 'react'
 import { motion, useInView } from 'framer-motion'
-import { addDoc, collection, serverTimestamp } from 'firebase/firestore'
-import { db } from '@/lib/firebase'
+/* Firebase loads lazily at submit time — first paint stays featherweight */
 import { SITE, wa } from '@/lib/site'
 import { playFanfare } from '@/lib/fanfare'
 import { sfxChime } from '@/lib/sfx'
@@ -76,11 +75,14 @@ function LeadForm({ cfg, compact = false }) {
       course: cfg.courseValue,
       source: `${cfg.id}-strategy-session`,
       status: 'new',
-      timestamp: serverTimestamp(),
       createdAtISO: new Date().toISOString(),
     }
     try {
-      await addDoc(collection(db, 'enrollments'), lead)
+      const [{ addDoc, collection, serverTimestamp }, { db }] = await Promise.all([
+        import('firebase/firestore'),
+        import('@/lib/firebase'),
+      ])
+      await addDoc(collection(db, 'enrollments'), { ...lead, timestamp: serverTimestamp() })
     } catch (err) {
       console.error('Strategy-session lead save failed:', err)
       /* never lose a lead — hand it to WhatsApp instead */

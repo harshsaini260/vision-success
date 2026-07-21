@@ -3,8 +3,8 @@
 import { useEffect, useRef, useState } from 'react'
 import { motion, useInView, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
-import { addDoc, collection, getDocs, query, serverTimestamp, where } from 'firebase/firestore'
-import { db } from '@/lib/firebase'
+/* Firebase is loaded lazily (inside effects/submits) so the homepage
+   first paint never waits for it — elegance is also speed. */
 import { COURSES } from '@/lib/courses'
 import { SITE, wa } from '@/lib/site'
 import { nextSat, satMoment, daysTo } from '@/lib/sat'
@@ -279,58 +279,6 @@ function LivePulse() {
   )
 }
 
-/* ─── INTEL FEED — rotating one-line hooks, film-ticker style ─── */
-const INTEL = [
-  "MIT's average SAT is ~1550. Your mentor scored 1540. Ask him anything.",
-  'The Digital SAT hands you a Desmos calculator for EVERY math question.',
-  'Zero negative marking on the SAT — a brave guess never hurts you.',
-  "Universities 'superscore' — your best Math + best English, combined.",
-  'A strong SAT score can unlock scholarships worth tens of lakhs.',
-  '8 SAT windows a year. Miss one? The next is only weeks away.',
-  'NDA Maths is 300 marks — and shortcuts win it. We teach the shortcuts.',
-  'NEET Biology = 360 of 720 marks. Half the exam is one subject.',
-]
-
-function IntelFeed() {
-  const [i, setI] = useState(0)
-
-  useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
-    const id = setInterval(() => setI((v) => (v + 1) % INTEL.length), 4500)
-    return () => clearInterval(id)
-  }, [])
-
-  return (
-    <div
-      className="py-3.5 px-4 relative overflow-hidden"
-      style={{ background: '#0A0E08', borderTop: '1px solid rgba(212,175,55,0.22)', borderBottom: '1px solid rgba(212,175,55,0.22)' }}
-    >
-      <div className="max-w-3xl mx-auto flex items-center gap-3">
-        <span
-          className="flex-shrink-0 text-[9px] font-black uppercase tracking-[0.2em] px-2 py-1 rounded"
-          style={{ background: 'rgba(212,175,55,0.12)', color: 'var(--accent-light)', fontFamily: 'Orbitron, monospace', border: '1px solid rgba(212,175,55,0.35)' }}
-        >
-          📡 Intel
-        </span>
-        <div className="relative flex-1 h-5 overflow-hidden">
-          <AnimatePresence mode="wait">
-            <motion.p
-              key={i}
-              initial={{ y: 16, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: -16, opacity: 0 }}
-              transition={{ duration: 0.35 }}
-              className="absolute inset-0 text-xs text-gray-300 truncate leading-5"
-            >
-              {INTEL[i]}
-            </motion.p>
-          </AnimatePresence>
-        </div>
-      </div>
-    </div>
-  )
-}
-
 /* ─── TWO ENDINGS — the button that refuses to let you settle ─── */
 function TwoEndings() {
   const [shaking, setShaking] = useState(false)
@@ -403,6 +351,10 @@ function BrochureMagnet() {
     setError('')
     setStatus('saving')
     try {
+      const [{ addDoc, collection, serverTimestamp }, { db }] = await Promise.all([
+        import('firebase/firestore'),
+        import('@/lib/firebase'),
+      ])
       await addDoc(collection(db, 'enrollments'), {
         fullName: name.trim(),
         phone: digits.slice(-10),
@@ -1003,7 +955,11 @@ export default function HomePage() {
   useEffect(() => {
     async function loadReviews() {
       try {
-        /* Index-free + rules-compatible: where() only, sort + limit here. */
+        /* Lazy firebase + index-free query: where() only, sort + limit here. */
+        const [{ collection, getDocs, query, where }, { db }] = await Promise.all([
+          import('firebase/firestore'),
+          import('@/lib/firebase'),
+        ])
         const q = query(collection(db, 'reviews'), where('approved', '==', true))
         const snap = await getDocs(q)
         const items = snap.docs.map((d) => ({ id: d.id, ...d.data() }))
@@ -1324,19 +1280,6 @@ export default function HomePage() {
       {/* ─── THE BLUEPRINT — grab it before you even reach the courses ─── */}
       <BrochureMagnet />
 
-      {/* ─── EMOTIONAL ARC: dream → the person who did it → where it lands ─── */}
-      <Manifesto />
-      <MentorLetter />
-
-      {/* ─── SAT PREDICTOR — the 10-second tool + lead magnet ─── */}
-      <section className="section-padding" style={{ background: 'linear-gradient(180deg, #0A1628 0%, #07111F 100%)' }}>
-        <div className="max-w-2xl mx-auto">
-          <FadeIn>
-            <SATPredictor />
-          </FadeIn>
-        </div>
-      </section>
-
       {/* ─── COURSES ─── */}
       <section
         className="section-padding relative"
@@ -1559,11 +1502,21 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ─── EMOTIONAL ARC: dream → the person who did it → the tool ─── */}
+      <Manifesto />
+      <MentorLetter />
+
+      {/* ─── SAT PREDICTOR — the 10-second tool + lead magnet ─── */}
+      <section className="section-padding" style={{ background: 'linear-gradient(180deg, #0A1628 0%, #07111F 100%)' }}>
+        <div className="max-w-2xl mx-auto">
+          <FadeIn>
+            <SATPredictor />
+          </FadeIn>
+        </div>
+      </section>
+
       {/* ─── DEPARTURES — the split-flap showpiece ─── */}
       <DeparturesSection />
-
-      {/* ─── INTEL FEED — one-liners that keep eyes moving ─── */}
-      <IntelFeed />
 
       {/* ─── FIND YOUR BATTLEFIELD — invite card that opens the popup ─── */}
       <section className="section-padding" style={{ background: 'linear-gradient(180deg, #07111F 0%, #0A1628 100%)' }}>
