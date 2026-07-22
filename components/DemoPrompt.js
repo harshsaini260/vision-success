@@ -15,7 +15,7 @@ import { DEMO_WA } from '@/lib/site'
 
 const VISITS_KEY = 'vs-visit-count'
 const SESSION_KEY = 'vs-demo-prompt-shown'
-const SKIP_PATHS = ['/appointment', '/enroll', '/admin', '/hello']
+const SKIP_PATHS = ['/appointment', '/enroll', '/admin', '/hello', '/start']
 
 export default function DemoPrompt() {
   const [open, setOpen] = useState(false)

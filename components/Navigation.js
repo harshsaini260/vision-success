@@ -36,8 +36,8 @@ export default function Navigation() {
     return () => { document.body.style.overflow = '' }
   }, [menuOpen])
 
-  /* /hello is Pola's secret door — no chrome, pure moment */
-  if (pathname === '/hello') return null
+  /* /hello and /start are Pola's secret doors — no chrome, pure moment */
+  if (pathname === '/hello' || pathname === '/start') return null
 
   return (
     <>

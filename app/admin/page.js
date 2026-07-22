@@ -17,7 +17,7 @@ import toast from 'react-hot-toast'
 const ADMIN_PASSWORD = process.env.NEXT_PUBLIC_ADMIN_PASSWORD || 'VisionSuccess@2025'
 
 const CATEGORIES = ['NDA', 'JEE', 'NEET', 'Foundation', 'General']
-const TABS = ['Appointments', 'Enrollments', 'Materials', 'Reviews']
+const TABS = ['Appointments', 'Enrollments', 'Surveys', 'Predictions', 'Materials', 'Reviews']
 
 const AUTH_ERRORS = {
   'auth/invalid-credential': 'Wrong email or password.',
@@ -363,7 +363,7 @@ function MaterialsTab() {
 }
 
 /* ─── LEAD LIST (shared by Appointments & Enrollments) ─── */
-function LeadCard({ lead, statuses, statusColors, onStatus, extraLines }) {
+function LeadCard({ lead, statuses, statusColors, onStatus, extraLines, onDelete }) {
   return (
     <div className="glass-card rounded-2xl p-5">
       <div className="flex flex-wrap items-start justify-between gap-3 mb-3">
@@ -429,6 +429,15 @@ function LeadCard({ lead, statuses, statusColors, onStatus, extraLines }) {
         >
           💬 WhatsApp
         </a>
+        {onDelete && (
+          <button
+            onClick={onDelete}
+            className="text-xs px-3 py-1.5 rounded-lg"
+            style={{ background: 'rgba(123,45,45,0.12)', border: '1px solid rgba(123,45,45,0.4)', color: '#C77' }}
+          >
+            🗑 Delete
+          </button>
+        )}
       </div>
     </div>
   )
@@ -564,6 +573,125 @@ function EnrollmentsTab() {
                   <div>👨‍👩‍👦 Parent: {e.parentName || '—'} {e.parentPhone && `· ${e.parentPhone}`}</div>
                 )}
                 {e.email && <div>✉️ {e.email}</div>}
+              </div>
+            }
+          />
+        ))
+      )}
+    </div>
+  )
+}
+
+/* ─── shared: load a lead collection newest-first, resilient ─── */
+function useLeadCollection(name) {
+  const [rows, setRows] = useState([])
+  const [loading, setLoading] = useState(true)
+  useEffect(() => {
+    async function load() {
+      try {
+        let snap
+        try {
+          snap = await getDocs(query(collection(db, name), orderBy('timestamp', 'desc')))
+        } catch {
+          snap = await getDocs(collection(db, name)) // some docs may lack timestamp
+        }
+        const items = snap.docs.map((d) => ({ id: d.id, ...d.data() }))
+        items.sort((a, b) => (b.timestamp?.seconds || 0) - (a.timestamp?.seconds || 0))
+        setRows(items)
+      } catch (e) {
+        console.error(e)
+        toast.error(friendlyLoadError(e))
+        setRows([])
+      }
+      setLoading(false)
+    }
+    load()
+  }, [name])
+  const setStatus = async (id, status) => {
+    try {
+      await updateDoc(doc(db, name, id), { status })
+      setRows((prev) => prev.map((r) => (r.id === id ? { ...r, status } : r)))
+      toast.success(`Marked as ${status}`)
+    } catch (e) { toast.error(friendlyLoadError(e)) }
+  }
+  const remove = async (id) => {
+    if (!confirm('Delete this entry permanently?')) return
+    try {
+      await deleteDoc(doc(db, name, id))
+      setRows((prev) => prev.filter((r) => r.id !== id))
+      toast.success('Deleted')
+    } catch (e) { toast.error(friendlyLoadError(e)) }
+  }
+  return { rows, loading, setStatus, remove }
+}
+
+const LEAD_STATUS_COLORS = { new: '#D4AF37', contacted: '#4A7C59', admitted: '#2D5282', closed: '#7B2D2D' }
+
+/* ─── SURVEYS TAB (from the /start QR survey) ─── */
+function SurveysTab() {
+  const { rows, loading, setStatus, remove } = useLeadCollection('surveys')
+  const fmt = (v) => (Array.isArray(v) ? v.join(', ') : v || '—')
+  return (
+    <div className="space-y-4">
+      <h2 className="text-xl font-black text-white" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+        QR Survey Responses ({rows.length})
+      </h2>
+      {loading ? (
+        <div className="py-12 text-center text-gray-500">Loading…</div>
+      ) : rows.length === 0 ? (
+        <div className="py-12 text-center text-gray-500">No survey responses yet. Put the &quot;Scan Me&quot; poster up — they&apos;ll come.</div>
+      ) : (
+        rows.map((s) => (
+          <LeadCard
+            key={s.id}
+            lead={{ ...s, fullName: s.name, phone: s.whatsapp, city: s.area, course: `Wants: ${fmt(s.exams)}` }}
+            statuses={['new', 'contacted', 'admitted', 'closed']}
+            statusColors={LEAD_STATUS_COLORS}
+            onStatus={setStatus}
+            onDelete={() => remove(s.id)}
+            extraLines={
+              <div className="text-xs text-gray-500 mb-3 space-y-0.5">
+                {s.matchedRoute && <div>➡️ Routed to: <span className="text-gold-400">{s.matchedRoute}</span></div>}
+                <div>🧑 Status: {fmt(s.currentStatus)} · ⏱️ Attempt: {fmt(s.attempt)}</div>
+                <div>📚 Prep now: {fmt(s.prep)} · 💸 Budget: {fmt(s.budget)}</div>
+                <div>🏫 Mode: {fmt(s.mode)} · 🕘 Timing: {fmt(s.timing)}</div>
+                <div>😣 Challenges: {fmt(s.challenge)}</div>
+                <div>⭐ Priorities: {fmt(s.matters)}</div>
+                {s.disappointed && <div>💬 Past letdown: &quot;{s.disappointed}&quot;</div>}
+              </div>
+            }
+          />
+        ))
+      )}
+    </div>
+  )
+}
+
+/* ─── PREDICTIONS TAB (from the SAT predictor tool) ─── */
+function PredictionsTab() {
+  const { rows, loading, setStatus, remove } = useLeadCollection('predictions')
+  return (
+    <div className="space-y-4">
+      <h2 className="text-xl font-black text-white" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+        SAT Predictor Leads ({rows.length})
+      </h2>
+      {loading ? (
+        <div className="py-12 text-center text-gray-500">Loading…</div>
+      ) : rows.length === 0 ? (
+        <div className="py-12 text-center text-gray-500">No predictor leads yet.</div>
+      ) : (
+        rows.map((p) => (
+          <LeadCard
+            key={p.id}
+            lead={{ ...p, fullName: p.name, course: `Predicted ${p.predictedRange?.low}–${p.predictedRange?.high}` }}
+            statuses={['new', 'contacted', 'admitted', 'closed']}
+            statusColors={LEAD_STATUS_COLORS}
+            onStatus={setStatus}
+            onDelete={() => remove(p.id)}
+            extraLines={
+              <div className="text-xs text-gray-500 mb-3 space-y-0.5">
+                <div>🧮 Algebra {p.algebraComfort}/10 · Last math {p.lastMathScore}% · {p.hoursPerWeek} hrs/wk</div>
+                <div>🎯 Est. {p.weeksToTarget} weeks to 1450+</div>
               </div>
             }
           />
@@ -762,6 +890,8 @@ export default function AdminPage() {
           >
             {activeTab === 'Appointments' && <AppointmentsTab />}
             {activeTab === 'Enrollments' && <EnrollmentsTab />}
+            {activeTab === 'Surveys' && <SurveysTab />}
+            {activeTab === 'Predictions' && <PredictionsTab />}
             {activeTab === 'Materials' && <MaterialsTab />}
             {activeTab === 'Reviews' && <ReviewsAdminTab />}
           </motion.div>

@@ -50,6 +50,12 @@ service cloud.firestore {
       allow read, update, delete: if isAdmin();
     }
 
+    // ── Survey responses (from the /start QR survey) ──
+    match /surveys/{docId} {
+      allow create: if true;                       // public survey
+      allow read, update, delete: if isAdmin();
+    }
+
     // Everything else: locked.
     match /{document=**} {
       allow read, write: if false;

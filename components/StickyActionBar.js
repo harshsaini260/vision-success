@@ -9,7 +9,7 @@
 import { usePathname } from 'next/navigation'
 import { SITE, wa } from '@/lib/site'
 
-const HIDE_ON = ['/sat', '/hello', '/appointment', '/enroll', '/admin']
+const HIDE_ON = ['/sat', '/hello', '/start', '/appointment', '/enroll', '/admin']
 
 export default function StickyActionBar() {
   const pathname = usePathname() || '/'
