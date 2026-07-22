@@ -56,6 +56,16 @@ function routeFor(exams = []) {
 
 const ease = [0.22, 1, 0.36, 1]
 
+/* GA4 helper — fires named events with parameters. Survey answers
+   flow into Analytics so demand trends + drop-off are visible there. */
+function track(event, params = {}) {
+  try {
+    if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+      window.gtag('event', event, params)
+    }
+  } catch {}
+}
+
 export default function SurveyExperience() {
   const router = useRouter()
   const [step, setStep] = useState(-1) // -1 = intro
@@ -121,6 +131,17 @@ export default function SurveyExperience() {
     })
   }
 
+  /* GA4 funnel: survey_start when they begin, survey_step for each
+     question completed. In GA4 this is a drop-off funnel per question. */
+  useEffect(() => {
+    if (step === 0) track('survey_start', { event_category: 'survey' })
+    else if (step > 0 && step <= total) {
+      const doneQ = QUESTIONS[step - 1]
+      track('survey_step', { event_category: 'survey', step_id: doneQ.id, step_index: step, step_pct: Math.round((step / total) * 100) })
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [step])
+
   /* fire the save exactly once when we cross past the last question,
      covering both the Next button and single-select auto-advance */
   useEffect(() => {
@@ -144,11 +165,22 @@ export default function SurveyExperience() {
     } catch (err) {
       console.error('Survey save failed:', err)
     }
-    try {
-      if (typeof window.gtag === 'function') {
-        window.gtag('event', 'generate_lead', { event_category: 'conversion', event_label: 'qr-survey' })
-      }
-    } catch {}
+    /* rich GA4 event: the answers become reportable demand data —
+       which exams, which village, which budget, where they routed. */
+    const exams = Array.isArray(answers.exams) ? answers.exams : []
+    track('survey_complete', {
+      event_category: 'survey',
+      exams: exams.join(' | ').slice(0, 100) || 'none',
+      primary_exam: exams[0] || 'none',
+      area: answers.area || '—',
+      current_status: answers.currentStatus || '—',
+      attempt: answers.attempt || '—',
+      prep_method: answers.prep || '—',
+      budget: answers.budget || '—',
+      learn_mode: answers.mode || '—',
+      matched_route: route.href,
+    })
+    track('generate_lead', { event_category: 'conversion', event_label: 'qr-survey', matched_route: route.href })
     playFanfare()
     import('canvas-confetti').then((m) => m.default({ particleCount: 120, spread: 90, origin: { y: 0.6 }, colors: ['#D4AF37', '#F5D76E', '#6FAA7A', '#fff'] })).catch(() => {})
     setSaving(false)

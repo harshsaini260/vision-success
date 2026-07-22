@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   collection, addDoc, getDocs, updateDoc, deleteDoc, doc,
@@ -627,15 +627,91 @@ function useLeadCollection(name) {
 
 const LEAD_STATUS_COLORS = { new: '#D4AF37', contacted: '#4A7C59', admitted: '#2D5282', closed: '#7B2D2D' }
 
+/* count occurrences of a field's values across rows (arrays counted per-item),
+   returned as [value, count] sorted high→low */
+function tally(rows, key) {
+  const m = {}
+  rows.forEach((r) => {
+    const v = r[key]
+    if (Array.isArray(v)) v.forEach((x) => { if (x) m[x] = (m[x] || 0) + 1 })
+    else if (v) m[v] = (m[v] || 0) + 1
+  })
+  return Object.entries(m).sort((a, b) => b[1] - a[1])
+}
+
+/* a compact horizontal-bar breakdown */
+function InsightBars({ title, data, total, accent = 'var(--accent)' }) {
+  if (!data.length) return null
+  const max = data[0][1] || 1
+  return (
+    <div className="glass-card rounded-2xl p-4">
+      <div className="text-[10px] uppercase tracking-[0.2em] text-gray-500 mb-3" style={{ fontFamily: 'Orbitron, monospace' }}>{title}</div>
+      <div className="space-y-2">
+        {data.slice(0, 6).map(([label, n]) => (
+          <div key={label}>
+            <div className="flex justify-between text-xs mb-0.5">
+              <span className="text-gray-300 truncate pr-2">{label}</span>
+              <span className="text-gray-500 flex-shrink-0">{n} · {Math.round((n / (total || 1)) * 100)}%</span>
+            </div>
+            <div className="h-1.5 rounded-full" style={{ background: 'rgba(255,255,255,0.07)' }}>
+              <div className="h-full rounded-full" style={{ width: `${(n / max) * 100}%`, background: accent }} />
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+function surveyCsv(rows) {
+  const cols = ['name', 'whatsapp', 'area', 'currentStatus', 'exams', 'attempt', 'prep', 'challenge', 'disappointed', 'matters', 'budget', 'mode', 'timing', 'matchedRoute', 'status', 'createdAtISO']
+  const esc = (v) => {
+    const s = Array.isArray(v) ? v.join(' | ') : v == null ? '' : String(v)
+    return `"${s.replace(/"/g, '""')}"`
+  }
+  const lines = [cols.join(','), ...rows.map((r) => cols.map((c) => esc(r[c])).join(','))]
+  const blob = new Blob([lines.join('\n')], { type: 'text/csv;charset=utf-8;' })
+  const a = document.createElement('a')
+  a.href = URL.createObjectURL(blob)
+  a.download = `vision-success-surveys-${new Date().toISOString().slice(0, 10)}.csv`
+  document.body.appendChild(a); a.click(); a.remove()
+}
+
 /* ─── SURVEYS TAB (from the /start QR survey) ─── */
 function SurveysTab() {
   const { rows, loading, setStatus, remove } = useLeadCollection('surveys')
   const fmt = (v) => (Array.isArray(v) ? v.join(', ') : v || '—')
+
+  const insights = useMemo(() => ({
+    exams: tally(rows, 'exams'),
+    areas: tally(rows, 'area'),
+    budgets: tally(rows, 'budget'),
+    challenges: tally(rows, 'challenge'),
+    routes: tally(rows, 'matchedRoute'),
+  }), [rows])
+
   return (
     <div className="space-y-4">
-      <h2 className="text-xl font-black text-white" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
-        QR Survey Responses ({rows.length})
-      </h2>
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <h2 className="text-xl font-black text-white" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+          QR Survey Responses ({rows.length})
+        </h2>
+        {rows.length > 0 && (
+          <button onClick={() => surveyCsv(rows)} className="btn-gold px-4 py-2 rounded-xl text-xs">
+            ⬇ Export CSV
+          </button>
+        )}
+      </div>
+
+      {/* ── MARKET INSIGHTS — what students actually want ── */}
+      {rows.length > 0 && (
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <InsightBars title="🔥 Most-wanted exams" data={insights.exams} total={rows.length} />
+          <InsightBars title="📍 Where they're from" data={insights.areas} total={rows.length} accent="#6FAA7A" />
+          <InsightBars title="💸 Budget appetite" data={insights.budgets} total={rows.length} accent="#E0912E" />
+          <InsightBars title="😣 Biggest pain points" data={insights.challenges} total={rows.length} accent="#E05C42" />
+        </div>
+      )}
       {loading ? (
         <div className="py-12 text-center text-gray-500">Loading…</div>
       ) : rows.length === 0 ? (
