@@ -10,6 +10,7 @@ import { useMemo, useState } from 'react'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { wa } from '@/lib/site'
+import { saveLead } from '@/lib/leads'
 import { playFanfare } from '@/lib/fanfare'
 import { sfxPop, sfxChime } from '@/lib/sfx'
 
@@ -79,12 +80,10 @@ export default function SATPredictor() {
     if (digits.length < 10) return setError('Enter a valid 10-digit WhatsApp number')
     setError('')
     setSaving(true)
-    try {
-      const [{ addDoc, collection, serverTimestamp }, { db }] = await Promise.all([
-        import('firebase/firestore'),
-        import('@/lib/firebase'),
-      ])
-      await addDoc(collection(db, 'predictions'), {
+    /* fail-safe: never lose the lead to a rules hiccup */
+    await saveLead(
+      'predictions',
+      {
         name: name.trim(),
         phone: digits.slice(-10),
         algebraComfort: algebra,
@@ -93,13 +92,9 @@ export default function SATPredictor() {
         predictedRange: { low: result.low, high: result.high },
         weeksToTarget: result.weeks,
         source: 'sat-predictor',
-        status: 'new',
-        createdAtISO: new Date().toISOString(),
-        timestamp: serverTimestamp(),
-      })
-    } catch (err) {
-      console.error('Predictor lead save failed:', err)
-    }
+      },
+      `Namaste! SAT predictor: mera range ${result.low}-${result.high} aaya 🎯\n\n👤 ${name.trim()}\n📞 ${digits.slice(-10)}\nFull roadmap chahiye 🙏`
+    )
     try {
       if (typeof window.gtag === 'function') {
         window.gtag('event', 'generate_lead', { event_category: 'conversion', event_label: 'sat-predictor' })

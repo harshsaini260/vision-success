@@ -11,6 +11,7 @@ import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
 import SurveyBear from '@/components/SurveyBear'
 import { wa } from '@/lib/site'
+import { saveLead } from '@/lib/leads'
 import { playFanfare } from '@/lib/fanfare'
 import { sfxPop, sfxChime, sfxWhoosh } from '@/lib/sfx'
 
@@ -155,16 +156,13 @@ export default function SurveyExperience() {
   const finish = async () => {
     setSaving(true)
     const route = routeFor(answers.exams)
-    const record = { ...answers, matchedRoute: route.href, source: 'qr-survey', status: 'new', createdAtISO: new Date().toISOString() }
-    try {
-      const [{ addDoc, collection, serverTimestamp }, { db }] = await Promise.all([
-        import('firebase/firestore'),
-        import('@/lib/firebase'),
-      ])
-      await addDoc(collection(db, 'surveys'), { ...record, timestamp: serverTimestamp() })
-    } catch (err) {
-      console.error('Survey save failed:', err)
-    }
+    const record = { ...answers, matchedRoute: route.href, source: 'qr-survey' }
+    /* fail-safe: a rules hiccup must never lose a student's answers */
+    await saveLead(
+      'surveys',
+      record,
+      `Namaste! Maine Pola ka survey pura kiya 🐻‍❄️\n\n👤 ${answers.name || '—'}\n📞 ${answers.whatsapp || '—'}\n🎯 ${(Array.isArray(answers.exams) ? answers.exams.join(', ') : '—')}`
+    )
     /* rich GA4 event: the answers become reportable demand data —
        which exams, which village, which budget, where they routed. */
     const exams = Array.isArray(answers.exams) ? answers.exams : []
