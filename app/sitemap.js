@@ -1,6 +1,7 @@
 import { SITE } from '@/lib/site'
 import { COURSES } from '@/lib/courses'
 import { SEO_PAGES } from '@/lib/seoPages'
+import { POSTS } from '@/lib/blog'
 
 export default function sitemap() {
   const now = new Date()
@@ -24,6 +25,13 @@ export default function sitemap() {
     { url: `${SITE.url}/enroll/nda`, lastModified: now, changeFrequency: 'weekly', priority: 0.9 },
     { url: `${SITE.url}/enroll/neet`, lastModified: now, changeFrequency: 'weekly', priority: 0.9 },
     { url: `${SITE.url}/enroll/jee`, lastModified: now, changeFrequency: 'weekly', priority: 0.9 },
+    { url: `${SITE.url}/blog`, lastModified: now, changeFrequency: 'daily', priority: 0.8 },
+    ...POSTS.map((p) => ({
+      url: `${SITE.url}/blog/${p.slug}`,
+      lastModified: new Date(p.date),
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    })),
     { url: `${SITE.url}/enroll`, lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
     { url: `${SITE.url}/appointment`, lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
     { url: `${SITE.url}/materials`, lastModified: now, changeFrequency: 'weekly', priority: 0.7 },

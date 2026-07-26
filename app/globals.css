@@ -864,6 +864,116 @@ img { max-width: 100%; height: auto; }
   to { transform: translate(8%, 5%) rotate(4deg) scale(1.18); opacity: 1; }
 }
 
+/* ===== THE SCROLLS — handwritten blog parchment ===== */
+.scroll-paper {
+  position: relative;
+  background:
+    radial-gradient(ellipse 110% 80% at 15% 0%, rgba(59,51,37,0.05) 0%, transparent 55%),
+    radial-gradient(ellipse 100% 70% at 85% 100%, rgba(59,51,37,0.07) 0%, transparent 50%),
+    linear-gradient(180deg, #F7F2E6 0%, #F5F0E4 50%, #EFE8D8 100%);
+  color: #3B3325;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 40px rgba(var(--accent-rgb),0.06);
+}
+/* the rolled dowels at top and bottom */
+.scroll-paper::before,
+.scroll-paper::after {
+  content: '';
+  position: absolute;
+  left: -10px;
+  right: -10px;
+  height: 18px;
+  background: linear-gradient(180deg, var(--accent-dark, #8C6D1F) 0%, var(--accent, #D4AF37) 45%, var(--accent-dark, #8C6D1F) 100%);
+  border-radius: 9px;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.3);
+}
+.scroll-paper::before { top: -9px; }
+.scroll-paper::after { bottom: -9px; }
+
+/* faint ruled lines, like a real notebook page */
+.scroll-ruled {
+  background-image: repeating-linear-gradient(
+    180deg,
+    transparent 0px,
+    transparent 31px,
+    rgba(59,51,37,0.07) 31px,
+    rgba(59,51,37,0.07) 32px
+  );
+}
+
+.scroll-hand {
+  font-family: 'Caveat', cursive;
+  font-weight: 600;
+  color: #3B3325;
+  font-size: 1.32rem;
+  line-height: 1.75;
+}
+.scroll-hand strong { color: #7A2F1E; }
+.scroll-h {
+  font-family: 'Caveat', cursive;
+  font-weight: 700;
+  color: #7A2F1E;
+  font-size: 1.85rem;
+  line-height: 1.25;
+}
+.scroll-quote {
+  font-family: 'Caveat', cursive;
+  font-weight: 700;
+  font-size: 1.7rem;
+  line-height: 1.4;
+  color: #6B5A22;
+  border-left: 3px solid rgba(var(--accent-rgb), 0.65);
+  padding-left: 1rem;
+}
+.scroll-note {
+  font-family: 'Caveat', cursive;
+  font-weight: 600;
+  color: #8A7326;
+  font-size: 1.15rem;
+  transform: rotate(-1.6deg);
+  display: inline-block;
+}
+
+/* form fields that live on parchment */
+.scroll-input {
+  width: 100%;
+  background: rgba(255,255,255,0.55);
+  border: 1px solid rgba(59,51,37,0.28);
+  border-radius: 10px;
+  padding: 11px 14px;
+  color: #3B3325;
+  font-family: 'Caveat', cursive;
+  font-weight: 600;
+  font-size: 1.15rem;
+  outline: none;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+.scroll-input::placeholder { color: rgba(59,51,37,0.45); }
+.scroll-input:focus {
+  border-color: var(--accent-dark, #8C6D1F);
+  background: rgba(255,255,255,0.8);
+}
+
+/* wax seal on each scroll card */
+.wax-seal {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #C6503A, #8E2F1F 70%);
+  box-shadow: 0 3px 10px rgba(0,0,0,0.45), inset 0 -2px 6px rgba(0,0,0,0.3);
+  display: flex; align-items: center; justify-content: center;
+  color: #F5D2C6;
+  font-family: 'Orbitron', monospace;
+  font-size: 13px;
+  font-weight: 700;
+  transform: rotate(-8deg);
+  flex-shrink: 0;
+}
+
+@media (max-width: 640px) {
+  .scroll-hand { font-size: 1.22rem; }
+  .scroll-h { font-size: 1.6rem; }
+  .scroll-quote { font-size: 1.45rem; }
+}
+
 /* ===== SAT PREDICTOR SLIDERS ===== */
 .sat-slider {
   -webkit-appearance: none;

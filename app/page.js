@@ -8,6 +8,7 @@ import Link from 'next/link'
 import { COURSES } from '@/lib/courses'
 import { SITE, wa } from '@/lib/site'
 import { nextSat, satMoment, daysTo } from '@/lib/sat'
+import { POSTS, questionOfTheDay } from '@/lib/blog'
 import QuickLeadForm from '@/components/QuickLeadForm'
 import BattlefieldPopup from '@/components/BattlefieldPopup'
 import DepartureBoard from '@/components/DepartureBoard'
@@ -723,6 +724,64 @@ function Manifesto() {
               🚀 Start Dreaming Louder
             </Link>
           </div>
+        </FadeIn>
+      </div>
+    </section>
+  )
+}
+
+/* ─── THE SCROLLS TEASER — today's question + latest writing ───
+   The question changes on its own each morning, so the homepage is
+   never identical two days running. */
+function ScrollTeaser() {
+  const [q, setQ] = useState(null)
+  useEffect(() => { setQ(questionOfTheDay()) }, [])
+  const latest = POSTS.slice(0, 2)
+
+  return (
+    <section className="section-padding" style={{ background: '#07111F' }}>
+      <div className="max-w-3xl mx-auto">
+        <FadeIn>
+          <div className="text-center mb-8">
+            <span className="section-tag mb-4 inline-block">📜 The Scrolls</span>
+            <h2 className="text-4xl md:text-5xl font-black text-white mb-2" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+              Today&apos;s <span className="text-gold-shimmer">Question</span>
+            </h2>
+            <p className="text-gray-500 text-sm">A new one every morning. No marks for this one.</p>
+          </div>
+        </FadeIn>
+
+        <FadeIn delay={0.08}>
+          <Link href="/blog" className="block group">
+            <div
+              className="scroll-paper rounded-sm px-6 py-9 sm:px-10 text-center transition-transform duration-300 group-hover:-translate-y-1"
+              style={{ transform: 'rotate(-0.6deg)' }}
+            >
+              <p className="scroll-h" style={{ fontSize: '2rem' }}>
+                {q ? q.text : '…'}
+              </p>
+              <p className="scroll-note mt-5">think about it on the walk home ✎</p>
+            </div>
+          </Link>
+        </FadeIn>
+
+        <FadeIn delay={0.14}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-6">
+            {latest.map((p) => (
+              <Link key={p.slug} href={`/blog/${p.slug}`} className="glass-card glass-card-hover rounded-2xl p-4 flex gap-3 transition-all duration-300">
+                <span className="text-2xl flex-shrink-0">{p.emoji}</span>
+                <span>
+                  <span className="block text-sm font-bold text-white mb-0.5" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+                    {p.title}
+                  </span>
+                  <span className="block text-[11px] text-gray-500">{p.tag} · {p.readMins} min read</span>
+                </span>
+              </Link>
+            ))}
+          </div>
+          <p className="text-center mt-5">
+            <Link href="/blog" className="text-sm font-bold text-gold-400">📜 Read all the scrolls — or write one →</Link>
+          </p>
         </FadeIn>
       </div>
     </section>
@@ -1514,6 +1573,9 @@ export default function HomePage() {
           </FadeIn>
         </div>
       </section>
+
+      {/* ─── THE SCROLLS — today's question, in the reader's face ─── */}
+      <ScrollTeaser />
 
       {/* ─── DEPARTURES — the split-flap showpiece ─── */}
       <DeparturesSection />
