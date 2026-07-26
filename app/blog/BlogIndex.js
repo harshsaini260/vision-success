@@ -10,6 +10,7 @@ import Link from 'next/link'
 import { motion, useInView } from 'framer-motion'
 import { POSTS, TAGS, questionOfTheDay } from '@/lib/blog'
 import { SITE, wa } from '@/lib/site'
+import { saveLead } from '@/lib/leads'
 import { sfxPop, sfxChime } from '@/lib/sfx'
 
 function FadeIn({ children, delay = 0 }) {
@@ -54,29 +55,58 @@ function DailyQuestion() {
   )
 }
 
-/* ─── SUBMISSION — open to anyone, published only after review ─── */
+/* ─── SUBMISSION — open to anyone, published only after review ───
+   Writes to the `blogs` queue as approved:false. The security rule
+   REFUSES any submission that tries to set approved:true, so nothing
+   can ever self-publish. If Firestore is unreachable the draft still
+   reaches us over WhatsApp rather than being lost. */
 function SubmitScroll() {
   const [name, setName] = useState('')
+  const [place, setPlace] = useState('')
   const [title, setTitle] = useState('')
   const [idea, setIdea] = useState('')
   const [error, setError] = useState('')
+  const [status, setStatus] = useState('idle') // idle | sending | sent
 
-  const send = (e) => {
+  const send = async (e) => {
     e.preventDefault()
     if (!name.trim()) return setError('Your name, please')
     if (!title.trim()) return setError('Give it a title')
     if (idea.trim().length < 40) return setError('Tell us a little more — at least a few lines')
     setError('')
+    setStatus('sending')
     sfxChime()
     try {
       if (typeof window.gtag === 'function') {
         window.gtag('event', 'blog_submission', { event_category: 'engagement', event_label: title.trim().slice(0, 80) })
       }
     } catch {}
-    window.open(
-      wa(`✍️ BLOG SUBMISSION — Vision Success Scrolls\n\n👤 ${name.trim()}\n📜 Title: ${title.trim()}\n\n${idea.trim()}`),
-      '_blank',
-      'noopener'
+    await saveLead(
+      'blogs',
+      {
+        authorName: name.trim(),
+        authorPlace: place.trim(),
+        title: title.trim(),
+        body: idea.trim(),
+        approved: false, // the rule enforces this too — belt and braces
+        source: 'blog-submission',
+      },
+      `✍️ BLOG SUBMISSION — Vision Success Scrolls\n\n👤 ${name.trim()}${place.trim() ? ` · ${place.trim()}` : ''}\n📜 ${title.trim()}\n\n${idea.trim()}`
+    )
+    setStatus('sent')
+  }
+
+  if (status === 'sent') {
+    return (
+      <div className="scroll-paper rounded-sm px-6 py-10 sm:px-10 text-center" style={{ transform: 'rotate(0.4deg)' }}>
+        <div className="text-4xl mb-3">📜</div>
+        <h3 className="scroll-h mb-2" style={{ fontSize: '2rem' }}>Your scroll is with us.</h3>
+        <p className="scroll-hand" style={{ fontSize: '1.15rem' }}>
+          We read every single one. If it&apos;s published, it appears below with your name on it —
+          usually within a few days.
+        </p>
+        <p className="scroll-note mt-4">thank you for writing ✎</p>
+      </div>
     )
   }
 
@@ -104,6 +134,13 @@ function SubmitScroll() {
         />
         <input
           className="scroll-input"
+          placeholder="Your village / town (optional)"
+          value={place}
+          onChange={(e) => setPlace(e.target.value)}
+          aria-label="Your place"
+        />
+        <input
+          className="scroll-input"
           placeholder="Title of your scroll"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
@@ -118,14 +155,106 @@ function SubmitScroll() {
           aria-label="Your writing"
         />
         {error && <p className="text-sm font-semibold" style={{ color: '#B3402E' }}>{error}</p>}
-        <button type="submit" className="btn-gold w-full py-3.5 rounded-xl text-sm">
-          📜 Send My Scroll
+        <button type="submit" disabled={status === 'sending'} className="btn-gold w-full py-3.5 rounded-xl text-sm disabled:opacity-60">
+          {status === 'sending' ? 'Sending…' : '📜 Send My Scroll'}
         </button>
         <p className="text-[11px] text-center" style={{ color: '#8A7326' }}>
-          Opens WhatsApp with your writing attached. Nothing appears on this page until we read and
-          approve it — no automatic posting, ever.
+          Goes into our review queue. Nothing appears on this page until a human reads and approves
+          it — no automatic posting, ever.
         </p>
       </form>
+    </div>
+  )
+}
+
+/* ─── COMMUNITY SCROLLS — reader submissions the admin approved ───
+   Rendered on the same parchment as everything else. Expands inline
+   so a reader never leaves the page. */
+function CommunityScrolls() {
+  const [rows, setRows] = useState([])
+  const [open, setOpen] = useState(null)
+
+  useEffect(() => {
+    ;(async () => {
+      try {
+        const [{ collection, getDocs, query, where }, { db }] = await Promise.all([
+          import('firebase/firestore'),
+          import('@/lib/firebase'),
+        ])
+        const snap = await getDocs(query(collection(db, 'blogs'), where('approved', '==', true)))
+        const items = snap.docs.map((d) => ({ id: d.id, ...d.data() }))
+        items.sort((a, b) => (b.timestamp?.seconds || 0) - (a.timestamp?.seconds || 0))
+        setRows(items)
+      } catch {
+        setRows([])
+      }
+    })()
+  }, [])
+
+  if (rows.length === 0) return null
+
+  return (
+    <div className="mt-14">
+      <FadeIn>
+        <div className="text-center mb-7">
+          <h2 className="text-3xl font-black text-white mb-1" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+            ✍️ From The <span className="text-gold-shimmer">Community</span>
+          </h2>
+          <p className="text-gray-500 text-sm">Written by readers. Read and approved by us.</p>
+        </div>
+      </FadeIn>
+      <div className="space-y-8">
+        {rows.map((r, i) => {
+          const isOpen = open === r.id
+          return (
+            <FadeIn key={r.id} delay={i * 0.05}>
+              <article
+                className="scroll-paper rounded-sm px-6 py-8 sm:px-10 sm:py-9"
+                style={{ transform: `rotate(${i % 2 === 0 ? 0.5 : -0.5}deg)` }}
+              >
+                <div className="flex items-start justify-between gap-4 mb-3">
+                  <div>
+                    <p
+                      className="text-[10px] uppercase tracking-[0.25em] opacity-60 mb-1"
+                      style={{ fontFamily: 'Orbitron, monospace', color: '#7A6A48' }}
+                    >
+                      Community scroll
+                    </p>
+                    <h3 className="scroll-h" style={{ fontSize: '1.9rem' }}>{r.title}</h3>
+                  </div>
+                  <span className="wax-seal" aria-hidden>✍️</span>
+                </div>
+
+                <div className="scroll-hand" style={{ fontSize: '1.18rem' }}>
+                  {(isOpen ? r.body : (r.body || '').slice(0, 260) + ((r.body || '').length > 260 ? '…' : ''))
+                    .split('\n')
+                    .filter(Boolean)
+                    .map((para, j) => (
+                      <p key={j} className="mb-3">{para}</p>
+                    ))}
+                </div>
+
+                {(r.body || '').length > 260 && (
+                  <button
+                    onClick={() => { sfxPop(); setOpen(isOpen ? null : r.id) }}
+                    className="scroll-note mt-2"
+                    style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
+                  >
+                    {isOpen ? '← fold this scroll' : 'unroll the whole scroll →'}
+                  </button>
+                )}
+
+                <div className="mt-6 pt-4" style={{ borderTop: '1px dashed rgba(59,51,37,0.28)' }}>
+                  <p className="scroll-h" style={{ fontSize: '1.45rem' }}>— {r.authorName || 'Anonymous'}</p>
+                  <p className="text-xs mt-0.5" style={{ color: '#8A7326' }}>
+                    {r.authorPlace ? `${r.authorPlace} · ` : ''}reviewed and published by Vision Success
+                  </p>
+                </div>
+              </article>
+            </FadeIn>
+          )
+        })}
+      </div>
     </div>
   )
 }
@@ -211,6 +340,9 @@ export default function BlogIndex() {
             </FadeIn>
           ))}
         </div>
+
+        {/* community scrolls — approved reader submissions */}
+        <CommunityScrolls />
 
         {/* submit */}
         <div className="mt-14">

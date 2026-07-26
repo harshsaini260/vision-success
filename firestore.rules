@@ -56,6 +56,16 @@ service cloud.firestore {
       allow read, update, delete: if isAdmin();
     }
 
+    // ── Community blog scrolls (from /blog) ──
+    // Same proven shape as reviews: anyone may submit, but ONLY as
+    // unapproved. Nothing is publicly readable until the admin flips
+    // approved to true, so nothing can self-publish.
+    match /blogs/{docId} {
+      allow create: if request.resource.data.approved == false;
+      allow read: if resource.data.approved == true || isAdmin();
+      allow update, delete: if isAdmin();
+    }
+
     // Everything else: locked.
     match /{document=**} {
       allow read, write: if false;

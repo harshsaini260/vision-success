@@ -17,7 +17,7 @@ import toast from 'react-hot-toast'
 const ADMIN_PASSWORD = process.env.NEXT_PUBLIC_ADMIN_PASSWORD || 'VisionSuccess@2025'
 
 const CATEGORIES = ['NDA', 'JEE', 'NEET', 'Foundation', 'General']
-const TABS = ['Appointments', 'Enrollments', 'Surveys', 'Predictions', 'Materials', 'Reviews']
+const TABS = ['Appointments', 'Enrollments', 'Surveys', 'Predictions', 'Scrolls', 'Materials', 'Reviews']
 
 const AUTH_ERRORS = {
   'auth/invalid-credential': 'Wrong email or password.',
@@ -777,6 +777,165 @@ function PredictionsTab() {
   )
 }
 
+/* ─── SCROLLS TAB — the blog approval queue ───
+   Pending submissions first, each shown in full so you can read
+   before deciding. Approve publishes it to /blog instantly. */
+function ScrollsTab() {
+  const [rows, setRows] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [expanded, setExpanded] = useState(null)
+
+  const load = async () => {
+    setLoading(true)
+    try {
+      let snap
+      try {
+        snap = await getDocs(query(collection(db, 'blogs'), orderBy('timestamp', 'desc')))
+      } catch {
+        snap = await getDocs(collection(db, 'blogs'))
+      }
+      const items = snap.docs.map((d) => ({ id: d.id, ...d.data() }))
+      items.sort((a, b) => (b.timestamp?.seconds || 0) - (a.timestamp?.seconds || 0))
+      setRows(items)
+    } catch (e) {
+      console.error(e)
+      toast.error(friendlyLoadError(e))
+      setRows([])
+    }
+    setLoading(false)
+  }
+
+  useEffect(() => { load() }, [])
+
+  const setApproved = async (id, approved) => {
+    try {
+      await updateDoc(doc(db, 'blogs', id), { approved })
+      setRows((prev) => prev.map((r) => (r.id === id ? { ...r, approved } : r)))
+      toast.success(approved ? 'Published to /blog 🎉' : 'Unpublished')
+    } catch (e) { toast.error(friendlyLoadError(e)) }
+  }
+
+  const remove = async (id) => {
+    if (!confirm('Delete this submission permanently?')) return
+    try {
+      await deleteDoc(doc(db, 'blogs', id))
+      setRows((prev) => prev.filter((r) => r.id !== id))
+      toast.success('Deleted')
+    } catch (e) { toast.error(friendlyLoadError(e)) }
+  }
+
+  const pending = rows.filter((r) => !r.approved)
+  const live = rows.filter((r) => r.approved)
+
+  const Card = ({ r }) => {
+    const isOpen = expanded === r.id
+    const body = r.body || ''
+    return (
+      <div
+        className="glass-card rounded-2xl p-5"
+        style={{ border: r.approved ? '1px solid rgba(111,170,122,0.35)' : '1px solid rgba(var(--accent-rgb),0.35)' }}
+      >
+        <div className="flex flex-wrap items-start justify-between gap-3 mb-2">
+          <div className="min-w-0">
+            <div className="font-bold text-white text-lg" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+              {r.title || '(untitled)'}
+            </div>
+            <div className="text-sm text-gray-400">
+              ✍️ {r.authorName || 'Anonymous'}{r.authorPlace ? ` · ${r.authorPlace}` : ''}
+              {r.createdAtISO ? ` · ${new Date(r.createdAtISO).toLocaleDateString('en-IN')}` : ''}
+            </div>
+          </div>
+          <span
+            className="text-xs font-bold uppercase px-3 py-1 rounded-full"
+            style={{
+              background: r.approved ? 'rgba(111,170,122,0.15)' : 'rgba(212,175,55,0.15)',
+              color: r.approved ? '#6FAA7A' : '#D4AF37',
+              border: `1px solid ${r.approved ? 'rgba(111,170,122,0.4)' : 'rgba(212,175,55,0.4)'}`,
+              fontFamily: 'Orbitron, monospace',
+            }}
+          >
+            {r.approved ? 'live' : 'pending'}
+          </span>
+        </div>
+
+        <div className="text-sm text-gray-300 leading-relaxed whitespace-pre-line mb-3">
+          {isOpen ? body : body.slice(0, 320) + (body.length > 320 ? '…' : '')}
+        </div>
+        {body.length > 320 && (
+          <button onClick={() => setExpanded(isOpen ? null : r.id)} className="text-xs text-gold-400 mb-3 underline">
+            {isOpen ? 'show less' : 'read the full scroll'}
+          </button>
+        )}
+
+        <div className="flex flex-wrap gap-2">
+          {!r.approved ? (
+            <button
+              onClick={() => setApproved(r.id, true)}
+              className="text-xs px-4 py-2 rounded-lg font-bold"
+              style={{ background: 'rgba(111,170,122,0.15)', border: '1px solid rgba(111,170,122,0.5)', color: '#6FAA7A' }}
+            >
+              ✓ Approve &amp; Publish
+            </button>
+          ) : (
+            <button
+              onClick={() => setApproved(r.id, false)}
+              className="text-xs px-4 py-2 rounded-lg"
+              style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.15)', color: 'rgba(240,234,214,0.6)' }}
+            >
+              ⏸ Unpublish
+            </button>
+          )}
+          <button
+            onClick={() => remove(r.id)}
+            className="text-xs px-4 py-2 rounded-lg ml-auto"
+            style={{ background: 'rgba(123,45,45,0.12)', border: '1px solid rgba(123,45,45,0.4)', color: '#C77' }}
+          >
+            🗑 Delete
+          </button>
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div className="space-y-4">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <h2 className="text-xl font-black text-white" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+          Blog Scrolls — {pending.length} waiting, {live.length} live
+        </h2>
+        <button onClick={load} className="btn-ghost px-4 py-2 rounded-xl text-xs">↻ Refresh</button>
+      </div>
+
+      {loading ? (
+        <div className="py-12 text-center text-gray-500">Loading…</div>
+      ) : rows.length === 0 ? (
+        <div className="py-12 text-center text-gray-500">
+          No submissions yet. The write-a-scroll form lives at the bottom of /blog.
+        </div>
+      ) : (
+        <>
+          {pending.length > 0 && (
+            <>
+              <div className="text-[10px] uppercase tracking-[0.2em] text-gold-400 pt-2" style={{ fontFamily: 'Orbitron, monospace' }}>
+                ⏳ Waiting for your approval
+              </div>
+              {pending.map((r) => <Card key={r.id} r={r} />)}
+            </>
+          )}
+          {live.length > 0 && (
+            <>
+              <div className="text-[10px] uppercase tracking-[0.2em] pt-4" style={{ fontFamily: 'Orbitron, monospace', color: '#6FAA7A' }}>
+                ✓ Published on /blog
+              </div>
+              {live.map((r) => <Card key={r.id} r={r} />)}
+            </>
+          )}
+        </>
+      )}
+    </div>
+  )
+}
+
 /* ─── REVIEWS TAB ─── */
 function ReviewsAdminTab() {
   const [reviews, setReviews] = useState([])
@@ -968,6 +1127,7 @@ export default function AdminPage() {
             {activeTab === 'Enrollments' && <EnrollmentsTab />}
             {activeTab === 'Surveys' && <SurveysTab />}
             {activeTab === 'Predictions' && <PredictionsTab />}
+            {activeTab === 'Scrolls' && <ScrollsTab />}
             {activeTab === 'Materials' && <MaterialsTab />}
             {activeTab === 'Reviews' && <ReviewsAdminTab />}
           </motion.div>
