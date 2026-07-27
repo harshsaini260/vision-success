@@ -864,6 +864,33 @@ img { max-width: 100%; height: auto; }
   to { transform: translate(8%, 5%) rotate(4deg) scale(1.18); opacity: 1; }
 }
 
+/* ===== STUDENT STORIES — Netflix-style doc rail ===== */
+.story-card {
+  width: 132px;
+  height: 196px;            /* ~9:13 poster, deliberately compact */
+  background: #0A1628;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.story-card:hover,
+.story-card:focus-visible {
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: 0 14px 34px rgba(0,0,0,0.55);
+}
+.story-card:active { transform: scale(0.98); }
+@media (min-width: 640px) {
+  .story-card { width: 150px; height: 220px; }
+}
+/* hide the scrollbar but keep the scroll */
+.story-rail { scrollbar-width: none; -ms-overflow-style: none; }
+.story-rail::-webkit-scrollbar { display: none; }
+
+.line-clamp-4 {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 /* ===== THE SCROLLS — handwritten blog parchment ===== */
 .scroll-paper {
   position: relative;

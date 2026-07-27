@@ -1000,6 +1000,30 @@ function ReviewsAdminTab() {
               </div>
             </div>
             <p className="text-gray-400 text-sm italic mb-3">&quot;{r.review}&quot;</p>
+
+            {/* Documentary link — paste a YouTube/Drive URL and this
+                review becomes a playable episode in the homepage rail. */}
+            <div className="flex flex-wrap items-center gap-2 mb-3">
+              <span className="text-[10px] uppercase tracking-widest text-gray-500" style={{ fontFamily: 'Orbitron, monospace' }}>
+                🎬 Story video
+              </span>
+              <input
+                defaultValue={r.videoUrl || ''}
+                placeholder="Paste YouTube / Drive link (optional)"
+                className="admin-input flex-1 min-w-[200px] text-xs"
+                onBlur={async (e) => {
+                  const v = e.target.value.trim()
+                  if (v === (r.videoUrl || '')) return
+                  try {
+                    await updateDoc(doc(db, 'reviews', r.id), { videoUrl: v })
+                    setReviews((prev) => prev.map((x) => (x.id === r.id ? { ...x, videoUrl: v } : x)))
+                    toast.success(v ? 'Video attached — now playable on the homepage 🎬' : 'Video removed')
+                  } catch (err) { toast.error(friendlyLoadError(err)) }
+                }}
+              />
+              {r.videoUrl && <span className="text-[10px]" style={{ color: '#6FAA7A' }}>▶ live</span>}
+            </div>
+
             <div className="flex gap-2">
               {!r.approved && (
                 <button

@@ -15,6 +15,7 @@ import DepartureBoard from '@/components/DepartureBoard'
 import PolarBuddy from '@/components/PolarBuddy'
 import Scribble from '@/components/Scribble'
 import SATPredictor from '@/components/SATPredictor'
+import StudentStories from '@/components/StudentStories'
 import { playFanfare } from '@/lib/fanfare'
 import { sfxPop, sfxNope, sfxWhoosh, sfxChime } from '@/lib/sfx'
 
@@ -1008,28 +1009,9 @@ function GiftTab() {
 
 /* ─── MAIN PAGE ─── */
 export default function HomePage() {
-  const [reviews, setReviews] = useState([])
+  /* Reviews are fetched by <StudentStories/> itself now, so the
+     homepage no longer holds that state or duplicates the read. */
   const [lightbox, setLightbox] = useState(null)
-
-  useEffect(() => {
-    async function loadReviews() {
-      try {
-        /* Lazy firebase + index-free query: where() only, sort + limit here. */
-        const [{ collection, getDocs, query, where }, { db }] = await Promise.all([
-          import('firebase/firestore'),
-          import('@/lib/firebase'),
-        ])
-        const q = query(collection(db, 'reviews'), where('approved', '==', true))
-        const snap = await getDocs(q)
-        const items = snap.docs.map((d) => ({ id: d.id, ...d.data() }))
-        items.sort((a, b) => (b.timestamp?.seconds || 0) - (a.timestamp?.seconds || 0))
-        setReviews(items.slice(0, 6))
-      } catch (e) {
-        // No reviews yet, that's fine
-      }
-    }
-    loadReviews()
-  }, [])
 
   return (
     <>
@@ -1672,47 +1654,8 @@ export default function HomePage() {
       {/* ─── WHY FAMILIES TRUST US — credibility (shows always) ─── */}
       <TrustPillars />
 
-      {/* ─── TESTIMONIALS (from Firebase, when real reviews exist) ─── */}
-      {reviews.length > 0 && (
-        <section
-          className="section-padding"
-          style={{ background: 'linear-gradient(180deg, #0A1628 0%, #07111F 100%)' }}
-        >
-          <div className="max-w-7xl mx-auto">
-            <FadeIn>
-              <div className="text-center mb-12">
-                <span className="section-tag mb-4 inline-block">Student Stories</span>
-                <h2
-                  className="text-4xl md:text-5xl font-black text-white"
-                  style={{ fontFamily: 'Rajdhani, sans-serif' }}
-                >
-                  In Their Own Words
-                </h2>
-              </div>
-            </FadeIn>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {reviews.map((review, i) => (
-                <FadeIn key={review.id} delay={i * 0.1}>
-                  <div className="testimonial-card h-full">
-                    <div className="flex items-center gap-1 mb-3">
-                      {Array.from({ length: review.rating || 5 }).map((_, j) => (
-                        <span key={j} className="text-gold-400 text-lg">★</span>
-                      ))}
-                    </div>
-                    <p className="text-gray-300 text-sm leading-relaxed mb-4 italic">
-                      "{review.review}"
-                    </p>
-                    <div>
-                      <div className="font-semibold text-white">{review.name}</div>
-                      <div className="text-xs text-gray-500">{review.course}</div>
-                    </div>
-                  </div>
-                </FadeIn>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
+      {/* ─── STUDENT STORIES — compact Netflix-style doc rail ─── */}
+      <StudentStories />
 
       {/* ─── FAQ ─── */}
       <section className="section-padding" style={{ background: '#07111F' }}>

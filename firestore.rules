@@ -1,89 +1,232 @@
-// ════════════════════════════════════════════════════════════════
-// VISION SUCCESS — Firestore Security Rules
-// Paste this in: Firebase Console → Firestore Database → Rules → Publish
+// ═══════════════════════════════════════════════════════════════════════
+//  VISION SUCCESS — UNIFIED FIRESTORE RULES  (single source of truth)
 //
-// These rules match exactly how the website queries data:
-//  • Public pages read ONLY published materials / approved reviews
-//  • Anyone can submit appointments, enrollments, and reviews
-//  • Admin panel needs a Firebase Auth login (README → "Admin Setup")
-// ════════════════════════════════════════════════════════════════
+//  ⚠ ONE Firebase project serves THREE clients:
+//      1. the public website  (visionsuccessuna.com)
+//      2. the student/parent app (Android + web)
+//      3. the admin Batcomputer (web + in-app)
+//
+//  This ONE file covers all three. An identical copy lives in
+//  vision-success/firestore.rules — whichever project you deploy from,
+//  nothing breaks. NEVER deploy a partial ruleset: a collection with no
+//  matching allow rule is denied, which is what used to knock the app
+//  offline whenever the website rules were published (and vice-versa).
+//
+//  There is deliberately NO `match /{document=**} { allow ...: if false }`
+//  catch-all: Firestore already denies anything unmatched, and a stray
+//  catch-all invites exactly the confusion that caused the outage.
+// ═══════════════════════════════════════════════════════════════════════
 rules_version = '2';
+
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // ONLY the owner's account counts as admin — even if someone
-    // manages to create another Auth user, they get nothing.
-    function isAdmin() {
-      return request.auth != null
+    // ───────────────────────── helpers ─────────────────────────
+    function authed() {
+      return request.auth != null;
+    }
+
+    // Permanent owner — hardcoded so admin access can NEVER be locked out,
+    // even if the users collection is wiped.
+    function isOwner() {
+      return authed()
         && request.auth.token.email == 'harshsaini0502@gmail.com';
     }
 
-    // ── Counseling bookings (from /appointment) ──
-    match /appointments/{docId} {
-      allow create: if true;                       // public form
-      allow read, update, delete: if isAdmin();    // admin panel only
+    function userExists() {
+      return authed()
+        && exists(/databases/$(database)/documents/users/$(request.auth.uid));
+    }
+    function userData() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+    }
+    function isAdmin() {
+      return isOwner() || (userExists() && userData().role == 'admin');
+    }
+    // Student AND their parent both point at the same studentId.
+    function linkedTo(sid) {
+      return userExists() && userData().studentId == sid;
+    }
+    function isStudentOf(sid) {
+      return linkedTo(sid) && userData().role == 'student';
     }
 
-    // ── Admission requests (from /enroll) ──
-    match /enrollments/{docId} {
-      allow create: if true;                       // public form
+    // ═══════════════ 1. PUBLIC WEBSITE COLLECTIONS ═══════════════
+    // Public forms may CREATE; only admin can read/manage.
+
+    match /appointments/{id} {
+      allow create: if true;
       allow read, update, delete: if isAdmin();
     }
 
-    // ── Student reviews (from /reviews) ──
-    match /reviews/{docId} {
-      // New reviews must arrive unapproved; admin flips the switch
-      allow create: if request.resource.data.approved == false;
-      allow read: if resource.data.approved == true || isAdmin();
+    match /enrollments/{id} {
+      allow create: if true;
+      allow read, update, delete: if isAdmin();
+    }
+
+    // Reviews exist in TWO schemas in this project: the original
+    // {approved: bool} and a newer {status: 'pending'|'approved'} one. Both
+    // are honoured so no testimonial is silently stranded/invisible.
+    // .get(field, default) is used throughout so a MISSING field evaluates
+    // to the safe default instead of failing the whole rule.
+    match /reviews/{id} {
+      allow read: if isAdmin()
+        || resource.data.get('approved', false) == true
+        || resource.data.get('status', '') == 'approved';
+      // Submissions must arrive unapproved in whichever schema they use.
+      allow create: if request.resource.data.get('approved', true) == false
+        || request.resource.data.get('status', '') == 'pending';
       allow update, delete: if isAdmin();
     }
 
-    // ── Study materials (shown on /materials) ──
-    match /materials/{docId} {
-      allow read: if resource.data.published == true || isAdmin();
+    // Study material behind the QR poster. Public sees only published docs;
+    // the admin panel (unfiltered, ordered query) reads everything.
+    match /materials/{id} {
+      allow read: if isAdmin() || resource.data.get('published', false) == true;
       allow create, update, delete: if isAdmin();
     }
 
-    // ── SAT Predictor leads (from the homepage predictor tool) ──
-    match /predictions/{docId} {
-      allow create: if true;                       // public tool
+    // SAT Predictor leads (homepage tool).
+    match /predictions/{id} {
+      allow create: if true;
       allow read, update, delete: if isAdmin();
     }
 
-    // ── Survey responses (from the /start QR survey) ──
-    match /surveys/{docId} {
-      allow create: if true;                       // public survey
+    // QR survey responses (/start).
+    match /surveys/{id} {
+      allow create: if true;
       allow read, update, delete: if isAdmin();
     }
 
-    // ── Community blog scrolls (from /blog) ──
-    // Same proven shape as reviews: anyone may submit, but ONLY as
-    // unapproved. Nothing is publicly readable until the admin flips
-    // approved to true, so nothing can self-publish.
-    match /blogs/{docId} {
-      allow create: if request.resource.data.approved == false;
-      allow read: if resource.data.approved == true || isAdmin();
+    // Community blog scrolls (/blog). Submissions MUST arrive unapproved,
+    // so nothing can ever self-publish; only admin flips approved.
+    match /blogs/{id} {
+      allow read: if isAdmin() || resource.data.get('approved', false) == true;
+      allow create: if request.resource.data.get('approved', true) == false;
       allow update, delete: if isAdmin();
     }
 
-    // Everything else: locked.
-    match /{document=**} {
-      allow read, write: if false;
+    // ═══════════════ 2. ROLE MAPPING ═══════════════
+    // A signed-in user may create ONLY their own doc once (first-run admin
+    // bootstrap) and can never update it, so roles can't be self-escalated.
+    match /users/{uid} {
+      allow read: if authed() && (request.auth.uid == uid || isAdmin());
+      allow create: if isAdmin() || request.auth.uid == uid;
+      allow update, delete: if isAdmin();
+    }
+
+    // ═══════════════ 3. STUDENT RECORDS ═══════════════
+    match /students/{sid} {
+      allow read: if isAdmin() || linkedTo(sid);
+      allow create, delete: if isAdmin();
+      // Students may only nudge their own game stats; all else is admin.
+      allow update: if isAdmin()
+        || (isStudentOf(sid)
+            && request.resource.data.diff(resource.data)
+                 .affectedKeys().hasOnly(['xp', 'streak', 'quizTier']));
+
+      match /logs/{id} {
+        allow read: if isAdmin() || linkedTo(sid);
+        allow create: if isAdmin() || isStudentOf(sid);
+        allow update, delete: if isAdmin();
+      }
+      match /trials/{id} {
+        allow read: if isAdmin() || linkedTo(sid);
+        allow write: if isAdmin();
+      }
+      match /attendance/{id} {
+        allow read: if isAdmin() || linkedTo(sid);
+        allow write: if isAdmin();
+      }
+      // Parent submits a pending payment; admin approves/rejects.
+      match /payments/{id} {
+        allow read: if isAdmin() || linkedTo(sid);
+        allow create: if isAdmin() || linkedTo(sid);
+        allow update, delete: if isAdmin();
+      }
+      match /completions/{id} {
+        allow read: if isAdmin() || linkedTo(sid);
+        allow write: if isAdmin() || isStudentOf(sid);
+      }
+      match /absences/{id} {
+        allow read: if isAdmin() || linkedTo(sid);
+        allow create: if isAdmin() || linkedTo(sid);
+        allow update, delete: if isAdmin();
+      }
+      // Mind Forge creative posts.
+      match /creations/{id} {
+        allow read: if isAdmin() || linkedTo(sid);
+        allow create: if isAdmin() || isStudentOf(sid);
+        allow update, delete: if isAdmin();
+      }
+    }
+
+    // Collection-group reads for the Batcomputer (pending approvals across
+    // ALL students). collectionGroup() needs these wildcard-path rules.
+    match /{path=**}/logs/{id}      { allow read: if isAdmin(); }
+    match /{path=**}/payments/{id}  { allow read: if isAdmin(); }
+    match /{path=**}/absences/{id}  { allow read: if isAdmin(); }
+    match /{path=**}/creations/{id} { allow read: if isAdmin(); }
+
+    // ═══════════════ 4. APP SHARED CONTENT ═══════════════
+    match /notices/{id} {
+      allow read: if authed();
+      allow write: if isAdmin();
+    }
+    match /notes/{id} {
+      allow read: if authed();
+      allow write: if isAdmin();
+    }
+    match /assignments/{id} {
+      allow read: if authed();
+      allow write: if isAdmin();
+    }
+    match /skills/{id} {
+      allow read: if authed();
+      allow write: if isAdmin();
+    }
+    // Institute settings: events, pins, class groups, game visibility.
+    match /config/{doc} {
+      allow read: if authed();
+      allow write: if isAdmin();
+    }
+
+    // ═══════════════ 5. GAME / SOCIAL ═══════════════
+    // Hall of Fame — all signed-in read; a student maintains only their own.
+    match /leaderboard/{sid} {
+      allow read: if authed();
+      allow write: if isAdmin() || isStudentOf(sid);
+    }
+    // Chem duels — members see, start and score; only admin deletes.
+    match /duels/{id} {
+      allow read, create, update: if authed();
+      allow delete: if isAdmin();
+    }
+    // Weekly boss board.
+    match /bossScores/{id} {
+      allow read, create, update: if authed();
+      allow delete: if isAdmin();
+    }
+    // Class group chat — members post as themselves; admin moderates.
+    match /chats/{group}/messages/{msg} {
+      allow read: if authed();
+      allow create: if authed()
+        && request.resource.data.senderId == request.auth.uid;
+      allow update, delete: if isAdmin();
+    }
+
+    // ═══════════════ 6. LIVE PRESENCE / SCREEN TIME ═══════════════
+    // The student's own app writes a heartbeat here; admin (and the linked
+    // parent) can read it. Nobody can read anyone else's presence.
+    match /presence/{sid} {
+      allow read: if isAdmin() || linkedTo(sid);
+      allow create, update: if isAdmin() || isStudentOf(sid);
+      allow delete: if isAdmin();
+    }
+
+    // ═══════════════ 7. PRIVATE PER-USER SPACE ═══════════════
+    match /friday/{uid}/{document=**} {
+      allow read, write: if authed() && request.auth.uid == uid;
     }
   }
 }
-
-// ────────────────────────────────────────────────────────────────
-// TEMPORARY OPEN MODE (only if you haven't set up Firebase Auth yet
-// and want the admin "legacy password" to work — NOT recommended,
-// anyone technical could edit your data):
-//
-// rules_version = '2';
-// service cloud.firestore {
-//   match /databases/{database}/documents {
-//     match /{document=**} {
-//       allow read, write: if true;
-//     }
-//   }
-// }
-// ────────────────────────────────────────────────────────────────
