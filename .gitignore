@@ -7,3 +7,5 @@ out/
 # "git add . → push → Vercel" flow just works. All values inside are
 # NEXT_PUBLIC (browser-visible by design). If you ever add a real
 # secret, move it to Vercel env vars and add .env.local below.
+.vercel
+.env*

@@ -26,6 +26,7 @@ export default function sitemap() {
     { url: `${SITE.url}/enroll/neet`, lastModified: now, changeFrequency: 'weekly', priority: 0.9 },
     { url: `${SITE.url}/enroll/jee`, lastModified: now, changeFrequency: 'weekly', priority: 0.9 },
     { url: `${SITE.url}/blog`, lastModified: now, changeFrequency: 'daily', priority: 0.8 },
+    { url: `${SITE.url}/stories`, lastModified: now, changeFrequency: 'weekly', priority: 0.8 },
     ...POSTS.map((p) => ({
       url: `${SITE.url}/blog/${p.slug}`,
       lastModified: new Date(p.date),

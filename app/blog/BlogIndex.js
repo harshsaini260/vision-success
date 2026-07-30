@@ -100,7 +100,7 @@ function SubmitScroll() {
     return (
       <div className="scroll-paper rounded-sm px-6 py-10 sm:px-10 text-center" style={{ transform: 'rotate(0.4deg)' }}>
         <div className="text-4xl mb-3">📜</div>
-        <h3 className="scroll-h mb-2" style={{ fontSize: '2rem' }}>Your scroll is with us.</h3>
+        <h3 className="scroll-h mb-2" style={{ fontSize: '2rem' }}>Your post is with us.</h3>
         <p className="scroll-hand" style={{ fontSize: '1.15rem' }}>
           We read every single one. If it&apos;s published, it appears below with your name on it —
           usually within a few days.
@@ -120,7 +120,7 @@ function SubmitScroll() {
       </p>
       <h3 className="scroll-h mb-2" style={{ fontSize: '2rem' }}>Write one yourself.</h3>
       <p className="scroll-hand mb-6" style={{ fontSize: '1.15rem' }}>
-        Anyone may send a scroll — student, parent, teacher, or someone who just has something worth
+        Anyone may send a post — student, parent, teacher, or someone who just has something worth
         saying. We read every one. The good ones get published here with your name on them.
       </p>
 
@@ -141,7 +141,7 @@ function SubmitScroll() {
         />
         <input
           className="scroll-input"
-          placeholder="Title of your scroll"
+          placeholder="Title of your post"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           aria-label="Title"
@@ -156,7 +156,7 @@ function SubmitScroll() {
         />
         {error && <p className="text-sm font-semibold" style={{ color: '#B3402E' }}>{error}</p>}
         <button type="submit" disabled={status === 'sending'} className="btn-gold w-full py-3.5 rounded-xl text-sm disabled:opacity-60">
-          {status === 'sending' ? 'Sending…' : '📜 Send My Scroll'}
+          {status === 'sending' ? 'Sending…' : '📖 Send My Post'}
         </button>
         <p className="text-[11px] text-center" style={{ color: '#8A7326' }}>
           Goes into our review queue. Nothing appears on this page until a human reads and approves
@@ -218,7 +218,7 @@ function CommunityScrolls() {
                       className="text-[10px] uppercase tracking-[0.25em] opacity-60 mb-1"
                       style={{ fontFamily: 'Orbitron, monospace', color: '#7A6A48' }}
                     >
-                      Community scroll
+                      Reader post
                     </p>
                     <h3 className="scroll-h" style={{ fontSize: '1.9rem' }}>{r.title}</h3>
                   </div>
@@ -240,7 +240,7 @@ function CommunityScrolls() {
                     className="scroll-note mt-2"
                     style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
                   >
-                    {isOpen ? '← fold this scroll' : 'unroll the whole scroll →'}
+                    {isOpen ? '← show less' : 'read the whole thing →'}
                   </button>
                 )}
 
@@ -274,7 +274,7 @@ export default function BlogIndex() {
         }}
       >
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-          <span className="section-tag mb-4 inline-block">📜 The Scrolls</span>
+          <span className="section-tag mb-4 inline-block">📖 The Blog</span>
           <h1 className="text-5xl md:text-6xl font-black text-white mb-4" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
             Things Worth <span className="text-gold-shimmer">Writing Down</span>
           </h1>
@@ -334,7 +334,7 @@ export default function BlogIndex() {
                     <span className="wax-seal" aria-hidden>{p.emoji}</span>
                   </div>
                   <p className="scroll-hand" style={{ fontSize: '1.2rem' }}>{p.excerpt}</p>
-                  <p className="scroll-note mt-4">read the whole scroll →</p>
+                  <p className="scroll-note mt-4">read the full post →</p>
                 </article>
               </Link>
             </FadeIn>

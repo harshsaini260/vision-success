@@ -106,6 +106,13 @@ service cloud.firestore {
       allow update, delete: if isAdmin();
     }
 
+    // Video documentaries (/stories). Admin-authored only: files live in
+    // Vercel Blob, this holds the metadata. Public sees published ones.
+    match /vlogs/{id} {
+      allow read: if isAdmin() || resource.data.get('published', false) == true;
+      allow create, update, delete: if isAdmin();
+    }
+
     // ═══════════════ 2. ROLE MAPPING ═══════════════
     // A signed-in user may create ONLY their own doc once (first-run admin
     // bootstrap) and can never update it, so roles can't be self-escalated.

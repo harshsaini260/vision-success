@@ -16,6 +16,7 @@ import PolarBuddy from '@/components/PolarBuddy'
 import Scribble from '@/components/Scribble'
 import SATPredictor from '@/components/SATPredictor'
 import StudentStories from '@/components/StudentStories'
+import HomeDocumentary from '@/components/HomeDocumentary'
 import { playFanfare } from '@/lib/fanfare'
 import { sfxPop, sfxNope, sfxWhoosh, sfxChime } from '@/lib/sfx'
 
@@ -744,7 +745,7 @@ function ScrollTeaser() {
       <div className="max-w-3xl mx-auto">
         <FadeIn>
           <div className="text-center mb-8">
-            <span className="section-tag mb-4 inline-block">📜 The Scrolls</span>
+            <span className="section-tag mb-4 inline-block">📖 From The Blog</span>
             <h2 className="text-4xl md:text-5xl font-black text-white mb-2" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
               Today&apos;s <span className="text-gold-shimmer">Question</span>
             </h2>
@@ -781,7 +782,7 @@ function ScrollTeaser() {
             ))}
           </div>
           <p className="text-center mt-5">
-            <Link href="/blog" className="text-sm font-bold text-gold-400">📜 Read all the scrolls — or write one →</Link>
+            <Link href="/blog" className="text-sm font-bold text-gold-400">📖 Read the blog — or write for it →</Link>
           </p>
         </FadeIn>
       </div>
@@ -1654,7 +1655,8 @@ export default function HomePage() {
       {/* ─── WHY FAMILIES TRUST US — credibility (shows always) ─── */}
       <TrustPillars />
 
-      {/* ─── STUDENT STORIES — compact Netflix-style doc rail ─── */}
+      {/* ─── THE DOCUMENTARY + student voices — compact rails ─── */}
+      <HomeDocumentary />
       <StudentStories />
 
       {/* ─── FAQ ─── */}

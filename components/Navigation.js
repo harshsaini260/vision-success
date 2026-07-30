@@ -13,7 +13,8 @@ const navLinks = [
   { href: '/sat', label: 'SAT ✨' },
   { href: '/enroll', label: 'Enroll' },
   { href: '/materials', label: 'Materials' },
-  { href: '/blog', label: 'Scrolls 📜' },
+  { href: '/stories', label: 'Stories 🎬' },
+  { href: '/blog', label: 'Blog' },
   { href: '/reviews', label: 'Reviews' },
 ]
 

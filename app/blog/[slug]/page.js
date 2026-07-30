@@ -81,7 +81,7 @@ export default function ScrollPage({ params }) {
         <nav className="mb-6 text-xs text-gray-500" aria-label="Breadcrumb">
           <Link href="/" className="hover:text-gold-400">Home</Link>
           <span className="mx-2">/</span>
-          <Link href="/blog" className="hover:text-gold-400">The Scrolls</Link>
+          <Link href="/blog" className="hover:text-gold-400">Blog</Link>
           <span className="mx-2">/</span>
           <span className="text-gray-400">{post.tag}</span>
         </nav>
@@ -122,7 +122,7 @@ export default function ScrollPage({ params }) {
             </p>
             <p className="text-xs mt-1" style={{ color: '#8A7326' }}>
               {post.guest
-                ? `Guest scroll${post.guest.place ? ` · ${post.guest.place}` : ''} · reviewed and published by Vision Success`
+                ? `Guest post${post.guest.place ? ` · ${post.guest.place}` : ''} · reviewed and published by Vision Success`
                 : 'Written at the desk in Una, Himachal Pradesh'}
             </p>
           </div>
@@ -154,7 +154,7 @@ export default function ScrollPage({ params }) {
         {others.length > 0 && (
           <div className="mt-12">
             <h3 className="text-lg font-black text-white mb-4" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
-              More scrolls
+              More posts
             </h3>
             <div className="space-y-4">
               {others.map((o) => (
@@ -173,7 +173,7 @@ export default function ScrollPage({ params }) {
         )}
 
         <p className="text-center mt-10">
-          <Link href="/blog" className="text-sm font-semibold text-gold-400">← all scrolls</Link>
+          <Link href="/blog" className="text-sm font-semibold text-gold-400">← all posts</Link>
         </p>
       </div>
     </div>

@@ -17,7 +17,7 @@ import toast from 'react-hot-toast'
 const ADMIN_PASSWORD = process.env.NEXT_PUBLIC_ADMIN_PASSWORD || 'VisionSuccess@2025'
 
 const CATEGORIES = ['NDA', 'JEE', 'NEET', 'Foundation', 'General']
-const TABS = ['Appointments', 'Enrollments', 'Surveys', 'Predictions', 'Scrolls', 'Materials', 'Reviews']
+const TABS = ['Appointments', 'Enrollments', 'Surveys', 'Predictions', 'Vlogs', 'Blog', 'Materials', 'Reviews']
 
 const AUTH_ERRORS = {
   'auth/invalid-credential': 'Wrong email or password.',
@@ -777,6 +777,219 @@ function PredictionsTab() {
   )
 }
 
+/* ─── VLOGS TAB — upload documentary episodes from this device ───
+   The file goes straight from the browser to Vercel Blob (so a big
+   video never passes through a serverless function). /api/upload
+   verifies the Firebase login server-side before issuing a token. */
+function VlogsTab() {
+  const [rows, setRows] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [form, setForm] = useState({ title: '', subtitle: '', description: '', series: 'Student Stories', duration: '', orientation: 'portrait' })
+  const [videoFile, setVideoFile] = useState(null)
+  const [posterFile, setPosterFile] = useState(null)
+  const [videoLink, setVideoLink] = useState('')
+  const [progress, setProgress] = useState(0)
+  const [busy, setBusy] = useState(false)
+
+  const SERIES = ['Student Stories', 'Inside The Classroom', 'Parent Voices', 'Study Tips', 'Other']
+
+  const load = async () => {
+    setLoading(true)
+    try {
+      let snap
+      try { snap = await getDocs(query(collection(db, 'vlogs'), orderBy('timestamp', 'desc'))) }
+      catch { snap = await getDocs(collection(db, 'vlogs')) }
+      const items = snap.docs.map((d) => ({ id: d.id, ...d.data() }))
+      items.sort((a, b) => (b.timestamp?.seconds || 0) - (a.timestamp?.seconds || 0))
+      setRows(items)
+    } catch (e) {
+      console.error(e); toast.error(friendlyLoadError(e)); setRows([])
+    }
+    setLoading(false)
+  }
+  useEffect(() => { load() }, [])
+
+  const uploadOne = async (file, kind) => {
+    const { upload } = await import('@vercel/blob/client')
+    const idToken = await auth.currentUser.getIdToken()
+    const safe = file.name.replace(/[^a-zA-Z0-9._-]/g, '_')
+    const blob = await upload(`vlogs/${Date.now()}-${kind}-${safe}`, file, {
+      access: 'public',
+      handleUploadUrl: '/api/upload',
+      clientPayload: JSON.stringify({ idToken }),
+      onUploadProgress: ({ percentage }) => setProgress(Math.round(percentage)),
+    })
+    return blob.url
+  }
+
+  const publish = async (e) => {
+    e.preventDefault()
+    if (!form.title.trim()) return toast.error('Give the episode a title')
+    if (!videoFile && !videoLink.trim()) return toast.error('Choose a video file or paste a link')
+    setBusy(true); setProgress(0)
+    try {
+      const videoUrl = videoFile ? await uploadOne(videoFile, 'video') : videoLink.trim()
+      const posterUrl = posterFile ? await uploadOne(posterFile, 'poster') : ''
+      await addDoc(collection(db, 'vlogs'), {
+        ...form,
+        title: form.title.trim(),
+        videoUrl,
+        posterUrl,
+        published: true,
+        createdAtISO: new Date().toISOString(),
+        timestamp: serverTimestamp(),
+      })
+      toast.success('Episode published 🎬')
+      setForm({ title: '', subtitle: '', description: '', series: 'Student Stories', duration: '', orientation: 'portrait' })
+      setVideoFile(null); setPosterFile(null); setVideoLink(''); setProgress(0)
+      load()
+    } catch (err) {
+      console.error(err)
+      toast.error(err?.message || 'Upload failed')
+    }
+    setBusy(false)
+  }
+
+  const togglePublish = async (r) => {
+    try {
+      await updateDoc(doc(db, 'vlogs', r.id), { published: !r.published })
+      setRows((p) => p.map((x) => (x.id === r.id ? { ...x, published: !x.published } : x)))
+      toast.success(r.published ? 'Hidden from site' : 'Published')
+    } catch (e) { toast.error(friendlyLoadError(e)) }
+  }
+  const removeVlog = async (id) => {
+    if (!confirm('Delete this episode?')) return
+    try {
+      await deleteDoc(doc(db, 'vlogs', id))
+      setRows((p) => p.filter((x) => x.id !== id))
+      toast.success('Deleted')
+    } catch (e) { toast.error(friendlyLoadError(e)) }
+  }
+
+  return (
+    <div className="space-y-5">
+      <h2 className="text-xl font-black text-white" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+        Documentary Episodes ({rows.length})
+      </h2>
+
+      {/* upload form */}
+      <form onSubmit={publish} className="glass-card rounded-2xl p-5 space-y-3" style={{ border: '1px solid rgba(var(--accent-rgb),0.3)' }}>
+        <div className="text-sm font-bold text-gold-400" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+          🎬 Upload a new episode
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label className="form-label">Title *</label>
+            <input className="admin-input" value={form.title} placeholder="e.g. Arjun's 1520"
+              onChange={(e) => setForm((p) => ({ ...p, title: e.target.value }))} />
+          </div>
+          <div>
+            <label className="form-label">Subtitle</label>
+            <input className="admin-input" value={form.subtitle} placeholder="SAT 1520 · Mehatpur → Boston"
+              onChange={(e) => setForm((p) => ({ ...p, subtitle: e.target.value }))} />
+          </div>
+        </div>
+
+        <div>
+          <label className="form-label">Description</label>
+          <textarea className="admin-input" rows={2} value={form.description} placeholder="What happens in this episode…"
+            onChange={(e) => setForm((p) => ({ ...p, description: e.target.value }))} />
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div>
+            <label className="form-label">Series</label>
+            <select className="admin-input" value={form.series} onChange={(e) => setForm((p) => ({ ...p, series: e.target.value }))}>
+              {SERIES.map((s) => <option key={s} value={s}>{s}</option>)}
+            </select>
+          </div>
+          <div>
+            <label className="form-label">Shape</label>
+            <select className="admin-input" value={form.orientation} onChange={(e) => setForm((p) => ({ ...p, orientation: e.target.value }))}>
+              <option value="portrait">Portrait (phone video)</option>
+              <option value="landscape">Landscape</option>
+            </select>
+          </div>
+          <div>
+            <label className="form-label">Duration</label>
+            <input className="admin-input" value={form.duration} placeholder="1:24"
+              onChange={(e) => setForm((p) => ({ ...p, duration: e.target.value }))} />
+          </div>
+        </div>
+
+        <div className="rounded-xl p-3" style={{ background: 'rgba(var(--accent-rgb),0.06)', border: '1px dashed rgba(var(--accent-rgb),0.35)' }}>
+          <label className="form-label">🎥 Video file from this device (mp4/mov, up to 500 MB)</label>
+          <input type="file" accept="video/*" className="admin-input"
+            onChange={(e) => { setVideoFile(e.target.files?.[0] || null); setVideoLink('') }} />
+          {videoFile && <p className="text-xs text-gold-400 mt-1">{videoFile.name} · {(videoFile.size / 1048576).toFixed(1)} MB</p>}
+          <p className="text-[11px] text-gray-500 mt-2">…or paste a YouTube / Drive link instead:</p>
+          <input className="admin-input mt-1" placeholder="https://youtu.be/… (optional)" value={videoLink}
+            onChange={(e) => { setVideoLink(e.target.value); setVideoFile(null) }} />
+        </div>
+
+        <div>
+          <label className="form-label">🖼️ Cover image (optional — a still from the video)</label>
+          <input type="file" accept="image/*" className="admin-input"
+            onChange={(e) => setPosterFile(e.target.files?.[0] || null)} />
+        </div>
+
+        {busy && progress > 0 && (
+          <div>
+            <div className="h-2 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.1)' }}>
+              <div className="h-full rounded-full transition-all" style={{ width: `${progress}%`, background: 'var(--accent)' }} />
+            </div>
+            <p className="text-xs text-gray-400 mt-1">Uploading… {progress}%</p>
+          </div>
+        )}
+
+        <button type="submit" disabled={busy} className="btn-gold w-full py-3 rounded-xl text-sm disabled:opacity-60">
+          {busy ? 'Uploading…' : '🎬 Publish Episode'}
+        </button>
+      </form>
+
+      {/* existing episodes */}
+      {loading ? (
+        <div className="py-10 text-center text-gray-500">Loading…</div>
+      ) : rows.length === 0 ? (
+        <div className="py-10 text-center text-gray-500">No episodes yet. Upload the first one above.</div>
+      ) : (
+        rows.map((r) => (
+          <div key={r.id} className="glass-card rounded-2xl p-4 flex flex-wrap items-center gap-3">
+            <div className="w-16 h-24 rounded-lg overflow-hidden flex-shrink-0" style={{ background: '#0A1628' }}>
+              {r.posterUrl
+                ? <img src={r.posterUrl} alt="" className="w-full h-full object-cover" />
+                : <div className="w-full h-full flex items-center justify-center text-2xl">🎬</div>}
+            </div>
+            <div className="flex-1 min-w-[180px]">
+              <div className="font-bold text-white" style={{ fontFamily: 'Rajdhani, sans-serif' }}>{r.title}</div>
+              <div className="text-xs text-gold-400">{r.subtitle}</div>
+              <div className="text-[11px] text-gray-500">{r.series} · {r.orientation}{r.duration ? ` · ${r.duration}` : ''}</div>
+              <a href={r.videoUrl} target="_blank" rel="noopener noreferrer" className="text-[10px] text-gray-600 underline break-all">
+                {(r.videoUrl || '').slice(0, 52)}…
+              </a>
+            </div>
+            <div className="flex gap-2">
+              <button onClick={() => togglePublish(r)} className="text-xs px-3 py-1.5 rounded-lg"
+                style={{
+                  background: r.published ? 'rgba(111,170,122,0.15)' : 'rgba(255,255,255,0.05)',
+                  border: `1px solid ${r.published ? 'rgba(111,170,122,0.45)' : 'rgba(255,255,255,0.15)'}`,
+                  color: r.published ? '#6FAA7A' : 'rgba(240,234,214,0.5)',
+                }}>
+                {r.published ? '✓ Live' : 'Hidden'}
+              </button>
+              <button onClick={() => removeVlog(r.id)} className="text-xs px-3 py-1.5 rounded-lg"
+                style={{ background: 'rgba(123,45,45,0.12)', border: '1px solid rgba(123,45,45,0.4)', color: '#C77' }}>
+                🗑
+              </button>
+            </div>
+          </div>
+        ))
+      )}
+    </div>
+  )
+}
+
 /* ─── SCROLLS TAB — the blog approval queue ───
    Pending submissions first, each shown in full so you can read
    before deciding. Approve publishes it to /blog instantly. */
@@ -901,7 +1114,7 @@ function ScrollsTab() {
     <div className="space-y-4">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <h2 className="text-xl font-black text-white" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
-          Blog Scrolls — {pending.length} waiting, {live.length} live
+          Blog posts — {pending.length} waiting, {live.length} live
         </h2>
         <button onClick={load} className="btn-ghost px-4 py-2 rounded-xl text-xs">↻ Refresh</button>
       </div>
@@ -1151,7 +1364,8 @@ export default function AdminPage() {
             {activeTab === 'Enrollments' && <EnrollmentsTab />}
             {activeTab === 'Surveys' && <SurveysTab />}
             {activeTab === 'Predictions' && <PredictionsTab />}
-            {activeTab === 'Scrolls' && <ScrollsTab />}
+            {activeTab === 'Vlogs' && <VlogsTab />}
+            {activeTab === 'Blog' && <ScrollsTab />}
             {activeTab === 'Materials' && <MaterialsTab />}
             {activeTab === 'Reviews' && <ReviewsAdminTab />}
           </motion.div>
