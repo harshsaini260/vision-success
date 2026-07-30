@@ -1,8 +1,13 @@
+.env.local
+.env*.local
+
 node_modules/
 .next/
 out/
 *.log
 .DS_Store
+# .env.local IS ignored — it holds real secrets (Vercel Blob token).
+# Never commit it. Older note below is superseded.
 # NOTE: .env.local is intentionally NOT ignored here so the beginner
 # "git add . → push → Vercel" flow just works. All values inside are
 # NEXT_PUBLIC (browser-visible by design). If you ever add a real
