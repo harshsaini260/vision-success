@@ -316,25 +316,32 @@ p {
 /* ===== NAV ===== */
 .nav-link {
   position: relative;
-  color: rgba(240,234,214,0.7);
-  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+  color: rgba(240,234,214,0.68);
+  font-weight: 600;
   font-family: 'Rajdhani', sans-serif;
-  font-size: 1rem;
-  letter-spacing: 0.05em;
+  font-size: 0.875rem;
+  letter-spacing: 0.13em;
   text-transform: uppercase;
   transition: color 0.2s ease;
   text-decoration: none;
 }
 
+/* the rule grows from the centre out — steadier than a left-anchored
+   wipe when six of them sit in a row */
 .nav-link::after {
   content: '';
   position: absolute;
-  bottom: -4px;
+  bottom: -7px;
   left: 0;
-  width: 0;
-  height: 2px;
-  background: linear-gradient(90deg, var(--accent), var(--accent-light));
-  transition: width 0.3s ease;
+  right: 0;
+  height: 1.5px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  transform: scaleX(0);
+  transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .nav-link:hover,
@@ -344,7 +351,85 @@ p {
 
 .nav-link:hover::after,
 .nav-link.active::after {
-  width: 100%;
+  transform: scaleX(1);
+}
+
+/* the flagship marker on SAT — a dot, not an emoji */
+.nav-flagship {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 6px rgba(var(--accent-rgb), 0.9);
+  animation: navPulse 2.6s ease-in-out infinite;
+}
+
+@keyframes navPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.45; transform: scale(0.75); }
+}
+
+/* the wordmark holds its tracking on wide screens and gives some back on
+   narrow phones, where the mark + wordmark + CTA + burger must all fit */
+.nav-wordmark { letter-spacing: 0.12em; }
+
+@media (max-width: 400px) {
+  .nav-wordmark { letter-spacing: 0.05em; }
+}
+
+/* on the narrowest phones the crest carries the brand on its own —
+   better than crowding the wordmark against the CTA */
+@media (max-width: 340px) {
+  .nav-brandtext { display: none; }
+}
+
+.nav-more-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.nav-caret {
+  transition: transform 0.2s ease;
+  opacity: 0.7;
+}
+
+.nav-more-item {
+  display: block;
+  padding: 9px 16px;
+  text-decoration: none;
+  transition: background 0.16s ease;
+}
+
+.nav-more-item:hover {
+  background: rgba(var(--accent-rgb), 0.08);
+}
+
+.nav-more-label {
+  display: block;
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 600;
+  font-size: 0.8125rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(240,234,214,0.85);
+}
+
+.nav-more-item:hover .nav-more-label {
+  color: var(--accent);
+}
+
+.nav-more-hint {
+  display: block;
+  font-size: 0.6875rem;
+  color: rgba(240,234,214,0.35);
+  margin-top: 1px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-flagship { animation: none; }
+  .nav-link::after { transition: none; }
 }
 
 /* ===== MOBILE MENU ===== */
