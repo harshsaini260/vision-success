@@ -1,43 +1,31 @@
 <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <!-- Vision Success — The Bear & The North Star (favicon) -->
-  <circle cx="60" cy="60" r="60" fill="#07111F"/>
+  <!-- Vision Success — The Crest (favicon)
+       Simplified from components/Logo.js: at 16px only the shield, the
+       flame and the star survive, so everything else is dropped and the
+       remaining shapes are thickened. -->
+  <rect width="120" height="120" rx="24" fill="#07111F"/>
 
-  <!-- compass ring, broken where the star shines -->
-  <path d="M 108.4 47.0 A 50 50 0 1 1 83.5 15.8" stroke="#D4AF37" stroke-width="3" stroke-linecap="round"/>
+  <!-- shield: navy body -->
+  <path d="M60 12 L100 23 V62 C100 85 82 100 60 108 C38 100 20 85 20 62 V23 Z" fill="#1B4F7E"/>
+  <!-- silver field -->
+  <path d="M60 20 L93 29 V62 C93 81 78 93.5 60 100.5 C42 93.5 27 81 27 62 V29 Z" fill="#E8F0F7"/>
+  <!-- gold keyline -->
+  <path d="M60 20 L93 29 V62 C93 81 78 93.5 60 100.5 C42 93.5 27 81 27 62 V29 Z" fill="none" stroke="#D4AF37" stroke-width="2.4"/>
 
-  <!-- Polaris -->
-  <path d="M97 12 Q98.8 20 106.3 22.3 Q98.8 24.6 97 32.5 Q95.2 24.6 87.7 22.3 Q95.2 20 97 12 Z" fill="#F5D76E"/>
-  <circle cx="97" cy="22.3" r="1.5" fill="#FFFDF5"/>
+  <!-- open book -->
+  <path d="M35 63 L58 70 V83 L35 76 Z" fill="#FFFFFF" stroke="#1B4F7E" stroke-width="2.4" stroke-linejoin="round"/>
+  <path d="M85 63 L62 70 V83 L85 76 Z" fill="#FFFFFF" stroke="#1B4F7E" stroke-width="2.4" stroke-linejoin="round"/>
+  <path d="M56.5 69 L60 67.5 L63.5 69 V83 L60 84.5 L56.5 83 Z" fill="#1B4F7E"/>
 
-  <!-- dream trail -->
-  <circle cx="83" cy="39" r="1.6" fill="#D4AF37" opacity="0.85"/>
-  <circle cx="90" cy="31" r="1.8" fill="#F5D76E"/>
+  <!-- torch -->
+  <rect x="56.5" y="48" width="7" height="22" rx="2.4" fill="#1B4F7E"/>
+  <path d="M52 46 H68 L65.5 52.5 H54.5 Z" fill="#1B4F7E"/>
 
-  <!-- ears -->
-  <circle cx="41" cy="50" r="7" fill="#F0EAD6"/>
-  <circle cx="72" cy="50" r="7" fill="#F0EAD6"/>
-  <circle cx="41" cy="50" r="3" fill="#0A1628" opacity="0.13"/>
-  <circle cx="72" cy="50" r="3" fill="#0A1628" opacity="0.13"/>
+  <!-- flame -->
+  <path d="M60 20 C64.5 28.5 69 32 69 39 C69 45 64.7 49 60 49 C55.3 49 51 45 51 39 C51 32 55.5 28.5 60 20 Z" fill="#D4AF37"/>
+  <path d="M60 29 C62.4 33.5 64.4 35.5 64.4 39.3 C64.4 42.6 62.4 44.8 60 44.8 C57.6 44.8 55.6 42.6 55.6 39.3 C55.6 35.5 57.6 33.5 60 29 Z" fill="#FBF3D8"/>
 
-  <!-- head -->
-  <circle cx="56" cy="67" r="21.5" fill="#F0EAD6"/>
-
-  <!-- muzzle + nose + smile, gazing up-right -->
-  <ellipse cx="61.5" cy="72" rx="9" ry="6.7" fill="#FBF7EA"/>
-  <path d="M61.5 66 Q64.8 66.5 64.8 68.6 Q64.8 71 61.5 71 Q58.2 71 58.2 68.6 Q58.2 66.5 61.5 66 Z" fill="#0A1628"/>
-  <path d="M61.5 71.3 Q61.5 74 64.2 74.5" stroke="#0A1628" stroke-width="1.2" stroke-linecap="round"/>
-
-  <!-- eyes on the star -->
-  <circle cx="48.5" cy="60" r="2.6" fill="#0A1628"/>
-  <circle cx="66.5" cy="57.5" r="2.6" fill="#0A1628"/>
-  <circle cx="49.5" cy="59" r="0.9" fill="#FFFDF5"/>
-  <circle cx="67.5" cy="56.5" r="0.9" fill="#FFFDF5"/>
-
-  <!-- blush -->
-  <ellipse cx="42.5" cy="67.5" rx="3.2" ry="1.9" fill="#E05C42" opacity="0.28"/>
-  <ellipse cx="70.5" cy="65" rx="3.2" ry="1.9" fill="#E05C42" opacity="0.28"/>
-
-  <!-- gold scarf -->
-  <path d="M38.5 80 Q56 90.5 74 79" stroke="#D4AF37" stroke-width="5.5" stroke-linecap="round" fill="none"/>
-  <path d="M68.5 82.5 Q71.5 89 69.5 95" stroke="#D4AF37" stroke-width="5" stroke-linecap="round" fill="none"/>
+  <!-- arrow of progress -->
+  <path d="M37 83 C50 79 63 68 74 50" stroke="#D4AF37" stroke-width="5" stroke-linecap="round" fill="none"/>
+  <path d="M69 47 L81 42 L78.5 55 Z" fill="#2E6FA8"/>
 </svg>

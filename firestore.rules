@@ -59,6 +59,12 @@ service cloud.firestore {
       allow read, update, delete: if isAdmin();
     }
 
+    // school seminar requests from /schools
+    match /seminars/{id} {
+      allow create: if true;
+      allow read, update, delete: if isAdmin();
+    }
+
     match /enrollments/{id} {
       allow create: if true;
       allow read, update, delete: if isAdmin();

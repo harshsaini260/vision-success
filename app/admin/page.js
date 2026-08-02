@@ -17,7 +17,7 @@ import toast from 'react-hot-toast'
 const ADMIN_PASSWORD = process.env.NEXT_PUBLIC_ADMIN_PASSWORD || 'VisionSuccess@2025'
 
 const CATEGORIES = ['NDA', 'JEE', 'NEET', 'Foundation', 'General']
-const TABS = ['Appointments', 'Enrollments', 'Surveys', 'Predictions', 'Vlogs', 'Blog', 'Materials', 'Reviews']
+const TABS = ['Appointments', 'Enrollments', 'Schools', 'Surveys', 'Predictions', 'Vlogs', 'Blog', 'Materials', 'Reviews']
 
 const AUTH_ERRORS = {
   'auth/invalid-credential': 'Wrong email or password.',
@@ -743,6 +743,43 @@ function SurveysTab() {
   )
 }
 
+/* ─── SEMINARS TAB (school seminar requests from /schools) ─── */
+function SeminarsTab() {
+  const { rows, loading, setStatus, remove } = useLeadCollection('seminars')
+  const SEM_STATUS = { new: '#D4AF37', contacted: '#4A7C59', booked: '#2D5282', done: '#6FAA7A', closed: '#7B2D2D' }
+  return (
+    <div className="space-y-4">
+      <h2 className="text-xl font-black text-white" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+        School Seminar Requests ({rows.length})
+      </h2>
+      {loading ? (
+        <div className="py-12 text-center text-gray-500">Loading…</div>
+      ) : rows.length === 0 ? (
+        <div className="py-12 text-center text-gray-500">
+          No requests yet. Hand the brochure to a principal — the link on it points here.
+        </div>
+      ) : (
+        rows.map((s) => (
+          <LeadCard
+            key={s.id}
+            lead={{ ...s, fullName: s.school, city: s.role || '—', currentClass: s.classes || '—', course: `Contact: ${s.person}` }}
+            statuses={['new', 'contacted', 'booked', 'done', 'closed']}
+            statusColors={SEM_STATUS}
+            onStatus={setStatus}
+            onDelete={() => remove(s.id)}
+            extraLines={
+              <div className="text-xs text-gray-500 mb-3 space-y-0.5">
+                <div>🗓️ Preferred timing: {s.when || 'flexible'}</div>
+                <div>🎓 Classes wanted: {s.classes || 'not specified'}</div>
+              </div>
+            }
+          />
+        ))
+      )}
+    </div>
+  )
+}
+
 /* ─── PREDICTIONS TAB (from the SAT predictor tool) ─── */
 function PredictionsTab() {
   const { rows, loading, setStatus, remove } = useLeadCollection('predictions')
@@ -1362,6 +1399,7 @@ export default function AdminPage() {
           >
             {activeTab === 'Appointments' && <AppointmentsTab />}
             {activeTab === 'Enrollments' && <EnrollmentsTab />}
+            {activeTab === 'Schools' && <SeminarsTab />}
             {activeTab === 'Surveys' && <SurveysTab />}
             {activeTab === 'Predictions' && <PredictionsTab />}
             {activeTab === 'Vlogs' && <VlogsTab />}

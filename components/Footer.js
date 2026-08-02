@@ -97,6 +97,7 @@ export default function Footer() {
                 { href: '/materials', label: 'Materials' },
                 { href: '/reviews', label: 'Reviews' },
                 { href: '/appointment', label: 'Book Counseling' },
+                { href: '/schools', label: 'For Schools' },
               ].map((link) => (
                 <li key={link.href}>
                   <Link
