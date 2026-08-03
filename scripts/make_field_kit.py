@@ -895,130 +895,173 @@ def script_pdf(cls, meta):
 SCRIPTS = {}
 
 # ─────────────────────────── CLASS 9 ───────────────────────────
+# Built like a magic trick. A number goes on the board before a word is
+# spoken, sits there doing nothing for thirty-two minutes, and then turns
+# out to have been the answer the whole time.
+#
+# THE MIND-BLOWER: 52! — a shuffled deck is an order that has almost
+# certainly never existed and will never exist again.
+#   52! = 8.0658 x 10^67 (verified)
+#   atoms in Earth ~1.33 x 10^50 -> 52! is ~6 x 10^17 times larger
+#   every human shuffling once a second since the Big Bang would cover
+#   ~3.5 x 10^27 orders = 4.3 x 10^-41 of the total
 SCRIPTS[9] = dict(
-    title_a="THE QUIET",
-    title_b="ARITHMETIC.",
+    title_a="DAY FIFTEEN.",
+    title_b="NOBODY SEES IT.",
     logline="Class 9 has no board exam, which is exactly why it decides more than Class 12 does. "
-            "A session about the invisible mathematics of small daily choices — and about not "
-            "deciding at fourteen what you are bad at.",
-    glance=[("40", "minutes"), ("5", "acts"), ("1", "rupee coin"), ("0", "things sold")],
-    props="A one-rupee coin. A sheet of paper you can fold. A watch.",
-    principle="Class 9 students do not need urgency. They need to be told that they are already building something.",
+            "A session built like a magic trick: a number written on the board before a single word "
+            "is spoken, which means nothing at the start and everything at the end.",
+    glance=[("40", "minutes"), ("5", "acts"), ("1", "deck of cards"), ("52!", "the mind-blower")],
+    props="A one-rupee coin. An ordinary deck of 52 playing cards. A blackboard you can write on before they arrive.",
+    principle="Class 9 does not need urgency. It needs to be told that it is already building something, and that nobody is going to clap for it yet.",
     acts=[
         ("Act one", "The Cold Open.", [
-            ("00:00", "Walk in. Say nothing. Hold up the coin.",
-             "Walk to the centre of the room. Do not introduce yourself. Hold a one-rupee coin up "
-             "where the back row can see it, and say nothing at all until the room goes quiet on its "
-             "own. It takes about eight seconds and it will feel like a minute.",
-             "Do not fill the silence. The silence is the hook. If you speak first, you have lost the opening."),
-            ("SAY", "In this room, right now, there are two of you who will finish Class 12 with completely different lives. And today — this morning — you are identical. Same school, same teachers, same town. One of you has already started pulling ahead, and neither of you can feel it yet. That is the problem with the thing I came here to talk about: by the time you can feel it, it has already finished happening."),
-            ("01:00", "Let it land, then make the offer.",
-             "Give that four full seconds. Then hold the coin higher and change tone completely — "
-             "brisk, playful, like a game show."),
-            ("SAY", "So. A deal. I can give every one of you ten lakh rupees, right now, today, in cash. Or — I give you this one rupee, and every single day for thirty days, it doubles. Hands up for the ten lakh."),
+            ("BEFORE", "Write the number on the board. Do not explain it.",
+             "Before the students settle — before you say anything at all — write this on the board "
+             "in the largest digits that will fit:   53,68,70,912.   Then walk away from it and do "
+             "not look at it again until the last two minutes of the session. Somebody will ask what "
+             "it is. Smile and say “later”.",
+             "This number is your spinning top. It sits there doing nothing for thirty-two minutes and then it does everything. Do not explain it early, no matter how many times you are asked. The asking is the point."),
+            ("00:00", "Walk to the centre. Hold up the coin. Say nothing.",
+             "Do not introduce yourself. Hold a one-rupee coin up where the back row can see it and "
+             "say absolutely nothing until the room goes quiet on its own. It takes about eight "
+             "seconds and it will feel like a minute.",
+             "Do not fill the silence. The silence is the hook. If you speak first, you have handed the room back to them."),
+            ("SAY", "In this room, right now, there are two of you who will finish Class 12 with completely different lives. And today — this morning, sitting there — you are identical. Same school. Same teachers. Same town. Same syllabus. One of you has already started pulling ahead, and neither of you can feel it. That is the whole problem with the thing I came here to say. By the time you can feel it, it has already finished happening."),
+            ("01:00", "Let it land. Then change gear completely.",
+             "Give that four full seconds of silence. Then switch tone hard — brisk, bright, almost a "
+             "game-show host. The gear change is what wakes the room up; it tells them this is not "
+             "going to be a lecture.",
+             "The tonal whiplash here is deliberate. Solemn, then playful. Do not deliver the whole session in one register."),
+            ("SAY", "Right. A deal. I am going to give every single one of you ten lakh rupees. Cash. Today, before lunch. Or — I give you this one rupee, and every day for thirty days, it doubles. Hands up for the ten lakh, and be honest, because I will know."),
             ("02:00", "Take the vote properly.",
-             "Count the hands out loud. Say the number. Then ask who chose the rupee and look "
-             "genuinely, warmly interested in them — do not mock either group.",
-             "Do not reveal the answer yet. Let them sit in it for a beat."),
-            ("SAY", "Day one, one rupee. Day five, sixteen. Day ten, five hundred and twelve. Day fifteen — sixteen thousand three hundred and eighty-four. Which is why almost nobody picks it: on day fifteen, halfway through, it still looks like a bad joke next to ten lakh."),
-            ("03:30", "The reveal.",
-             "Slow down here. This number is the spine of the whole session.",),
-            ("SAY", "Day thirty is fifty-three crore, six lakh, seventy thousand and ninety-one rupees. Fifty-three crore. From one rupee. And more than half of that total appeared in the last three days alone."),
-            ("04:30", "Now say your name — once.",
-             "Only now. Your name, the institute's name, one sentence. Then move straight on. Do not "
-             "elaborate, do not list courses, do not mention fees."),
-            ("SAY", "You are in Class 9. There is no board exam this year. Nobody is watching you very closely. Which is exactly why this is the year that decides the most — because this is your day fifteen, and day fifteen always looks like nothing."),
+             "Count the hands out loud and say the number. Then ask who took the rupee, and look "
+             "genuinely, warmly delighted with them. Do not mock the other group — most adults "
+             "choose the ten lakh too.",
+             "Do not reveal the answer yet. Make them wait through the arithmetic. Anticipation is free and you should charge them for it."),
+            ("SAY", "Day one, one rupee. Day five, sixteen rupees. Day ten, five hundred and twelve. Day fifteen — halfway through — sixteen thousand three hundred and eighty-four rupees. Sixteen thousand, against ten lakh, and we are halfway. Halfway through, it is still a joke."),
+            ("03:15", "Now the reveal. Slow right down.",
+             "This is the spine of the whole session. Say the number as though it costs you something "
+             "to say it.",),
+            ("SAY", "Day thirty is more than fifty-three crore rupees. And here is the part that should unsettle you slightly: more than half of that entire fortune arrives in the last three days."),
+            ("04:15", "Say your name. Once. Then never again until the end.",
+             "Your name, the institute's name, one sentence. Do not list courses. Do not mention "
+             "fees. Do not say the word “admission”. Then move on immediately.",
+             "If they smell a pitch here, you lose the room and you will not get it back."),
+            ("SAY", "You are in Class 9. There is no board exam this year. Nobody is watching you very closely, and nobody is going to clap for anything you do in the next twelve months. Which is exactly why this is the year that decides the most — because this is day fifteen. And day fifteen always, always looks like nothing."),
         ]),
         ("Act two", "The Demonstration.", [
-            ("06:00", "The paper fold. Do it with them.",
-             "Hold up a single sheet of paper. Ask the room: if you could fold this in half fifty "
-             "times — impossible in practice, but imagine — how thick would it be? Take guesses. "
-             "Someone will say a metre. Someone will say as tall as the school.",
-             "Take at least three guesses out loud before answering. The wrongness of the guesses IS the lesson."),
-            ("SAY", "Fifty folds would reach past the sun. Not to the roof, not to the moon — past the sun, and most of the way to it again. That is the same arithmetic as the coin. Your brain is very good at adding and genuinely terrible at doubling, and almost every mistake you will make about your own future comes from that one bug."),
-            ("08:00", "Now make it about them.",
-             "Describe two students in this district — same intelligence, same school, same village. "
-             "Student A reads twenty minutes a day, every day, including bad days. Student B reads "
-             "six hours the night before each test. Ask the room, honestly: who is working harder "
-             "right now, today?",
-             "They will say Student B. Agree with them. They are right, and agreeing buys you enormous credibility."),
-            ("SAY", "They are right. Tonight, Student B is working harder. Over four years, Student A has read for roughly five hundred hours and Student B for about eighty. Same brain, same village, six times the mind. And nobody watching will call it work — they will call it talent, which is the laziest word in the language."),
-            ("10:30", "The three-question test. Hands up.",
-             "Ask three questions and count hands each time. (1) Who here has already decided they "
-             "are bad at Maths? (2) Who decided that before Class 8? (3) Who has ever actually gone "
-             "back and repaired the chapter where it started going wrong? The third count is almost "
-             "always near zero, and that gap is the point.",
-             "Keep this fast and light. You are collecting evidence, not shaming anyone."),
-            ("SAY", "Nearly all of you put a hand up for the first question. Almost none of you for the third. So here is what has actually happened: you did not discover a limit. You missed about nine hours of Mathematics somewhere around Class 7, everything after it stacked on top of the gap, and you turned a gap into an identity. Those are extremely different problems, and only one of them is permanent."),
-            ("13:00", "Say the sentence they will remember.",),
-            ("SAY", "You are not bad at Mathematics. You are missing nine hours of Mathematics. Nobody has ever been born bad at the number seven."),
+            ("06:00", "Take out the deck. Let them check it is ordinary.",
+             "Hold up a normal deck of 52 playing cards. Hand it to a student in the front row and "
+             "ask them to confirm out loud that it is an ordinary deck. Take it back. Shuffle it "
+             "properly, several times, where everyone can see.",
+             "Getting a student to verify the deck costs you eight seconds and buys you the room's trust for the next four minutes. Do not skip it."),
+            ("SAY", "Ordinary deck. Fifty-two cards. I have just shuffled it. Now I am going to tell you something about this exact order — this one, here, in my hand — and I want you to decide whether you believe me."),
+            ("07:00", "Make the claim. Then stop talking.",),
+            ("SAY", "This arrangement of cards has almost certainly never existed before in the history of the universe. And after I put it down, it will never exist again."),
+            ("07:30", "Let them argue. Do not correct them yet.",
+             "They will object. Somebody will say that is impossible, somebody will say you cannot "
+             "know that, somebody will say it must have happened before. Let them go for twenty "
+             "seconds. Enjoy it.",
+             "The argument is what makes the answer land. A fact they have fought for is worth ten facts they were handed."),
+            ("08:00", "Now do the arithmetic on the board, in front of them.",
+             "The first card can be any of 52. The second, any of the remaining 51. Then 50, then 49. "
+             "Write 52 × 51 × 50 × … × 2 × 1 on the board and let them see the shape of it.",
+             "Write it. Do not announce it. Numbers you write are believed; numbers you say are politely doubted."),
+            ("SAY", "That number is an eight followed by sixty-seven more digits. Now — there are roughly ten to the fifty atoms in the entire planet Earth. Every rock, every ocean, every person, the whole core. The number of ways to arrange these fifty-two cards is about six hundred million billion times larger than the number of atoms in this planet."),
+            ("09:15", "And now the line that finishes them off.",
+             "Deliver this one slowly and let the room sit in it. This is the fact they will repeat "
+             "at dinner tonight.",),
+            ("SAY", "If every person alive today shuffled a deck of cards once every second — all eight billion of us, every second, without stopping — and we had been doing it since the Big Bang, fourteen billion years ago, we would still have covered less than a trillionth of a trillionth of a trillionth of the possible orders. Almost every shuffle in human history has been the first and the last time that order has ever existed."),
+            ("10:15", "Now turn the whole thing on them. This is why the trick exists.",
+             "Everything before this beat was setup. Land this one properly and the rest of the "
+             "session runs itself.",),
+            ("SAY", "Fifty-two small things, arranged slightly differently, and you get something the universe has never seen before. You are going to make about a thousand small decisions this year. What time you sleep. Whether you open the book on the day you do not feel like it. Which chapter you finally go back and fix. Nobody will notice a single one of them — including you. And the arrangement they produce has never existed before either."),
+            ("11:30", "The two students. Make it concrete and local.",
+             "Two students in this district. Same intelligence, same school, same village. Student A "
+             "reads twenty minutes a day, every day, including the bad days. Student B does six hours "
+             "the night before each test. Ask the room, honestly: who is working harder tonight?",
+             "They will say Student B. Agree with them immediately. They are right, and agreeing with a room buys you more credibility than being clever at it."),
+            ("SAY", "They are right. Tonight, B is working harder — much harder, and it is not close. Over four years, A has read for about five hundred hours and B for about eighty. Same brain. Same village. Six times the mind. And nobody watching will call it work. They will call it talent, which is the laziest word in the English language."),
         ]),
         ("Act three", "The Map.", [
-            ("15:00", "Name every road. Fast — twenty seconds each.",
-             "Engineering (JEE). Medicine (NEET). The defence academies (the NDA — and tell them it "
-             "can be written straight after Class 12, which surprises every Class 9 room). Merchant "
-             "navy (IMU CET). Teaching (HP TET). Civil services. Law, design, architecture, "
-             "psychology, journalism. And studying abroad on the SAT.",
-             "Do not linger. You are naming, not selling. The speed is what makes the list feel enormous."),
-            ("SAY", "Every single one of those is open to somebody sitting in this room. Not one of them requires you to have been born somewhere else."),
-            ("17:00", "Give them one hard number they have never heard.",
-             "For a Class 9 room the best one is the SAT: it is scored out of 1600, it runs on eight "
-             "Saturdays a year in India, it is taken on a laptop in about two hours and fourteen "
-             "minutes, and it is the entrance route to universities abroad — many of which give "
-             "substantial merit scholarships."),
-            ("SAY", "Eight Saturdays a year. That is all it is. Somebody in this district has already sat that paper and scored 1540 out of 1600 — top one percent in the world — and then came back here. The paper does not know which town you are from. It genuinely cannot tell."),
-            ("19:00", "The stream myth, killed early.",
-             "Tell them plainly, two years before anyone else will: there is no stream in which you "
-             "cannot build a serious life, and the idea that Arts or Commerce is where the weak "
-             "students go has cost this state more talent than any exam ever has."),
-            ("20:30", "The one honest constraint.",
-             "Be straight: Physics and Mathematics are genuinely required for the Air Force and Navy "
-             "wings of the NDA, and Biology is genuinely required for medicine. Very few doors "
-             "actually close — but those two really do, and they should know it now rather than in "
-             "Class 11."),
+            ("13:30", "Three questions. Hands up each time. Fast.",
+             "One: who here has already decided they are bad at Maths? Two: who decided it before "
+             "Class 8? Three: who has ever actually gone back and repaired the chapter where it "
+             "first went wrong? Count each. The third is almost always near zero.",
+             "Keep it quick and light. You are collecting evidence, not shaming anyone. Smile through all three."),
+            ("SAY", "Nearly every hand for the first one. Almost none for the third. So here is what actually happened to you. You did not discover a limit. You missed about nine hours of Mathematics somewhere around Class 7, everything after it stacked on top of the hole, and then you turned a hole into an identity. Those are completely different problems, and only one of them is permanent."),
+            ("15:00", "Say the sentence they will still remember in June.",),
+            ("SAY", "You are not bad at Mathematics. You are nine hours behind in Mathematics. Nobody in the history of the human species has been born bad at the number seven."),
+            ("16:00", "Name every road. Twenty seconds each, no more.",
+             "Engineering (JEE). Medicine (NEET). The defence academies — the NDA, which can be "
+             "written straight after Class 12, and which surprises every Class 9 room. Merchant navy "
+             "(IMU CET). Teaching (HP TET). Civil services. Law, design, architecture, psychology, "
+             "journalism. And studying abroad, on the SAT.",
+             "Do not linger anywhere. The speed is what makes the list feel enormous. You are naming, not selling."),
+            ("SAY", "Every single one of those is open to somebody sitting in this room today. Not one of them requires you to have been born somewhere else."),
+            ("18:00", "One hard number they have never heard.",
+             "The SAT: scored out of 1600, taken on a laptop, ninety-eight questions in two hours and "
+             "fourteen minutes, offered on eight Saturdays a year in India, and the entrance route to "
+             "universities abroad — many of which give substantial merit scholarships."),
+            ("SAY", "Eight Saturdays a year. That is the entire gate. And somebody from this district has already walked through it — scored 1540 out of 1600, top one percent on Earth — and then did the strange thing and came back here to teach it. That paper does not know which town you are from. It genuinely cannot tell."),
+            ("19:30", "Kill the stream myth two years before anyone else will.",
+             "There is no stream in which you cannot build a serious life, and the idea that Arts or "
+             "Commerce is where the weaker students go has cost this state more talent than any exam "
+             "ever has."),
+            ("20:30", "The two constraints that are genuinely real.",
+             "Physics and Mathematics are required for the Air Force and Navy wings of the NDA. "
+             "Biology is required for medicine. Very few doors actually close in this decision — but "
+             "those two really do, and knowing it now instead of in Class 11 is worth a year."),
         ]),
         ("Act four", "The Turn.", [
-            ("22:00", "Ask the uncomfortable question. Then wait.",
-             "Ask it slowly and mean it. Then give ten full seconds of silence. Do not rescue them "
-             "from it.",),
-            ("SAY", "Who in this room has already decided what they are not good at? Keep your hand down. Just answer it inside your own head, honestly, where nobody can see you."),
-            ("23:30", "Explain why fourteen is the dangerous age for it.",
-             "At fourteen a student is not choosing a subject, they are choosing a story about "
-             "themselves — and the story is far stickier than the subject. A gap can be closed in a "
-             "month. An identity takes years, and some people never put it down at all."),
-            ("SAY", "Be careful what you decide about yourself this year. You are not just picking subjects. You are writing a sentence that starts with I am the kind of person who — and you will still be finishing that sentence at thirty."),
-            ("25:30", "Now give them the method. Practical, unglamorous, real.",
-             "Four rules, said plainly. One: shrink the unit until starting is embarrassing — ten "
-             "minutes, not two hours. Two: fix the time, not the amount. Three: give yourself "
-             "permission to begin badly. Four: protect the streak, not the session — a bad ten "
-             "minutes still counts, a skipped day does not.",
-             "This is the most genuinely useful ninety seconds of the session. Slow down and let them write it."),
+            ("22:00", "The uncomfortable question. Then ten seconds of silence.",
+             "Ask it slowly and mean it. Then wait ten full seconds and do not rescue them from it. "
+             "Watch the room go still.",),
+            ("SAY", "Who in this room has already decided what they are not good at? Keep your hand down. Do not tell anyone. Just answer it honestly inside your own head, where nobody else can see you."),
+            ("23:30", "Why fourteen is the dangerous age for this.",
+             "At fourteen a student is not choosing a subject — they are choosing a story about "
+             "themselves, and the story is far stickier than the subject. A gap closes in a month. "
+             "An identity takes years, and some people never put it down at all."),
+            ("SAY", "Be very careful what you decide about yourself this year. You are not picking subjects. You are writing a sentence that begins “I am the kind of person who —” and you will still be finishing that sentence when you are thirty."),
+            ("25:30", "Now the method. Practical, unglamorous, real.",
+             "Four rules, said plainly and slowly enough to write down. One: shrink the unit until "
+             "starting is embarrassing — ten minutes, not two hours. Two: fix the time, not the "
+             "amount. Three: give yourself permission to begin badly. Four: protect the streak, not "
+             "the session — a bad ten minutes still counts, a skipped day does not.",
+             "This is the most genuinely useful ninety seconds of the session. Slow down and let them actually write it."),
             ("27:00", "The thing nobody tells them about motivation.",
-             "Motivation is a feeling, and feelings are unreliable employees. The students who "
-             "succeed are not the ones who feel like studying — they are the ones who built a "
-             "routine that never asks how they feel."),
-            ("SAY", "You will not feel like it. That is not a problem to be solved, that is just Tuesday. The whole trick is building something that works on the days you do not feel like it, because those are most of the days."),
-            ("29:00", "One more hands-up, and this one changes the room.",
-             "Ask: who in here has something they are genuinely curious about that has nothing to do "
-             "with your syllabus? Take three or four answers out loud. Whatever they say — cricket, "
-             "phones, animals, cooking, music — connect it in one sentence to a real field of study "
-             "or career.",
-             "This beat is why they remember you. Be quick, be generous, and take the shy hands first."),
+             "Motivation is a feeling, and feelings are unreliable employees. The students who get "
+             "there are not the ones who feel like studying — they are the ones who built a routine "
+             "that never bothers to ask how they feel."),
+            ("SAY", "You will not feel like it. That is not a problem to be solved. That is just Tuesday. The entire trick is building something that still works on the days you do not feel like it — because those are most of the days, for everybody, forever."),
+            ("28:30", "The curiosity round. This is the beat they remember you for.",
+             "Ask: who has something they are genuinely curious about that has nothing to do with "
+             "your syllabus? Take three or four answers out loud. Whatever they say — cricket, "
+             "phones, animals, cooking, music, cars — connect it in one sentence to a real field of "
+             "study or a real career.",
+             "Take the shy hands first. Be quick, be generous, and never let a single answer sound silly. One student in that room has just heard their thing named as a career for the first time."),
         ]),
         ("Act five", "The Close.", [
-            ("32:00", "Return to the coin.",
-             "Hold the rupee up again, exactly as you did at the start. The room will remember it "
-             "instantly. Let the callback do the work — do not over-explain it."),
-            ("SAY", "You will not see the difference this year. You will barely see it next year. Somewhere around Class 11 it will stop being invisible, and by Class 12 everybody will call it talent. It is not talent. It is day fifteen, and it started this morning whether you chose it or not."),
+            ("31:30", "Now — for the first time in thirty-two minutes — turn and point at the board.",
+             "Walk over to the number you wrote before you had spoken a single word. Tap it. The "
+             "room will go completely silent, because they have been looking at it and wondering "
+             "about it for the whole session.",
+             "This is the payoff. Do not hurry it and do not over-explain it. Let them get there half a second before you do."),
+            ("SAY", "Somebody asked me at the start what that number was. Fifty-three crore, sixty-eight lakh, seventy thousand, nine hundred and twelve rupees. That is one rupee, doubled every day, for thirty days. I wrote it on that board before I said a single word to any of you — because it was already true before you walked in. It was true whether or not anybody in this room believed it."),
+            ("32:45", "Return to the coin. Hold it up exactly as you did at the start.",
+             "Same gesture, same height. The room will feel the loop close even if nobody could "
+             "explain why."),
+            ("SAY", "You will not see the difference this year. You will barely see it next year. Somewhere around Class 11 it will stop being invisible, and by Class 12 everybody will call it talent. It is not talent. It is day fifteen — and yours started this morning, whether you chose it or not."),
             ("34:00", "Hand out the cards.",
              "Distribute the printed Command Card for their stream. Say clearly that it is free, it "
              "is theirs, and they may photograph it, share it, or give it to a friend in another "
              "school.",
-             "This is the only moment the institute's name appears again. Do not add a pitch."),
+             "This is the only moment the institute's name appears again. Do not add a pitch to it."),
             ("35:30", "Questions.",
-             "Open the floor. Class 9 asks the most surprising questions of any year — take them "
-             "seriously. Answer honestly, including “I don't know, but I'll find out and send it "
-             "to your school.” Never convert a question into an advertisement."),
+             "Class 9 asks the most surprising questions of any year in the school — take every one "
+             "of them seriously. Answer honestly, including “I don't know, but I will find out and "
+             "send it to your school.” Never convert a question into an advertisement."),
             ("39:00", "Leave on time.",
              "End early rather than late. Thank the teacher by name, in front of the students. Walk "
              "out without lingering to collect anything — that single restraint is what makes a "
@@ -1026,174 +1069,233 @@ SCRIPTS[9] = dict(
         ]),
     ],
     qa=[
-        ("“Sir, can I really give the NDA straight after Class 12?”",
-         "Yes. The NDA is written twice a year and you can sit it while you are still in Class 12, "
-         "within the age window. The written paper is 900 marks — Mathematics is 300 of it and the "
-         "General Ability Test is 600 — and it is followed by a five-day SSB interview also worth "
-         "900 marks. Final selection is out of 1800."),
-        ("“What is the SAT and is it only for rich people?”",
-         "It is the entrance test for universities abroad, scored from 400 to 1600, taken on a "
-         "laptop in about two hours fourteen minutes. It runs on eight Saturdays a year in India. "
-         "There is a registration fee, and there are also substantial merit scholarships — which is "
-         "the part nobody here is ever told."),
+        ("“Sir, is the card thing actually true?”",
+         "Yes, and be ready to prove it. 52 × 51 × 50 … × 1 is about 8 followed by 67 zeros. There "
+         "are roughly 10 to the 50 atoms in the Earth. Offer to write the full multiplication on the "
+         "board for anyone who stays behind — two or three always do, and those are your future "
+         "Mathematics students."),
+        ("“Can I really give the NDA straight after Class 12?”",
+         "Yes. It runs twice a year and you can sit it while still in Class 12, within the age "
+         "window. Written paper: Mathematics 300 marks, General Ability 600. Then a five-day SSB "
+         "interview worth another 900. Final selection out of 1800."),
+        ("“What is the SAT, and is it only for rich people?”",
+         "The entrance route to universities abroad. Scored 400–1600, taken on a laptop in about two "
+         "hours fourteen minutes, offered on eight Saturdays a year in India. There is a "
+         "registration fee — and there are substantial merit scholarships, which is the half nobody "
+         "here is ever told."),
         ("“Which stream should I take?”",
-         "Do not answer this for them. Say: the honest answer is the one you would still be curious "
-         "about at eleven at night, and you have two years to find out. Then name the only real "
-         "constraints — Physics and Maths for the Air Force and Navy wings of the NDA, Biology for "
-         "medicine."),
+         "Do not answer it for them. Say: the honest answer is whichever one you would still be "
+         "curious about at eleven at night, and you have two whole years to find that out. Then name "
+         "the only real constraints — Physics and Maths for the Air Force and Navy wings of the NDA, "
+         "Biology for medicine."),
         ("“Am I too late?”",
-         "In Class 9 the honest answer is a flat no, and you should say it flatly. Nothing has "
-         "closed. Not one thing."),
+         "In Class 9 the honest answer is a flat no, and you should say it flatly, with no "
+         "qualifications. Nothing has closed. Not one single thing."),
         ("“How many hours should I study?”",
-         "Resist the number. Say: less than you think, more often than you want. Twenty consistent "
-         "minutes beats a six-hour panic, and the students who burn out at fourteen are usually the "
-         "ones who started with a number instead of a routine."),
+         "Resist the number. Say: less than you think, far more often than you want. Twenty "
+         "consistent minutes beats a six-hour panic, and the students who burn out at fourteen are "
+         "almost always the ones who started with a number instead of a routine."),
     ],
-    final_image="Leave them with the coin, not the institute. The ones who remember the coin will find you.",
+    final_image="The number was on the board the entire time, and none of them could read it. That is the whole lesson, and you never had to say it out loud.",
 )
 
 # ─────────────────────────── CLASS 10 ───────────────────────────
+# The session proves — live, using the students' own birthdays — that
+# certainty and correctness are different things, and then spends the rest
+# of the period applying that to the stream decision.
+#
+# THE MIND-BLOWER: the birthday problem. Verified probabilities of at
+# least one shared birthday: 23 people 50.7%, 30 -> 70.6%, 40 -> 89.1%,
+# 50 -> 97.0%, 60 -> 99.4%. Pairs in a room of 40: 780.
 SCRIPTS[10] = dict(
-    title_a="THE FORK",
-    title_b="IN THE ROAD.",
-    logline="Class 10 chooses a stream and believes it is choosing a life. A session about how much "
-            "that decision actually decides, how much it does not, and why almost everything here "
-            "is more reversible than it feels.",
-    glance=[("40", "minutes"), ("5", "acts"), ("1", "paper map"), ("0", "things sold")],
-    props="A folded paper road map (a real one). A blackboard or a large sheet.",
-    principle="Class 10 is frightened of choosing wrong. Your job is to make the choice smaller and clearer, not scarier.",
+    title_a="THE ODDS",
+    title_b="YOU CANNOT FEEL.",
+    logline="Class 10 chooses a stream and believes it is choosing a life. A session that begins by "
+            "proving — live, in the room, using the students' own birthdays — that their certainty "
+            "is unreliable, and then rebuilds the whole map in front of them.",
+    glance=[("40", "minutes"), ("5", "acts"), ("23", "the number"), ("0", "things sold")],
+    props="A folded paper road map (a real one). A blackboard. Optionally, slips of paper for every student.",
+    principle="Class 10 is frightened of choosing wrong. Your job is to make the choice smaller and clearer, not scarier — and to prove to them that the fear is a bad instrument.",
     acts=[
         ("Act one", "The Cold Open.", [
-            ("00:00", "Open the map. Look at it, not at them.",
-             "Unfold a real paper map and hold it up. Study it. Turn it around once, as if lost. Do "
-             "not speak for at least six seconds.",
-             "The prop does the hooking. Resist speaking. A room will always go quiet for someone who is clearly about to do something."),
+            ("00:00", "Before you introduce yourself, ask them for their birthdays.",
+             "Walk in. Before you say your name, before anything, ask every student to write their "
+             "date of birth — day and month only, not the year — on a slip of paper and hold on to "
+             "it. If slips are impractical, just tell them to have it ready to call out. Do not say "
+             "why. If they ask why, say “you'll see”, and move on.",
+             "The refusal is the hook. A room that has been asked for something without being told why will not stop paying attention until it finds out. Do not give it away."),
+            ("01:15", "Now unfold the map. Study it. Say nothing for six seconds.",
+             "Unfold a real paper road map and hold it up. Look at it, not at them. Turn it around "
+             "once, as if lost.",
+             "A room will always go quiet for somebody who is visibly about to do something. Let the prop earn the silence."),
             ("SAY", "Somewhere in this school, right now, there is a student who is going to become a doctor. And this morning, that student thinks they are bad at Biology."),
-            ("00:45", "Hold the pause. Then the map.",
-             "Four seconds. Then lift the map higher.",),
-            ("SAY", "This map is completely accurate. Every road on it is real, every distance is correct, and it is still perfectly possible to be lost while holding it — because a map is useless until you know which two places you are choosing between. That is the whole problem with this year."),
-            ("02:00", "Name yourself, once, and move on.",
-             "Your name, the institute's name, one sentence. Then immediately drop it and do not "
-             "return until the very end."),
-            ("SAY", "In a few months, someone will ask you to pick a stream. Most of you will pick it on three things: your marks, what your best friend picks, and something one relative said at a wedding."),
-            ("03:00", "Let the laugh happen.",
-             "There will be a laugh of recognition. Do not rush past it — ride it, then land the "
-             "sentence the entire session hangs on."),
+            ("02:00", "Hold it for four seconds. Then lift the map higher.",),
+            ("SAY", "This map is completely accurate. Every road on it is real. Every distance on it is correct. And it is still perfectly possible to be lost while holding it — because a map is useless until you know which two places you are choosing between. That is this entire year, in one object."),
+            ("03:00", "Name yourself once, then drop it entirely.",
+             "Your name, the institute's name, one sentence. Then do not mention either again until "
+             "the cards come out at the end."),
+            ("SAY", "In a few months, somebody is going to ask you to pick a stream. And most of you will pick it on three things: your marks, what your best friend picks, and something one relative said at a wedding."),
+            ("03:45", "Ride the laugh. Then land the thesis.",
+             "There will be a laugh of recognition — it happens in every school. Do not rush past it. "
+             "Let it finish, then drop your voice for the next line.",),
             ("SAY", "I am not here to tell you what to choose. I am here to make sure that when you do choose, you are choosing between the real options — and not just the three you happen to have heard of."),
         ]),
         ("Act two", "The Demonstration.", [
-            ("05:00", "The board exercise. Get them to build the list.",
+            ("05:00", "Come back to the birthdays. Set the bet.",
+             "Ask the room: in a group this size, what are the chances that two people share exactly "
+             "the same birthday — same day, same month? Take guesses out loud and write them on the "
+             "board. Somebody will say “one in three hundred and sixty-five”.",
+             "Write their guesses on the board. The gap between their guess and the truth IS the lesson — do not let it evaporate in ten seconds."),
+            ("06:00", "Take the bet publicly.",
+             "Count the room, or ask the teacher for the number. Then commit — out loud, with no "
+             "hedging. Confidence is the whole performance here.",),
+            ("SAY", "There are about forty of you. I am going to claim that two people in this room share a birthday. Not close. Not the same week. The same day and the same month. And I am not guessing — I am nearly certain, and I will tell you exactly how certain in about two minutes."),
+            ("06:45", "Run it. Month by month. Keep it fast and theatrical.",
+             "“January — hands up. Call out your dates.” Work through the year at pace. Repeat each "
+             "date loudly as it is called. Let the tension build as the months run out.",
+             "In a room of 40 the chance of a match is 89%. At 50 it is 97%. At 60 it is over 99%. Run this only in a room of 30 or more."),
+            ("07:45", "IF NO MATCH: recover in one sentence and keep the fact.",
+             "It happens roughly one time in ten in a room of forty. Do not apologise and do not "
+             "deflate. Say: “This room is in the eleven percent — which is its own kind of rare, and "
+             "you should enjoy it.” Then immediately run it again on birth MONTH alone, which is a "
+             "mathematical certainty above twelve students, and carry straight on into the "
+             "explanation.",
+             "Never run a demonstration you have no recovery for. Read this beat before you walk in, every single time."),
+            ("08:30", "When it happens — and it usually does — stop everything.",
+             "Get the two students to stand up. Let the room react. Let it be genuinely loud for a "
+             "few seconds. You have earned it and so have they.",
+             "Do not talk over the reaction. This is the single best moment in the whole kit; let it breathe."),
+            ("SAY", "Twenty-three. That is all it takes for this to be more likely than not — twenty-three people in a room, and the odds are already better than a coin toss. Not one hundred and eighty-three. Twenty-three. In a room of fifty it is ninety-seven percent. In a room of sixty it is over ninety-nine. Every single one of you would have bet against me, and every single one of you would have lost."),
+            ("09:45", "Now explain why their intuition failed. Be quick and be kind.",
+             "Each of you was silently comparing your own birthday against everyone else's. That is "
+             "the wrong question. The right question is about every possible pair in the room — and "
+             "in a room of forty there are seven hundred and eighty pairs."),
+            ("SAY", "You were not bad at maths. You were answering a different question from the one I actually asked. And that — answering a slightly different question from the one in front of you — is most of the wrong decisions that anybody ever makes. Including the one you are about to make about your stream."),
+            ("11:00", "The pivot. This is why the whole demonstration exists.",
+             "Everything up to here was setup. Deliver this next line slowly. It is the thesis of the "
+             "entire session and everything afterwards leans on it.",),
+            ("SAY", "So here is what I have just proved to you, using nothing but your own birthdays: the feeling of being certain and the state of being right are two completely different things — and you cannot tell them apart from the inside. You just felt it happen. Every one of you was sure, and the room was against you."),
+            ("12:00", "And now bring it home.",),
+            ("SAY", "Which brings me back to the student in this school who is going to become a doctor, and who is absolutely certain, this morning, that they are bad at Biology."),
+        ]),
+        ("Act three", "The Map.", [
+            ("13:30", "The sixty-second list. Make them build it.",
              "Ask the room to name every career they can think of. Write each one on the board as "
-             "fast as they call it out. Stop at exactly sixty seconds and count what is up there.",
-             "It is almost always between eight and fifteen, and heavily clustered on doctor / engineer / teacher / army / police."),
-            ("SAY", "Sixty seconds, and this whole room together produced about a dozen. Now let me add some that nobody said."),
-            ("06:30", "Add the ones they missed.",
+             "fast as it is called out. Stop dead at exactly sixty seconds and count what is up "
+             "there, out loud.",
+             "It is almost always between eight and fifteen, clustered on doctor, engineer, teacher, army, police. Count them out loud. The smallness of the list is the entire point."),
+            ("SAY", "Sixty seconds, forty of you, and together you produced about a dozen. Now let me add some that nobody in this room said."),
+            ("15:00", "Add the missing ones. Five words of entry route each.",
              "Merchant navy officer. Architect. Actuary. Commercial pilot. Forensic scientist. "
              "Chartered accountant. Industrial designer. Hotel management. Agricultural scientist. "
-             "Sports physiotherapist. Data analyst. Wildlife biologist. Say each with the entry "
-             "route in five words.",
-             "Watch the room while you write. This is the beat where a Class 10 audience physically leans forward."),
-            ("SAY", "None of you said these. Not because you rejected them — because you had never heard them out loud. You cannot choose from a list you have never seen, and until ninety seconds ago, that list did not exist for you."),
-            ("09:00", "What the stream actually decides. Be precise and calm.",
+             "Sports physiotherapist. Data analyst. Wildlife biologist. Naval architect. Cartographer.",
+             "Watch the room while you write. This is the beat where a Class 10 audience physically leans forward. Some of them are seeing their life on that board."),
+            ("SAY", "Not one of you said these. Not because you considered them and rejected them — because they had never once been said out loud in front of you. You cannot choose from a list you have never seen. And ninety seconds ago, that list did not exist for anybody in this room."),
+            ("17:30", "What the stream actually decides. Precise and calm.",
              "Science with Maths keeps engineering, architecture and the technical defence wings "
              "open. Science with Biology keeps medicine and the life sciences open. Commerce keeps "
              "finance, CA, economics and business open. Arts keeps law, civil services, design, "
              "languages, psychology and journalism open.",
-             "Say clearly: none of these is the weak choice. That myth costs this district more talent than any exam does."),
-            ("SAY", "There is no stream in which you cannot build a serious life. There is only a stream that matches what you would still be curious about at eleven at night. And I promise you: nobody at thirty is asked which stream they took."),
-            ("11:30", "The doors that stay open regardless — this surprises every Class 10 room.",
+             "Say clearly that none of these is the weak choice. That myth costs this district more talent every year than any exam does."),
+            ("SAY", "There is no stream in which you cannot build a serious life. There is only a stream that matches what you would still be curious about at eleven at night. And I promise you this: nobody at thirty has ever been asked which stream they took."),
+            ("19:30", "The doors that stay open regardless — this surprises every room.",
              "The NDA's Army wing is open to all streams. The SAT does not care which stream you "
              "took. The civil services do not care. Law and design do not care. Very few doors "
              "actually close in this decision."),
-            ("13:00", "The two that genuinely do close.",
+            ("20:30", "The two that genuinely do close.",
              "Physics and Mathematics are required for the Air Force and Navy wings of the NDA. "
              "Biology is required for medicine. Those are real, and knowing them now rather than in "
-             "Class 12 is worth an entire year."),
+             "Class 12 is worth an entire year of somebody's life."),
             ("SAY", "So the real question is not which stream is best. It is: which doors do I want to keep open, and what is the honest price of keeping them open?"),
         ]),
-        ("Act three", "The Evidence.", [
-            ("15:00", "Give them the actual numbers. They are old enough now.",
-             "NEET: 180 compulsory questions, 720 marks, three hours, on paper. Physics 45 questions, "
+        ("Act four", "The Evidence.", [
+            ("22:00", "NEET, exactly. They are old enough for the real numbers now.",
+             "180 compulsory questions, 720 marks, three hours, pen and paper. Physics 45 questions, "
              "Chemistry 45, Biology 90. Plus four for a correct answer, minus one for a wrong one.",
-             "Slow down. Offer to repeat any number. This is where the note-taking starts."),
-            ("SAY", "Look at that split again. Biology is ninety questions out of a hundred and eighty — three hundred and sixty marks out of seven hundred and twenty. Biology is not a subject in NEET. Biology is exactly half the entire exam."),
-            ("17:00", "JEE Main, precisely.",
-             "75 questions, 300 marks, plus four and minus one. It runs in two sessions — January "
-             "and April — and if you sit both, only the higher score counts."),
-            ("SAY", "Two attempts, and the worse one is thrown away. Nobody tells you that in Class 10, and it changes how frightened you are allowed to be."),
-            ("18:30", "The rule almost nobody in this district knows.",
-             "For admission to an NIT, IIIT or a government-funded institute through JEE, you need "
-             "75% in your boards — OR to be in the top 20 percentile of your own board. Two doors, "
-             "not one. And neither is required merely to sit the exam."),
-            ("SAY", "Top twenty percentile of your own board. Not of India — of your board. For a lot of you that is a considerably lower number than seventy-five percent, and not knowing it has quietly cost students in this state seats they had already earned."),
-            ("20:00", "The NDA, precisely.",
-             "Written: Mathematics 120 questions for 300 marks, General Ability 150 questions for "
-             "600 marks. Then a five-day SSB interview worth another 900. Final merit out of 1800.",),
-            ("SAY", "Do that division. In the General Ability paper each question is worth four marks; in Maths each is worth two and a half. One GAT question is worth more than one and a half Maths questions — and almost every aspirant spends twice as long on Maths. That is not a study tip. That is free marks lying on the floor."),
-            ("21:30", "The board-exam truth that lowers the temperature.",
-             "For most careers the Class 10 percentage matters far less than everyone around them is "
-             "implying. It opens the stream, and after that almost nobody asks for it again."),
+             "Slow down. Offer to repeat any number. This is where the note-taking starts, and you should wait for it."),
+            ("SAY", "Now look at that split again. Biology is ninety questions out of a hundred and eighty. Three hundred and sixty marks out of seven hundred and twenty. Biology is not a subject in NEET. Biology is exactly one half of the entire examination."),
+            ("23:30", "JEE Main, exactly.",
+             "75 questions, 300 marks, plus four and minus one. Two sessions a year — January and "
+             "April — and if you sit both, only the higher score counts."),
+            ("SAY", "Two attempts, and the worse one is simply thrown away. Nobody tells you that in Class 10, and it changes how frightened you are allowed to be for the next two years."),
+            ("24:30", "The rule almost nobody in this district knows.",
+             "For admission to an NIT, IIIT or a government-funded institute through JEE you need 75% "
+             "in your boards — OR to be in the top 20 percentile of your own board. Two doors, not "
+             "one. And neither is required merely to sit the exam.",
+             "Say this one twice. It is the single most valuable sentence in the session for a Class 10 audience."),
+            ("SAY", "Top twenty percentile of your own board. Not of India — of your board. For a lot of you, that is a considerably lower number than seventy-five percent. Not knowing that has quietly cost students in this state seats they had already earned."),
+            ("25:45", "The NDA, exactly.",
+             "Written: Mathematics 120 questions for 300 marks, General Ability 150 questions for 600 "
+             "marks. Then a five-day SSB interview worth another 900. Final merit out of 1800."),
+            ("SAY", "Do the division. In the General Ability paper each question is worth four marks. In Maths, two and a half. One GAT question outweighs one and a half Maths questions — and almost every aspirant spends twice as long on Maths. That is not a study tip. That is free marks lying on the floor."),
+            ("26:45", "The board-exam truth that lowers the temperature in the room.",
+             "For most careers, the Class 10 percentage matters far less than everybody around them "
+             "is currently implying. It opens the stream, and after that almost nobody asks for it "
+             "again."),
         ]),
-        ("Act four", "The Turn.", [
-            ("23:00", "Name the real fear out loud, because nobody else will.",),
-            ("SAY", "You are not actually afraid of Physics. Every one of you has quietly wondered whether you are going to be the one who disappoints your parents. That is the real subject of this year, and nobody has said it to you out loud, so I will."),
-            ("24:30", "Then answer it.",
+        ("Act five", "The Turn, And The Close.", [
+            ("28:00", "Name the real fear out loud, because nobody else in their life will.",),
+            ("SAY", "You are not actually afraid of Physics. Every single one of you has quietly wondered whether you are going to be the one who disappoints your parents. That is the real subject of this year, and nobody has ever said it to you out loud, so I will."),
+            ("29:15", "Then answer it properly.",
              "Say plainly what actually disappoints a parent: not a wrong stream, not a bad mark — a "
              "child who stopped trying. Almost no parent in Himachal has ever been disappointed by a "
              "child who was still trying."),
             ("SAY", "Nobody in your family is going to remember your stream. They are going to remember whether you kept going."),
-            ("26:00", "Reversibility — the most freeing thing you can tell a Class 10 room.",
+            ("30:30", "Reversibility — the most freeing thing you can hand a Class 10 room.",
              "Streams can be changed. Degrees pivot. Thousands of people build serious careers on a "
-             "path they did not begin on. A choice at fifteen is a draft, not a contract."),
-            ("27:30", "The one thing that is genuinely hard to reverse.",
-             "Be honest so they trust the rest: the two years of Class 11 and 12 are hard to get "
-             "back. Not impossible — droppers succeed routinely — but that is the expensive door, "
-             "not the stream."),
+             "path they did not begin on. A choice made at fifteen is a draft, not a contract."),
+            ("31:30", "And the one thing that genuinely is hard to reverse.",
+             "Be honest, so they trust everything else you have said: the two years of Class 11 and "
+             "12 are hard to get back. Not impossible — droppers succeed routinely — but that is the "
+             "expensive door, not the stream."),
             ("SAY", "The stream is a pencil decision. The two years are the ink. Spend your worry on the right one."),
-            ("29:00", "The routine that survives a bad week.",
-             "Fix the time rather than the quantity. Shrink the starting unit until it is "
-             "embarrassing. Permit yourself to begin badly. Define a good day as the minimum you can "
-             "manage when everything is going wrong — because those days decide the year."),
-        ]),
-        ("Act five", "The Close.", [
-            ("32:00", "Fold the map, slowly, while you talk.",
-             "The physical action holds attention better than any slide. Fold it deliberately, one "
-             "crease at a time, as you deliver the close."),
-            ("SAY", "You are not choosing your life this year. You are choosing which roads stay on your map. Keep as many as you honestly can, and then walk seriously down one of them — and remember that the student who becomes the doctor is sitting in this room right now, thinking they are bad at Biology."),
-            ("34:00", "Hand out the cards.",
+            ("32:30", "Now fold the map — and call back to the birthdays.",
+             "Fold the map slowly, one crease at a time, while you deliver the close. Then stop, and "
+             "look at the two students who shared a birthday.",
+             "The callback is what makes the session feel like one thing instead of six. Do not skip it, even if you are running late."),
+            ("SAY", "Two of you in this room share a birthday, and not one person here believed it was likely. You have spent this whole year being certain about yourselves — certain you are bad at this, not built for that, not the kind of person who does the other thing. I would not trust that feeling very much. You have already watched it be wrong once today, in public, in under three minutes."),
+            ("33:45", "The last line. Land it and stop.",),
+            ("SAY", "You are not choosing your life this year. You are choosing which roads stay on your map. Keep as many of them as you honestly can, and then walk seriously down one — and remember that the student who becomes the doctor is sitting in this room right now, completely certain that they are bad at Biology."),
+            ("34:45", "Hand out the cards.",
              "Distribute the Command Cards. Free, theirs, shareable. Name the institute for the "
              "second and final time."),
-            ("35:30", "Questions.",
-             "Expect fear-shaped questions — “sir, if I take Arts can I still...”. Answer "
-             "with facts and never with reassurance you cannot back up."),
+            ("36:00", "Questions.",
+             "Expect fear-shaped questions — “sir, if I take Arts can I still…”. Answer with facts, "
+             "and never with reassurance you cannot back up."),
             ("39:00", "End clean.",
-             "Thank the teacher by name. Leave on time. Do not solicit anything on the way out."),
+             "Thank the teacher by name, in front of the students. Leave on time. Do not solicit "
+             "anything on the way out."),
         ]),
     ],
     qa=[
+        ("“How can twenty-three people be enough? There are 365 days!”",
+         "Because the question is not “does someone share MY birthday” — it is “does any pair in the "
+         "room match”. Twenty-three people make 253 pairs; forty people make 780. Offer to write the "
+         "pair count on the board. This question always comes, and answering it well is the best "
+         "ninety seconds of maths teaching you will do all week."),
         ("“Is Arts really okay? My family says it is for weak students.”",
          "Answer without hedging: the civil services, law, design, psychology, journalism and "
-         "economics all run through it. Then say the true thing — the stream has never been the "
-         "problem; the assumption that a stream is a verdict has been."),
+         "economics all run through it. Then say the true thing — the stream was never the problem; "
+         "the assumption that a stream is a verdict has been."),
         ("“Can I do the NDA if I take Commerce or Arts?”",
          "Yes, for the Army wing. The Air Force and Navy wings require Physics and Mathematics in "
          "Class 11 and 12. Written paper is 300 Maths + 600 GAT; SSB is another 900."),
         ("“How much does the Class 10 percentage actually matter?”",
-         "It decides which stream your school will give you, and after that almost nobody asks for "
-         "it again. Say it calmly — this question is usually asked by a frightened student."),
+         "It decides which stream your school will offer you, and after that almost nobody asks for "
+         "it again. Say it calmly — this question is nearly always asked by a frightened student."),
         ("“What if I choose wrong?”",
          "Say: almost every part of this is more reversible than it feels. Streams change, degrees "
          "pivot, and people build serious careers on paths they did not begin on. The expensive "
          "thing is not choosing wrong — it is not choosing at all and letting the year decide for you."),
         ("“Do I need 75% in boards for an NIT?”",
-         "75% OR the top 20 percentile of your own board — either one. And neither is needed simply "
-         "to sit JEE Main; they apply at admission."),
+         "75% OR the top 20 percentile of your own board — either one satisfies it. And neither is "
+         "needed simply to sit JEE Main; they apply at admission."),
         ("“What is the SAT?”",
          "The entrance route to universities abroad. Scored 400–1600, taken on a laptop in about two "
-         "hours fourteen minutes, offered on eight Saturdays a year in India. It has no stream "
-         "requirement and no age limit."),
+         "hours fourteen minutes, offered on eight Saturdays a year in India. No stream requirement "
+         "and no age limit."),
     ],
-    final_image="They came in afraid of choosing wrong. They should leave believing that almost nothing here is unfixable — except not choosing at all.",
+    final_image="They watched their own certainty fail in front of them, using their own birthdays. Nothing you say after that has to argue very hard.",
 )
 
 # ─────────────────────────── CLASS 11 ───────────────────────────
