@@ -36,21 +36,20 @@ export default function HomeDocumentary() {
   if (items.length === 0) return null
 
   return (
-    <section className="py-10 md:py-14" style={{ background: '#04090F' }}>
+    <section className="py-12 md:py-16 relative grain" style={{ background: 'var(--ink)' }}>
       <div className="max-w-5xl mx-auto px-4">
         <div className="flex items-end justify-between gap-4 mb-4">
           <div>
-            <span
-              className="text-[10px] uppercase tracking-[0.28em] block mb-1"
-              style={{ fontFamily: 'Orbitron, monospace', color: '#E05C42' }}
-            >
-              ● The Documentary
-            </span>
-            <h2 className="text-2xl md:text-3xl font-black text-white leading-tight" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
-              Watch them <span className="text-gold-shimmer">do it</span>.
+            <p className="eyebrow mb-2">The Documentary</p>
+            <h2 className="text-3xl md:text-4xl text-white leading-tight">
+              Watch them do it.
             </h2>
           </div>
-          <Link href="/stories" className="text-xs font-bold text-gold-400 whitespace-nowrap pb-1">
+          <Link
+            href="/stories"
+            className="text-[11px] uppercase tracking-[0.16em] whitespace-nowrap pb-1.5"
+            style={{ color: 'var(--accent)' }}
+          >
             All episodes →
           </Link>
         </div>
@@ -66,19 +65,19 @@ export default function HomeDocumentary() {
               {it.posterUrl ? (
                 <img src={it.posterUrl} alt="" className="absolute inset-0 w-full h-full object-cover" loading="lazy" />
               ) : (
-                <div className="absolute inset-0" style={{ background: 'linear-gradient(165deg, rgba(212,175,55,0.28) 0%, #0A1628 55%, #04090F 100%)' }} />
+                <div className="absolute inset-0" style={{ background: 'linear-gradient(165deg, rgba(212,175,55,0.28) 0%, var(--ink-3) 55%, var(--ink) 100%)' }} />
               )}
               <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, transparent 35%, rgba(4,9,15,0.92) 100%)' }} />
               <span className="doc-play absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-11 h-11 rounded-full flex items-center justify-center"
-                style={{ background: 'rgba(255,255,255,0.94)', color: '#07111F' }}>▶</span>
+                style={{ background: 'rgba(255,255,255,0.94)', color: 'var(--ink-2)' }}>▶</span>
               {it.duration && (
                 <span className="absolute top-2 right-2 text-[9px] font-bold px-1.5 py-0.5 rounded"
-                  style={{ background: 'rgba(0,0,0,0.7)', color: '#F0EAD6', fontFamily: 'Orbitron, monospace' }}>
+                  style={{ background: 'rgba(0,0,0,0.7)', color: 'var(--bone)', fontFamily: 'var(--font-ui)' }}>
                   {it.duration}
                 </span>
               )}
               <div className="absolute bottom-0 left-0 right-0 p-3">
-                <div className="text-sm font-black text-white leading-tight line-clamp-2" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+                <div className="text-sm font-semibold text-white leading-tight line-clamp-2" style={{ fontFamily: 'var(--font-display)' }}>
                   {it.title}
                 </div>
                 {it.subtitle && <div className="text-[10px] text-gold-400 truncate mt-0.5">{it.subtitle}</div>}
@@ -117,7 +116,7 @@ export default function HomeDocumentary() {
                 )}
               </div>
               <div className="mt-3">
-                <h3 className="text-lg font-black text-white" style={{ fontFamily: 'Rajdhani, sans-serif' }}>{playing.title}</h3>
+                <h3 className="text-lg font-semibold text-white" style={{ fontFamily: 'var(--font-display)' }}>{playing.title}</h3>
                 {playing.subtitle && <p className="text-sm text-gold-400">{playing.subtitle}</p>}
               </div>
             </motion.div>

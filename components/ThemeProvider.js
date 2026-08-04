@@ -2,13 +2,15 @@
 
 import { createContext, useContext, useEffect, useState } from 'react'
 
+/* Every accent is a muted, aged tone — heirloom metals and dyes
+   rather than screen primaries. Keeps the site rich at any setting. */
 export const THEMES = [
-  { id: 'gold',    label: 'Military Gold', color: '#D4AF37', r: 212, g: 175, b: 55  },
-  { id: 'saffron', label: 'Saffron India', color: '#FF7A00', r: 255, g: 122, b: 0   },
-  { id: 'royal',   label: 'Royal Purple',  color: '#9333EA', r: 147, g: 51,  b: 234 },
-  { id: 'emerald', label: 'Emerald',       color: '#10B981', r: 16,  g: 185, b: 129 },
-  { id: 'sky',     label: 'Sky Blue',      color: '#0EA5E9', r: 14,  g: 165, b: 233 },
-  { id: 'crimson', label: 'Crimson',       color: '#DC2626', r: 220, g: 38,  b: 38  },
+  { id: 'gold',    label: 'Antique Gold',  color: '#C8A951', r: 200, g: 169, b: 81  },
+  { id: 'saffron', label: 'Burnt Saffron', color: '#C4712A', r: 196, g: 113, b: 42  },
+  { id: 'royal',   label: 'Aubergine',     color: '#6E4E96', r: 110, g: 78,  b: 150 },
+  { id: 'emerald', label: 'Hunter Green',  color: '#3E7D63', r: 62,  g: 125, b: 99  },
+  { id: 'sky',     label: 'Prussian Blue', color: '#3D6E96', r: 61,  g: 110, b: 150 },
+  { id: 'crimson', label: 'Bordeaux',      color: '#9B2F3A', r: 155, g: 47,  b: 58  },
 ]
 
 function applyTheme(id) {

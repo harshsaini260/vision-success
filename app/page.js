@@ -17,6 +17,7 @@ import Scribble from '@/components/Scribble'
 import SATPredictor from '@/components/SATPredictor'
 import StudentStories from '@/components/StudentStories'
 import HomeDocumentary from '@/components/HomeDocumentary'
+import Creed from '@/components/Creed'
 import { playFanfare } from '@/lib/fanfare'
 import { sfxPop, sfxNope, sfxWhoosh, sfxChime } from '@/lib/sfx'
 
@@ -300,7 +301,7 @@ function TwoEndings() {
         onAnimationEnd={() => setShaking(false)}
         className={`inline-flex items-center justify-center px-7 py-4 rounded-xl text-base font-bold uppercase tracking-wider ${shaking ? 'shake-no' : ''}`}
         style={{
-          fontFamily: 'Rajdhani, sans-serif',
+          fontFamily: 'var(--font-display)',
           border: '2px solid rgba(59,51,37,0.55)',
           color: 'rgba(59,51,37,0.75)',
           background: 'transparent',
@@ -401,7 +402,7 @@ function BrochureMagnet() {
     <section
       id="blueprint"
       className="relative overflow-hidden py-16 md:py-24 px-4 scroll-mt-20"
-      style={{ background: 'linear-gradient(180deg, #07111F 0%, #04090F 100%)' }}
+      style={{ background: 'linear-gradient(180deg, var(--ink-2) 0%, var(--ink) 100%)' }}
     >
       <div
         aria-hidden
@@ -416,8 +417,8 @@ function BrochureMagnet() {
           <div className="text-center mb-8">
             <span className="section-tag mb-4 inline-block">🤫 Psst… Steal Our SAT Blueprint</span>
             <h2
-              className="text-4xl md:text-5xl font-black text-white mb-3 leading-tight"
-              style={{ fontFamily: 'Rajdhani, sans-serif' }}
+              className="text-4xl md:text-5xl font-semibold text-white mb-3 leading-tight"
+              style={{ fontFamily: 'var(--font-display)' }}
             >
               Dreams Bigger Than{' '}
               <span className="text-gold-shimmer">Borders?</span>
@@ -432,7 +433,7 @@ function BrochureMagnet() {
             {days !== null && (
               <p
                 className="mt-3 text-xs font-bold uppercase tracking-[0.2em]"
-                style={{ color: '#E05C42', fontFamily: 'Orbitron, monospace' }}
+                style={{ color: '#E05C42', fontFamily: 'var(--font-ui)' }}
               >
                 ⏳ Next SAT drops in {days} days…
               </p>
@@ -461,7 +462,7 @@ function BrochureMagnet() {
                 </div>
                 <p
                   className="text-center text-[10px] mt-2 text-gray-500 uppercase tracking-[0.2em]"
-                  style={{ fontFamily: 'Orbitron, monospace' }}
+                  style={{ fontFamily: 'var(--font-ui)' }}
                 >
                   {status === 'done'
                     ? 'yayy!! 🎉'
@@ -478,7 +479,7 @@ function BrochureMagnet() {
               {/* the gate */}
               {status === 'done' ? (
                 <div className="flex-1 text-center sm:text-left">
-                  <h3 className="text-xl font-black text-white mb-2" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+                  <h3 className="text-xl font-semibold text-white mb-2" style={{ fontFamily: 'var(--font-display)' }}>
                     📖 Blueprint unlocked!
                   </h3>
                   <p className="text-sm text-gray-400 mb-4">
@@ -546,7 +547,7 @@ function BrochureMagnet() {
             <Link
               href="/sat"
               className="inline-flex items-center gap-2 text-sm font-bold text-gold-400 hover:text-gold-300 transition-colors"
-              style={{ fontFamily: 'Rajdhani, sans-serif', letterSpacing: '0.06em' }}
+              style={{ fontFamily: 'var(--font-display)', letterSpacing: '0.06em' }}
             >
               🎬 CURIOUS? WATCH THE FULL MISSION BRIEF — THE WAR CLOCK IS TICKING →
             </Link>
@@ -598,14 +599,14 @@ function DeadlineStrip() {
   return (
     <section
       className="py-12 md:py-16 px-4 relative overflow-hidden"
-      style={{ background: '#04090F', borderBottom: '1px solid rgba(var(--accent-rgb),0.12)' }}
+      style={{ background: 'var(--ink)', borderBottom: '1px solid rgba(var(--accent-rgb),0.12)' }}
     >
       <div className="max-w-5xl mx-auto">
         <FadeIn>
           <div className="text-center mb-8">
             <h2
-              className="text-3xl md:text-5xl font-black text-white leading-tight"
-              style={{ fontFamily: 'Rajdhani, sans-serif' }}
+              className="text-3xl md:text-5xl font-semibold text-white leading-tight"
+              style={{ fontFamily: 'var(--font-display)' }}
             >
               ⏳ EVERY DREAM HAS A{' '}
               <span style={{ color: '#E8A24C', textShadow: '0 0 20px rgba(232,162,76,0.28)' }}>DEADLINE</span>
@@ -626,8 +627,8 @@ function DeadlineStrip() {
             >
               {i === 0 && (
                 <span
-                  className="absolute -top-2 right-3 text-[8px] font-black px-2 py-0.5 rounded-full uppercase tracking-widest"
-                  style={{ background: 'var(--accent)', color: '#07111F', fontFamily: 'Orbitron, monospace' }}
+                  className="absolute -top-2 right-3 text-[8px] font-semibold px-2 py-0.5 rounded-full uppercase tracking-widest"
+                  style={{ background: 'var(--accent)', color: 'var(--ink-2)', fontFamily: 'var(--font-ui)' }}
                 >
                   Closest ▸
                 </span>
@@ -635,14 +636,14 @@ function DeadlineStrip() {
               <div className="text-xl mb-1">{ex.emoji}</div>
               <div
                 className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400 mb-2"
-                style={{ fontFamily: 'Orbitron, monospace' }}
+                style={{ fontFamily: 'var(--font-ui)' }}
               >
                 {ex.label}
               </div>
               <div className="flex items-baseline gap-1">
                 <span
-                  className="text-4xl font-black stat-number leading-none"
-                  style={{ fontFamily: 'Orbitron, monospace' }}
+                  className="text-4xl font-semibold stat-number leading-none"
+                  style={{ fontFamily: 'var(--font-ui)' }}
                 >
                   {ex.days}
                 </span>
@@ -686,7 +687,7 @@ function Manifesto() {
     { t: 'We call it Tuesday.', big: true },
   ]
   return (
-    <section className="relative overflow-hidden py-20 md:py-28 px-4" style={{ background: '#04090F' }}>
+    <section className="relative overflow-hidden py-20 md:py-28 px-4" style={{ background: 'var(--ink)' }}>
       <div
         aria-hidden
         className="absolute inset-0 pointer-events-none"
@@ -696,7 +697,7 @@ function Manifesto() {
         <FadeIn>
           <span
             className="inline-block text-[10px] uppercase tracking-[0.35em] mb-8"
-            style={{ fontFamily: 'Orbitron, monospace', color: 'rgba(var(--accent-rgb),0.7)' }}
+            style={{ fontFamily: 'var(--font-ui)', color: 'rgba(var(--accent-rgb),0.7)' }}
           >
             ✦ The Dreamers&apos; Manifesto ✦
           </span>
@@ -705,8 +706,8 @@ function Manifesto() {
           {LINES.map((l, i) => (
             <FadeIn key={l.t} delay={i * 0.15}>
               <p
-                className={l.big ? 'text-3xl sm:text-5xl font-black leading-tight' : 'text-lg sm:text-2xl text-gray-400 font-semibold'}
-                style={l.big ? { fontFamily: 'Rajdhani, sans-serif' } : undefined}
+                className={l.big ? 'text-3xl sm:text-5xl font-semibold leading-tight' : 'text-lg sm:text-2xl text-gray-400 font-semibold'}
+                style={l.big ? { fontFamily: 'var(--font-display)' } : undefined}
               >
                 {l.big ? <span className="text-gold-shimmer">{l.t}</span> : l.t}
               </p>
@@ -741,12 +742,12 @@ function ScrollTeaser() {
   const latest = POSTS.slice(0, 2)
 
   return (
-    <section className="section-padding" style={{ background: '#07111F' }}>
+    <section className="section-padding" style={{ background: 'var(--ink-2)' }}>
       <div className="max-w-3xl mx-auto">
         <FadeIn>
           <div className="text-center mb-8">
             <span className="section-tag mb-4 inline-block">📖 From The Blog</span>
-            <h2 className="text-4xl md:text-5xl font-black text-white mb-2" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+            <h2 className="text-4xl md:text-5xl font-semibold text-white mb-2" style={{ fontFamily: 'var(--font-display)' }}>
               Today&apos;s <span className="text-gold-shimmer">Question</span>
             </h2>
             <p className="text-gray-500 text-sm">A new one every morning. No marks for this one.</p>
@@ -773,7 +774,7 @@ function ScrollTeaser() {
               <Link key={p.slug} href={`/blog/${p.slug}`} className="glass-card glass-card-hover rounded-2xl p-4 flex gap-3 transition-all duration-300">
                 <span className="text-2xl flex-shrink-0">{p.emoji}</span>
                 <span>
-                  <span className="block text-sm font-bold text-white mb-0.5" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+                  <span className="block text-sm font-bold text-white mb-0.5" style={{ fontFamily: 'var(--font-display)' }}>
                     {p.title}
                   </span>
                   <span className="block text-[11px] text-gray-500">{p.tag} · {p.readMins} min read</span>
@@ -795,12 +796,12 @@ function ScrollTeaser() {
    showpiece: where our SAT/IELTS dreamers actually land. */
 function DeparturesSection() {
   return (
-    <section className="section-padding" style={{ background: 'linear-gradient(180deg, #07111F 0%, #04090F 100%)' }}>
+    <section className="section-padding" style={{ background: 'linear-gradient(180deg, var(--ink-2) 0%, var(--ink) 100%)' }}>
       <div className="max-w-3xl mx-auto">
         <FadeIn>
           <div className="text-center mb-8">
             <span className="section-tag mb-4 inline-block">🛫 Now Boarding</span>
-            <h2 className="text-4xl md:text-5xl font-black text-white mb-2" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+            <h2 className="text-4xl md:text-5xl font-semibold text-white mb-2" style={{ fontFamily: 'var(--font-display)' }}>
               Departures: <span className="text-gold-shimmer">Una → The World</span>
             </h2>
             <p className="text-gray-400 text-sm max-w-md mx-auto">
@@ -825,7 +826,7 @@ function DeparturesSection() {
    the parent reading over a student's shoulder. */
 function MentorLetter() {
   return (
-    <section className="py-16 md:py-24 px-4" style={{ background: 'linear-gradient(180deg, #0A1628 0%, #0C1A2E 100%)' }}>
+    <section className="py-16 md:py-24 px-4" style={{ background: 'linear-gradient(180deg, var(--ink-3) 0%, #0C1A2E 100%)' }}>
       <div className="max-w-2xl mx-auto">
         <FadeIn>
           <div
@@ -839,7 +840,7 @@ function MentorLetter() {
             />
             <p
               className="text-[11px] uppercase tracking-[0.28em] mb-5 opacity-60"
-              style={{ fontFamily: 'Orbitron, monospace', color: '#7A6A48' }}
+              style={{ fontFamily: 'var(--font-ui)', color: '#7A6A48' }}
             >
               A note from the mentor&apos;s desk
             </p>
@@ -908,12 +909,12 @@ const TRUST_PILLARS = [
 
 function TrustPillars() {
   return (
-    <section className="section-padding" style={{ background: 'linear-gradient(180deg, #0C1A2E 0%, #07111F 100%)' }}>
+    <section className="section-padding" style={{ background: 'linear-gradient(180deg, #0C1A2E 0%, var(--ink-2) 100%)' }}>
       <div className="max-w-5xl mx-auto">
         <FadeIn>
           <div className="text-center mb-10">
             <span className="section-tag mb-4 inline-block">Why Families in Una Trust Us</span>
-            <h2 className="text-4xl md:text-5xl font-black text-white mb-3" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+            <h2 className="text-4xl md:text-5xl font-semibold text-white mb-3" style={{ fontFamily: 'var(--font-display)' }}>
               A Track Record, Not a Sales Pitch
             </h2>
             <p className="text-gray-400 max-w-xl mx-auto text-sm">
@@ -927,7 +928,7 @@ function TrustPillars() {
             <FadeIn key={p.title} delay={i * 0.1}>
               <div className="glass-card rounded-2xl p-6 h-full text-center md:text-left">
                 <div className="text-4xl mb-3">{p.icon}</div>
-                <h3 className="text-lg font-bold text-white mb-2" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+                <h3 className="text-lg font-bold text-white mb-2" style={{ fontFamily: 'var(--font-display)' }}>
                   {p.title}
                 </h3>
                 <p className="text-sm text-gray-400 leading-relaxed">{p.text}</p>
@@ -945,7 +946,7 @@ function TrustPillars() {
                 {'★★★★★'.split('').map((s, i) => (
                   <span key={i} className="text-gold-400">{s}</span>
                 ))}
-                <span className="text-white font-bold ml-2" style={{ fontFamily: 'Rajdhani, sans-serif' }}>4.9 on Google</span>
+                <span className="text-white font-bold ml-2" style={{ fontFamily: 'var(--font-display)' }}>4.9 on Google</span>
               </div>
               <p className="text-xs text-gray-400">
                 Studied with us? Your honest words help the next family decide. 🙏
@@ -992,14 +993,14 @@ function GiftTab() {
           className="fixed right-0 top-1/2 -translate-y-1/2 z-40 flex items-center gap-2 pl-3 pr-2 py-3 rounded-l-2xl"
           style={{
             background: 'linear-gradient(135deg, var(--accent), var(--accent-light))',
-            color: '#07111F',
+            color: 'var(--ink-2)',
             boxShadow: '-4px 4px 20px rgba(0,0,0,0.4)',
             writingMode: 'vertical-rl',
           }}
           aria-label="Get the free SAT Blueprint"
         >
           <span className="text-lg" style={{ writingMode: 'horizontal-tb' }}>🎁</span>
-          <span className="text-xs font-black uppercase tracking-widest" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+          <span className="text-xs font-semibold uppercase tracking-widest" style={{ fontFamily: 'var(--font-display)' }}>
             Free Blueprint
           </span>
         </motion.a>
@@ -1029,7 +1030,7 @@ export default function HomePage() {
       <section
         className="relative min-h-screen flex items-center overflow-hidden"
         style={{
-          background: 'linear-gradient(180deg, #04090F 0%, #07111F 40%, #0A1628 100%)',
+          background: 'linear-gradient(180deg, var(--ink) 0%, var(--ink-2) 40%, var(--ink-3) 100%)',
         }}
       >
         {/* BG decorations */}
@@ -1070,8 +1071,8 @@ export default function HomePage() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.1 }}
-                className="text-5xl sm:text-6xl lg:text-7xl font-black leading-[0.95] mb-5"
-                style={{ fontFamily: 'Rajdhani, sans-serif', letterSpacing: '-0.02em' }}
+                className="text-5xl sm:text-6xl lg:text-7xl font-semibold leading-[0.95] mb-5"
+                style={{ fontFamily: 'var(--font-display)', letterSpacing: '-0.02em' }}
               >
                 <span className="text-white">FROM UNA,</span>
                 <br />
@@ -1142,7 +1143,7 @@ export default function HomePage() {
               >
                 <p
                   className="text-[10px] uppercase tracking-[0.3em] text-gray-500 mb-3 text-center lg:text-left"
-                  style={{ fontFamily: 'Orbitron, monospace' }}
+                  style={{ fontFamily: 'var(--font-ui)' }}
                 >
                   What&apos;s your dream? Tap it ↓
                 </p>
@@ -1169,15 +1170,15 @@ export default function HomePage() {
                     >
                       {p.hot && (
                         <span
-                          className="absolute -top-2 right-2 text-[8px] font-black px-1.5 py-0.5 rounded-full uppercase tracking-widest"
-                          style={{ background: 'var(--accent)', color: '#07111F', fontFamily: 'Orbitron, monospace' }}
+                          className="absolute -top-2 right-2 text-[8px] font-semibold px-1.5 py-0.5 rounded-full uppercase tracking-widest"
+                          style={{ background: 'var(--accent)', color: 'var(--ink-2)', fontFamily: 'var(--font-ui)' }}
                         >
                           New
                         </span>
                       )}
                       <span className="text-2xl">{p.emoji}</span>
                       <span className="text-left leading-tight">
-                        <span className="block text-sm font-black text-white" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+                        <span className="block text-sm font-semibold text-white" style={{ fontFamily: 'var(--font-display)' }}>
                           {p.big}
                         </span>
                         <span className="block text-[10px] text-gray-400">{p.small}</span>
@@ -1222,7 +1223,7 @@ export default function HomePage() {
                   />
                   <div
                     className="absolute bottom-1.5 left-0 right-0 text-center text-sm font-semibold"
-                    style={{ color: '#3B3325', fontFamily: 'Rajdhani, sans-serif' }}
+                    style={{ color: '#3B3325', fontFamily: 'var(--font-display)' }}
                   >
                     {p.caption}
                   </div>
@@ -1258,7 +1259,7 @@ export default function HomePage() {
                 />
                 <div
                   className="absolute bottom-1 left-0 right-0 text-center text-[11px] font-semibold"
-                  style={{ color: '#3B3325', fontFamily: 'Rajdhani, sans-serif' }}
+                  style={{ color: '#3B3325', fontFamily: 'var(--font-display)' }}
                 >
                   {p.caption} {p.emoji}
                 </div>
@@ -1283,8 +1284,8 @@ export default function HomePage() {
               >
                 <div className="text-2xl mb-1">{stat.icon}</div>
                 <div
-                  className="text-3xl font-black stat-number"
-                  style={{ fontFamily: 'Orbitron, monospace' }}
+                  className="text-3xl font-semibold stat-number"
+                  style={{ fontFamily: 'var(--font-ui)' }}
                 >
                   {stat.big}
                 </div>
@@ -1307,7 +1308,7 @@ export default function HomePage() {
               <span
                 key={i}
                 className="inline-block px-8 font-bold text-navy-900 text-sm uppercase tracking-wider"
-                style={{ fontFamily: 'Rajdhani, sans-serif' }}
+                style={{ fontFamily: 'var(--font-display)' }}
               >
                 {item} &nbsp; ✦ &nbsp;
               </span>
@@ -1326,7 +1327,7 @@ export default function HomePage() {
       <section
         className="section-padding relative"
         style={{
-          background: 'linear-gradient(180deg, #0A1628 0%, #07111F 100%)',
+          background: 'linear-gradient(180deg, var(--ink-3) 0%, var(--ink-2) 100%)',
         }}
       >
         <div className="max-w-7xl mx-auto">
@@ -1334,8 +1335,8 @@ export default function HomePage() {
             <div className="text-center mb-16">
               <span className="section-tag mb-4 inline-block">Our Programs</span>
               <h2
-                className="text-4xl md:text-5xl font-black text-white mb-4"
-                style={{ fontFamily: 'Rajdhani, sans-serif' }}
+                className="text-4xl md:text-5xl font-semibold text-white mb-4"
+                style={{ fontFamily: 'var(--font-display)' }}
               >
                 Choose Your Path
               </h2>
@@ -1365,13 +1366,13 @@ export default function HomePage() {
                 <div>
                   <div className="text-5xl mb-4">🌍</div>
                   <h3
-                    className="text-4xl md:text-5xl font-black text-white mb-2"
-                    style={{ fontFamily: 'Rajdhani, sans-serif' }}
+                    className="text-4xl md:text-5xl font-semibold text-white mb-2"
+                    style={{ fontFamily: 'var(--font-display)' }}
                   >
                     SAT — Operation 1600
                   </h3>
                   <div className="text-gold-400 font-semibold mb-1">
-                    Taught by a mentor who scored <span className="text-gold-shimmer font-black">1540</span> himself
+                    Taught by a mentor who scored <span className="text-gold-shimmer font-semibold">1540</span> himself
                   </div>
                   <div className="mb-4">
                     <Scribble color="red" rotate={-2} size="sm">my favourite classroom ♥</Scribble>
@@ -1439,8 +1440,8 @@ export default function HomePage() {
                       }}
                     >
                       <div
-                        className="text-3xl font-black text-gold-400 mb-1"
-                        style={{ fontFamily: 'Orbitron, monospace' }}
+                        className="text-3xl font-semibold text-gold-400 mb-1"
+                        style={{ fontFamily: 'var(--font-ui)' }}
                       >
                         {s.n}
                       </div>
@@ -1468,8 +1469,8 @@ export default function HomePage() {
                     {course.badge}
                   </div>
                   <h3
-                    className="text-2xl font-black text-white mb-1"
-                    style={{ fontFamily: 'Rajdhani, sans-serif' }}
+                    className="text-2xl font-semibold text-white mb-1"
+                    style={{ fontFamily: 'var(--font-display)' }}
                   >
                     {course.title}
                   </h3>
@@ -1489,7 +1490,7 @@ export default function HomePage() {
           {/* SUBJECT & LOCAL PAGES */}
           <FadeIn delay={0.1}>
             <div className="mt-10 text-center">
-              <p className="text-sm text-gray-400 mb-4 uppercase tracking-widest" style={{ fontFamily: 'Orbitron, monospace' }}>
+              <p className="text-sm text-gray-400 mb-4 uppercase tracking-widest" style={{ fontFamily: 'var(--font-ui)' }}>
                 Single-Subject Tuition & More
               </p>
               <div className="flex flex-wrap justify-center gap-2">
@@ -1501,7 +1502,7 @@ export default function HomePage() {
                     style={{
                       background: 'rgba(255,255,255,0.04)',
                       border: '1px solid rgba(var(--accent-rgb),0.2)',
-                      fontFamily: 'Rajdhani, sans-serif',
+                      fontFamily: 'var(--font-display)',
                     }}
                   >
                     {s.label}
@@ -1525,15 +1526,15 @@ export default function HomePage() {
               className="mt-8 rounded-2xl p-5 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 text-center"
               style={{ background: 'rgba(var(--accent-rgb),0.06)', border: '1px solid rgba(var(--accent-rgb),0.2)' }}
             >
-              <span className="text-sm font-bold text-white" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+              <span className="text-sm font-bold text-white" style={{ fontFamily: 'var(--font-display)' }}>
                 📞 1. Call / WhatsApp
               </span>
               <span className="text-gold-400 hidden sm:inline">→</span>
-              <span className="text-sm font-bold text-white" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+              <span className="text-sm font-bold text-white" style={{ fontFamily: 'var(--font-display)' }}>
                 🎓 2. FREE Demo Class
               </span>
               <span className="text-gold-400 hidden sm:inline">→</span>
-              <span className="text-sm font-bold text-white" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+              <span className="text-sm font-bold text-white" style={{ fontFamily: 'var(--font-display)' }}>
                 🚀 3. Enroll & Rise
               </span>
               <Link href="/appointment" className="btn-gold px-5 py-2.5 rounded-xl text-xs sm:ml-4">
@@ -1549,7 +1550,7 @@ export default function HomePage() {
       <MentorLetter />
 
       {/* ─── SAT PREDICTOR — the 10-second tool + lead magnet ─── */}
-      <section className="section-padding" style={{ background: 'linear-gradient(180deg, #0A1628 0%, #07111F 100%)' }}>
+      <section className="section-padding" style={{ background: 'linear-gradient(180deg, var(--ink-3) 0%, var(--ink-2) 100%)' }}>
         <div className="max-w-2xl mx-auto">
           <FadeIn>
             <SATPredictor />
@@ -1564,7 +1565,7 @@ export default function HomePage() {
       <DeparturesSection />
 
       {/* ─── FIND YOUR BATTLEFIELD — invite card that opens the popup ─── */}
-      <section className="section-padding" style={{ background: 'linear-gradient(180deg, #07111F 0%, #0A1628 100%)' }}>
+      <section className="section-padding" style={{ background: 'linear-gradient(180deg, var(--ink-2) 0%, var(--ink-3) 100%)' }}>
         <div className="max-w-2xl mx-auto">
           <FadeIn>
             <button
@@ -1575,8 +1576,8 @@ export default function HomePage() {
             >
               <span className="section-tag mb-4 inline-block">🎯 30 Seconds · 4 Questions</span>
               <h2
-                className="text-4xl md:text-5xl font-black text-white mb-2"
-                style={{ fontFamily: 'Rajdhani, sans-serif' }}
+                className="text-4xl md:text-5xl font-semibold text-white mb-2"
+                style={{ fontFamily: 'var(--font-display)' }}
               >
                 Find Your <span className="text-gold-shimmer">Battlefield</span>
               </h2>
@@ -1592,14 +1593,14 @@ export default function HomePage() {
       </section>
 
       {/* ─── WALL OF MOMENTS — real photos, polaroid wall ─── */}
-      <section className="section-padding overflow-hidden" style={{ background: '#07111F' }}>
+      <section className="section-padding overflow-hidden" style={{ background: 'var(--ink-2)' }}>
         <div className="max-w-6xl mx-auto">
           <FadeIn>
             <div className="text-center mb-12">
               <span className="section-tag mb-4 inline-block">Inside Vision Success</span>
               <h2
-                className="text-4xl md:text-5xl font-black text-white mb-2"
-                style={{ fontFamily: 'Rajdhani, sans-serif' }}
+                className="text-4xl md:text-5xl font-semibold text-white mb-2"
+                style={{ fontFamily: 'var(--font-display)' }}
               >
                 The Wall of Moments
               </h2>
@@ -1641,7 +1642,7 @@ export default function HomePage() {
                   />
                   <span
                     className="absolute bottom-1.5 md:bottom-2.5 left-0 right-0 text-center text-[11px] md:text-sm font-semibold"
-                    style={{ color: '#3B3325', fontFamily: 'Rajdhani, sans-serif' }}
+                    style={{ color: '#3B3325', fontFamily: 'var(--font-display)' }}
                   >
                     {photo.emoji} {photo.caption}
                   </span>
@@ -1655,19 +1656,22 @@ export default function HomePage() {
       {/* ─── WHY FAMILIES TRUST US — credibility (shows always) ─── */}
       <TrustPillars />
 
+      {/* ─── THE CREED — the words we live by (Nims Purja) ─── */}
+      <Creed />
+
       {/* ─── THE DOCUMENTARY + student voices — compact rails ─── */}
       <HomeDocumentary />
       <StudentStories />
 
       {/* ─── FAQ ─── */}
-      <section className="section-padding" style={{ background: '#07111F' }}>
+      <section className="section-padding" style={{ background: 'var(--ink-2)' }}>
         <div className="max-w-3xl mx-auto">
           <FadeIn>
             <div className="text-center mb-12">
               <span className="section-tag mb-4 inline-block">Parents Ask, We Answer</span>
               <h2
-                className="text-4xl md:text-5xl font-black text-white"
-                style={{ fontFamily: 'Rajdhani, sans-serif' }}
+                className="text-4xl md:text-5xl font-semibold text-white"
+                style={{ fontFamily: 'var(--font-display)' }}
               >
                 Frequently Asked Questions
               </h2>
@@ -1689,15 +1693,15 @@ export default function HomePage() {
       {/* ─── CONTACT + MAP ─── */}
       <section
         className="section-padding"
-        style={{ background: 'linear-gradient(180deg, #07111F 0%, #0A1628 100%)' }}
+        style={{ background: 'linear-gradient(180deg, var(--ink-2) 0%, var(--ink-3) 100%)' }}
       >
         <div className="max-w-6xl mx-auto">
           <FadeIn>
             <div className="text-center mb-12">
               <span className="section-tag mb-4 inline-block">Find Us</span>
               <h2
-                className="text-4xl md:text-5xl font-black text-white"
-                style={{ fontFamily: 'Rajdhani, sans-serif' }}
+                className="text-4xl md:text-5xl font-semibold text-white"
+                style={{ fontFamily: 'var(--font-display)' }}
               >
                 Visit Us or Say Hello
               </h2>
@@ -1754,7 +1758,7 @@ export default function HomePage() {
       <section
         className="section-padding relative overflow-hidden"
         style={{
-          background: 'linear-gradient(135deg, #0A1628 0%, #152C55 100%)',
+          background: 'linear-gradient(135deg, var(--ink-3) 0%, #152C55 100%)',
         }}
       >
         <div
@@ -1781,19 +1785,19 @@ export default function HomePage() {
 
               <p
                 className="text-[10px] font-bold tracking-[0.3em] uppercase opacity-60 mb-2"
-                style={{ fontFamily: 'Orbitron, monospace' }}
+                style={{ fontFamily: 'var(--font-ui)' }}
               >
                 ★ Notice · Vision Success · Una ★
               </p>
               <h2
-                className="text-6xl sm:text-7xl font-black leading-none mb-3"
-                style={{ fontFamily: 'Rajdhani, sans-serif', letterSpacing: '0.04em' }}
+                className="text-6xl sm:text-7xl font-semibold leading-none mb-3"
+                style={{ fontFamily: 'var(--font-display)', letterSpacing: '0.04em' }}
               >
                 WANTED
               </h2>
               <p
                 className="text-xs sm:text-sm font-bold uppercase tracking-[0.18em] mb-5"
-                style={{ color: '#B3402E', fontFamily: 'Orbitron, monospace' }}
+                style={{ color: '#B3402E', fontFamily: 'var(--font-ui)' }}
               >
                 15 students crazy enough to leave Una
               </p>
@@ -1858,14 +1862,14 @@ export default function HomePage() {
               />
               <div
                 className="absolute bottom-2.5 md:bottom-4 left-0 right-0 text-center text-base md:text-lg font-bold"
-                style={{ color: '#3B3325', fontFamily: 'Rajdhani, sans-serif' }}
+                style={{ color: '#3B3325', fontFamily: 'var(--font-display)' }}
               >
                 {lightbox.emoji} {lightbox.caption}
               </div>
               <button
                 aria-label="Close photo"
                 className="absolute -top-3 -right-3 w-9 h-9 rounded-full text-white font-bold"
-                style={{ background: 'var(--accent)', color: '#07111F' }}
+                style={{ background: 'var(--accent)', color: 'var(--ink-2)' }}
                 onClick={() => setLightbox(null)}
               >
                 ✕

@@ -23,7 +23,8 @@ function embedFor(url = '') {
   return null
 }
 
-const ACCENTS = ['#D4AF37', '#6FAA7A', '#2D5282', '#E05C42', '#8A7326']
+/* aged tones — brass, moss, ink-blue, oxblood, bronze */
+const ACCENTS = ['#C8A951', '#5E8A6E', '#3D6E96', '#9B4B3F', '#8F7530']
 
 export default function StudentStories() {
   const [stories, setStories] = useState([])
@@ -47,22 +48,21 @@ export default function StudentStories() {
   }, [])
 
   return (
-    <section className="py-12 md:py-16" style={{ background: 'linear-gradient(180deg, #04090F 0%, #07111F 100%)' }}>
+    <section className="py-12 md:py-16" style={{ background: 'linear-gradient(180deg, var(--ink) 0%, var(--ink-2) 100%)' }}>
       <div className="max-w-5xl mx-auto px-4">
         {/* header row — Netflix-tight */}
-        <div className="flex items-end justify-between gap-4 mb-4">
+        <div className="flex items-end justify-between gap-4 mb-5">
           <div>
-            <span
-              className="text-[10px] uppercase tracking-[0.28em] block mb-1"
-              style={{ fontFamily: 'Orbitron, monospace', color: '#E05C42' }}
-            >
-              ● Student Stories
-            </span>
-            <h2 className="text-2xl md:text-3xl font-black text-white leading-tight" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
-              Real students. <span className="text-gold-shimmer">Real results.</span>
+            <p className="eyebrow mb-2">On Record</p>
+            <h2 className="text-3xl md:text-4xl text-white leading-tight">
+              In their own words.
             </h2>
           </div>
-          <Link href="/reviews" className="text-xs font-bold text-gold-400 whitespace-nowrap pb-1">
+          <Link
+            href="/reviews"
+            className="text-[11px] uppercase tracking-[0.16em] whitespace-nowrap pb-1.5 transition-colors"
+            style={{ color: 'var(--accent)' }}
+          >
             See all →
           </Link>
         </div>
@@ -83,12 +83,12 @@ export default function StudentStories() {
                 {/* poster art */}
                 <div
                   className="absolute inset-0"
-                  style={{ background: `linear-gradient(165deg, ${accent}2E 0%, #0A1628 55%, #04090F 100%)` }}
+                  style={{ background: `linear-gradient(165deg, ${accent}2E 0%, var(--ink-3) 55%, var(--ink) 100%)` }}
                 />
                 {/* episode ribbon */}
                 <span
-                  className="absolute top-2 left-2 text-[8px] font-black px-1.5 py-0.5 rounded uppercase tracking-widest z-10"
-                  style={{ background: accent, color: '#07111F', fontFamily: 'Orbitron, monospace' }}
+                  className="absolute top-2 left-2 text-[8px] font-semibold px-1.5 py-0.5 rounded uppercase tracking-widest z-10"
+                  style={{ background: accent, color: 'var(--ink-2)', fontFamily: 'var(--font-ui)' }}
                 >
                   {hasVideo ? '▶ Episode' : 'S1 · Note'}
                 </span>
@@ -96,7 +96,7 @@ export default function StudentStories() {
                 <div className="relative z-10 h-full flex flex-col justify-end p-3">
                   {hasVideo && (
                     <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-11 h-11 rounded-full flex items-center justify-center"
-                      style={{ background: 'rgba(255,255,255,0.92)', color: '#07111F' }}>
+                      style={{ background: 'rgba(255,255,255,0.92)', color: 'var(--ink-2)' }}>
                       ▶
                     </span>
                   )}
@@ -110,7 +110,7 @@ export default function StudentStories() {
                       <span key={j} className="text-[9px]" style={{ color: accent }}>★</span>
                     ))}
                   </div>
-                  <div className="text-xs font-black text-white leading-tight" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+                  <div className="text-xs font-semibold text-white leading-tight" style={{ fontFamily: 'var(--font-display)' }}>
                     {s.name}
                   </div>
                   <div className="text-[9px] text-gray-400 truncate">{s.course}</div>
@@ -130,7 +130,7 @@ export default function StudentStories() {
             style={{ border: '1px dashed rgba(var(--accent-rgb),0.5)', background: 'rgba(var(--accent-rgb),0.05)' }}
           >
             <span className="text-2xl mb-1">🎬</span>
-            <span className="text-xs font-black text-white leading-tight" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+            <span className="text-xs font-semibold text-white leading-tight" style={{ fontFamily: 'var(--font-display)' }}>
               {stories.length === 0 ? 'Be the first story' : 'Could be you'}
             </span>
             <span className="text-[9px] text-gray-400 mt-1 leading-snug">
@@ -139,8 +139,8 @@ export default function StudentStories() {
           </Link>
         </div>
 
-        <p className="text-[10px] text-gray-600 mt-1">
-          ← swipe · every story here is a real, verified review from our students
+        <p className="text-[11px] mt-2" style={{ color: 'var(--bone-dim)' }}>
+          Swipe · every story here is a real, verified review from our students
         </p>
       </div>
 
@@ -179,7 +179,7 @@ export default function StudentStories() {
                 />
               </div>
               <div className="mt-3 text-center">
-                <div className="text-white font-black" style={{ fontFamily: 'Rajdhani, sans-serif' }}>{playing.name}</div>
+                <div className="text-white font-semibold" style={{ fontFamily: 'var(--font-display)' }}>{playing.name}</div>
                 <div className="text-xs text-gray-400">{playing.course}</div>
               </div>
             </motion.div>

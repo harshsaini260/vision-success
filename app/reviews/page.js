@@ -97,7 +97,7 @@ export default function ReviewsPage() {
   return (
     <div
       className="min-h-screen"
-      style={{ background: 'linear-gradient(180deg, #04090F 0%, #07111F 100%)' }}
+      style={{ background: 'linear-gradient(180deg, var(--ink) 0%, var(--ink-2) 100%)' }}
     >
       {/* HEADER */}
       <div
@@ -110,8 +110,8 @@ export default function ReviewsPage() {
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
           <span className="section-tag mb-4 inline-block">Student Stories</span>
           <h1
-            className="text-5xl md:text-6xl font-black text-white mb-4"
-            style={{ fontFamily: 'Rajdhani, sans-serif' }}
+            className="text-5xl md:text-6xl font-semibold text-white mb-4"
+            style={{ fontFamily: 'var(--font-display)' }}
           >
             Real{' '}
             <span
@@ -167,8 +167,8 @@ export default function ReviewsPage() {
             >
               <form onSubmit={handleSubmit} className="p-6 md:p-10 space-y-5">
                 <h3
-                  className="text-2xl font-black text-white mb-2"
-                  style={{ fontFamily: 'Rajdhani, sans-serif' }}
+                  className="text-2xl font-semibold text-white mb-2"
+                  style={{ fontFamily: 'var(--font-display)' }}
                 >
                   Share Your Experience
                 </h3>
@@ -250,8 +250,8 @@ export default function ReviewsPage() {
           <div className="text-center py-20">
             <div className="text-6xl mb-4">💬</div>
             <h3
-              className="text-2xl font-black text-white mb-3"
-              style={{ fontFamily: 'Rajdhani, sans-serif' }}
+              className="text-2xl font-semibold text-white mb-3"
+              style={{ fontFamily: 'var(--font-display)' }}
             >
               Be the First to Review
             </h3>

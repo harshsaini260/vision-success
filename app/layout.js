@@ -43,7 +43,7 @@ export const metadata = {
 export const viewport = {
   width: 'device-width',
   initialScale: 1,
-  themeColor: '#07111F',
+  themeColor: '#0B1119',
 }
 
 /* Applies the saved theme color BEFORE first paint — kills the
@@ -51,7 +51,7 @@ export const viewport = {
 const themeInitScript = `
 (function(){try{
   var t=localStorage.getItem('vs-theme')||'gold';
-  var m={gold:['#D4AF37','212, 175, 55'],saffron:['#FF7A00','255, 122, 0'],royal:['#9333EA','147, 51, 234'],emerald:['#10B981','16, 185, 129'],sky:['#0EA5E9','14, 165, 233'],crimson:['#DC2626','220, 38, 38']};
+  var m={gold:['#C8A951','200, 169, 81'],saffron:['#C4712A','196, 113, 42'],royal:['#6E4E96','110, 78, 150'],emerald:['#3E7D63','62, 125, 99'],sky:['#3D6E96','61, 110, 150'],crimson:['#9B2F3A','155, 47, 58']};
   var v=m[t]||m.gold,r=document.documentElement;
   r.style.setProperty('--accent',v[0]);
   r.style.setProperty('--accent-rgb',v[1]);
@@ -145,7 +145,7 @@ export default function RootLayout({ children }) {
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Orbitron:wght@400;600;700;900&family=Inter:wght@300;400;500;600;700;800;900&family=Caveat:wght@600;700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700;800&family=Caveat:wght@600;700&display=swap"
           rel="stylesheet"
         />
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
@@ -176,12 +176,12 @@ export default function RootLayout({ children }) {
             position="top-center"
             toastOptions={{
               style: {
-                background: '#0A1628',
-                color: '#F0EAD6',
+                background: 'var(--ink-3)',
+                color: 'var(--bone)',
                 border: '1px solid rgba(212,175,55,0.3)',
                 fontFamily: 'Inter, sans-serif',
               },
-              success: { iconTheme: { primary: '#D4AF37', secondary: '#0A1628' } },
+              success: { iconTheme: { primary: '#D4AF37', secondary: 'var(--ink-3)' } },
             }}
           />
         </ThemeProvider>

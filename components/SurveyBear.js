@@ -8,9 +8,9 @@
 
 import { motion, AnimatePresence } from 'framer-motion'
 
-const CREAM = '#F0EAD6'
+const CREAM = 'var(--bone)'
 const MUZZLE = '#FBF7EA'
-const INK = '#0A1628'
+const INK = 'var(--ink-3)'
 
 export default function SurveyBear({ expression = 'happy', size = 132 }) {
   const shy = expression === 'shy'

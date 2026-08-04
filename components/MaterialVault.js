@@ -107,19 +107,19 @@ export default function MaterialVault({ items = [] }) {
           >
             {m.badge && (
               <span
-                className="absolute top-4 right-4 text-[9px] font-black px-2 py-1 rounded-full uppercase tracking-widest"
-                style={{ background: 'var(--accent)', color: '#07111F', fontFamily: 'Orbitron, monospace' }}
+                className="absolute top-4 right-4 text-[9px] font-semibold px-2 py-1 rounded-full uppercase tracking-widest"
+                style={{ background: 'var(--accent)', color: 'var(--ink-2)', fontFamily: 'var(--font-ui)' }}
               >
                 {m.badge}
               </span>
             )}
             <div className="text-4xl mb-3">{m.emoji}</div>
-            <h3 className="text-xl font-black text-white mb-2 pr-16" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+            <h3 className="text-xl font-semibold text-white mb-2 pr-16" style={{ fontFamily: 'var(--font-display)' }}>
               {m.title}
             </h3>
             <p className="text-sm text-gray-400 leading-relaxed mb-4 flex-1">{m.description}</p>
             {m.meta && (
-              <div className="text-[10px] uppercase tracking-[0.18em] text-gray-600 mb-3" style={{ fontFamily: 'Orbitron, monospace' }}>
+              <div className="text-[10px] uppercase tracking-[0.18em] text-gray-600 mb-3" style={{ fontFamily: 'var(--font-ui)' }}>
                 {m.meta}
               </div>
             )}
@@ -147,7 +147,7 @@ export default function MaterialVault({ items = [] }) {
               transition={{ type: 'spring', stiffness: 260, damping: 24 }}
               className="relative w-full max-w-sm rounded-3xl p-7 text-center"
               style={{
-                background: 'linear-gradient(180deg, #0A1628 0%, #07111F 100%)',
+                background: 'linear-gradient(180deg, var(--ink-3) 0%, var(--ink-2) 100%)',
                 border: '1.5px solid rgba(var(--accent-rgb),0.4)',
                 boxShadow: '0 25px 80px rgba(0,0,0,0.7)',
               }}
@@ -162,7 +162,7 @@ export default function MaterialVault({ items = [] }) {
                 ✕
               </button>
               <div className="text-4xl mb-2">{target.emoji}</div>
-              <h3 className="text-xl font-black text-white mb-1" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+              <h3 className="text-xl font-semibold text-white mb-1" style={{ fontFamily: 'var(--font-display)' }}>
                 {target.title}
               </h3>
               <p className="text-xs text-gray-400 mb-5">

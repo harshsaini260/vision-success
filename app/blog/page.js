@@ -3,7 +3,9 @@ import { POSTS } from '@/lib/blog'
 import BlogIndex from './BlogIndex'
 
 export const metadata = {
-  title: 'Blog — Study Strategy, Exam Method & Ambition | Vision Success Una',
+  /* absolute: the root layout template already appends the institute
+     name, which was producing "… | Vision Success Una | Vision Success Una" */
+  title: { absolute: 'Blog — Study Strategy, Exam Method & Ambition | Vision Success Una' },
   description:
     'Honest writing on SAT strategy, NDA and NEET preparation, study method and ambition — from Vision Success Coaching Institute, Una, Himachal Pradesh. Plus a new question to think about every day.',
   keywords:

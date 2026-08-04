@@ -61,7 +61,7 @@ export default function BrainFuel() {
     >
       <div className="text-center mb-6">
         <span className="section-tag mb-3 inline-block">⚡ Brain Fuel</span>
-        <h2 className="text-3xl md:text-4xl font-black text-white" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+        <h2 className="text-3xl md:text-4xl font-semibold text-white" style={{ fontFamily: 'var(--font-display)' }}>
           Facts & Fun, Refilled Daily
         </h2>
         <p className="text-gray-500 text-sm mt-1">Tap the card for the next one 👇</p>
@@ -82,7 +82,7 @@ export default function BrainFuel() {
             <div className="flex items-center justify-between mb-4">
               <span
                 className="text-[11px] font-bold uppercase tracking-widest px-3 py-1 rounded-full"
-                style={{ background: `${meta.color}22`, color: meta.color, fontFamily: 'Orbitron, monospace' }}
+                style={{ background: `${meta.color}22`, color: meta.color, fontFamily: 'var(--font-ui)' }}
               >
                 {meta.label}
               </span>

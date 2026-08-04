@@ -36,7 +36,7 @@ export default function CourseFinder() {
     >
       <div className="text-center mb-8">
         <span className="section-tag mb-3 inline-block">🎯 30-Second Quiz</span>
-        <h2 className="text-3xl md:text-4xl font-black text-white mb-2" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+        <h2 className="text-3xl md:text-4xl font-semibold text-white mb-2" style={{ fontFamily: 'var(--font-display)' }}>
           Not Sure? Find Your Course
         </h2>
         <p className="text-gray-400 text-sm">Tap your dream — we&apos;ll point you to the right program.</p>
@@ -54,7 +54,7 @@ export default function CourseFinder() {
             }}
           >
             <div className="text-3xl mb-2">{d.emoji}</div>
-            <div className="text-sm font-bold text-white" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+            <div className="text-sm font-bold text-white" style={{ fontFamily: 'var(--font-display)' }}>
               {d.label}
             </div>
           </button>
@@ -72,10 +72,10 @@ export default function CourseFinder() {
             style={{ background: `${result.color}12`, border: `1.5px solid ${result.color}55` }}
           >
             <div className="text-4xl mb-2">{result.emoji}</div>
-            <p className="text-xs uppercase tracking-widest text-gray-400 mb-1" style={{ fontFamily: 'Orbitron, monospace' }}>
+            <p className="text-xs uppercase tracking-widest text-gray-400 mb-1" style={{ fontFamily: 'var(--font-ui)' }}>
               Your Path
             </p>
-            <h3 className="text-2xl font-black text-white mb-1" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+            <h3 className="text-2xl font-semibold text-white mb-1" style={{ fontFamily: 'var(--font-display)' }}>
               {result.title}
             </h3>
             <p className="text-sm font-semibold mb-4" style={{ color: result.color }}>

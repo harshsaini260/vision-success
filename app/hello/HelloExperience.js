@@ -17,7 +17,7 @@ export default function HelloExperience() {
   return (
     <div
       className="relative min-h-screen overflow-hidden flex items-center justify-center px-5"
-      style={{ background: 'radial-gradient(ellipse 120% 90% at 50% -10%, #0C1A2E 0%, #07111F 45%, #04090F 100%)' }}
+      style={{ background: 'radial-gradient(ellipse 120% 90% at 50% -10%, #0C1A2E 0%, var(--ink-2) 45%, var(--ink) 100%)' }}
     >
       {/* aurora + snow — the polar night */}
       <div className="aurora" aria-hidden><i /><i /><i /></div>
@@ -50,8 +50,8 @@ export default function HelloExperience() {
           initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.7, duration: 0.8, ease }}
-          className="mt-3 text-3xl sm:text-4xl font-black text-white leading-tight"
-          style={{ fontFamily: 'Rajdhani, sans-serif' }}
+          className="mt-3 text-3xl sm:text-4xl font-semibold text-white leading-tight"
+          style={{ fontFamily: 'var(--font-display)' }}
         >
           I&apos;m <span className="text-gold-shimmer">Pola</span> — the Vision Success bear.
         </motion.h1>
@@ -60,7 +60,7 @@ export default function HelloExperience() {
           animate={{ opacity: 1 }}
           transition={{ delay: 2.3, duration: 0.7 }}
           className="mt-1 text-[11px] uppercase tracking-[0.3em] text-gray-500"
-          style={{ fontFamily: 'Orbitron, monospace' }}
+          style={{ fontFamily: 'var(--font-ui)' }}
         >
           Official mascot · professional dreamer
         </motion.p>
@@ -90,8 +90,8 @@ export default function HelloExperience() {
           initial={{ opacity: 0, scale: 0.92, y: 16 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ delay: 3.6, duration: 0.9, ease }}
-          className="mt-7 text-2xl sm:text-3xl font-black leading-snug text-white"
-          style={{ fontFamily: 'Rajdhani, sans-serif' }}
+          className="mt-7 text-2xl sm:text-3xl font-semibold leading-snug text-white"
+          style={{ fontFamily: 'var(--font-display)' }}
         >
           Something big is starting in Una —{' '}
           <span className="text-gold-shimmer">and you&apos;re early.</span>
@@ -124,7 +124,7 @@ export default function HelloExperience() {
             href="/#blueprint"
             onClick={() => sfxChime()}
             className="text-sm font-semibold text-gold-400 hover:text-gold-300 transition-colors"
-            style={{ fontFamily: 'Rajdhani, sans-serif', letterSpacing: '0.05em' }}
+            style={{ fontFamily: 'var(--font-display)', letterSpacing: '0.05em' }}
           >
             🎁 or steal my free SAT Blueprint first →
           </Link>

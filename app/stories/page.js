@@ -18,13 +18,13 @@ export const metadata = {
 
 export default function StoriesPage() {
   return (
-    <div className="min-h-screen" style={{ background: '#04090F' }}>
+    <div className="min-h-screen" style={{ background: 'var(--ink)' }}>
       <div className="pt-20">
         <div className="max-w-5xl mx-auto px-4 pb-2">
           <span className="section-tag mb-3 inline-block">🎬 The Documentary</span>
           <h1
-            className="text-4xl md:text-6xl font-black text-white leading-none"
-            style={{ fontFamily: 'Rajdhani, sans-serif' }}
+            className="text-4xl md:text-6xl font-semibold text-white leading-none"
+            style={{ fontFamily: 'var(--font-display)' }}
           >
             STUDENT <span className="text-gold-shimmer">STORIES</span>
           </h1>

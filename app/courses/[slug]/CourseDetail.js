@@ -59,16 +59,16 @@ function ExamCountdown({ exams, color }) {
       className="rounded-3xl p-8 text-center"
       style={{ background: 'rgba(255,255,255,0.03)', border: `1.5px solid ${color}44` }}
     >
-      <p className="text-sm uppercase tracking-widest text-gray-400 mb-1" style={{ fontFamily: 'Orbitron, monospace' }}>
+      <p className="text-sm uppercase tracking-widest text-gray-400 mb-1" style={{ fontFamily: 'var(--font-ui)' }}>
         ⏳ Countdown to
       </p>
-      <p className="text-xl font-bold text-white mb-6" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+      <p className="text-xl font-bold text-white mb-6" style={{ fontFamily: 'var(--font-display)' }}>
         {next.name}
       </p>
       <div className="grid grid-cols-4 gap-3 max-w-lg mx-auto mb-4">
         {cells.map((c) => (
           <div key={c.l} className="rounded-2xl py-4" style={{ background: `${color}14`, border: `1px solid ${color}33` }}>
-            <div className="text-3xl md:text-4xl font-black" style={{ fontFamily: 'Orbitron, monospace', color }}>
+            <div className="text-3xl md:text-4xl font-semibold" style={{ fontFamily: 'var(--font-ui)', color }}>
               {String(c.v).padStart(2, '0')}
             </div>
             <div className="text-[10px] uppercase tracking-widest text-gray-500 mt-1">{c.l}</div>
@@ -89,7 +89,7 @@ export default function CourseDetail({ course }) {
   const enquiryWa = wa(`I want to enquire about ${course.title} at Vision Success Una`)
 
   return (
-    <div className="min-h-screen" style={{ background: 'linear-gradient(180deg, #04090F 0%, #07111F 100%)' }}>
+    <div className="min-h-screen" style={{ background: 'linear-gradient(180deg, var(--ink) 0%, var(--ink-2) 100%)' }}>
       {/* HERO */}
       <div
         className="pt-24 pb-14 px-4"
@@ -117,13 +117,13 @@ export default function CourseDetail({ course }) {
                   background: `${course.color}22`,
                   border: `1px solid ${course.color}55`,
                   color: course.color,
-                  fontFamily: 'Orbitron, monospace',
+                  fontFamily: 'var(--font-ui)',
                 }}
               >
                 {course.badge}
               </span>
             </div>
-            <h1 className="text-4xl md:text-6xl font-black text-white mb-3" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+            <h1 className="text-4xl md:text-6xl font-semibold text-white mb-3" style={{ fontFamily: 'var(--font-display)' }}>
               {course.title}{' '}
               <span className="block text-lg md:text-2xl mt-1 font-bold" style={{ color: course.color }}>
                 in Una, Himachal Pradesh
@@ -156,7 +156,7 @@ export default function CourseDetail({ course }) {
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-3xl">
               {course.heroStats.map((s) => (
                 <div key={s.l} className="glass-card rounded-2xl p-4 text-center">
-                  <div className="text-2xl font-black" style={{ fontFamily: 'Orbitron, monospace', color: course.color }}>
+                  <div className="text-2xl font-semibold" style={{ fontFamily: 'var(--font-ui)', color: course.color }}>
                     {s.n}
                   </div>
                   <div className="text-[11px] text-gray-400 mt-1 uppercase tracking-wider">{s.l}</div>
@@ -177,7 +177,7 @@ export default function CourseDetail({ course }) {
         <FadeIn>
           <div className="text-center mb-8">
             <SectionTag>At a Glance</SectionTag>
-            <h2 className="text-3xl md:text-4xl font-black text-white" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+            <h2 className="text-3xl md:text-4xl font-semibold text-white" style={{ fontFamily: 'var(--font-display)' }}>
               Course Quick Facts
             </h2>
           </div>
@@ -198,7 +198,7 @@ export default function CourseDetail({ course }) {
         <FadeIn>
           <div className="text-center mb-8">
             <SectionTag>Inside the Program</SectionTag>
-            <h2 className="text-3xl md:text-4xl font-black text-white" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+            <h2 className="text-3xl md:text-4xl font-semibold text-white" style={{ fontFamily: 'var(--font-display)' }}>
               Everything You Get
             </h2>
           </div>
@@ -220,7 +220,7 @@ export default function CourseDetail({ course }) {
         <FadeIn>
           <div className="text-center mb-8">
             <SectionTag>Weekly Rhythm</SectionTag>
-            <h2 className="text-3xl md:text-4xl font-black text-white" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+            <h2 className="text-3xl md:text-4xl font-semibold text-white" style={{ fontFamily: 'var(--font-display)' }}>
               Batches & Schedule
             </h2>
           </div>
@@ -228,10 +228,10 @@ export default function CourseDetail({ course }) {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
             {course.batches.map((b) => (
               <div key={b.name} className="glass-card rounded-2xl p-5 text-center">
-                <div className="text-sm font-bold text-white mb-1" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+                <div className="text-sm font-bold text-white mb-1" style={{ fontFamily: 'var(--font-display)' }}>
                   {b.name}
                 </div>
-                <div className="text-lg font-black mb-1" style={{ fontFamily: 'Orbitron, monospace', color: course.color }}>
+                <div className="text-lg font-semibold mb-1" style={{ fontFamily: 'var(--font-ui)', color: course.color }}>
                   {b.time}
                 </div>
                 <div className="text-xs text-gray-500">{b.note}</div>
@@ -249,7 +249,7 @@ export default function CourseDetail({ course }) {
                   borderBottom: i < course.weekPlan.length - 1 ? '1px solid rgba(255,255,255,0.05)' : 'none',
                 }}
               >
-                <span className="w-28 flex-shrink-0 text-sm font-bold uppercase tracking-wider" style={{ color: course.color, fontFamily: 'Rajdhani, sans-serif' }}>
+                <span className="w-28 flex-shrink-0 text-sm font-bold uppercase tracking-wider" style={{ color: course.color, fontFamily: 'var(--font-display)' }}>
                   {w.day}
                 </span>
                 <span className="text-sm text-gray-300">{w.focus}</span>
@@ -263,7 +263,7 @@ export default function CourseDetail({ course }) {
         <FadeIn>
           <div className="text-center mb-8">
             <SectionTag>Did You Know?</SectionTag>
-            <h2 className="text-3xl md:text-4xl font-black text-white" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+            <h2 className="text-3xl md:text-4xl font-semibold text-white" style={{ fontFamily: 'var(--font-display)' }}>
               Fun Facts That Fuel You
             </h2>
           </div>
@@ -275,7 +275,7 @@ export default function CourseDetail({ course }) {
                   style={{ background: `${course.color}0D`, border: `1px solid ${course.color}2A` }}
                 >
                   <div className="text-3xl mb-3">{f.emoji}</div>
-                  <h3 className="text-lg font-bold text-white mb-2" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+                  <h3 className="text-lg font-bold text-white mb-2" style={{ fontFamily: 'var(--font-display)' }}>
                     {f.title}
                   </h3>
                   <p className="text-sm text-gray-400 leading-relaxed">{f.text}</p>
@@ -289,7 +289,7 @@ export default function CourseDetail({ course }) {
         <FadeIn>
           <div className="text-center mb-10">
             <SectionTag>The Journey</SectionTag>
-            <h2 className="text-3xl md:text-4xl font-black text-white" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+            <h2 className="text-3xl md:text-4xl font-semibold text-white" style={{ fontFamily: 'var(--font-display)' }}>
               Your Roadmap to Success
             </h2>
           </div>
@@ -302,14 +302,14 @@ export default function CourseDetail({ course }) {
               {course.roadmap.map((r, i) => (
                 <div key={r.title} className="flex gap-5 items-start">
                   <div
-                    className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 font-black text-sm relative z-10"
-                    style={{ background: course.color, color: '#04090F', fontFamily: 'Orbitron, monospace' }}
+                    className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 font-semibold text-sm relative z-10"
+                    style={{ background: course.color, color: 'var(--ink)', fontFamily: 'var(--font-ui)' }}
                   >
                     {i + 1}
                   </div>
                   <div className="glass-card rounded-2xl p-5 flex-1">
                     <div className="flex flex-wrap items-center gap-3 mb-1">
-                      <h3 className="text-lg font-bold text-white" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+                      <h3 className="text-lg font-bold text-white" style={{ fontFamily: 'var(--font-display)' }}>
                         {r.title}
                       </h3>
                       <span className="text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full" style={{ background: `${course.color}1A`, color: course.color }}>
@@ -330,7 +330,7 @@ export default function CourseDetail({ course }) {
             className="rounded-2xl p-6 text-center"
             style={{ background: 'rgba(var(--accent-rgb),0.08)', border: '1px solid rgba(var(--accent-rgb),0.25)' }}
           >
-            <p className="text-xl font-bold text-gold-400 mb-1" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+            <p className="text-xl font-bold text-gold-400 mb-1" style={{ fontFamily: 'var(--font-display)' }}>
               💛 Fees Are Never a Barrier at Vision Success
             </p>
             <p className="text-gray-400 text-sm">
@@ -347,7 +347,7 @@ export default function CourseDetail({ course }) {
         <FadeIn>
           <div className="text-center mb-8">
             <SectionTag>Questions?</SectionTag>
-            <h2 className="text-3xl md:text-4xl font-black text-white" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+            <h2 className="text-3xl md:text-4xl font-semibold text-white" style={{ fontFamily: 'var(--font-display)' }}>
               Frequently Asked Questions
             </h2>
           </div>
@@ -365,7 +365,7 @@ export default function CourseDetail({ course }) {
         <FadeIn>
           <div className="text-center mb-8">
             <SectionTag>Explore More</SectionTag>
-            <h2 className="text-3xl md:text-4xl font-black text-white" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+            <h2 className="text-3xl md:text-4xl font-semibold text-white" style={{ fontFamily: 'var(--font-display)' }}>
               Other Paths at Vision Success
             </h2>
           </div>
@@ -377,7 +377,7 @@ export default function CourseDetail({ course }) {
                 className="glass-card glass-card-hover rounded-2xl p-5 block transition-all duration-300"
               >
                 <div className="text-3xl mb-2">{c.emoji}</div>
-                <div className="text-lg font-bold text-white mb-1" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+                <div className="text-lg font-bold text-white mb-1" style={{ fontFamily: 'var(--font-display)' }}>
                   {c.title}
                 </div>
                 <p className="text-xs text-gray-500 mb-2">{c.subtitle}</p>
@@ -393,7 +393,7 @@ export default function CourseDetail({ course }) {
       {/* FINAL CTA */}
       <div className="py-16 px-4 text-center" style={{ background: `${course.color}0A`, borderTop: `1px solid ${course.color}22` }}>
         <FadeIn>
-          <h2 className="text-3xl md:text-4xl font-black text-white mb-3" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+          <h2 className="text-3xl md:text-4xl font-semibold text-white mb-3" style={{ fontFamily: 'var(--font-display)' }}>
             Ready to start your {course.title.replace(' Coaching', '')} journey?
           </h2>
           <p className="text-gray-400 mb-8 max-w-xl mx-auto">

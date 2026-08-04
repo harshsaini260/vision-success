@@ -9,13 +9,13 @@ export default function Error({ error, reset }) {
   return (
     <div
       className="min-h-screen flex items-center justify-center px-4 pt-20"
-      style={{ background: 'linear-gradient(180deg, #04090F 0%, #07111F 100%)' }}
+      style={{ background: 'linear-gradient(180deg, var(--ink) 0%, var(--ink-2) 100%)' }}
     >
       <div className="text-center max-w-md">
         <div className="text-6xl mb-5">⚠️</div>
         <h1
-          className="text-3xl font-black text-white mb-3"
-          style={{ fontFamily: 'Rajdhani, sans-serif' }}
+          className="text-3xl font-semibold text-white mb-3"
+          style={{ fontFamily: 'var(--font-display)' }}
         >
           Something Went Wrong
         </h1>

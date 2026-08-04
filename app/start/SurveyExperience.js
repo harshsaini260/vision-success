@@ -188,7 +188,7 @@ export default function SurveyExperience() {
   const route = done ? routeFor(answers.exams) : null
 
   return (
-    <div className="relative min-h-screen overflow-hidden flex flex-col" style={{ background: 'radial-gradient(ellipse 120% 90% at 50% -10%, #0C1A2E 0%, #07111F 45%, #04090F 100%)' }}>
+    <div className="relative min-h-screen overflow-hidden flex flex-col" style={{ background: 'radial-gradient(ellipse 120% 90% at 50% -10%, #0C1A2E 0%, var(--ink-2) 45%, var(--ink) 100%)' }}>
       <div className="aurora" aria-hidden><i /><i /><i /></div>
       <div className="snowfall" aria-hidden>{Array.from({ length: 10 }).map((_, i) => <i key={i} />)}</div>
 
@@ -197,10 +197,10 @@ export default function SurveyExperience() {
         <div className="relative z-10 px-5 pt-5">
           <div className="max-w-md mx-auto">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-[10px] uppercase tracking-[0.25em] text-gold-400" style={{ fontFamily: 'Orbitron, monospace' }}>
+              <span className="text-[10px] uppercase tracking-[0.25em] text-gold-400" style={{ fontFamily: 'var(--font-ui)' }}>
                 {current?.section}
               </span>
-              <span className="text-[10px] text-gray-500" style={{ fontFamily: 'Orbitron, monospace' }}>{step + 1} / {total}</span>
+              <span className="text-[10px] text-gray-500" style={{ fontFamily: 'var(--font-ui)' }}>{step + 1} / {total}</span>
             </div>
             <div className="h-1.5 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.1)' }}>
               <motion.div className="h-full rounded-full" style={{ background: 'linear-gradient(90deg, var(--accent), var(--accent-light))' }}
@@ -222,7 +222,7 @@ export default function SurveyExperience() {
             {step === -1 && (
               <motion.div key="intro" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ ease }}>
                 <p className="text-2xl mb-2" style={{ fontFamily: "'Caveat', cursive", color: '#F5D76E', transform: 'rotate(-2deg)' }}>oh, hi there 🐾</p>
-                <h1 className="text-3xl sm:text-4xl font-black text-white leading-tight mb-3" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+                <h1 className="text-3xl sm:text-4xl font-semibold text-white leading-tight mb-3" style={{ fontFamily: 'var(--font-display)' }}>
                   Answer <span className="text-gold-shimmer">13 tiny things.</span><br />I&apos;ll show you your door.
                 </h1>
                 <p className="text-gray-400 text-sm mb-7 max-w-xs mx-auto">
@@ -272,7 +272,7 @@ export default function SurveyExperience() {
                     {current.options.map((opt) => (
                       <button key={opt} onClick={() => pick(current.id, opt)}
                         className="rounded-2xl px-4 py-3.5 text-left font-semibold transition-all duration-200 hover:-translate-y-0.5 active:scale-[0.97]"
-                        style={{ background: value === opt ? 'rgba(var(--accent-rgb),0.16)' : 'rgba(255,255,255,0.04)', border: value === opt ? '1.5px solid var(--accent)' : '1px solid rgba(var(--accent-rgb),0.22)', color: '#F0EAD6', fontFamily: 'Rajdhani, sans-serif' }}>
+                        style={{ background: value === opt ? 'rgba(var(--accent-rgb),0.16)' : 'rgba(255,255,255,0.04)', border: value === opt ? '1.5px solid var(--accent)' : '1px solid rgba(var(--accent-rgb),0.22)', color: 'var(--bone)', fontFamily: 'var(--font-display)' }}>
                         {opt}
                       </button>
                     ))}
@@ -288,7 +288,7 @@ export default function SurveyExperience() {
                       return (
                         <button key={opt} onClick={() => toggleMulti(current.id, opt)}
                           className="w-full rounded-2xl px-4 py-3 text-left font-semibold transition-all duration-200 flex items-center justify-between gap-2 active:scale-[0.98]"
-                          style={{ background: on ? 'rgba(var(--accent-rgb),0.16)' : 'rgba(255,255,255,0.04)', border: on ? '1.5px solid var(--accent)' : '1px solid rgba(var(--accent-rgb),0.22)', color: '#F0EAD6', fontFamily: 'Rajdhani, sans-serif' }}>
+                          style={{ background: on ? 'rgba(var(--accent-rgb),0.16)' : 'rgba(255,255,255,0.04)', border: on ? '1.5px solid var(--accent)' : '1px solid rgba(var(--accent-rgb),0.22)', color: 'var(--bone)', fontFamily: 'var(--font-display)' }}>
                           <span>{on ? '✓ ' : ''}{opt}{typeof o !== 'string' && o.tag && <span className="block text-[10px] font-normal" style={{ color: '#6FAA7A' }}>{o.tag}</span>}</span>
                         </button>
                       )
@@ -307,9 +307,9 @@ export default function SurveyExperience() {
                       return (
                         <button key={opt} onClick={() => toggleRank(current.id, opt)}
                           className="w-full rounded-2xl px-4 py-3 text-left font-semibold transition-all duration-200 flex items-center gap-3 active:scale-[0.98]"
-                          style={{ background: rank >= 0 ? 'rgba(var(--accent-rgb),0.16)' : 'rgba(255,255,255,0.04)', border: rank >= 0 ? '1.5px solid var(--accent)' : '1px solid rgba(var(--accent-rgb),0.22)', color: '#F0EAD6', fontFamily: 'Rajdhani, sans-serif' }}>
-                          <span className="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-xs font-black"
-                            style={{ background: rank >= 0 ? 'var(--accent)' : 'rgba(255,255,255,0.08)', color: rank >= 0 ? '#07111F' : '#93A0B0', fontFamily: 'Orbitron, monospace' }}>
+                          style={{ background: rank >= 0 ? 'rgba(var(--accent-rgb),0.16)' : 'rgba(255,255,255,0.04)', border: rank >= 0 ? '1.5px solid var(--accent)' : '1px solid rgba(var(--accent-rgb),0.22)', color: 'var(--bone)', fontFamily: 'var(--font-display)' }}>
+                          <span className="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-xs font-semibold"
+                            style={{ background: rank >= 0 ? 'var(--accent)' : 'rgba(255,255,255,0.08)', color: rank >= 0 ? 'var(--ink-2)' : '#93A0B0', fontFamily: 'var(--font-ui)' }}>
                             {rank >= 0 ? rank + 1 : ''}
                           </span>
                           {opt}
@@ -332,7 +332,7 @@ export default function SurveyExperience() {
                 <p className="text-2xl mb-1" style={{ fontFamily: "'Caveat', cursive", color: '#F5D76E' }}>
                   got it, {(answers.name || 'friend').split(' ')[0]}! 🎉
                 </p>
-                <h2 className="text-3xl sm:text-4xl font-black text-white leading-tight mb-3" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+                <h2 className="text-3xl sm:text-4xl font-semibold text-white leading-tight mb-3" style={{ fontFamily: 'var(--font-display)' }}>
                   I know exactly<br />where you belong.
                 </h2>
                 <p className="text-gray-300 text-sm max-w-xs mx-auto mb-2">{route.fomo}</p>
@@ -345,7 +345,7 @@ export default function SurveyExperience() {
                     {saving ? 'saving…' : '🐾 Take me there'}
                   </button>
                   <a href={wa(`Namaste! Maine Pola ka survey pura kiya 🐻‍❄️ (Naam: ${answers.name || '—'})`)} target="_blank" rel="noopener noreferrer"
-                    className="whatsapp-cta text-sm font-semibold text-gold-400 hover:text-gold-300" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+                    className="whatsapp-cta text-sm font-semibold text-gold-400 hover:text-gold-300" style={{ fontFamily: 'var(--font-display)' }}>
                     💬 or just message us on WhatsApp
                   </a>
                 </div>

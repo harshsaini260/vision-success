@@ -4,7 +4,7 @@
 export default function GlobalError({ error, reset }) {
   return (
     <html lang="en">
-      <body style={{ margin: 0, background: '#04090F', color: '#F0EAD6', fontFamily: 'Inter, system-ui, sans-serif' }}>
+      <body style={{ margin: 0, background: 'var(--ink)', color: 'var(--bone)', fontFamily: 'Inter, system-ui, sans-serif' }}>
         <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '24px' }}>
           <div>
             <div style={{ fontSize: '56px', marginBottom: '16px' }}>⚠️</div>
@@ -12,7 +12,7 @@ export default function GlobalError({ error, reset }) {
             <p style={{ color: '#9aa3ad', margin: '0 0 24px' }}>Please refresh the page or call us at +91 82192 54332.</p>
             <button
               onClick={() => reset()}
-              style={{ background: '#D4AF37', color: '#0A1628', border: 'none', padding: '14px 28px', borderRadius: '12px', fontWeight: 700, fontSize: '15px', cursor: 'pointer' }}
+              style={{ background: '#D4AF37', color: 'var(--ink-3)', border: 'none', padding: '14px 28px', borderRadius: '12px', fontWeight: 700, fontSize: '15px', cursor: 'pointer' }}
             >
               ↻ Reload
             </button>

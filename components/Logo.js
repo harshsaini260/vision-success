@@ -134,7 +134,7 @@ export default function Logo({ size = 44, id = 'vs', glow = true, showBanner = t
             y="97"
             textAnchor="middle"
             fill="#123A5E"
-            style={{ fontFamily: 'Rajdhani, sans-serif', fontWeight: 700, fontSize: '11px', letterSpacing: '0.02em' }}
+            style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '11px', letterSpacing: '0.02em' }}
           >
             VISION SUCCESS
           </text>

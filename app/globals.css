@@ -5,12 +5,26 @@
 /* Fonts load once via <link> in app/layout.js — the old duplicate
    @import here was render-blocking and doubled the download. */
 
-/* ===== THEME CSS VARIABLES ===== */
+/* ===== THEME CSS VARIABLES =====
+   Palette is deliberately "old money": deep ink, antique gold, bone.
+   Muted over neon, hairlines over glows, restraint over shine. */
 :root {
-  --accent: #D4AF37;
-  --accent-rgb: 212, 175, 55;
-  --accent-light: #F5D76E;
-  --accent-dark: #B8941F;
+  --accent: #C8A951;          /* antique gold, not showroom yellow */
+  --accent-rgb: 200, 169, 81;
+  --accent-light: #E6D29A;
+  --accent-dark: #8F7530;
+
+  --ink: #070C12;             /* deepest surface */
+  --ink-2: #0B1119;           /* page base */
+  --ink-3: #111926;           /* raised surface */
+  --bone: #EDE4D3;            /* primary text */
+  --bone-dim: rgba(237, 228, 211, 0.62);
+  --hairline: rgba(237, 228, 211, 0.10);
+
+  /* Three families: a high-contrast serif for voice, a neutral sans
+     for interface, and Caveat kept for handwritten marginalia. */
+  --font-display: 'Cormorant Garamond', 'Iowan Old Style', Georgia, serif;
+  --font-ui: 'Inter', -apple-system, sans-serif;
 }
 
 * {
@@ -25,11 +39,61 @@ html {
 }
 
 body {
-  background-color: #07111F;
-  color: #F0EAD6;
-  font-family: 'Inter', sans-serif;
+  background-color: var(--ink-2);
+  color: var(--bone);
+  font-family: var(--font-ui);
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Serif voice for every heading, with the tight optical tracking
+   that makes Cormorant read as engraved rather than webby. */
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.1;
+}
+
+/* Small-caps eyebrow — the quiet luxury label */
+.eyebrow {
+  font-family: var(--font-ui);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+/* Hairline rule with a centred gold diamond */
+.rule-diamond {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  color: var(--accent);
+}
+.rule-diamond::before,
+.rule-diamond::after {
+  content: '';
+  height: 1px;
+  width: min(90px, 18vw);
+  background: linear-gradient(90deg, transparent, rgba(var(--accent-rgb), 0.55));
+}
+.rule-diamond::after {
+  background: linear-gradient(90deg, rgba(var(--accent-rgb), 0.55), transparent);
+}
+
+/* Film grain — documentary texture, GPU-cheap */
+.grain::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.32'/%3E%3C/svg%3E");
 }
 
 /* ===== ELEGANCE DETAILS ===== */
@@ -51,7 +115,7 @@ p {
 
 /* ===== SCROLLBAR ===== */
 ::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: #0A1628; }
+::-webkit-scrollbar-track { background: var(--ink-3); }
 ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
 
 /* ===== STARS BACKGROUND ===== */
@@ -99,72 +163,74 @@ p {
    cause of scroll lag on budget phones. A slightly stronger tint
    looks 95% identical at a fraction of the GPU cost. */
 .glass-card {
-  background: rgba(13, 24, 41, 0.72);
-  border: 1px solid rgba(var(--accent-rgb), 0.15);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  background: rgba(17, 25, 38, 0.66);
+  border: 1px solid var(--hairline);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
 }
 
 .glass-card-hover:hover {
-  background: rgba(var(--accent-rgb), 0.08);
-  border-color: rgba(var(--accent-rgb), 0.4);
-  transform: translateY(-4px);
-  box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 40px rgba(var(--accent-rgb),0.1);
+  background: rgba(var(--accent-rgb), 0.05);
+  border-color: rgba(var(--accent-rgb), 0.32);
+  transform: translateY(-3px);
+  box-shadow: 0 18px 44px rgba(0,0,0,0.45);
 }
 
-/* ===== GLOW BUTTON ===== */
+/* ===== BUTTONS — engraved brass, not neon ===== */
 .btn-gold {
-  background: linear-gradient(135deg, var(--accent), var(--accent-light), var(--accent));
-  background-size: 200% auto;
-  color: #0A1628;
-  font-weight: 700;
-  font-family: 'Rajdhani', sans-serif;
-  font-size: 1rem;
-  letter-spacing: 0.05em;
+  background: linear-gradient(160deg, var(--accent-light), var(--accent) 55%, var(--accent-dark));
+  color: #0A0F16;
+  font-weight: 600;
+  font-family: var(--font-ui);
+  font-size: 0.82rem;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   border: none;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
   position: relative;
   overflow: hidden;
+  box-shadow: 0 1px 0 rgba(255,255,255,0.28) inset, 0 6px 18px rgba(0,0,0,0.35);
 }
 
 .btn-gold:hover {
-  background-position: right center;
   transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(var(--accent-rgb),0.5);
+  filter: brightness(1.06);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.3) inset, 0 10px 26px rgba(0,0,0,0.45);
 }
 
+/* A single slow sheen — the light catching polished metal */
 .btn-gold::after {
   content: '';
   position: absolute;
   top: 0; left: -100%;
-  width: 60%;
+  width: 45%;
   height: 100%;
-  background: rgba(255,255,255,0.3);
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
   transform: skewX(-20deg);
-  transition: left 0.4s ease;
+  transition: left 0.65s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .btn-gold:hover::after {
-  left: 150%;
+  left: 160%;
 }
 
 .btn-ghost {
   background: transparent;
   color: var(--accent);
-  border: 2px solid rgba(var(--accent-rgb),0.5);
-  font-weight: 600;
-  font-family: 'Rajdhani', sans-serif;
+  border: 1px solid rgba(var(--accent-rgb),0.42);
+  font-weight: 500;
+  font-family: var(--font-ui);
+  font-size: 0.82rem;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  transition: all 0.3s ease;
+  letter-spacing: 0.14em;
+  transition: all 0.25s ease;
   cursor: pointer;
 }
 
 .btn-ghost:hover {
-  background: rgba(var(--accent-rgb),0.1);
+  background: rgba(var(--accent-rgb),0.07);
   border-color: var(--accent);
-  box-shadow: 0 0 20px rgba(var(--accent-rgb),0.3);
+  transform: translateY(-2px);
 }
 
 /* ===== GOLD DIVIDER ===== */
@@ -179,16 +245,16 @@ p {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: rgba(var(--accent-rgb),0.1);
-  border: 1px solid rgba(var(--accent-rgb),0.3);
+  background: transparent;
+  border: 1px solid rgba(var(--accent-rgb),0.28);
   color: var(--accent);
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.15em;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.26em;
   text-transform: uppercase;
-  padding: 6px 16px;
+  padding: 7px 18px;
   border-radius: 100px;
-  font-family: 'Orbitron', monospace;
+  font-family: var(--font-ui);
 }
 
 /* ===== TICKER ===== */
@@ -215,7 +281,7 @@ p {
   border: 1.5px solid rgba(var(--accent-rgb),0.2);
   border-radius: 12px;
   padding: 14px 16px;
-  color: #F0EAD6;
+  color: var(--bone);
   font-family: 'Inter', sans-serif;
   font-size: 1rem;
   transition: all 0.3s ease;
@@ -235,8 +301,8 @@ p {
 }
 
 .form-input option {
-  background: #0A1628;
-  color: #F0EAD6;
+  background: var(--ink-3);
+  color: var(--bone);
 }
 
 .form-label {
@@ -302,12 +368,12 @@ p {
 /* ===== COURSE CARD ===== */
 .course-badge {
   background: linear-gradient(135deg, var(--accent), var(--accent-light));
-  color: #0A1628;
+  color: var(--ink-3);
   font-size: 0.65rem;
   font-weight: 800;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  font-family: 'Orbitron', monospace;
+  font-family: var(--font-ui);
   padding: 4px 12px;
   border-radius: 100px;
   display: inline-block;
@@ -322,7 +388,7 @@ p {
   white-space: nowrap;
   color: rgba(240,234,214,0.68);
   font-weight: 600;
-  font-family: 'Rajdhani', sans-serif;
+  font-family: var(--font-display);
   font-size: 0.875rem;
   letter-spacing: 0.13em;
   text-transform: uppercase;
@@ -408,7 +474,7 @@ p {
 
 .nav-more-label {
   display: block;
-  font-family: 'Rajdhani', sans-serif;
+  font-family: var(--font-display);
   font-weight: 600;
   font-size: 0.8125rem;
   letter-spacing: 0.1em;
@@ -440,7 +506,7 @@ p {
   width: 80vw;
   max-width: 320px;
   height: 100vh;
-  background: linear-gradient(180deg, #07111F 0%, #0A1628 100%);
+  background: linear-gradient(180deg, var(--ink-2) 0%, var(--ink-3) 100%);
   border-left: 1px solid rgba(var(--accent-rgb),0.2);
   z-index: 100;
   padding: 80px 24px 24px;
@@ -508,7 +574,8 @@ p {
 
 /* ===== STAT COUNTER ===== */
 .stat-number {
-  font-family: 'Orbitron', monospace;
+  font-family: var(--font-display);
+  font-weight: 600;
   background: linear-gradient(135deg, var(--accent), var(--accent-light));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -517,10 +584,10 @@ p {
 
 /* ===== TESTIMONIAL CARD ===== */
 .testimonial-card {
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(var(--accent-rgb),0.12);
-  border-radius: 16px;
-  padding: 24px;
+  background: rgba(255,255,255,0.025);
+  border: 1px solid var(--hairline);
+  border-radius: 4px;
+  padding: 28px;
   transition: all 0.3s ease;
 }
 
@@ -537,7 +604,7 @@ p {
   border: 1.5px solid rgba(var(--accent-rgb),0.25);
   border-radius: 10px;
   padding: 12px 14px;
-  color: #F0EAD6;
+  color: var(--bone);
   font-family: 'Inter', sans-serif;
   outline: none;
   transition: all 0.3s ease;
@@ -678,10 +745,10 @@ img { max-width: 100%; height: auto; }
   cursor: pointer;
   list-style: none;
   padding: 18px 20px;
-  font-family: 'Rajdhani', sans-serif;
-  font-weight: 700;
-  font-size: 1.05rem;
-  color: #F0EAD6;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.22rem;
+  color: var(--bone);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -723,7 +790,7 @@ img { max-width: 100%; height: auto; }
   border: 2.5px double #B3402E;
   border-radius: 4px;
   color: #B3402E;
-  font-family: 'Orbitron', monospace;
+  font-family: var(--font-ui);
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.18em;
@@ -735,7 +802,7 @@ img { max-width: 100%; height: auto; }
 
 /* amber LED digits — pacific-rim war clock */
 .war-clock {
-  font-family: 'Orbitron', monospace;
+  font-family: var(--font-ui);
   color: var(--accent-light);
   font-variant-numeric: tabular-nums;
   text-shadow:
@@ -796,7 +863,7 @@ img { max-width: 100%; height: auto; }
   width: 9px;
   height: 13px;
   border-radius: 50%;
-  background: #07111F;
+  background: var(--ink-2);
   animation: kawaii-blink 4.2s infinite;
 }
 .kawaii-eye.left { left: 27px; }
@@ -818,12 +885,12 @@ img { max-width: 100%; height: auto; }
   transform: translateX(-50%);
   width: 16px;
   height: 9px;
-  border: 2.5px solid #07111F;
+  border: 2.5px solid var(--ink-2);
   border-top: none;
   border-radius: 0 0 16px 16px;
 }
 .kawaii-label {
-  font-family: 'Rajdhani', sans-serif;
+  font-family: var(--font-display);
   font-weight: 700;
   font-size: 0.82rem;
   letter-spacing: 0.14em;
@@ -953,7 +1020,7 @@ img { max-width: 100%; height: auto; }
 .doc-card {
   width: 168px;
   height: 250px;
-  background: #0A1628;
+  background: var(--ink-3);
   border: 1px solid rgba(255,255,255,0.07);
   transition: transform 0.28s cubic-bezier(0.4,0,0.2,1), box-shadow 0.28s ease, border-color 0.28s ease;
 }
@@ -982,7 +1049,7 @@ img { max-width: 100%; height: auto; }
 .story-card {
   width: 132px;
   height: 196px;            /* ~9:13 poster, deliberately compact */
-  background: #0A1628;
+  background: var(--ink-3);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 .story-card:hover,
@@ -1102,7 +1169,7 @@ img { max-width: 100%; height: auto; }
   box-shadow: 0 3px 10px rgba(0,0,0,0.45), inset 0 -2px 6px rgba(0,0,0,0.3);
   display: flex; align-items: center; justify-content: center;
   color: #F5D2C6;
-  font-family: 'Orbitron', monospace;
+  font-family: var(--font-ui);
   font-size: 13px;
   font-weight: 700;
   transform: rotate(-8deg);
@@ -1133,7 +1200,7 @@ img { max-width: 100%; height: auto; }
   height: 22px;
   border-radius: 50%;
   background: linear-gradient(135deg, var(--accent-light), var(--accent));
-  border: 2px solid #07111F;
+  border: 2px solid var(--ink-2);
   box-shadow: 0 0 0 3px rgba(var(--accent-rgb),0.25), 0 2px 8px rgba(0,0,0,0.5);
   cursor: pointer;
 }
@@ -1142,7 +1209,7 @@ img { max-width: 100%; height: auto; }
   height: 22px;
   border-radius: 50%;
   background: linear-gradient(135deg, var(--accent-light), var(--accent));
-  border: 2px solid #07111F;
+  border: 2px solid var(--ink-2);
   box-shadow: 0 0 0 3px rgba(var(--accent-rgb),0.25);
   cursor: pointer;
 }
@@ -1152,7 +1219,7 @@ img { max-width: 100%; height: auto; }
   background: linear-gradient(135deg, #25D366, #1EBE57);
   color: #05320f;
   border: none;
-  font-family: 'Rajdhani', sans-serif;
+  font-family: var(--font-display);
   letter-spacing: 0.03em;
   box-shadow: 0 8px 30px rgba(37,211,102,0.35);
   transition: transform 0.2s ease, box-shadow 0.3s ease;
@@ -1190,7 +1257,7 @@ img { max-width: 100%; height: auto; }
   gap: 6px;
   padding: 13px 8px;
   border-radius: 14px;
-  font-family: 'Rajdhani', sans-serif;
+  font-family: var(--font-display);
   font-weight: 700;
   font-size: 0.95rem;
   letter-spacing: 0.02em;

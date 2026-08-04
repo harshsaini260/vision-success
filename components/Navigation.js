@@ -127,7 +127,7 @@ export default function Navigation() {
               <div
                 className="nav-wordmark text-sm sm:text-base md:text-lg leading-none whitespace-nowrap"
                 style={{
-                  fontFamily: 'Rajdhani, sans-serif',
+                  fontFamily: 'var(--font-display)',
                   fontWeight: 700,
                   background: 'linear-gradient(135deg, var(--accent), var(--accent-light))',
                   WebkitBackgroundClip: 'text',
@@ -210,7 +210,7 @@ export default function Navigation() {
             <a
               href={`tel:${SITE.phoneTel}`}
               className="phone-cta hidden xl:flex items-center gap-1.5 text-[13px] font-semibold text-gray-400 hover:text-gold-400 transition-colors"
-              style={{ fontFamily: 'Rajdhani, sans-serif', letterSpacing: '0.04em' }}
+              style={{ fontFamily: 'var(--font-display)', letterSpacing: '0.04em' }}
             >
               <PhoneGlyph />
               {SITE.phoneDisplay}
@@ -282,7 +282,7 @@ export default function Navigation() {
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
             className="fixed top-0 right-0 h-screen w-4/5 max-w-xs z-50 flex flex-col"
             style={{
-              background: 'linear-gradient(180deg, #07111F 0%, #0A1628 100%)',
+              background: 'linear-gradient(180deg, var(--ink-2) 0%, var(--ink-3) 100%)',
               borderLeft: '1px solid rgba(var(--accent-rgb),0.2)',
             }}
           >
@@ -301,7 +301,7 @@ export default function Navigation() {
                         ? 'text-gold-500 bg-gold-500/10 border border-gold-500/30'
                         : 'text-gray-300 hover:text-gold-400'
                     }`}
-                    style={{ fontFamily: 'Rajdhani, sans-serif' }}
+                    style={{ fontFamily: 'var(--font-display)' }}
                   >
                     {link.label}
                   </Link>
@@ -325,7 +325,7 @@ export default function Navigation() {
                 <a
                   href={`tel:${SITE.phoneTel}`}
                   className="phone-cta flex items-center gap-3 text-gold-400"
-                  style={{ fontFamily: 'Rajdhani, sans-serif', fontWeight: 600 }}
+                  style={{ fontFamily: 'var(--font-display)', fontWeight: 600 }}
                 >
                   <span className="text-2xl">📞</span>
                   {SITE.phoneDisplay}

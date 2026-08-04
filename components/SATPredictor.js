@@ -35,10 +35,10 @@ function Slider({ label, value, min, max, step = 1, suffix = '', onChange }) {
   return (
     <div>
       <div className="flex items-center justify-between mb-1.5">
-        <label className="text-sm font-semibold text-gray-200" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+        <label className="text-sm font-semibold text-gray-200" style={{ fontFamily: 'var(--font-display)' }}>
           {label}
         </label>
-        <span className="text-sm font-black text-gold-400" style={{ fontFamily: 'Orbitron, monospace' }}>
+        <span className="text-sm font-semibold text-gold-400" style={{ fontFamily: 'var(--font-ui)' }}>
           {value}{suffix}
         </span>
       </div>
@@ -115,7 +115,7 @@ export default function SATPredictor() {
     >
       <div className="text-center mb-6">
         <span className="section-tag mb-3 inline-block">⚡ 10-Second Tool</span>
-        <h3 className="text-2xl sm:text-3xl font-black text-white" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+        <h3 className="text-2xl sm:text-3xl font-semibold text-white" style={{ fontFamily: 'var(--font-display)' }}>
           Predict Your <span className="text-gold-shimmer">SAT Score</span>
         </h3>
         <p className="text-gray-400 text-sm mt-1">Three quick sliders. No sign-up to see your range.</p>
@@ -148,10 +148,10 @@ export default function SATPredictor() {
               className="rounded-2xl p-5 text-center mb-4"
               style={{ background: 'rgba(var(--accent-rgb),0.08)', border: '1px solid rgba(var(--accent-rgb),0.3)' }}
             >
-              <div className="text-xs uppercase tracking-[0.25em] text-gray-400" style={{ fontFamily: 'Orbitron, monospace' }}>
+              <div className="text-xs uppercase tracking-[0.25em] text-gray-400" style={{ fontFamily: 'var(--font-ui)' }}>
                 Your predicted range
               </div>
-              <div className="text-4xl sm:text-5xl font-black stat-number my-1" style={{ fontFamily: 'Orbitron, monospace' }}>
+              <div className="text-4xl sm:text-5xl font-semibold stat-number my-1" style={{ fontFamily: 'var(--font-ui)' }}>
                 {result.low}–{result.high}
               </div>
               <div className="text-xs text-gray-400">
@@ -173,7 +173,7 @@ export default function SATPredictor() {
         {stage === 'done' && (
           <motion.div key="done" initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }} className="mt-7 max-w-md mx-auto text-center">
             <div className="text-4xl mb-2">🗺️</div>
-            <h4 className="text-xl font-black text-white mb-1" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+            <h4 className="text-xl font-semibold text-white mb-1" style={{ fontFamily: 'var(--font-display)' }}>
               Your roadmap is ready, {name.split(' ')[0]}!
             </h4>
             <p className="text-sm text-gray-300 mb-4">

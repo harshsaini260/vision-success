@@ -22,7 +22,7 @@ export default function CoursesPage() {
   return (
     <div
       className="min-h-screen"
-      style={{ background: 'linear-gradient(180deg, #04090F 0%, #07111F 100%)' }}
+      style={{ background: 'linear-gradient(180deg, var(--ink) 0%, var(--ink-2) 100%)' }}
     >
       {/* HEADER */}
       <div
@@ -35,8 +35,8 @@ export default function CoursesPage() {
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
           <span className="section-tag mb-4 inline-block">Our Programs</span>
           <h1
-            className="text-5xl md:text-6xl font-black text-white mb-4"
-            style={{ fontFamily: 'Rajdhani, sans-serif' }}
+            className="text-5xl md:text-6xl font-semibold text-white mb-4"
+            style={{ fontFamily: 'var(--font-display)' }}
           >
             Choose Your{' '}
             <span
@@ -70,7 +70,7 @@ export default function CoursesPage() {
             className="rounded-2xl p-6 text-center"
             style={{ background: 'rgba(var(--accent-rgb),0.08)', border: '1px solid rgba(var(--accent-rgb),0.25)' }}
           >
-            <p className="text-xl font-bold text-gold-400 mb-1" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+            <p className="text-xl font-bold text-gold-400 mb-1" style={{ fontFamily: 'var(--font-display)' }}>
               💛 Fees Are Never a Barrier at Vision Success
             </p>
             <p className="text-gray-400">
@@ -100,8 +100,8 @@ export default function CoursesPage() {
                   <div className="flex-1 min-w-0">
                     <div className="flex flex-wrap items-center gap-3 mb-1">
                       <h2
-                        className="text-3xl md:text-4xl font-black text-white"
-                        style={{ fontFamily: 'Rajdhani, sans-serif' }}
+                        className="text-3xl md:text-4xl font-semibold text-white"
+                        style={{ fontFamily: 'var(--font-display)' }}
                       >
                         <Link href={`/courses/${course.id}`} className="hover:text-gold-400 transition-colors">
                           {course.title}
@@ -113,7 +113,7 @@ export default function CoursesPage() {
                           background: `${course.color}22`,
                           border: `1px solid ${course.color}55`,
                           color: course.color,
-                          fontFamily: 'Orbitron, monospace',
+                          fontFamily: 'var(--font-ui)',
                         }}
                       >
                         {course.badge}
@@ -173,8 +173,8 @@ export default function CoursesPage() {
       >
         <FadeIn>
           <h2
-            className="text-3xl md:text-4xl font-black text-white mb-4"
-            style={{ fontFamily: 'Rajdhani, sans-serif' }}
+            className="text-3xl md:text-4xl font-semibold text-white mb-4"
+            style={{ fontFamily: 'var(--font-display)' }}
           >
             Still confused which course is right?
           </h2>

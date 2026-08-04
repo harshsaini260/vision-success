@@ -73,7 +73,7 @@ function FlapRow({ code, city, tag, delay }) {
     <div className="flex items-center gap-2 sm:gap-4 py-1.5 whitespace-nowrap">
       <span
         className="text-[10px] sm:text-xs font-bold tracking-widest text-gray-500 w-12 sm:w-16 flex-shrink-0"
-        style={{ fontFamily: 'Orbitron, monospace' }}
+        style={{ fontFamily: 'var(--font-ui)' }}
       >
         {code}
       </span>
@@ -113,11 +113,11 @@ export default function DepartureBoard() {
       <div className="flex items-center justify-between mb-3 pb-3" style={{ borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
         <div className="flex items-center gap-2">
           <span className="text-lg">🛫</span>
-          <span className="text-xs sm:text-sm font-black tracking-[0.2em] text-white" style={{ fontFamily: 'Orbitron, monospace' }}>
+          <span className="text-xs sm:text-sm font-semibold tracking-[0.2em] text-white" style={{ fontFamily: 'var(--font-ui)' }}>
             DEPARTURES
           </span>
         </div>
-        <span className="text-[10px] sm:text-xs tracking-widest text-gray-500" style={{ fontFamily: 'Orbitron, monospace' }}>
+        <span className="text-[10px] sm:text-xs tracking-widest text-gray-500" style={{ fontFamily: 'var(--font-ui)' }}>
           ORIGIN · UNA (HP) 🇮🇳
         </span>
       </div>
@@ -125,14 +125,14 @@ export default function DepartureBoard() {
       {/* column labels */}
       <div
         className="flex items-center gap-2 sm:gap-4 mb-1 text-[8px] sm:text-[9px] uppercase tracking-[0.2em] text-gray-600"
-        style={{ fontFamily: 'Orbitron, monospace' }}
+        style={{ fontFamily: 'var(--font-ui)' }}
       >
         <span className="w-12 sm:w-16 flex-shrink-0">Flight</span>
         <span>Destination</span>
         <span className="ml-auto">Waiting For You</span>
       </div>
 
-      <div style={{ fontFamily: 'Orbitron, monospace', fontSize: 'clamp(11px, 3.2vw, 18px)', fontWeight: 700 }}>
+      <div style={{ fontFamily: 'var(--font-ui)', fontSize: 'clamp(11px, 3.2vw, 18px)', fontWeight: 700 }}>
         {Array.from({ length: ROWS }).map((_, r) => {
           const f = FLIGHTS[(offset + r) % FLIGHTS.length]
           return <FlapRow key={r} code={`VS ${100 + r}`} city={f.city} tag={f.tag} delay={r * 130} />

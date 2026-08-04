@@ -89,7 +89,7 @@ function LoginScreen({ onLegacyLogin }) {
   return (
     <div
       className="min-h-screen flex items-center justify-center px-4"
-      style={{ background: 'linear-gradient(180deg, #04090F 0%, #07111F 100%)' }}
+      style={{ background: 'linear-gradient(180deg, var(--ink) 0%, var(--ink-2) 100%)' }}
     >
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
@@ -106,8 +106,8 @@ function LoginScreen({ onLegacyLogin }) {
           <div className="text-center mb-8">
             <div className="text-5xl mb-3">🔐</div>
             <h1
-              className="text-2xl font-black text-white"
-              style={{ fontFamily: 'Rajdhani, sans-serif' }}
+              className="text-2xl font-semibold text-white"
+              style={{ fontFamily: 'var(--font-display)' }}
             >
               Admin Panel
             </h1>
@@ -222,7 +222,7 @@ function MaterialsTab() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className="text-xl font-black text-white" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+        <h2 className="text-xl font-semibold text-white" style={{ fontFamily: 'var(--font-display)' }}>
           Study Materials ({materials.length})
         </h2>
         <button
@@ -235,7 +235,7 @@ function MaterialsTab() {
 
       {showForm && (
         <form onSubmit={handleAdd} className="glass-card rounded-2xl p-6 space-y-4">
-          <h3 className="font-bold text-white" style={{ fontFamily: 'Rajdhani, sans-serif' }}>New Material</h3>
+          <h3 className="font-bold text-white" style={{ fontFamily: 'var(--font-display)' }}>New Material</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="form-label">Title *</label>
@@ -368,7 +368,7 @@ function LeadCard({ lead, statuses, statusColors, onStatus, extraLines, onDelete
     <div className="glass-card rounded-2xl p-5">
       <div className="flex flex-wrap items-start justify-between gap-3 mb-3">
         <div>
-          <div className="font-bold text-white text-lg" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+          <div className="font-bold text-white text-lg" style={{ fontFamily: 'var(--font-display)' }}>
             {lead.fullName}
           </div>
           <div className="text-sm text-gray-400">{lead.phone} · {lead.city} · Class: {lead.currentClass}</div>
@@ -380,7 +380,7 @@ function LeadCard({ lead, statuses, statusColors, onStatus, extraLines, onDelete
             background: `${statusColors[lead.status] || '#D4AF37'}22`,
             color: statusColors[lead.status] || '#D4AF37',
             border: `1px solid ${statusColors[lead.status] || '#D4AF37'}44`,
-            fontFamily: 'Orbitron, monospace',
+            fontFamily: 'var(--font-ui)',
           }}
         >
           {lead.status || statuses[0]}
@@ -481,7 +481,7 @@ function AppointmentsTab() {
 
   return (
     <div className="space-y-4">
-      <h2 className="text-xl font-black text-white" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+      <h2 className="text-xl font-semibold text-white" style={{ fontFamily: 'var(--font-display)' }}>
         Counseling Appointments ({appointments.length})
       </h2>
       {loading ? (
@@ -548,7 +548,7 @@ function EnrollmentsTab() {
 
   return (
     <div className="space-y-4">
-      <h2 className="text-xl font-black text-white" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+      <h2 className="text-xl font-semibold text-white" style={{ fontFamily: 'var(--font-display)' }}>
         Enrollment Requests ({enrollments.length})
       </h2>
       {loading ? (
@@ -645,7 +645,7 @@ function InsightBars({ title, data, total, accent = 'var(--accent)' }) {
   const max = data[0][1] || 1
   return (
     <div className="glass-card rounded-2xl p-4">
-      <div className="text-[10px] uppercase tracking-[0.2em] text-gray-500 mb-3" style={{ fontFamily: 'Orbitron, monospace' }}>{title}</div>
+      <div className="text-[10px] uppercase tracking-[0.2em] text-gray-500 mb-3" style={{ fontFamily: 'var(--font-ui)' }}>{title}</div>
       <div className="space-y-2">
         {data.slice(0, 6).map(([label, n]) => (
           <div key={label}>
@@ -693,7 +693,7 @@ function SurveysTab() {
   return (
     <div className="space-y-4">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h2 className="text-xl font-black text-white" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+        <h2 className="text-xl font-semibold text-white" style={{ fontFamily: 'var(--font-display)' }}>
           QR Survey Responses ({rows.length})
         </h2>
         {rows.length > 0 && (
@@ -749,7 +749,7 @@ function SeminarsTab() {
   const SEM_STATUS = { new: '#D4AF37', contacted: '#4A7C59', booked: '#2D5282', done: '#6FAA7A', closed: '#7B2D2D' }
   return (
     <div className="space-y-4">
-      <h2 className="text-xl font-black text-white" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+      <h2 className="text-xl font-semibold text-white" style={{ fontFamily: 'var(--font-display)' }}>
         School Seminar Requests ({rows.length})
       </h2>
       {loading ? (
@@ -785,7 +785,7 @@ function PredictionsTab() {
   const { rows, loading, setStatus, remove } = useLeadCollection('predictions')
   return (
     <div className="space-y-4">
-      <h2 className="text-xl font-black text-white" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+      <h2 className="text-xl font-semibold text-white" style={{ fontFamily: 'var(--font-display)' }}>
         SAT Predictor Leads ({rows.length})
       </h2>
       {loading ? (
@@ -905,13 +905,13 @@ function VlogsTab() {
 
   return (
     <div className="space-y-5">
-      <h2 className="text-xl font-black text-white" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+      <h2 className="text-xl font-semibold text-white" style={{ fontFamily: 'var(--font-display)' }}>
         Documentary Episodes ({rows.length})
       </h2>
 
       {/* upload form */}
       <form onSubmit={publish} className="glass-card rounded-2xl p-5 space-y-3" style={{ border: '1px solid rgba(var(--accent-rgb),0.3)' }}>
-        <div className="text-sm font-bold text-gold-400" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+        <div className="text-sm font-bold text-gold-400" style={{ fontFamily: 'var(--font-display)' }}>
           🎬 Upload a new episode
         </div>
 
@@ -993,13 +993,13 @@ function VlogsTab() {
       ) : (
         rows.map((r) => (
           <div key={r.id} className="glass-card rounded-2xl p-4 flex flex-wrap items-center gap-3">
-            <div className="w-16 h-24 rounded-lg overflow-hidden flex-shrink-0" style={{ background: '#0A1628' }}>
+            <div className="w-16 h-24 rounded-lg overflow-hidden flex-shrink-0" style={{ background: 'var(--ink-3)' }}>
               {r.posterUrl
                 ? <img src={r.posterUrl} alt="" className="w-full h-full object-cover" />
                 : <div className="w-full h-full flex items-center justify-center text-2xl">🎬</div>}
             </div>
             <div className="flex-1 min-w-[180px]">
-              <div className="font-bold text-white" style={{ fontFamily: 'Rajdhani, sans-serif' }}>{r.title}</div>
+              <div className="font-bold text-white" style={{ fontFamily: 'var(--font-display)' }}>{r.title}</div>
               <div className="text-xs text-gold-400">{r.subtitle}</div>
               <div className="text-[11px] text-gray-500">{r.series} · {r.orientation}{r.duration ? ` · ${r.duration}` : ''}</div>
               <a href={r.videoUrl} target="_blank" rel="noopener noreferrer" className="text-[10px] text-gray-600 underline break-all">
@@ -1087,7 +1087,7 @@ function ScrollsTab() {
       >
         <div className="flex flex-wrap items-start justify-between gap-3 mb-2">
           <div className="min-w-0">
-            <div className="font-bold text-white text-lg" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+            <div className="font-bold text-white text-lg" style={{ fontFamily: 'var(--font-display)' }}>
               {r.title || '(untitled)'}
             </div>
             <div className="text-sm text-gray-400">
@@ -1101,7 +1101,7 @@ function ScrollsTab() {
               background: r.approved ? 'rgba(111,170,122,0.15)' : 'rgba(212,175,55,0.15)',
               color: r.approved ? '#6FAA7A' : '#D4AF37',
               border: `1px solid ${r.approved ? 'rgba(111,170,122,0.4)' : 'rgba(212,175,55,0.4)'}`,
-              fontFamily: 'Orbitron, monospace',
+              fontFamily: 'var(--font-ui)',
             }}
           >
             {r.approved ? 'live' : 'pending'}
@@ -1150,7 +1150,7 @@ function ScrollsTab() {
   return (
     <div className="space-y-4">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h2 className="text-xl font-black text-white" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+        <h2 className="text-xl font-semibold text-white" style={{ fontFamily: 'var(--font-display)' }}>
           Blog posts — {pending.length} waiting, {live.length} live
         </h2>
         <button onClick={load} className="btn-ghost px-4 py-2 rounded-xl text-xs">↻ Refresh</button>
@@ -1166,7 +1166,7 @@ function ScrollsTab() {
         <>
           {pending.length > 0 && (
             <>
-              <div className="text-[10px] uppercase tracking-[0.2em] text-gold-400 pt-2" style={{ fontFamily: 'Orbitron, monospace' }}>
+              <div className="text-[10px] uppercase tracking-[0.2em] text-gold-400 pt-2" style={{ fontFamily: 'var(--font-ui)' }}>
                 ⏳ Waiting for your approval
               </div>
               {pending.map((r) => <Card key={r.id} r={r} />)}
@@ -1174,7 +1174,7 @@ function ScrollsTab() {
           )}
           {live.length > 0 && (
             <>
-              <div className="text-[10px] uppercase tracking-[0.2em] pt-4" style={{ fontFamily: 'Orbitron, monospace', color: '#6FAA7A' }}>
+              <div className="text-[10px] uppercase tracking-[0.2em] pt-4" style={{ fontFamily: 'var(--font-ui)', color: '#6FAA7A' }}>
                 ✓ Published on /blog
               </div>
               {live.map((r) => <Card key={r.id} r={r} />)}
@@ -1225,7 +1225,7 @@ function ReviewsAdminTab() {
 
   return (
     <div className="space-y-4">
-      <h2 className="text-xl font-black text-white" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+      <h2 className="text-xl font-semibold text-white" style={{ fontFamily: 'var(--font-display)' }}>
         Reviews ({reviews.length})
       </h2>
       {loading ? (
@@ -1254,7 +1254,7 @@ function ReviewsAdminTab() {
             {/* Documentary link — paste a YouTube/Drive URL and this
                 review becomes a playable episode in the homepage rail. */}
             <div className="flex flex-wrap items-center gap-2 mb-3">
-              <span className="text-[10px] uppercase tracking-widest text-gray-500" style={{ fontFamily: 'Orbitron, monospace' }}>
+              <span className="text-[10px] uppercase tracking-widest text-gray-500" style={{ fontFamily: 'var(--font-ui)' }}>
                 🎬 Story video
               </span>
               <input
@@ -1331,7 +1331,7 @@ export default function AdminPage() {
     return (
       <div
         className="min-h-screen flex items-center justify-center"
-        style={{ background: 'linear-gradient(180deg, #04090F 0%, #07111F 100%)' }}
+        style={{ background: 'linear-gradient(180deg, var(--ink) 0%, var(--ink-2) 100%)' }}
       >
         <div className="text-gray-500 text-sm">Checking access…</div>
       </div>
@@ -1343,15 +1343,15 @@ export default function AdminPage() {
   return (
     <div
       className="min-h-screen"
-      style={{ background: 'linear-gradient(180deg, #04090F 0%, #07111F 100%)' }}
+      style={{ background: 'linear-gradient(180deg, var(--ink) 0%, var(--ink-2) 100%)' }}
     >
       <div
         className="pt-24 pb-8 px-4 text-center relative"
         style={{ borderBottom: '1px solid rgba(var(--accent-rgb),0.1)' }}
       >
         <h1
-          className="text-4xl font-black text-white mb-1"
-          style={{ fontFamily: 'Rajdhani, sans-serif' }}
+          className="text-4xl font-semibold text-white mb-1"
+          style={{ fontFamily: 'var(--font-display)' }}
         >
           Admin Panel
         </h1>
@@ -1378,7 +1378,7 @@ export default function AdminPage() {
               onClick={() => setActiveTab(tab)}
               className="flex-1 py-3 text-sm font-semibold transition-all"
               style={{
-                fontFamily: 'Rajdhani, sans-serif',
+                fontFamily: 'var(--font-display)',
                 background: activeTab === tab ? 'rgba(var(--accent-rgb),0.12)' : 'transparent',
                 color: activeTab === tab ? 'var(--accent)' : 'rgba(240,234,214,0.4)',
                 borderBottom: activeTab === tab ? '2px solid var(--accent)' : '2px solid transparent',

@@ -84,7 +84,7 @@ export default async function SeoLandingPage({ params }) {
   })
 
   return (
-    <div className="min-h-screen" style={{ background: 'linear-gradient(180deg, #04090F 0%, #07111F 100%)' }}>
+    <div className="min-h-screen" style={{ background: 'linear-gradient(180deg, var(--ink) 0%, var(--ink-2) 100%)' }}>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemas) }} />
 
       {/* HERO */}
@@ -106,7 +106,7 @@ export default async function SeoLandingPage({ params }) {
           {page.comingSoon && (
             <span className="section-tag mb-4 inline-block">🚀 Launching January 2027 — Join the Waitlist</span>
           )}
-          <h1 className="text-3xl md:text-5xl font-black text-white mb-5 leading-tight" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+          <h1 className="text-3xl md:text-5xl font-semibold text-white mb-5 leading-tight" style={{ fontFamily: 'var(--font-display)' }}>
             {page.h1}
           </h1>
           {page.intro.map((p) => (
@@ -132,7 +132,7 @@ export default async function SeoLandingPage({ params }) {
       <div className="max-w-4xl mx-auto px-4 py-12 space-y-12">
         {/* WHAT WE COVER */}
         <section>
-          <h2 className="text-2xl md:text-3xl font-black text-white mb-6" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+          <h2 className="text-2xl md:text-3xl font-semibold text-white mb-6" style={{ fontFamily: 'var(--font-display)' }}>
             📋 What We Cover
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -147,7 +147,7 @@ export default async function SeoLandingPage({ params }) {
 
         {/* WHY US */}
         <section>
-          <h2 className="text-2xl md:text-3xl font-black text-white mb-6" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+          <h2 className="text-2xl md:text-3xl font-semibold text-white mb-6" style={{ fontFamily: 'var(--font-display)' }}>
             🏆 Why Students Choose Vision Success
           </h2>
           <div className="space-y-3">
@@ -165,7 +165,7 @@ export default async function SeoLandingPage({ params }) {
           className="rounded-2xl p-6"
           style={{ background: 'rgba(var(--accent-rgb),0.08)', border: '1px solid rgba(var(--accent-rgb),0.25)' }}
         >
-          <h2 className="text-xl font-bold text-gold-400 mb-2" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+          <h2 className="text-xl font-bold text-gold-400 mb-2" style={{ fontFamily: 'var(--font-display)' }}>
             💰 Fee Details
           </h2>
           <p className="text-gray-300 text-sm mb-2">{page.fee}</p>
@@ -179,7 +179,7 @@ export default async function SeoLandingPage({ params }) {
 
         {/* FAQ */}
         <section>
-          <h2 className="text-2xl md:text-3xl font-black text-white mb-6" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+          <h2 className="text-2xl md:text-3xl font-semibold text-white mb-6" style={{ fontFamily: 'var(--font-display)' }}>
             ❓ Frequently Asked Questions
           </h2>
           <div className="space-y-3">
@@ -194,7 +194,7 @@ export default async function SeoLandingPage({ params }) {
 
         {/* RELATED */}
         <section>
-          <h2 className="text-2xl md:text-3xl font-black text-white mb-6" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+          <h2 className="text-2xl md:text-3xl font-semibold text-white mb-6" style={{ fontFamily: 'var(--font-display)' }}>
             🔗 Explore More
           </h2>
           <div className="flex flex-wrap gap-3">
@@ -203,7 +203,7 @@ export default async function SeoLandingPage({ params }) {
                 key={r.href}
                 href={r.href}
                 className="glass-card glass-card-hover rounded-xl px-5 py-3 text-sm font-semibold text-gold-400 transition-all duration-300"
-                style={{ fontFamily: 'Rajdhani, sans-serif' }}
+                style={{ fontFamily: 'var(--font-display)' }}
               >
                 {r.label} →
               </Link>
@@ -213,7 +213,7 @@ export default async function SeoLandingPage({ params }) {
 
         {/* MAP + CONTACT */}
         <section>
-          <h2 className="text-2xl md:text-3xl font-black text-white mb-6" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+          <h2 className="text-2xl md:text-3xl font-semibold text-white mb-6" style={{ fontFamily: 'var(--font-display)' }}>
             📍 Visit Us in Una
           </h2>
           <div className="rounded-2xl overflow-hidden mb-4" style={{ border: '1px solid rgba(var(--accent-rgb),0.2)' }}>
@@ -243,7 +243,7 @@ export default async function SeoLandingPage({ params }) {
         className="py-16 px-4 text-center"
         style={{ background: 'rgba(var(--accent-rgb),0.04)', borderTop: '1px solid rgba(var(--accent-rgb),0.1)' }}
       >
-        <h2 className="text-2xl md:text-4xl font-black text-white mb-3" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+        <h2 className="text-2xl md:text-4xl font-semibold text-white mb-3" style={{ fontFamily: 'var(--font-display)' }}>
           Ready to start? Your first class is free.
         </h2>
         <p className="text-gray-400 mb-8 max-w-xl mx-auto text-sm">

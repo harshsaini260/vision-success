@@ -68,7 +68,7 @@ export default function MaterialsPage() {
   const official = useMemo(() => OFFICIAL_LINKS.filter((l) => inCat(l.category)), [activeCategory])
 
   return (
-    <div className="min-h-screen" style={{ background: 'linear-gradient(180deg, #04090F 0%, #07111F 100%)' }}>
+    <div className="min-h-screen" style={{ background: 'linear-gradient(180deg, var(--ink) 0%, var(--ink-2) 100%)' }}>
       {/* HEADER */}
       <div
         className="pt-24 pb-14 text-center px-4"
@@ -79,7 +79,7 @@ export default function MaterialsPage() {
       >
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
           <span className="section-tag mb-4 inline-block">🎁 Free Forever</span>
-          <h1 className="text-5xl md:text-6xl font-black text-white mb-4" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+          <h1 className="text-5xl md:text-6xl font-semibold text-white mb-4" style={{ fontFamily: 'var(--font-display)' }}>
             The{' '}
             <span className="text-gold-shimmer">Library</span>
           </h1>
@@ -101,9 +101,9 @@ export default function MaterialsPage() {
                 className="px-4 py-2 rounded-full text-sm font-semibold transition-all duration-200"
                 style={{
                   background: activeCategory === cat ? 'linear-gradient(135deg, var(--accent), var(--accent-light))' : 'rgba(255,255,255,0.05)',
-                  color: activeCategory === cat ? '#0A1628' : 'rgba(240,234,214,0.6)',
+                  color: activeCategory === cat ? 'var(--ink-3)' : 'rgba(240,234,214,0.6)',
                   border: activeCategory === cat ? 'none' : '1px solid rgba(255,255,255,0.08)',
-                  fontFamily: 'Rajdhani, sans-serif',
+                  fontFamily: 'var(--font-display)',
                   letterSpacing: '0.04em',
                 }}
               >
@@ -118,7 +118,7 @@ export default function MaterialsPage() {
           <section className="mb-14">
             <FadeIn>
               <div className="mb-5">
-                <h2 className="text-2xl md:text-3xl font-black text-white" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+                <h2 className="text-2xl md:text-3xl font-semibold text-white" style={{ fontFamily: 'var(--font-display)' }}>
                   📕 Written By Us, Sealed By Us
                 </h2>
                 <p className="text-gray-500 text-sm mt-1">
@@ -134,7 +134,7 @@ export default function MaterialsPage() {
         {tools.length > 0 && (
           <section className="mb-14">
             <FadeIn>
-              <h2 className="text-2xl md:text-3xl font-black text-white mb-1" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+              <h2 className="text-2xl md:text-3xl font-semibold text-white mb-1" style={{ fontFamily: 'var(--font-display)' }}>
                 🛠️ Free Tools — No Sign-Up
               </h2>
               <p className="text-gray-500 text-sm mb-5">Use them right now, nothing to give us.</p>
@@ -147,7 +147,7 @@ export default function MaterialsPage() {
                     className="glass-card glass-card-hover rounded-2xl p-5 h-full flex flex-col transition-all duration-300 block"
                   >
                     <div className="text-3xl mb-2">{t.emoji}</div>
-                    <h3 className="text-base font-bold text-white mb-1.5" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+                    <h3 className="text-base font-bold text-white mb-1.5" style={{ fontFamily: 'var(--font-display)' }}>
                       {t.title}
                     </h3>
                     <p className="text-xs text-gray-400 leading-relaxed flex-1">{t.description}</p>
@@ -163,7 +163,7 @@ export default function MaterialsPage() {
         {sheets.length > 0 && (
           <section className="mb-14">
             <FadeIn>
-              <h2 className="text-2xl md:text-3xl font-black text-white mb-1" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+              <h2 className="text-2xl md:text-3xl font-semibold text-white mb-1" style={{ fontFamily: 'var(--font-display)' }}>
                 ⚡ The Exam On One Card
               </h2>
               <p className="text-gray-500 text-sm mb-5">
@@ -176,7 +176,7 @@ export default function MaterialsPage() {
                   <div className="glass-card rounded-2xl overflow-hidden" style={{ border: '1px solid rgba(var(--accent-rgb),0.25)' }}>
                     <div className="px-5 py-4 flex items-center gap-3" style={{ borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
                       <span className="text-2xl">{s.emoji}</span>
-                      <h3 className="text-lg font-bold text-white" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+                      <h3 className="text-lg font-bold text-white" style={{ fontFamily: 'var(--font-display)' }}>
                         {s.title}
                       </h3>
                     </div>
@@ -187,7 +187,7 @@ export default function MaterialsPage() {
                           className="flex flex-col sm:flex-row sm:items-center gap-0.5 sm:gap-4 px-5 py-2.5"
                           style={{ borderTop: j === 0 ? 'none' : '1px solid rgba(255,255,255,0.05)' }}
                         >
-                          <div className="sm:w-56 flex-shrink-0 text-sm font-bold text-gold-400" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+                          <div className="sm:w-56 flex-shrink-0 text-sm font-bold text-gold-400" style={{ fontFamily: 'var(--font-display)' }}>
                             {k}
                           </div>
                           <div className="text-sm text-gray-300">{v}</div>
@@ -211,7 +211,7 @@ export default function MaterialsPage() {
         {uploaded.length > 0 && (
           <section className="mb-14">
             <FadeIn>
-              <h2 className="text-2xl md:text-3xl font-black text-white mb-1" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+              <h2 className="text-2xl md:text-3xl font-semibold text-white mb-1" style={{ fontFamily: 'var(--font-display)' }}>
                 📎 Latest From Our Faculty
               </h2>
               <p className="text-gray-500 text-sm mb-5">Notes and papers posted by Vision Success teachers.</p>
@@ -220,10 +220,10 @@ export default function MaterialsPage() {
               {uploaded.map((m, i) => (
                 <FadeIn key={m.id} delay={i * 0.05}>
                   <div className="glass-card rounded-2xl p-5 h-full flex flex-col">
-                    <div className="text-[10px] uppercase tracking-widest text-gold-400 mb-2" style={{ fontFamily: 'Orbitron, monospace' }}>
+                    <div className="text-[10px] uppercase tracking-widest text-gold-400 mb-2" style={{ fontFamily: 'var(--font-ui)' }}>
                       {m.category}
                     </div>
-                    <h3 className="text-base font-bold text-white mb-1.5" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+                    <h3 className="text-base font-bold text-white mb-1.5" style={{ fontFamily: 'var(--font-display)' }}>
                       {m.title}
                     </h3>
                     {m.description && <p className="text-xs text-gray-400 leading-relaxed flex-1 mb-3">{m.description}</p>}
@@ -248,7 +248,7 @@ export default function MaterialsPage() {
         {official.length > 0 && (
           <section className="mb-14">
             <FadeIn>
-              <h2 className="text-2xl md:text-3xl font-black text-white mb-1" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+              <h2 className="text-2xl md:text-3xl font-semibold text-white mb-1" style={{ fontFamily: 'var(--font-display)' }}>
                 🏛️ Go Straight To The Source
               </h2>
               <p className="text-gray-500 text-sm mb-5">
@@ -266,7 +266,7 @@ export default function MaterialsPage() {
                   >
                     <span className="text-2xl flex-shrink-0">{l.emoji}</span>
                     <span>
-                      <span className="block text-sm font-bold text-white mb-0.5" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+                      <span className="block text-sm font-bold text-white mb-0.5" style={{ fontFamily: 'var(--font-display)' }}>
                         {l.title} <span className="text-gray-600">↗</span>
                       </span>
                       <span className="block text-xs text-gray-400 leading-relaxed">{l.description}</span>
@@ -285,7 +285,7 @@ export default function MaterialsPage() {
             style={{ background: 'rgba(var(--accent-rgb),0.06)', border: '1px solid rgba(var(--accent-rgb),0.15)' }}
           >
             <div className="text-4xl mb-3">🎓</div>
-            <h3 className="text-2xl font-black text-white mb-2" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+            <h3 className="text-2xl font-semibold text-white mb-2" style={{ fontFamily: 'var(--font-display)' }}>
               This Was The Free Part
             </h3>
             <p className="text-gray-400 mb-6 max-w-md mx-auto text-sm">

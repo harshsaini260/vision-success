@@ -106,7 +106,7 @@ function StepProgress({ current }) {
               className="text-xs font-bold uppercase tracking-wide"
               style={{
                 color: current >= step.id ? 'var(--accent)' : 'rgba(240,234,214,0.3)',
-                fontFamily: 'Rajdhani, sans-serif',
+                fontFamily: 'var(--font-display)',
               }}
             >
               {step.title}
@@ -190,8 +190,8 @@ function SuccessScreen({ name, course, booking }) {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4 }}
-        className="text-3xl md:text-4xl font-black text-white mb-3"
-        style={{ fontFamily: 'Rajdhani, sans-serif' }}
+        className="text-3xl md:text-4xl font-semibold text-white mb-3"
+        style={{ fontFamily: 'var(--font-display)' }}
       >
         You&apos;re All Set, {name}! 🎖️
       </motion.h2>
@@ -214,7 +214,7 @@ function SuccessScreen({ name, course, booking }) {
           target="_blank"
           rel="noopener noreferrer"
           className="whatsapp-cta inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl font-bold text-white text-base animate-pulse-gold"
-          style={{ background: '#25D366', fontFamily: 'Rajdhani, sans-serif', letterSpacing: '0.05em' }}
+          style={{ background: '#25D366', fontFamily: 'var(--font-display)', letterSpacing: '0.05em' }}
         >
           📤 Send My Booking on WhatsApp
         </a>
@@ -322,7 +322,7 @@ function BookingFlow() {
     return (
       <div
         className="min-h-screen flex items-center justify-center px-4 pt-24 pb-12 relative"
-        style={{ background: 'linear-gradient(180deg, #04090F 0%, #07111F 100%)' }}
+        style={{ background: 'linear-gradient(180deg, var(--ink) 0%, var(--ink-2) 100%)' }}
       >
         <BookingParticles />
         <div className="w-full max-w-lg relative" style={{ zIndex: 10 }}>
@@ -344,7 +344,7 @@ function BookingFlow() {
   return (
     <div
       className="min-h-screen relative"
-      style={{ background: 'linear-gradient(180deg, #04090F 0%, #07111F 100%)' }}
+      style={{ background: 'linear-gradient(180deg, var(--ink) 0%, var(--ink-2) 100%)' }}
     >
       <BookingParticles />
 
@@ -361,8 +361,8 @@ function BookingFlow() {
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
           <span className="section-tag mb-3 inline-block">100% Free</span>
           <h1
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-3 leading-tight"
-            style={{ fontFamily: 'Rajdhani, sans-serif' }}
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold text-white mb-3 leading-tight"
+            style={{ fontFamily: 'var(--font-display)' }}
           >
             Book Your Free{' '}
             <span
@@ -414,7 +414,7 @@ function BookingFlow() {
                       👤
                     </div>
                     <div>
-                      <h2 className="text-xl sm:text-2xl font-black text-white" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+                      <h2 className="text-xl sm:text-2xl font-semibold text-white" style={{ fontFamily: 'var(--font-display)' }}>
                         Tell Us About You
                       </h2>
                       <p className="text-xs text-gray-500">Step 1 of 3</p>
@@ -516,7 +516,7 @@ function BookingFlow() {
                       🎯
                     </div>
                     <div>
-                      <h2 className="text-xl sm:text-2xl font-black text-white" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+                      <h2 className="text-xl sm:text-2xl font-semibold text-white" style={{ fontFamily: 'var(--font-display)' }}>
                         What&apos;s Your Goal?
                       </h2>
                       <p className="text-xs text-gray-500">Step 2 of 3</p>
@@ -600,7 +600,7 @@ function BookingFlow() {
                       📅
                     </div>
                     <div>
-                      <h2 className="text-xl sm:text-2xl font-black text-white" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+                      <h2 className="text-xl sm:text-2xl font-semibold text-white" style={{ fontFamily: 'var(--font-display)' }}>
                         Pick Your Slot
                       </h2>
                       <p className="text-xs text-gray-500">Step 3 of 3 — Almost done!</p>
@@ -637,8 +637,8 @@ function BookingFlow() {
                                   ? 'linear-gradient(135deg, var(--accent), var(--accent-light,#F5D76E))'
                                   : 'rgba(255,255,255,0.04)',
                               border: selectedTime === slot ? 'none' : '1px solid rgba(255,255,255,0.08)',
-                              color: selectedTime === slot ? '#0A1628' : 'rgba(240,234,214,0.5)',
-                              fontFamily: 'Orbitron, monospace',
+                              color: selectedTime === slot ? 'var(--ink-3)' : 'rgba(240,234,214,0.5)',
+                              fontFamily: 'var(--font-ui)',
                               fontSize: '0.65rem',
                             }}
                           >
@@ -658,7 +658,7 @@ function BookingFlow() {
                       >
                         <p
                           className="text-xs font-bold uppercase tracking-wider mb-3"
-                          style={{ color: 'var(--accent)', fontFamily: 'Orbitron, monospace' }}
+                          style={{ color: 'var(--accent)', fontFamily: 'var(--font-ui)' }}
                         >
                           Booking Summary
                         </p>
@@ -715,7 +715,7 @@ function BookingFlow() {
                         animate={{ rotate: 360 }}
                         transition={{ duration: 0.8, repeat: Infinity, ease: 'linear' }}
                         className="w-4 h-4 border-2 border-current border-t-transparent rounded-full"
-                        style={{ borderColor: '#0A1628', borderTopColor: 'transparent' }}
+                        style={{ borderColor: 'var(--ink-3)', borderTopColor: 'transparent' }}
                       />
                       Booking...
                     </>

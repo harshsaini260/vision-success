@@ -40,7 +40,7 @@ export default function ThemeSwitcher() {
             >
               <p
                 className="text-xs mb-3 px-1 font-bold uppercase tracking-widest"
-                style={{ color: 'rgba(240,234,214,0.4)', fontFamily: 'Orbitron, monospace' }}
+                style={{ color: 'rgba(240,234,214,0.4)', fontFamily: 'var(--font-ui)' }}
               >
                 Theme
               </p>

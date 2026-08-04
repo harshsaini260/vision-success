@@ -13,7 +13,9 @@ export function generateMetadata({ params }) {
   const post = getPost(params.slug)
   if (!post) return {}
   return {
-    title: post.seoTitle || post.title,
+    /* absolute: seoTitle already ends with the institute name, and the
+       root template would otherwise append it a second time */
+    title: { absolute: post.seoTitle || `${post.title} | Vision Success Una` },
     description: post.seoDescription || post.excerpt,
     keywords: (post.keywords || []).join(', '),
     alternates: { canonical: `${SITE.url}/blog/${post.slug}` },
@@ -27,22 +29,43 @@ export function generateMetadata({ params }) {
   }
 }
 
+/* Plain editorial blocks — the reading is the point */
+const BODY = { color: 'rgba(237,228,211,0.78)' }
+
 function Block({ b }) {
-  if (b.h) return <h2 className="scroll-h mt-8 mb-2">{b.h}</h2>
-  if (b.q) return <blockquote className="scroll-quote my-7">{b.q}</blockquote>
-  if (b.note) return <p className="scroll-note my-5">{b.note}</p>
+  if (b.h)
+    return (
+      <h2 className="text-2xl md:text-3xl mt-11 mb-4" style={{ color: 'var(--bone)' }}>
+        {b.h}
+      </h2>
+    )
+  if (b.q)
+    return (
+      <blockquote
+        className="my-9 pl-6 text-xl md:text-2xl leading-snug"
+        style={{ borderLeft: '2px solid var(--accent)', fontFamily: 'var(--font-display)', color: 'var(--bone)' }}
+      >
+        {b.q}
+      </blockquote>
+    )
+  if (b.note)
+    return (
+      <p className="my-6 text-sm italic" style={{ color: 'var(--bone-dim)' }}>
+        {b.note}
+      </p>
+    )
   if (b.list)
     return (
-      <ul className="my-5 space-y-2">
+      <ul className="my-6 space-y-2.5">
         {b.list.map((li) => (
-          <li key={li} className="scroll-hand flex gap-3">
-            <span style={{ color: '#8A7326' }}>•</span>
+          <li key={li} className="flex gap-3 text-[15px] md:text-base leading-[1.85]" style={BODY}>
+            <span style={{ color: 'var(--accent)' }}>—</span>
             <span>{li}</span>
           </li>
         ))}
       </ul>
     )
-  return <p className="scroll-hand mb-4">{b.p}</p>
+  return <p className="text-[15px] md:text-base leading-[1.85] mb-5" style={BODY}>{b.p}</p>
 }
 
 export default function ScrollPage({ params }) {
@@ -73,10 +96,10 @@ export default function ScrollPage({ params }) {
   }
 
   return (
-    <div className="min-h-screen" style={{ background: 'linear-gradient(180deg, #04090F 0%, #07111F 60%, #0A1628 100%)' }}>
+    <div className="min-h-screen" style={{ background: 'var(--ink-2)' }}>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
 
-      <div className="max-w-3xl mx-auto px-4 pt-24 pb-16">
+      <div className="max-w-2xl mx-auto px-5 pt-28 pb-20">
         {/* breadcrumb */}
         <nav className="mb-6 text-xs text-gray-500" aria-label="Breadcrumb">
           <Link href="/" className="hover:text-gold-400">Home</Link>
@@ -86,29 +109,23 @@ export default function ScrollPage({ params }) {
           <span className="text-gray-400">{post.tag}</span>
         </nav>
 
-        {/* the scroll itself */}
-        <article
-          className="scroll-paper scroll-ruled rounded-sm px-6 py-10 sm:px-12 sm:py-12"
-          style={{ transform: 'rotate(-0.3deg)' }}
-        >
-          <header className="mb-7">
-            <div className="flex items-start justify-between gap-4 mb-3">
-              <p
-                className="text-[10px] uppercase tracking-[0.25em] opacity-60"
-                style={{ fontFamily: 'Orbitron, monospace', color: '#7A6A48' }}
-              >
-                {post.tag} · {post.readMins} min read ·{' '}
-                {new Date(post.date).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })}
-              </p>
-              <span className="wax-seal" aria-hidden>{post.emoji}</span>
-            </div>
-            <h1 className="scroll-h" style={{ fontSize: '2.5rem', lineHeight: 1.15 }}>
-              {post.title}
-            </h1>
+        {/* the article */}
+        <article>
+          <header className="mb-11">
+            <h1 className="text-4xl md:text-5xl text-white mb-5">{post.title}</h1>
+            <p
+              className="text-xl leading-relaxed mb-6"
+              style={{ fontFamily: 'var(--font-display)', color: 'rgba(237,228,211,0.82)' }}
+            >
+              {post.excerpt}
+            </p>
             <div
-              className="mt-4 mb-1"
-              style={{ height: 1, background: 'linear-gradient(90deg, rgba(59,51,37,0.35), transparent)' }}
-            />
+              className="text-[11px] uppercase tracking-[0.16em] pt-5"
+              style={{ color: 'rgba(237,228,211,0.56)', borderTop: '1px solid var(--hairline)' }}
+            >
+              {post.tag} · {post.readMins} min read ·{' '}
+              {new Date(post.date).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })}
+            </div>
           </header>
 
           {post.body.map((b, i) => (
@@ -116,11 +133,11 @@ export default function ScrollPage({ params }) {
           ))}
 
           {/* signature */}
-          <div className="mt-10 pt-5" style={{ borderTop: '1px dashed rgba(59,51,37,0.28)' }}>
-            <p className="scroll-h" style={{ fontSize: '1.6rem' }}>
+          <div className="mt-12 pt-6" style={{ borderTop: '1px solid var(--hairline)' }}>
+            <p className="text-2xl" style={{ fontFamily: 'var(--font-display)', color: 'var(--bone)' }}>
               — {post.guest ? post.guest.name : 'Vision Success, Una'}
             </p>
-            <p className="text-xs mt-1" style={{ color: '#8A7326' }}>
+            <p className="text-xs mt-1.5" style={{ color: 'var(--bone-dim)' }}>
               {post.guest
                 ? `Guest post${post.guest.place ? ` · ${post.guest.place}` : ''} · reviewed and published by Vision Success`
                 : 'Written at the desk in Una, Himachal Pradesh'}
@@ -133,7 +150,7 @@ export default function ScrollPage({ params }) {
           className="mt-10 rounded-2xl p-7 text-center"
           style={{ background: 'rgba(var(--accent-rgb),0.06)', border: '1px solid rgba(var(--accent-rgb),0.16)' }}
         >
-          <h3 className="text-xl font-black text-white mb-2" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+          <h3 className="text-xl font-semibold text-white mb-2" style={{ fontFamily: 'var(--font-display)' }}>
             Want this applied to your own timetable?
           </h3>
           <p className="text-gray-400 text-sm mb-5 max-w-md mx-auto">
@@ -153,7 +170,7 @@ export default function ScrollPage({ params }) {
         {/* more scrolls */}
         {others.length > 0 && (
           <div className="mt-12">
-            <h3 className="text-lg font-black text-white mb-4" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+            <h3 className="text-lg font-semibold text-white mb-4" style={{ fontFamily: 'var(--font-display)' }}>
               More posts
             </h3>
             <div className="space-y-4">
@@ -161,7 +178,7 @@ export default function ScrollPage({ params }) {
                 <Link key={o.slug} href={`/blog/${o.slug}`} className="glass-card glass-card-hover rounded-2xl p-4 flex gap-3 transition-all duration-300">
                   <span className="text-2xl flex-shrink-0">{o.emoji}</span>
                   <span>
-                    <span className="block text-sm font-bold text-white mb-0.5" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+                    <span className="block text-sm font-bold text-white mb-0.5" style={{ fontFamily: 'var(--font-display)' }}>
                       {o.title}
                     </span>
                     <span className="block text-xs text-gray-400">{o.excerpt.slice(0, 110)}…</span>

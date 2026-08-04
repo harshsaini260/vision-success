@@ -2,7 +2,7 @@ export default function Loading() {
   return (
     <div
       className="min-h-screen flex flex-col items-center justify-center gap-4"
-      style={{ background: 'linear-gradient(180deg, #04090F 0%, #07111F 100%)' }}
+      style={{ background: 'linear-gradient(180deg, var(--ink) 0%, var(--ink-2) 100%)' }}
     >
       <div
         className="w-10 h-10 rounded-full"

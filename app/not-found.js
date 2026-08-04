@@ -6,13 +6,13 @@ export default function NotFound() {
   return (
     <div
       className="min-h-screen flex items-center justify-center px-4 pt-20"
-      style={{ background: 'linear-gradient(180deg, #04090F 0%, #07111F 100%)' }}
+      style={{ background: 'linear-gradient(180deg, var(--ink) 0%, var(--ink-2) 100%)' }}
     >
       <div className="text-center max-w-md">
         <div
-          className="text-8xl font-black mb-4"
+          className="text-8xl font-semibold mb-4"
           style={{
-            fontFamily: 'Orbitron, monospace',
+            fontFamily: 'var(--font-ui)',
             background: 'linear-gradient(135deg, var(--accent), var(--accent-light))',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
@@ -21,7 +21,7 @@ export default function NotFound() {
         >
           404
         </div>
-        <h1 className="text-2xl font-black text-white mb-3" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+        <h1 className="text-2xl font-semibold text-white mb-3" style={{ fontFamily: 'var(--font-display)' }}>
           Mission Coordinates Not Found
         </h1>
         <p className="text-gray-400 mb-8 text-sm">

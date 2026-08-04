@@ -43,7 +43,7 @@ export default function AnimatedJourney() {
     <div>
       <div
         className="rounded-3xl overflow-hidden relative"
-        style={{ background: 'linear-gradient(180deg, #050B14 0%, #0A1628 100%)', border: '1.5px solid rgba(var(--accent-rgb),0.22)' }}
+        style={{ background: 'linear-gradient(180deg, #050B14 0%, var(--ink-3) 100%)', border: '1.5px solid rgba(var(--accent-rgb),0.22)' }}
       >
         <svg viewBox="0 0 800 420" className="w-full block" role="img" aria-label="Animated journey from joining Vision Success to selection">
           <defs>
@@ -62,7 +62,7 @@ export default function AnimatedJourney() {
             <motion.circle
               key={i}
               cx={x} cy={y} r={1.6}
-              fill="#F0EAD6"
+              fill="var(--bone)"
               initial={{ opacity: 0.2 }}
               animate={reduced ? { opacity: 0.6 } : { opacity: [0.15, 0.8, 0.15] }}
               transition={{ duration: 2.5 + (i % 3), repeat: reduced ? 0 : Infinity }}
@@ -71,7 +71,7 @@ export default function AnimatedJourney() {
 
           {/* moon */}
           <circle cx="745" cy="35" r="14" fill="rgba(240,234,214,0.85)" />
-          <circle cx="739" cy="31" r="12" fill="#0A1628" opacity="0.55" />
+          <circle cx="739" cy="31" r="12" fill="var(--ink-3)" opacity="0.55" />
 
           {/* mountain layers */}
           <path d="M0 420 L0 300 L120 200 L230 290 L340 190 L470 300 L560 220 L680 310 L800 210 L800 420 Z" fill="#0D1B2E" />
@@ -127,7 +127,7 @@ export default function AnimatedJourney() {
                   fontSize="12"
                   fontWeight="700"
                   fill={lit ? 'var(--accent-light, #F5D76E)' : 'rgba(240,234,214,0.3)'}
-                  style={{ fontFamily: 'Rajdhani, sans-serif', letterSpacing: '0.08em', textTransform: 'uppercase' }}
+                  style={{ fontFamily: 'var(--font-display)', letterSpacing: '0.08em', textTransform: 'uppercase' }}
                 >
                   {s.label}
                 </text>
@@ -172,7 +172,7 @@ export default function AnimatedJourney() {
           </g>
 
           {/* Una label at the trailhead */}
-          <text x="60" y="362" textAnchor="middle" fontSize="12" fill="rgba(240,234,214,0.5)" style={{ fontFamily: 'Rajdhani, sans-serif', letterSpacing: '0.15em' }}>
+          <text x="60" y="362" textAnchor="middle" fontSize="12" fill="rgba(240,234,214,0.5)" style={{ fontFamily: 'var(--font-display)', letterSpacing: '0.15em' }}>
             UNA, HP
           </text>
         </svg>
@@ -190,7 +190,7 @@ export default function AnimatedJourney() {
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.35 }}
               className="text-sm md:text-base font-semibold text-gray-200"
-              style={{ fontFamily: 'Rajdhani, sans-serif', letterSpacing: '0.03em' }}
+              style={{ fontFamily: 'var(--font-display)', letterSpacing: '0.03em' }}
             >
               {cur.caption}
             </motion.p>

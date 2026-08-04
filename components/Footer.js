@@ -6,7 +6,7 @@ export default function Footer() {
   return (
     <footer
       style={{
-        background: 'linear-gradient(180deg, #07111F 0%, #04090F 100%)',
+        background: 'linear-gradient(180deg, var(--ink-2) 0%, var(--ink) 100%)',
         borderTop: '1px solid rgba(var(--accent-rgb),0.1)',
       }}
     >
@@ -20,9 +20,9 @@ export default function Footer() {
               </div>
               <div>
                 <div
-                  className="text-xl font-black"
+                  className="text-xl font-semibold"
                   style={{
-                    fontFamily: 'Rajdhani, sans-serif',
+                    fontFamily: 'var(--font-display)',
                     background: 'linear-gradient(135deg, var(--accent), var(--accent-light))',
                     WebkitBackgroundClip: 'text',
                     WebkitTextFillColor: 'transparent',
@@ -77,7 +77,7 @@ export default function Footer() {
           <div>
             <h4
               className="text-sm font-bold uppercase tracking-widest text-gold-400 mb-5"
-              style={{ fontFamily: 'Orbitron, monospace' }}
+              style={{ fontFamily: 'var(--font-ui)' }}
             >
               Quick Links
             </h4>
@@ -103,7 +103,7 @@ export default function Footer() {
                   <Link
                     href={link.href}
                     className="text-sm text-gray-400 hover:text-gold-400 transition-colors flex items-center gap-2 group"
-                    style={{ fontFamily: 'Rajdhani, sans-serif' }}
+                    style={{ fontFamily: 'var(--font-display)' }}
                   >
                     <span
                       className="text-gold-500/30 group-hover:text-gold-500 transition-colors"
@@ -121,7 +121,7 @@ export default function Footer() {
           <div>
             <h4
               className="text-sm font-bold uppercase tracking-widest text-gold-400 mb-5"
-              style={{ fontFamily: 'Orbitron, monospace' }}
+              style={{ fontFamily: 'var(--font-ui)' }}
             >
               Follow Us
             </h4>

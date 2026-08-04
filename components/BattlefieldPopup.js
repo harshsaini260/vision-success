@@ -76,7 +76,7 @@ export default function BattlefieldPopup() {
               >
                 🎯
               </motion.div>
-              <h3 className="text-2xl sm:text-3xl font-black text-white leading-tight" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+              <h3 className="text-2xl sm:text-3xl font-semibold text-white leading-tight" style={{ fontFamily: 'var(--font-display)' }}>
                 Psst — before you explore…
               </h3>
               <p className="text-sm text-gray-300">

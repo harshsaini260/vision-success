@@ -83,7 +83,7 @@ function Player({ item, onClose }) {
           )}
         </div>
         <div className="mt-3">
-          <h3 className="text-xl font-black text-white" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+          <h3 className="text-xl font-semibold text-white" style={{ fontFamily: 'var(--font-display)' }}>
             {item.title}
           </h3>
           {item.subtitle && <p className="text-sm text-gold-400">{item.subtitle}</p>}
@@ -107,25 +107,25 @@ function Card({ item, onPlay, wide = false }) {
       ) : (
         <div
           className="absolute inset-0"
-          style={{ background: 'linear-gradient(165deg, rgba(212,175,55,0.28) 0%, #0A1628 55%, #04090F 100%)' }}
+          style={{ background: 'linear-gradient(165deg, rgba(212,175,55,0.28) 0%, var(--ink-3) 55%, var(--ink) 100%)' }}
         />
       )}
       <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, transparent 35%, rgba(4,9,15,0.92) 100%)' }} />
 
       <span className="doc-play absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 rounded-full flex items-center justify-center text-lg"
-        style={{ background: 'rgba(255,255,255,0.94)', color: '#07111F' }}>
+        style={{ background: 'rgba(255,255,255,0.94)', color: 'var(--ink-2)' }}>
         ▶
       </span>
 
       {item.duration && (
         <span className="absolute top-2 right-2 text-[9px] font-bold px-1.5 py-0.5 rounded"
-          style={{ background: 'rgba(0,0,0,0.7)', color: '#F0EAD6', fontFamily: 'Orbitron, monospace' }}>
+          style={{ background: 'rgba(0,0,0,0.7)', color: 'var(--bone)', fontFamily: 'var(--font-ui)' }}>
           {item.duration}
         </span>
       )}
 
       <div className="absolute bottom-0 left-0 right-0 p-3">
-        <div className="text-sm font-black text-white leading-tight line-clamp-2" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+        <div className="text-sm font-semibold text-white leading-tight line-clamp-2" style={{ fontFamily: 'var(--font-display)' }}>
           {item.title}
         </div>
         {item.subtitle && <div className="text-[10px] text-gold-400 truncate mt-0.5">{item.subtitle}</div>}
@@ -167,7 +167,7 @@ export default function Documentary({ limit = 0, compact = false }) {
     return (
       <div className="max-w-3xl mx-auto px-4 py-14 text-center">
         <div className="text-5xl mb-3">🎬</div>
-        <h3 className="text-2xl font-black text-white mb-2" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+        <h3 className="text-2xl font-semibold text-white mb-2" style={{ fontFamily: 'var(--font-display)' }}>
           Season One is being filmed.
         </h3>
         <p className="text-gray-400 text-sm max-w-md mx-auto mb-6">
@@ -221,15 +221,15 @@ export default function Documentary({ limit = 0, compact = false }) {
             ) : hero.posterUrl ? (
               <img src={hero.posterUrl} alt="" className="absolute inset-0 w-full h-full object-cover" />
             ) : (
-              <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, #0A1628, #04090F)' }} />
+              <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, var(--ink-3), var(--ink))' }} />
             )}
-            <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(4,9,15,0.45) 0%, rgba(4,9,15,0.75) 55%, #04090F 100%)' }} />
+            <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(4,9,15,0.45) 0%, rgba(4,9,15,0.75) 55%, var(--ink) 100%)' }} />
 
             <div className="relative z-10 max-w-5xl mx-auto px-4 pt-16 pb-8 flex flex-col justify-end" style={{ minHeight: 340 }}>
-              <span className="text-[10px] uppercase tracking-[0.3em] mb-2" style={{ fontFamily: 'Orbitron, monospace', color: '#E05C42' }}>
+              <span className="text-[10px] uppercase tracking-[0.3em] mb-2" style={{ fontFamily: 'var(--font-ui)', color: '#E05C42' }}>
                 ● Featured Episode
               </span>
-              <h2 className="text-3xl sm:text-5xl font-black text-white leading-none mb-2" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+              <h2 className="text-3xl sm:text-5xl font-semibold text-white leading-none mb-2" style={{ fontFamily: 'var(--font-display)' }}>
                 {hero.title}
               </h2>
               {hero.subtitle && <p className="text-gold-400 text-sm mb-2">{hero.subtitle}</p>}
@@ -259,7 +259,7 @@ export default function Documentary({ limit = 0, compact = false }) {
 
         {!compact && orderedKeys.map((k) => (
           <section key={k}>
-            <h3 className="text-lg font-black text-white mb-3" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+            <h3 className="text-lg font-semibold text-white mb-3" style={{ fontFamily: 'var(--font-display)' }}>
               {k}
             </h3>
             <div className="flex gap-3 overflow-x-auto snap-x pb-3 -mx-4 px-4 doc-rail">

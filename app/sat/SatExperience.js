@@ -47,7 +47,7 @@ function SceneTag({ children, tone = 'gold' }) {
     <div
       className="inline-flex items-center gap-2 text-[10px] tracking-[0.3em] uppercase mb-4"
       style={{
-        fontFamily: 'Orbitron, monospace',
+        fontFamily: 'var(--font-ui)',
         color: tone === 'red' ? '#E05C42' : 'rgba(var(--accent-rgb),0.75)',
       }}
     >
@@ -158,13 +158,13 @@ function WarClock() {
           <div>
             <div
               className="text-[10px] font-bold tracking-[0.28em] uppercase opacity-60"
-              style={{ fontFamily: 'Orbitron, monospace' }}
+              style={{ fontFamily: 'var(--font-ui)' }}
             >
               Mission Brief · College Board
             </div>
             <div
-              className="text-2xl sm:text-3xl font-black leading-none mt-1"
-              style={{ fontFamily: 'Rajdhani, sans-serif' }}
+              className="text-2xl sm:text-3xl font-semibold leading-none mt-1"
+              style={{ fontFamily: 'var(--font-display)' }}
             >
               NEXT SAT DROP
             </div>
@@ -180,7 +180,7 @@ function WarClock() {
           onAnimationEnd={() => setSlammed(false)}
           className={`war-scanlines relative rounded-lg px-3 py-5 sm:px-6 sm:py-7 overflow-hidden cursor-pointer ${slammed ? 'clock-slam' : ''}`}
           style={{
-            background: 'linear-gradient(180deg, #04090F 0%, #0A1628 130%)',
+            background: 'linear-gradient(180deg, var(--ink) 0%, var(--ink-3) 130%)',
             boxShadow: 'inset 0 0 30px rgba(0,0,0,0.9), inset 0 1px 0 rgba(255,255,255,0.06)',
             border: '3px solid #2A2418',
           }}
@@ -195,7 +195,7 @@ function WarClock() {
                 u.tone === 'red' ? 'final-call' : ''
               }`}
               style={{
-                fontFamily: 'Orbitron, monospace',
+                fontFamily: 'var(--font-ui)',
                 color: toneColor,
                 border: `1px solid ${u.tone === 'red' ? 'rgba(224,92,66,0.5)' : 'rgba(var(--accent-rgb),0.35)'}`,
                 textShadow: `0 0 8px ${u.tone === 'red' ? 'rgba(224,92,66,0.6)' : 'rgba(var(--accent-rgb),0.5)'}`,
@@ -208,7 +208,7 @@ function WarClock() {
           <div className="war-clock grid grid-cols-4 gap-1 sm:gap-3 text-center">
             {units.map((un) => (
               <div key={un.l}>
-                <div className="text-4xl sm:text-6xl font-black leading-none">
+                <div className="text-4xl sm:text-6xl font-semibold leading-none">
                   {un.tick ? (
                     <span key={un.v} className="tick inline-block">{un.v}</span>
                   ) : (
@@ -231,7 +231,7 @@ function WarClock() {
             style={{
               borderTop: '1px solid rgba(179,64,46,0.4)',
               color: '#E05C42',
-              fontFamily: 'Orbitron, monospace',
+              fontFamily: 'var(--font-ui)',
               textShadow: '0 0 10px rgba(224,92,66,0.6)',
             }}
           >
@@ -271,16 +271,16 @@ function TicketWall() {
         >
           {i === 0 && (
             <span
-              className="absolute -top-2 -right-2 text-[9px] font-black px-2 py-0.5 rounded-full uppercase tracking-widest"
-              style={{ background: 'var(--accent)', color: '#07111F', fontFamily: 'Orbitron, monospace' }}
+              className="absolute -top-2 -right-2 text-[9px] font-semibold px-2 py-0.5 rounded-full uppercase tracking-widest"
+              style={{ background: 'var(--accent)', color: 'var(--ink-2)', fontFamily: 'var(--font-ui)' }}
             >
               Next ▸
             </span>
           )}
-          <div className="text-[9px] uppercase tracking-[0.25em] opacity-60" style={{ fontFamily: 'Orbitron, monospace' }}>
+          <div className="text-[9px] uppercase tracking-[0.25em] opacity-60" style={{ fontFamily: 'var(--font-ui)' }}>
             Boarding Pass
           </div>
-          <div className="text-lg font-black leading-tight mt-1" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+          <div className="text-lg font-semibold leading-tight mt-1" style={{ fontFamily: 'var(--font-display)' }}>
             {t.label}
           </div>
           <div className="text-[10px] mt-1 opacity-70">Register by {t.reg}</div>
@@ -324,7 +324,7 @@ function StickyMissionBar() {
             <div className="flex-1 min-w-0 leading-tight">
               <div
                 className="text-[10px] tracking-[0.18em] uppercase text-gold-400 font-bold"
-                style={{ fontFamily: 'Orbitron, monospace' }}
+                style={{ fontFamily: 'var(--font-ui)' }}
               >
                 ⏳ SAT IN {days ? `${days.exam}D` : '——'}
               </div>
@@ -368,7 +368,7 @@ export default function SatExperience({ faqs = [] }) {
   ]
 
   return (
-    <div style={{ background: '#04090F' }}>
+    <div style={{ background: 'var(--ink)' }}>
       <StickyMissionBar />
 
       {/* ═══ SCENE 00 — COLD OPEN ═══ */}
@@ -396,7 +396,7 @@ export default function SatExperience({ faqs = [] }) {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
             className="mb-6 text-[10px] sm:text-xs tracking-[0.3em] uppercase text-gray-500"
-            style={{ fontFamily: 'Orbitron, monospace' }}
+            style={{ fontFamily: 'var(--font-ui)' }}
           >
             <Typewriter text="UNA, HIMACHAL PRADESH · 07:00 HRS" />
           </motion.div>
@@ -418,8 +418,8 @@ export default function SatExperience({ faqs = [] }) {
             initial={{ opacity: 0, scale: 1.14 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 1.7, duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-            className="relative font-black leading-[0.85] mb-6"
-            style={{ fontFamily: 'Rajdhani, sans-serif', letterSpacing: '-0.02em' }}
+            className="relative font-semibold leading-[0.85] mb-6"
+            style={{ fontFamily: 'var(--font-display)', letterSpacing: '-0.02em' }}
           >
             <span className="block text-white text-3xl sm:text-4xl tracking-[0.35em] mb-2">OPERATION</span>
             <span className="block text-gold-shimmer text-[6.5rem] sm:text-[9rem]" style={{ filter: 'drop-shadow(0 0 30px rgba(var(--accent-rgb),0.35))' }}>
@@ -444,7 +444,7 @@ export default function SatExperience({ faqs = [] }) {
             animate={{ opacity: 1 }}
             transition={{ delay: 3 }}
             className="mt-10 text-[10px] tracking-[0.3em] uppercase text-gray-600 animate-bounce"
-            style={{ fontFamily: 'Orbitron, monospace' }}
+            style={{ fontFamily: 'var(--font-ui)' }}
           >
             ▼ Scroll to begin briefing
           </motion.div>
@@ -452,7 +452,7 @@ export default function SatExperience({ faqs = [] }) {
       </section>
 
       {/* ═══ SCENE 01 — THE WAR CLOCK ═══ */}
-      <section className="px-4 pt-14 pb-14 md:pb-20" style={{ background: 'linear-gradient(180deg, #04090F 0%, #07111F 100%)' }}>
+      <section className="px-4 pt-14 pb-14 md:pb-20" style={{ background: 'linear-gradient(180deg, var(--ink) 0%, var(--ink-2) 100%)' }}>
         <div className="text-center">
           <SceneTag>Scene 01 · The Clock Is Already Running</SceneTag>
         </div>
@@ -475,8 +475,8 @@ export default function SatExperience({ faqs = [] }) {
           <SceneTag tone="red">Scene 02 · Classified</SceneTag>
           <FadeIn>
             <h2
-              className="text-4xl sm:text-5xl md:text-6xl font-black text-white leading-[0.95] mb-6"
-              style={{ fontFamily: 'Rajdhani, sans-serif' }}
+              className="text-4xl sm:text-5xl md:text-6xl font-semibold text-white leading-[0.95] mb-6"
+              style={{ fontFamily: 'var(--font-display)' }}
             >
               NOBODY ELSE HERE
               <br />
@@ -513,8 +513,8 @@ export default function SatExperience({ faqs = [] }) {
                   }}
                 >
                   <div
-                    className="text-2xl sm:text-3xl font-black"
-                    style={{ fontFamily: 'Orbitron, monospace', color: i === 2 ? '#E05C42' : 'var(--accent-light)' }}
+                    className="text-2xl sm:text-3xl font-semibold"
+                    style={{ fontFamily: 'var(--font-ui)', color: i === 2 ? '#E05C42' : 'var(--accent-light)' }}
                   >
                     {st.n}
                   </div>
@@ -546,7 +546,7 @@ export default function SatExperience({ faqs = [] }) {
               <span
                 key={i}
                 className="inline-block px-6 font-bold text-navy-900 text-xs uppercase tracking-wider"
-                style={{ fontFamily: 'Rajdhani, sans-serif' }}
+                style={{ fontFamily: 'var(--font-display)' }}
               >
                 {item} &nbsp; ✈ &nbsp;
               </span>
@@ -556,15 +556,15 @@ export default function SatExperience({ faqs = [] }) {
       </div>
 
       {/* ═══ SCENE 03 — TICKET WALL ═══ */}
-      <section className="px-4 py-14 md:py-20" style={{ background: '#07111F' }}>
+      <section className="px-4 py-14 md:py-20" style={{ background: 'var(--ink-2)' }}>
         <div className="max-w-3xl mx-auto">
           <div className="text-center">
             <SceneTag>Scene 03 · Pick Your Window</SceneTag>
           </div>
           <FadeIn>
             <h2
-              className="text-2xl md:text-3xl font-black text-white text-center mb-1"
-              style={{ fontFamily: 'Rajdhani, sans-serif' }}
+              className="text-2xl md:text-3xl font-semibold text-white text-center mb-1"
+              style={{ fontFamily: 'var(--font-display)' }}
             >
               {SAT_PER_YEAR} Drops a Year. Most Students Here Know Zero.
             </h2>
@@ -579,7 +579,7 @@ export default function SatExperience({ faqs = [] }) {
       </section>
 
       {/* ═══ SCENE 04 — KNOW YOUR WEAPON ═══ */}
-      <section className="px-4 pb-14 md:pb-20" style={{ background: '#07111F' }}>
+      <section className="px-4 pb-14 md:pb-20" style={{ background: 'var(--ink-2)' }}>
         <div className="max-w-4xl mx-auto">
           <div className="text-center">
             <SceneTag>Scene 04 · Know Your Weapon</SceneTag>
@@ -589,7 +589,7 @@ export default function SatExperience({ faqs = [] }) {
               <FadeIn key={b.title} delay={i * 0.08}>
                 <div className="glass-card rounded-2xl p-5 h-full">
                   <div className="text-3xl mb-2">{b.icon}</div>
-                  <h3 className="text-lg font-bold text-white mb-1.5" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+                  <h3 className="text-lg font-bold text-white mb-1.5" style={{ fontFamily: 'var(--font-display)' }}>
                     {b.title}
                   </h3>
                   <p className="text-sm text-gray-400 leading-relaxed">{b.text}</p>
@@ -601,7 +601,7 @@ export default function SatExperience({ faqs = [] }) {
       </section>
 
       {/* ═══ SCENE 05 — THE FOUNDING SQUAD ═══ */}
-      <section className="px-4 pb-10 md:pb-16" style={{ background: 'linear-gradient(180deg, #07111F 0%, #0A1628 100%)' }}>
+      <section className="px-4 pb-10 md:pb-16" style={{ background: 'linear-gradient(180deg, var(--ink-2) 0%, var(--ink-3) 100%)' }}>
         <div className="text-center">
           <SceneTag>Final Scene · The Founding Squad</SceneTag>
         </div>
@@ -620,10 +620,10 @@ export default function SatExperience({ faqs = [] }) {
               BATCH Nº 001
             </span>
             <div className="text-3xl mb-3">🫡</div>
-            <h2 className="text-3xl sm:text-4xl font-black mb-1 leading-none" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+            <h2 className="text-3xl sm:text-4xl font-semibold mb-1 leading-none" style={{ fontFamily: 'var(--font-display)' }}>
               {SQUAD_SEATS} SEATS. ONE SQUAD.
             </h2>
-            <p className="text-xs font-bold uppercase tracking-[0.2em] mb-4" style={{ color: '#B3402E', fontFamily: 'Orbitron, monospace' }}>
+            <p className="text-xs font-bold uppercase tracking-[0.2em] mb-4" style={{ color: '#B3402E', fontFamily: 'var(--font-ui)' }}>
               Zero precedent in this district
             </p>
             <p className="text-sm opacity-80 mb-6 max-w-sm mx-auto leading-relaxed">
@@ -644,7 +644,7 @@ export default function SatExperience({ faqs = [] }) {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="whatsapp-cta inline-flex items-center justify-center gap-2 px-7 py-4 rounded-xl text-base font-bold uppercase tracking-wider"
-                style={{ fontFamily: 'Rajdhani, sans-serif', border: '2px solid #3B3325', color: '#3B3325' }}
+                style={{ fontFamily: 'var(--font-display)', border: '2px solid #3B3325', color: '#3B3325' }}
               >
                 💬 WhatsApp Us
               </a>
@@ -658,12 +658,12 @@ export default function SatExperience({ faqs = [] }) {
 
       {/* ═══ POST-CREDITS — QUICK INTEL ═══ */}
       {faqs.length > 0 && (
-        <section className="px-4 pb-24 md:pb-32" style={{ background: '#0A1628' }}>
+        <section className="px-4 pb-24 md:pb-32" style={{ background: 'var(--ink-3)' }}>
           <div className="max-w-2xl mx-auto pt-10">
             <FadeIn>
               <h2
-                className="text-2xl md:text-3xl font-black text-white text-center mb-6"
-                style={{ fontFamily: 'Rajdhani, sans-serif' }}
+                className="text-2xl md:text-3xl font-semibold text-white text-center mb-6"
+                style={{ fontFamily: 'var(--font-display)' }}
               >
                 Post-Credits: Quick Intel
               </h2>

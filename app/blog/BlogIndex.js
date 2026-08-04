@@ -1,9 +1,14 @@
 'use client'
 
-/* ─── /blog — THE SCROLLS ───
-   Handwritten parchment cards, a question-of-the-day that changes on
-   its own every morning, and an open submission door that routes to
-   WhatsApp (deliberately no database write — see note in the form). */
+/* ─── /blog — PLAIN READING ───
+   Rebuilt simple on purpose. The parchment treatment was handsome but
+   slowed people down; a coaching journal earns trust by being read.
+   So: one honest vertical list, real titles, the search phrase each
+   piece answers stated openly, and a question of the day that still
+   changes every morning.
+
+   The submission queue underneath is unchanged — posts land as
+   approved:false and only a human can publish them. */
 
 import { useEffect, useMemo, useRef, useState } from 'react'
 import Link from 'next/link'
@@ -34,22 +39,22 @@ function DailyQuestion() {
   useEffect(() => { setQ(questionOfTheDay()) }, [])
 
   return (
-    <div className="scroll-paper rounded-sm px-6 py-8 sm:px-10 sm:py-10 relative" style={{ transform: 'rotate(-0.5deg)' }}>
-      <div className="flex items-start justify-between gap-4 mb-4">
-        <p
-          className="text-[10px] uppercase tracking-[0.28em] opacity-60"
-          style={{ fontFamily: 'Orbitron, monospace', color: '#7A6A48' }}
-        >
-          Question of the day
-          {q && <span> · No. {q.dayNumber}</span>}
-        </p>
-        <span className="wax-seal" aria-hidden>?</span>
-      </div>
-      <p className="scroll-h" style={{ fontSize: '2rem' }}>
-        {q ? q.text : '…'}
+    <div
+      className="px-7 py-9 sm:px-10 rounded-sm relative text-center"
+      style={{ border: '1px solid var(--hairline)', background: 'rgba(var(--accent-rgb),0.04)' }}
+    >
+      <p className="eyebrow mb-4">
+        Question of the day
+        {q && <span> · No. {q.dayNumber}</span>}
       </p>
-      <p className="scroll-note mt-5">
-        no marks for this one. think about it on the walk home. ✎
+      <p
+        className="text-2xl md:text-3xl leading-snug"
+        style={{ fontFamily: 'var(--font-display)', color: 'var(--bone)' }}
+      >
+        {q ? q.text : ' '}
+      </p>
+      <p className="text-xs mt-5" style={{ color: 'var(--bone-dim)' }}>
+        No marks for this one. Think about it on the walk home.
       </p>
     </div>
   )
@@ -98,56 +103,56 @@ function SubmitScroll() {
 
   if (status === 'sent') {
     return (
-      <div className="scroll-paper rounded-sm px-6 py-10 sm:px-10 text-center" style={{ transform: 'rotate(0.4deg)' }}>
+      <div className="px-7 py-10 sm:px-10 rounded-sm text-center" style={{ border: '1px solid var(--hairline)' }}>
         <div className="text-4xl mb-3">📜</div>
-        <h3 className="scroll-h mb-2" style={{ fontSize: '2rem' }}>Your post is with us.</h3>
-        <p className="scroll-hand" style={{ fontSize: '1.15rem' }}>
+        <h3 className="text-3xl mb-2" style={{ color: 'var(--bone)' }}>Your post is with us.</h3>
+        <p className="text-base leading-relaxed" style={{ color: 'var(--bone-dim)' }}>
           We read every single one. If it&apos;s published, it appears below with your name on it —
           usually within a few days.
         </p>
-        <p className="scroll-note mt-4">thank you for writing ✎</p>
+        <p className="text-xs mt-4" style={{ color: 'var(--bone-dim)' }}>Thank you for writing.</p>
       </div>
     )
   }
 
   return (
-    <div className="scroll-paper rounded-sm px-6 py-8 sm:px-10 sm:py-10" style={{ transform: 'rotate(0.4deg)' }}>
+    <div className="px-7 py-9 sm:px-10 rounded-sm" style={{ border: '1px solid var(--hairline)' }}>
       <p
         className="text-[10px] uppercase tracking-[0.28em] opacity-60 mb-3"
-        style={{ fontFamily: 'Orbitron, monospace', color: '#7A6A48' }}
+        style={{ color: 'var(--accent)' }}
       >
         The desk is open
       </p>
-      <h3 className="scroll-h mb-2" style={{ fontSize: '2rem' }}>Write one yourself.</h3>
-      <p className="scroll-hand mb-6" style={{ fontSize: '1.15rem' }}>
+      <h3 className="text-3xl mb-2" style={{ color: 'var(--bone)' }}>Write one yourself.</h3>
+      <p className="text-base leading-relaxed mb-6" style={{ color: 'var(--bone-dim)' }}>
         Anyone may send a post — student, parent, teacher, or someone who just has something worth
         saying. We read every one. The good ones get published here with your name on them.
       </p>
 
       <form onSubmit={send} className="space-y-3">
         <input
-          className="scroll-input"
+          className="form-input"
           placeholder="Your name"
           value={name}
           onChange={(e) => setName(e.target.value)}
           aria-label="Your name"
         />
         <input
-          className="scroll-input"
+          className="form-input"
           placeholder="Your village / town (optional)"
           value={place}
           onChange={(e) => setPlace(e.target.value)}
           aria-label="Your place"
         />
         <input
-          className="scroll-input"
+          className="form-input"
           placeholder="Title of your post"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           aria-label="Title"
         />
         <textarea
-          className="scroll-input"
+          className="form-input"
           rows={5}
           placeholder="Write it here — an idea, a lesson, a story, an argument…"
           value={idea}
@@ -158,7 +163,7 @@ function SubmitScroll() {
         <button type="submit" disabled={status === 'sending'} className="btn-gold w-full py-3.5 rounded-xl text-sm disabled:opacity-60">
           {status === 'sending' ? 'Sending…' : '📖 Send My Post'}
         </button>
-        <p className="text-[11px] text-center" style={{ color: '#8A7326' }}>
+        <p className="text-[11px] text-center" style={{ color: 'var(--bone-dim)' }}>
           Goes into our review queue. Nothing appears on this page until a human reads and approves
           it — no automatic posting, ever.
         </p>
@@ -197,7 +202,7 @@ function CommunityScrolls() {
     <div className="mt-14">
       <FadeIn>
         <div className="text-center mb-7">
-          <h2 className="text-3xl font-black text-white mb-1" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+          <h2 className="text-3xl font-semibold text-white mb-1" style={{ fontFamily: 'var(--font-display)' }}>
             ✍️ From The <span className="text-gold-shimmer">Community</span>
           </h2>
           <p className="text-gray-500 text-sm">Written by readers. Read and approved by us.</p>
@@ -209,23 +214,23 @@ function CommunityScrolls() {
           return (
             <FadeIn key={r.id} delay={i * 0.05}>
               <article
-                className="scroll-paper rounded-sm px-6 py-8 sm:px-10 sm:py-9"
-                style={{ transform: `rotate(${i % 2 === 0 ? 0.5 : -0.5}deg)` }}
+                className="rounded-sm px-6 py-8 sm:px-10 sm:py-9"
+                style={{ border: '1px solid var(--hairline)' }}
               >
                 <div className="flex items-start justify-between gap-4 mb-3">
                   <div>
                     <p
                       className="text-[10px] uppercase tracking-[0.25em] opacity-60 mb-1"
-                      style={{ fontFamily: 'Orbitron, monospace', color: '#7A6A48' }}
+                      style={{ color: 'var(--accent)' }}
                     >
                       Reader post
                     </p>
-                    <h3 className="scroll-h" style={{ fontSize: '1.9rem' }}>{r.title}</h3>
+                    <h3 className="text-2xl" style={{ color: 'var(--bone)' }}>{r.title}</h3>
                   </div>
-                  <span className="wax-seal" aria-hidden>✍️</span>
+                  
                 </div>
 
-                <div className="scroll-hand" style={{ fontSize: '1.18rem' }}>
+                <div className="text-[15px] leading-[1.85]" style={{ color: 'rgba(237,228,211,0.78)' }}>
                   {(isOpen ? r.body : (r.body || '').slice(0, 260) + ((r.body || '').length > 260 ? '…' : ''))
                     .split('\n')
                     .filter(Boolean)
@@ -237,16 +242,16 @@ function CommunityScrolls() {
                 {(r.body || '').length > 260 && (
                   <button
                     onClick={() => { sfxPop(); setOpen(isOpen ? null : r.id) }}
-                    className="scroll-note mt-2"
-                    style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
+                    className="text-xs mt-2"
+                    style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0, color: 'var(--accent)' }}
                   >
                     {isOpen ? '← show less' : 'read the whole thing →'}
                   </button>
                 )}
 
                 <div className="mt-6 pt-4" style={{ borderTop: '1px dashed rgba(59,51,37,0.28)' }}>
-                  <p className="scroll-h" style={{ fontSize: '1.45rem' }}>— {r.authorName || 'Anonymous'}</p>
-                  <p className="text-xs mt-0.5" style={{ color: '#8A7326' }}>
+                  <p className="text-xl" style={{ fontFamily: 'var(--font-display)', color: 'var(--bone)' }}>— {r.authorName || 'Anonymous'}</p>
+                  <p className="text-xs mt-0.5" style={{ color: 'var(--bone-dim)' }}>
                     {r.authorPlace ? `${r.authorPlace} · ` : ''}reviewed and published by Vision Success
                   </p>
                 </div>
@@ -259,33 +264,34 @@ function CommunityScrolls() {
   )
 }
 
+const fmtDate = (d) =>
+  new Date(d).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })
+
 export default function BlogIndex() {
   const [tag, setTag] = useState('All')
-  const posts = useMemo(() => (tag === 'All' ? POSTS : POSTS.filter((p) => p.tag === tag)), [tag])
+  const posts = useMemo(() => {
+    const list = tag === 'All' ? POSTS : POSTS.filter((p) => p.tag === tag)
+    return [...list].sort((a, b) => new Date(b.date) - new Date(a.date))
+  }, [tag])
 
   return (
-    <div className="min-h-screen" style={{ background: 'linear-gradient(180deg, #04090F 0%, #07111F 60%, #0A1628 100%)' }}>
-      {/* HEADER */}
-      <div
-        className="pt-24 pb-14 text-center px-4"
-        style={{
-          background: 'linear-gradient(180deg, rgba(var(--accent-rgb),0.05) 0%, transparent 100%)',
-          borderBottom: '1px solid rgba(var(--accent-rgb),0.1)',
-        }}
-      >
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-          <span className="section-tag mb-4 inline-block">📖 The Blog</span>
-          <h1 className="text-5xl md:text-6xl font-black text-white mb-4" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
-            Things Worth <span className="text-gold-shimmer">Writing Down</span>
-          </h1>
-          <p className="text-gray-400 max-w-xl mx-auto">
-            Strategy, method, and the occasional argument about ambition — from the desk of a
-            small-town institute that thinks small towns are starting lines.
+    <div className="min-h-screen" style={{ background: 'var(--ink-2)' }}>
+      <div className="max-w-2xl mx-auto px-5 pt-28 pb-20">
+        {/* HEADER — plain, so the reading starts sooner */}
+        <motion.header
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-center mb-14"
+        >
+          <p className="eyebrow mb-4">The Journal</p>
+          <h1 className="text-4xl md:text-5xl text-white mb-5">Things Worth Writing Down</h1>
+          <p className="text-base leading-relaxed" style={{ color: 'var(--bone-dim)' }}>
+            The same answers we give students and parents across the desk in Una —
+            written down once so anyone can read them, whether you join us or not.
           </p>
-        </motion.div>
-      </div>
+          <div className="rule-diamond mt-8" aria-hidden><span className="text-[10px]">◆</span></div>
+        </motion.header>
 
-      <div className="max-w-3xl mx-auto px-4 py-12">
         {/* daily question */}
         <FadeIn>
           <DailyQuestion />
@@ -293,17 +299,16 @@ export default function BlogIndex() {
 
         {/* tag filter */}
         <FadeIn delay={0.08}>
-          <div className="flex gap-2.5 flex-wrap justify-center my-10">
+          <div className="flex gap-2 flex-wrap justify-center mt-14 mb-2">
             {TAGS.map((t) => (
               <button
                 key={t}
                 onClick={() => { sfxPop(); setTag(t) }}
-                className="px-4 py-2 rounded-full text-sm font-semibold transition-all duration-200"
+                className="px-4 py-1.5 rounded-full text-[11px] uppercase tracking-[0.16em] transition-colors"
                 style={{
-                  background: tag === t ? 'linear-gradient(135deg, var(--accent), var(--accent-light))' : 'rgba(255,255,255,0.05)',
-                  color: tag === t ? '#0A1628' : 'rgba(240,234,214,0.6)',
-                  border: tag === t ? 'none' : '1px solid rgba(255,255,255,0.08)',
-                  fontFamily: 'Rajdhani, sans-serif',
+                  border: `1px solid ${tag === t ? 'rgba(var(--accent-rgb),0.6)' : 'var(--hairline)'}`,
+                  color: tag === t ? 'var(--accent)' : 'var(--bone-dim)',
+                  background: tag === t ? 'rgba(var(--accent-rgb),0.06)' : 'transparent',
                 }}
               >
                 {t}
@@ -312,36 +317,46 @@ export default function BlogIndex() {
           </div>
         </FadeIn>
 
-        {/* the scrolls */}
-        <div className="space-y-10">
+        {/* THE LIST — numbered, honest, keyword-forward */}
+        <ol className="mt-8">
           {posts.map((p, i) => (
-            <FadeIn key={p.slug} delay={i * 0.06}>
-              <Link href={`/blog/${p.slug}`} className="block group">
-                <article
-                  className="scroll-paper rounded-sm px-6 py-8 sm:px-10 sm:py-9 transition-transform duration-300 group-hover:-translate-y-1"
-                  style={{ transform: `rotate(${i % 2 === 0 ? -0.5 : 0.5}deg)` }}
-                >
-                  <div className="flex items-start justify-between gap-4 mb-3">
-                    <div>
-                      <p
-                        className="text-[10px] uppercase tracking-[0.25em] opacity-60 mb-1"
-                        style={{ fontFamily: 'Orbitron, monospace', color: '#7A6A48' }}
-                      >
-                        {p.tag} · {p.readMins} min read
+            <li key={p.slug} style={{ borderTop: i === 0 ? '1px solid var(--hairline)' : undefined }}>
+              <Link
+                href={`/blog/${p.slug}`}
+                className="group block py-7"
+                style={{ borderBottom: '1px solid var(--hairline)' }}
+              >
+                <div className="flex items-baseline gap-4">
+                  <span className="text-xs tabular-nums" style={{ color: 'rgba(var(--accent-rgb),0.55)' }}>
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                  <div className="flex-1">
+                    <h2
+                      className="text-2xl md:text-3xl mb-2 transition-colors group-hover:text-[var(--accent)]"
+                      style={{ color: 'var(--bone)' }}
+                    >
+                      {p.title}
+                    </h2>
+                    <p className="text-sm leading-relaxed mb-3" style={{ color: 'var(--bone-dim)' }}>
+                      {p.excerpt}
+                    </p>
+                    <span className="text-[10px] uppercase tracking-[0.16em]" style={{ color: 'rgba(237,228,211,0.56)' }}>
+                      {p.tag} · {fmtDate(p.date)} · {p.readMins} min read
+                    </span>
+                    {/* the search phrases this piece actually answers */}
+                    {p.keywords?.length > 0 && (
+                      <p className="text-[11px] mt-2.5" style={{ color: 'rgba(237,228,211,0.5)' }}>
+                        Answers: {p.keywords.slice(0, 3).join(' · ')}
                       </p>
-                      <h2 className="scroll-h" style={{ fontSize: '2.05rem' }}>{p.title}</h2>
-                    </div>
-                    <span className="wax-seal" aria-hidden>{p.emoji}</span>
+                    )}
                   </div>
-                  <p className="scroll-hand" style={{ fontSize: '1.2rem' }}>{p.excerpt}</p>
-                  <p className="scroll-note mt-4">read the full post →</p>
-                </article>
+                </div>
               </Link>
-            </FadeIn>
+            </li>
           ))}
-        </div>
+        </ol>
 
-        {/* community scrolls — approved reader submissions */}
+        {/* community posts — approved reader submissions */}
         <CommunityScrolls />
 
         {/* submit */}
@@ -353,19 +368,22 @@ export default function BlogIndex() {
 
         {/* soft CTA */}
         <FadeIn delay={0.1}>
-          <div className="mt-12 text-center">
-            <p className="text-gray-400 text-sm mb-4">
+          <div className="mt-16 text-center">
+            <div className="rule-diamond mb-7" aria-hidden><span className="text-[10px]">◆</span></div>
+            <p className="text-sm mb-6" style={{ color: 'var(--bone-dim)' }}>
               Reading is the easy part. Come sit in the room where we do the hard part.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
-              <Link href="/appointment" className="btn-gold inline-flex items-center justify-center px-7 py-3.5 rounded-xl text-sm">
-                📅 Book a Free Session
+              <Link href="/appointment" className="btn-gold inline-flex items-center justify-center px-8 py-3.5 rounded-full">
+                Book a Free Session
               </Link>
-              <Link href="/materials" className="btn-ghost inline-flex items-center justify-center px-7 py-3.5 rounded-xl text-sm">
-                🎁 Free Study Material
+              <Link href="/materials" className="btn-ghost inline-flex items-center justify-center px-8 py-3.5 rounded-full">
+                Free Study Material
               </Link>
             </div>
-            <p className="text-[11px] text-gray-600 mt-5">📞 {SITE.phoneDisplay} · {SITE.hours}</p>
+            <p className="text-[11px] mt-6" style={{ color: 'var(--bone-dim)' }}>
+              {SITE.phoneDisplay} · {SITE.hours}
+            </p>
           </div>
         </FadeIn>
       </div>

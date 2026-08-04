@@ -100,7 +100,7 @@ function EnrollForm() {
         style={{ background: 'rgba(255,255,255,0.03)', border: '1.5px solid rgba(var(--accent-rgb),0.3)' }}
       >
         <div className="text-7xl mb-5">🎖️</div>
-        <h2 className="text-3xl font-black text-white mb-3" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+        <h2 className="text-3xl font-semibold text-white mb-3" style={{ fontFamily: 'var(--font-display)' }}>
           Welcome Aboard, {form.fullName.split(' ')[0] || 'Champion'}!
         </h2>
         <p className="text-gray-300 mb-2">
@@ -117,7 +117,7 @@ function EnrollForm() {
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl font-bold text-white"
-            style={{ background: '#25D366', fontFamily: 'Rajdhani, sans-serif', letterSpacing: '0.04em' }}
+            style={{ background: '#25D366', fontFamily: 'var(--font-display)', letterSpacing: '0.04em' }}
           >
             💬 Say Hi on WhatsApp
           </a>
@@ -137,7 +137,7 @@ function EnrollForm() {
       <div className="p-5 sm:p-8 md:p-10 space-y-7">
         {/* STUDENT */}
         <div>
-          <h2 className="text-xl font-black text-white mb-4 flex items-center gap-2" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-2" style={{ fontFamily: 'var(--font-display)' }}>
             <span>👤</span> Student Details
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -173,7 +173,7 @@ function EnrollForm() {
 
         {/* PARENT */}
         <div>
-          <h2 className="text-xl font-black text-white mb-4 flex items-center gap-2" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-2" style={{ fontFamily: 'var(--font-display)' }}>
             <span>👨‍👩‍👦</span> Parent / Guardian <span className="text-xs font-normal text-gray-500">(optional, recommended)</span>
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -190,7 +190,7 @@ function EnrollForm() {
 
         {/* COURSE */}
         <div>
-          <h2 className="text-xl font-black text-white mb-4 flex items-center gap-2" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-2" style={{ fontFamily: 'var(--font-display)' }}>
             <span>🎯</span> Course &amp; Batch
           </h2>
           <label className="form-label mb-2">Select Course *</label>
@@ -269,7 +269,7 @@ function EnrollForm() {
                 animate={{ rotate: 360 }}
                 transition={{ duration: 0.8, repeat: Infinity, ease: 'linear' }}
                 className="w-4 h-4 border-2 rounded-full inline-block"
-                style={{ borderColor: '#0A1628', borderTopColor: 'transparent' }}
+                style={{ borderColor: 'var(--ink-3)', borderTopColor: 'transparent' }}
               />
               Submitting...
             </>
@@ -287,7 +287,7 @@ function EnrollForm() {
 
 export default function EnrollPage() {
   return (
-    <div className="min-h-screen" style={{ background: 'linear-gradient(180deg, #04090F 0%, #07111F 100%)' }}>
+    <div className="min-h-screen" style={{ background: 'linear-gradient(180deg, var(--ink) 0%, var(--ink-2) 100%)' }}>
       {/* HERO */}
       <div
         className="pt-24 pb-12 text-center px-4"
@@ -298,7 +298,7 @@ export default function EnrollPage() {
       >
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
           <span className="section-tag mb-3 inline-block">Admissions Open</span>
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-white mb-3" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-semibold text-white mb-3" style={{ fontFamily: 'var(--font-display)' }}>
             Enroll at{' '}
             <span
               style={{
@@ -323,7 +323,7 @@ export default function EnrollPage() {
           {BENEFITS.map((b) => (
             <div key={b.title} className="glass-card rounded-2xl p-3 text-center">
               <div className="text-2xl mb-1">{b.icon}</div>
-              <div className="text-xs font-bold text-white" style={{ fontFamily: 'Rajdhani, sans-serif' }}>{b.title}</div>
+              <div className="text-xs font-bold text-white" style={{ fontFamily: 'var(--font-display)' }}>{b.title}</div>
               <div className="text-[10px] text-gray-500 leading-tight mt-0.5">{b.desc}</div>
             </div>
           ))}

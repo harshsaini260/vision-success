@@ -107,7 +107,7 @@ function LeadForm({ cfg, compact = false }) {
         style={{ background: 'rgba(var(--accent-rgb),0.08)', border: '1.5px solid rgba(var(--accent-rgb),0.4)' }}
       >
         <div className="text-4xl mb-3">🎯</div>
-        <h3 className="text-2xl font-black text-white mb-2" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+        <h3 className="text-2xl font-semibold text-white mb-2" style={{ fontFamily: 'var(--font-display)' }}>
           Slot Requested!
         </h3>
         <p className="text-sm text-gray-300 mb-5 max-w-sm mx-auto">
@@ -134,7 +134,7 @@ function LeadForm({ cfg, compact = false }) {
     >
       {!compact && (
         <>
-          <h3 className="text-2xl font-black text-white mb-1" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+          <h3 className="text-2xl font-semibold text-white mb-1" style={{ fontFamily: 'var(--font-display)' }}>
             🎯 Claim Your Free Strategy Session
           </h3>
           <p className="text-sm text-gray-400 mb-5">
@@ -162,7 +162,7 @@ function LeadForm({ cfg, compact = false }) {
 /* ─── MAIN TEMPLATE ─── */
 export default function ExamLanding({ cfg }) {
   return (
-    <div style={{ background: 'linear-gradient(180deg, #04090F 0%, #07111F 60%, #0A1628 100%)' }}>
+    <div style={{ background: 'linear-gradient(180deg, var(--ink) 0%, var(--ink-2) 60%, var(--ink-3) 100%)' }}>
       {/* ═══ HERO + FORM ═══ */}
       <section className="relative pt-24 md:pt-32 pb-12 px-4 overflow-hidden">
         <div
@@ -175,8 +175,8 @@ export default function ExamLanding({ cfg }) {
             {/* scarcity chip — whiteboard: urgency up top */}
             <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="mb-5">
               <span
-                className="final-call inline-block text-[10px] font-black px-3 py-1.5 rounded-full uppercase tracking-[0.18em]"
-                style={{ color: '#E05C42', border: '1px solid rgba(224,92,66,0.5)', fontFamily: 'Orbitron, monospace' }}
+                className="final-call inline-block text-[10px] font-semibold px-3 py-1.5 rounded-full uppercase tracking-[0.18em]"
+                style={{ color: '#E05C42', border: '1px solid rgba(224,92,66,0.5)', fontFamily: 'var(--font-ui)' }}
               >
                 ⚠ {cfg.scarcity}
               </span>
@@ -186,8 +186,8 @@ export default function ExamLanding({ cfg }) {
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1, duration: 0.7 }}
-              className="text-4xl sm:text-5xl md:text-6xl font-black leading-[1.02] mb-4"
-              style={{ fontFamily: 'Rajdhani, sans-serif' }}
+              className="text-4xl sm:text-5xl md:text-6xl font-semibold leading-[1.02] mb-4"
+              style={{ fontFamily: 'var(--font-display)' }}
             >
               <span className="text-white">{cfg.h1a} </span>
               <span className="text-gold-shimmer">{cfg.h1b}</span>
@@ -235,13 +235,13 @@ export default function ExamLanding({ cfg }) {
               {cfg.funnel.map((s, i) => (
                 <div key={s.title} className="glass-card rounded-2xl p-5 relative">
                   <div
-                    className="absolute top-3 right-4 text-2xl font-black opacity-15"
-                    style={{ fontFamily: 'Orbitron, monospace', color: 'var(--accent)' }}
+                    className="absolute top-3 right-4 text-2xl font-semibold opacity-15"
+                    style={{ fontFamily: 'var(--font-ui)', color: 'var(--accent)' }}
                   >
                     {i + 1}
                   </div>
                   <div className="text-3xl mb-2">{s.icon}</div>
-                  <h3 className="text-base font-bold text-white mb-1" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+                  <h3 className="text-base font-bold text-white mb-1" style={{ fontFamily: 'var(--font-display)' }}>
                     {s.title}
                   </h3>
                   <p className="text-xs text-gray-400 leading-relaxed">{s.text}</p>
@@ -259,11 +259,11 @@ export default function ExamLanding({ cfg }) {
             <div className="text-center mb-8">
               <span
                 className="inline-block text-[10px] font-bold uppercase tracking-[0.28em] mb-3"
-                style={{ color: '#E05C42', fontFamily: 'Orbitron, monospace' }}
+                style={{ color: '#E05C42', fontFamily: 'var(--font-ui)' }}
               >
                 ▸ {cfg.lessonsTag}
               </span>
-              <h2 className="text-3xl md:text-4xl font-black text-white" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+              <h2 className="text-3xl md:text-4xl font-semibold text-white" style={{ fontFamily: 'var(--font-display)' }}>
                 {cfg.lessonsTitle}
               </h2>
               <p className="text-gray-500 text-xs mt-2">
@@ -277,7 +277,7 @@ export default function ExamLanding({ cfg }) {
                 <div className="glass-card rounded-2xl p-5 sm:p-6 flex gap-4">
                   <div className="text-3xl flex-shrink-0">{l.icon}</div>
                   <div>
-                    <h3 className="text-lg font-bold text-gold-400 mb-1" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+                    <h3 className="text-lg font-bold text-gold-400 mb-1" style={{ fontFamily: 'var(--font-display)' }}>
                       {i + 1}. {l.title}
                     </h3>
                     <p className="text-sm text-gray-300 leading-relaxed">{l.text}</p>
@@ -293,7 +293,7 @@ export default function ExamLanding({ cfg }) {
       <section className="px-4 py-14">
         <div className="max-w-3xl mx-auto">
           <FadeIn>
-            <h2 className="text-3xl md:text-4xl font-black text-white text-center mb-8" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+            <h2 className="text-3xl md:text-4xl font-semibold text-white text-center mb-8" style={{ fontFamily: 'var(--font-display)' }}>
               {cfg.pattern.title}
             </h2>
           </FadeIn>
@@ -305,7 +305,7 @@ export default function ExamLanding({ cfg }) {
                   className="flex flex-col sm:flex-row sm:items-center gap-0.5 sm:gap-4 px-5 py-3.5"
                   style={{ borderTop: i === 0 ? 'none' : '1px solid rgba(255,255,255,0.06)' }}
                 >
-                  <div className="sm:w-52 flex-shrink-0 text-sm font-bold text-gold-400" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+                  <div className="sm:w-52 flex-shrink-0 text-sm font-bold text-gold-400" style={{ fontFamily: 'var(--font-display)' }}>
                     {k}
                   </div>
                   <div className="text-sm text-gray-300">{v}</div>
@@ -321,7 +321,7 @@ export default function ExamLanding({ cfg }) {
       <section className="px-4 pb-14">
         <div className="max-w-4xl mx-auto">
           <FadeIn>
-            <h2 className="text-3xl md:text-4xl font-black text-white text-center mb-8" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+            <h2 className="text-3xl md:text-4xl font-semibold text-white text-center mb-8" style={{ fontFamily: 'var(--font-display)' }}>
               {cfg.proof.title}
             </h2>
           </FadeIn>
@@ -330,7 +330,7 @@ export default function ExamLanding({ cfg }) {
               <div className="grid grid-cols-2 gap-3">
                 {cfg.proof.stats.map((s) => (
                   <div key={s.l} className="glass-card rounded-2xl p-5 text-center">
-                    <div className="text-2xl sm:text-3xl font-black stat-number mb-1" style={{ fontFamily: 'Orbitron, monospace' }}>
+                    <div className="text-2xl sm:text-3xl font-semibold stat-number mb-1" style={{ fontFamily: 'var(--font-ui)' }}>
                       {s.n}
                     </div>
                     <div className="text-[10px] text-gray-400 uppercase tracking-wider">{s.l}</div>
@@ -350,7 +350,7 @@ export default function ExamLanding({ cfg }) {
                       style={{ aspectRatio: '4/3' }}
                       onError={(e) => { e.target.onerror = null; e.target.src = cfg.proof.photo.fallback }}
                     />
-                    <div className="absolute bottom-1.5 left-0 right-0 text-center text-sm font-semibold" style={{ color: '#3B3325', fontFamily: 'Rajdhani, sans-serif' }}>
+                    <div className="absolute bottom-1.5 left-0 right-0 text-center text-sm font-semibold" style={{ color: '#3B3325', fontFamily: 'var(--font-display)' }}>
                       {cfg.proof.photo.caption}
                     </div>
                   </div>
@@ -371,7 +371,7 @@ export default function ExamLanding({ cfg }) {
       <section className="px-4 pb-14">
         <div className="max-w-2xl mx-auto">
           <FadeIn>
-            <h2 className="text-3xl font-black text-white text-center mb-6" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+            <h2 className="text-3xl font-semibold text-white text-center mb-6" style={{ fontFamily: 'var(--font-display)' }}>
               Straight Answers
             </h2>
           </FadeIn>
@@ -393,7 +393,7 @@ export default function ExamLanding({ cfg }) {
         <div className="max-w-xl mx-auto">
           <FadeIn>
             <div className="text-center mb-6">
-              <h2 className="text-3xl md:text-4xl font-black text-white" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+              <h2 className="text-3xl md:text-4xl font-semibold text-white" style={{ fontFamily: 'var(--font-display)' }}>
                 Convinced? <span className="text-gold-shimmer">Same Form. Right Here.</span>
               </h2>
               <p className="text-gray-500 text-xs mt-2">

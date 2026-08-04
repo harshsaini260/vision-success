@@ -110,7 +110,7 @@ export default function SchoolsPage() {
   }
 
   return (
-    <main style={{ background: '#07111F' }}>
+    <main style={{ background: 'var(--ink-2)' }}>
       {/* ── hero ── */}
       <section className="relative overflow-hidden">
         <div
@@ -124,13 +124,13 @@ export default function SchoolsPage() {
             </div>
             <span
               className="text-[10px] md:text-[11px] uppercase tracking-[0.34em] block mb-5"
-              style={{ fontFamily: 'Orbitron, monospace', color: 'var(--accent-light, #F0D488)' }}
+              style={{ fontFamily: 'var(--font-ui)', color: 'var(--accent-light, #F0D488)' }}
             >
               A proposal for your school
             </span>
             <h1
-              className="text-4xl md:text-6xl font-black leading-[1.05] mb-5"
-              style={{ fontFamily: 'Rajdhani, sans-serif' }}
+              className="text-4xl md:text-6xl font-semibold leading-[1.05] mb-5"
+              style={{ fontFamily: 'var(--font-display)' }}
             >
               <span className="text-white">Career clarity,</span>
               <br />
@@ -153,8 +153,8 @@ export default function SchoolsPage() {
                 style={{ background: 'rgba(13,24,41,0.66)', border: '1px solid rgba(var(--accent-rgb),0.22)' }}
               >
                 <div
-                  className="text-2xl md:text-3xl font-black text-gold-400 leading-none"
-                  style={{ fontFamily: 'Rajdhani, sans-serif' }}
+                  className="text-2xl md:text-3xl font-semibold text-gold-400 leading-none"
+                  style={{ fontFamily: 'var(--font-display)' }}
                 >
                   {big}
                 </div>
@@ -189,12 +189,12 @@ export default function SchoolsPage() {
       </section>
 
       {/* ── the reason ── */}
-      <section className="py-14 md:py-20" style={{ background: '#0A1628' }}>
+      <section className="py-14 md:py-20" style={{ background: 'var(--ink-3)' }}>
         <div className="max-w-3xl mx-auto px-4">
           <span className="text-[10px] uppercase tracking-[0.3em] text-gold-400 block mb-3">Why we are asking</span>
           <h2
-            className="text-3xl md:text-4xl font-black text-white mb-6 leading-tight"
-            style={{ fontFamily: 'Rajdhani, sans-serif' }}
+            className="text-3xl md:text-4xl font-semibold text-white mb-6 leading-tight"
+            style={{ fontFamily: 'var(--font-display)' }}
           >
             Your students are deciding blind.
           </h2>
@@ -214,7 +214,7 @@ export default function SchoolsPage() {
           >
             <p
               className="text-lg md:text-xl font-bold text-gold-400 leading-snug"
-              style={{ fontFamily: 'Rajdhani, sans-serif' }}
+              style={{ fontFamily: 'var(--font-display)' }}
             >
               A child who does not know an option exists has not rejected it. They were simply never told.
             </p>
@@ -227,8 +227,8 @@ export default function SchoolsPage() {
         <div className="max-w-4xl mx-auto px-4">
           <span className="text-[10px] uppercase tracking-[0.3em] text-gold-400 block mb-3">Inside the 40 minutes</span>
           <h2
-            className="text-3xl md:text-4xl font-black text-white mb-9 leading-tight"
-            style={{ fontFamily: 'Rajdhani, sans-serif' }}
+            className="text-3xl md:text-4xl font-semibold text-white mb-9 leading-tight"
+            style={{ fontFamily: 'var(--font-display)' }}
           >
             The map nobody gave them.
           </h2>
@@ -240,14 +240,14 @@ export default function SchoolsPage() {
                 style={{ background: 'rgba(13,24,41,0.66)', border: '1px solid rgba(var(--accent-rgb),0.18)' }}
               >
                 <div
-                  className="text-xs font-black text-gold-400 mb-2"
-                  style={{ fontFamily: 'Orbitron, monospace' }}
+                  className="text-xs font-semibold text-gold-400 mb-2"
+                  style={{ fontFamily: 'var(--font-ui)' }}
                 >
                   {c.n}
                 </div>
                 <h3
-                  className="text-lg font-black text-white mb-2 leading-tight"
-                  style={{ fontFamily: 'Rajdhani, sans-serif' }}
+                  className="text-lg font-semibold text-white mb-2 leading-tight"
+                  style={{ fontFamily: 'var(--font-display)' }}
                 >
                   {c.h}
                 </h3>
@@ -263,12 +263,12 @@ export default function SchoolsPage() {
       </section>
 
       {/* ── the four promises ── */}
-      <section className="py-14 md:py-20" style={{ background: '#0A1628' }}>
+      <section className="py-14 md:py-20" style={{ background: 'var(--ink-3)' }}>
         <div className="max-w-3xl mx-auto px-4">
           <span className="text-[10px] uppercase tracking-[0.3em] text-gold-400 block mb-3">Our undertakings</span>
           <h2
-            className="text-3xl md:text-4xl font-black text-white mb-9 leading-tight"
-            style={{ fontFamily: 'Rajdhani, sans-serif' }}
+            className="text-3xl md:text-4xl font-semibold text-white mb-9 leading-tight"
+            style={{ fontFamily: 'var(--font-display)' }}
           >
             What we will not do.
           </h2>
@@ -281,8 +281,8 @@ export default function SchoolsPage() {
                 />
                 <div>
                   <h3
-                    className="text-lg font-black text-white mb-1 leading-tight"
-                    style={{ fontFamily: 'Rajdhani, sans-serif' }}
+                    className="text-lg font-semibold text-white mb-1 leading-tight"
+                    style={{ fontFamily: 'var(--font-display)' }}
                   >
                     {p.h}
                   </h3>
@@ -299,8 +299,8 @@ export default function SchoolsPage() {
         <div className="max-w-3xl mx-auto px-4">
           <span className="text-[10px] uppercase tracking-[0.3em] text-gold-400 block mb-3">Who is speaking</span>
           <h2
-            className="text-3xl md:text-4xl font-black text-white mb-6 leading-tight"
-            style={{ fontFamily: 'Rajdhani, sans-serif' }}
+            className="text-3xl md:text-4xl font-semibold text-white mb-6 leading-tight"
+            style={{ fontFamily: 'var(--font-display)' }}
           >
             The people, and the record.
           </h2>
@@ -334,14 +334,14 @@ export default function SchoolsPage() {
       </section>
 
       {/* ── the request form ── */}
-      <section id="request" className="py-14 md:py-20" style={{ background: '#0A1628' }}>
+      <section id="request" className="py-14 md:py-20" style={{ background: 'var(--ink-3)' }}>
         <div className="max-w-xl mx-auto px-4">
           <span className="text-[10px] uppercase tracking-[0.3em] text-gold-400 block mb-3 text-center">
             The next step
           </span>
           <h2
-            className="text-3xl md:text-4xl font-black text-white mb-3 leading-tight text-center"
-            style={{ fontFamily: 'Rajdhani, sans-serif' }}
+            className="text-3xl md:text-4xl font-semibold text-white mb-3 leading-tight text-center"
+            style={{ fontFamily: 'var(--font-display)' }}
           >
             One period. One date.
           </h2>
@@ -356,8 +356,8 @@ export default function SchoolsPage() {
             >
               <div className="text-4xl mb-3">🤝</div>
               <h3
-                className="text-2xl font-black text-white mb-2"
-                style={{ fontFamily: 'Rajdhani, sans-serif' }}
+                className="text-2xl font-semibold text-white mb-2"
+                style={{ fontFamily: 'var(--font-display)' }}
               >
                 Thank you — we have it.
               </h3>

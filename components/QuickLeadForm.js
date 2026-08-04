@@ -37,7 +37,7 @@ export default function QuickLeadForm({ heading = 'Book Your FREE Demo Class' })
       className="rounded-2xl p-6 md:p-8"
       style={{ background: 'rgba(13,24,41,0.72)', border: '1px solid rgba(var(--accent-rgb),0.25)' }}
     >
-      <h3 className="text-2xl font-black text-white mb-1" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+      <h3 className="text-2xl font-semibold text-white mb-1" style={{ fontFamily: 'var(--font-display)' }}>
         {heading}
       </h3>
       <p className="text-sm text-gray-400 mb-6">No payment. No obligation. We reply within 10 minutes on WhatsApp.</p>

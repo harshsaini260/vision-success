@@ -156,7 +156,7 @@ export default function BattlefieldQuiz() {
               </span>
             </motion.div>
             <div className="text-6xl mb-3">{v.emoji}</div>
-            <h3 className="text-3xl sm:text-4xl font-black text-white mb-2" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+            <h3 className="text-3xl sm:text-4xl font-semibold text-white mb-2" style={{ fontFamily: 'var(--font-display)' }}>
               Your battlefield: <span className="text-gold-shimmer">{v.title}</span>
             </h3>
             <p className="text-gray-400 text-sm max-w-sm mx-auto mb-6">{v.sub}</p>
@@ -183,7 +183,7 @@ export default function BattlefieldQuiz() {
             <div className="flex items-center justify-between mb-5">
               <span
                 className="text-[10px] font-bold uppercase tracking-[0.25em] text-gold-400"
-                style={{ fontFamily: 'Orbitron, monospace' }}
+                style={{ fontFamily: 'var(--font-ui)' }}
               >
                 Q{step + 1} / {QUESTIONS.length}
               </span>
@@ -198,8 +198,8 @@ export default function BattlefieldQuiz() {
               </div>
             </div>
             <h3
-              className="text-2xl sm:text-3xl font-black text-white mb-6"
-              style={{ fontFamily: 'Rajdhani, sans-serif' }}
+              className="text-2xl sm:text-3xl font-semibold text-white mb-6"
+              style={{ fontFamily: 'var(--font-display)' }}
             >
               {QUESTIONS[step].q}
             </h3>
@@ -212,7 +212,7 @@ export default function BattlefieldQuiz() {
                   style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(var(--accent-rgb),0.22)' }}
                 >
                   <span className="text-2xl flex-shrink-0">{a.emoji}</span>
-                  <span className="text-sm font-semibold text-gray-200" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+                  <span className="text-sm font-semibold text-gray-200" style={{ fontFamily: 'var(--font-display)' }}>
                     {a.text}
                   </span>
                 </button>

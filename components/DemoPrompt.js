@@ -83,7 +83,7 @@ export default function DemoPrompt() {
             transition={{ type: 'spring', stiffness: 260, damping: 24 }}
             className="relative max-w-md w-full rounded-3xl p-7 sm:p-8 text-center"
             style={{
-              background: 'linear-gradient(180deg, #0A1628 0%, #07111F 100%)',
+              background: 'linear-gradient(180deg, var(--ink-3) 0%, var(--ink-2) 100%)',
               border: '1.5px solid rgba(var(--accent-rgb),0.4)',
               boxShadow: '0 25px 80px rgba(0,0,0,0.7), 0 0 50px rgba(var(--accent-rgb),0.12)',
             }}
@@ -98,7 +98,7 @@ export default function DemoPrompt() {
               ✕
             </button>
             <div className="text-5xl mb-3">🎓</div>
-            <h3 className="text-2xl font-black text-white mb-2" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+            <h3 className="text-2xl font-semibold text-white mb-2" style={{ fontFamily: 'var(--font-display)' }}>
               Pasand aa raha hai? Ek FREE demo class try karo! 🙌
             </h3>
             <p className="text-sm text-gray-400 mb-6">
