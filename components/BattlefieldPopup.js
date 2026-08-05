@@ -54,6 +54,7 @@ export default function BattlefieldPopup() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
+          data-modal-open="1"
           className="fixed inset-0 z-[200] flex items-end sm:items-center justify-center px-3 pb-4 sm:p-4 overflow-y-auto"
           style={{ background: 'rgba(4,9,15,0.82)' }}
           onClick={() => setOpen(false)}

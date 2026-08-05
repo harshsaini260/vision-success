@@ -1,29 +1,29 @@
 'use client'
 
-import { useRef } from 'react'
-import Link from 'next/link'
-import { motion, useInView } from 'framer-motion'
+import { motion } from 'framer-motion'
 
-/* ─── THE CREED ───
-   A tribute to Nirmal "Nims" Purja, who summited all fourteen 8,000ers
-   in under seven months and answered every "it can't be done" the same way.
+/* ─── THE CREED — masthead epigraph ───
+   The first thing on the site, above everything. A tribute to Nirmal
+   "Nims" Purja, who summited all fourteen 8,000ers in under seven
+   months and answered every "it cannot be done" the same way.
    These are his words, not ours. We only try to live by them.
 
-   Built phone-first: one column, large serif, generous air. The quote
-   reveals word by word as it scrolls into view — the pause before a
-   summit push. */
+   Deliberately compact: it sets the tone in about two seconds and
+   hands the screen straight to the hero. The animated words are
+   decorative — the real sentence ships as sr-only text so screen
+   readers and crawlers read a sentence, not one run-on word. */
 
 const LINE_1 = ['Giving', 'up', 'is', 'not', 'in', 'the', 'blood', 'sir,']
 const LINE_2 = ['not', 'in', 'the', 'blood.']
 
-function Word({ children, i, show, bold }) {
+function Word({ children, i, accent }) {
   return (
     <motion.span
-      initial={{ opacity: 0, y: 14 }}
-      animate={show ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.55, delay: i * 0.09, ease: [0.2, 0.65, 0.3, 1] }}
-      className="inline-block mr-[0.28em]"
-      style={bold ? { color: 'var(--accent-light)', fontStyle: 'italic' } : undefined}
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay: 0.25 + i * 0.075, ease: [0.2, 0.65, 0.3, 1] }}
+      className="inline-block mr-[0.26em]"
+      style={accent ? { color: 'var(--accent-light)', fontStyle: 'italic' } : undefined}
     >
       {children}
     </motion.span>
@@ -31,126 +31,99 @@ function Word({ children, i, show, bold }) {
 }
 
 export default function Creed() {
-  const ref = useRef(null)
-  const show = useInView(ref, { once: true, margin: '-90px' })
-
   return (
     <section
-      ref={ref}
       className="relative overflow-hidden grain"
       style={{
-        background: 'linear-gradient(180deg, var(--ink) 0%, #0A121C 55%, var(--ink) 100%)',
-        borderTop: '1px solid var(--hairline)',
+        background: 'linear-gradient(180deg, var(--ink) 0%, #090F17 100%)',
         borderBottom: '1px solid var(--hairline)',
       }}
+      aria-label="The words we live by"
     >
-      {/* summit ridge, barely there */}
+      {/* a summit ridge, barely there */}
       <svg
-        viewBox="0 0 1200 260"
+        viewBox="0 0 1200 160"
         preserveAspectRatio="none"
-        className="absolute bottom-0 left-0 w-full h-[38%] pointer-events-none"
+        className="absolute bottom-0 left-0 w-full h-[55%] pointer-events-none"
         aria-hidden
       >
-        <path d="M0 260 L0 190 L150 96 L280 178 L430 60 L560 168 L700 74 L850 186 L1000 104 L1120 172 L1200 118 L1200 260 Z" fill="rgba(var(--accent-rgb),0.05)" />
-        <path d="M0 260 L0 224 L170 158 L320 226 L470 140 L640 232 L790 152 L950 236 L1090 170 L1200 218 L1200 260 Z" fill="rgba(var(--accent-rgb),0.035)" />
+        <path
+          d="M0 160 L0 118 L150 58 L280 108 L430 36 L560 102 L700 44 L850 112 L1000 62 L1120 104 L1200 70 L1200 160 Z"
+          fill="rgba(var(--accent-rgb),0.055)"
+        />
+        <path
+          d="M0 160 L0 138 L170 96 L320 138 L470 86 L640 142 L790 92 L950 144 L1090 104 L1200 132 L1200 160 Z"
+          fill="rgba(var(--accent-rgb),0.035)"
+        />
       </svg>
 
-      {/* one held star above the summit */}
-      <motion.div
+      {/* one held star over the summit */}
+      <motion.span
         className="absolute rounded-full pointer-events-none"
-        style={{ top: '14%', left: '50%', width: 3, height: 3, background: 'var(--accent-light)' }}
-        animate={{ opacity: [0.25, 0.9, 0.25] }}
+        style={{ top: '22%', left: '50%', width: 3, height: 3, background: 'var(--accent-light)' }}
+        animate={{ opacity: [0.2, 0.85, 0.2] }}
         transition={{ duration: 4, repeat: Infinity }}
         aria-hidden
       />
 
-      <div className="relative max-w-3xl mx-auto px-6 py-24 md:py-32 text-center">
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={show ? { opacity: 1 } : {}}
-          transition={{ duration: 0.7 }}
-          className="eyebrow mb-10"
-        >
-          The Words We Live By
-        </motion.p>
-
-        {/* the quote — phone-first type scale.
-            The per-word spans are decorative: they render with margins, so
-            assistive tech and crawlers would read one run-on word. The real
-            sentence lives in the sr-only line below, and the animation is
-            hidden from the accessibility tree. */}
+      <div className="relative max-w-3xl mx-auto px-5 pt-24 pb-9 md:pt-28 md:pb-12 text-center">
         <blockquote>
           <span className="sr-only">
-            Giving up is not in the blood sir, not in the blood.
+            Giving up is not in the blood sir, not in the blood. — Nirmal &ldquo;Nims&rdquo; Purja
           </span>
+
           <p
             aria-hidden="true"
-            className="text-[2rem] leading-[1.24] sm:text-5xl md:text-6xl md:leading-[1.16] text-balance"
+            className="text-[1.6rem] leading-[1.25] sm:text-4xl md:text-[2.75rem] md:leading-[1.18] text-balance"
             style={{ fontFamily: 'var(--font-display)', fontWeight: 500, color: 'var(--bone)' }}
           >
             <span
-              className="block text-6xl md:text-7xl leading-none mb-1 select-none"
-              style={{ color: 'rgba(var(--accent-rgb),0.35)', fontFamily: 'var(--font-display)' }}
+              className="select-none"
+              style={{ color: 'rgba(var(--accent-rgb),0.4)' }}
             >
               &ldquo;
             </span>
             {LINE_1.map((w, i) => (
-              <Word key={`a${i}`} i={i} show={show}>{w}</Word>
+              <Word key={`a${i}`} i={i}>{w}</Word>
             ))}
             <br className="hidden sm:block" />
             {LINE_2.map((w, i) => (
-              <Word key={`b${i}`} i={LINE_1.length + i} show={show} bold>{w}</Word>
+              <Word key={`b${i}`} i={LINE_1.length + i} accent>{w}</Word>
             ))}
+            <span className="select-none" style={{ color: 'rgba(var(--accent-rgb),0.4)' }}>
+              &rdquo;
+            </span>
           </p>
 
           <motion.footer
             initial={{ opacity: 0 }}
-            animate={show ? { opacity: 1 } : {}}
-            transition={{ duration: 0.8, delay: 1.15 }}
-            className="mt-10"
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.7, delay: 1.15 }}
+            className="mt-5"
           >
-            <div className="rule-diamond mb-6" aria-hidden>
-              <span className="text-[10px]">◆</span>
-            </div>
             <cite
-              className="not-italic block text-lg md:text-xl"
-              style={{ fontFamily: 'var(--font-display)', color: 'var(--accent)', fontWeight: 600 }}
+              className="not-italic block text-sm md:text-base tracking-[0.12em] uppercase"
+              style={{ color: 'var(--accent)', fontFamily: 'var(--font-ui)', fontWeight: 600 }}
             >
               Nirmal &ldquo;Nims&rdquo; Purja
             </cite>
-            <span className="block text-xs mt-2 tracking-[0.18em] uppercase" style={{ color: 'var(--bone-dim)' }}>
+            <span className="block text-[11px] mt-1.5" style={{ color: 'var(--bone-dim)' }}>
               14 peaks above 8,000 m · 6 months, 6 days
             </span>
           </motion.footer>
         </blockquote>
 
-        {/* our vow */}
-        <motion.div
-          initial={{ opacity: 0, y: 18 }}
-          animate={show ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 1.45 }}
-          className="mt-14 pt-10"
-          style={{ borderTop: '1px solid var(--hairline)' }}
+        {/* our vow — one line, no lecture */}
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.7, delay: 1.35 }}
+          className="mt-7 pt-6 text-sm md:text-base mx-auto max-w-xl"
+          style={{ borderTop: '1px solid var(--hairline)', color: 'var(--bone-dim)' }}
         >
-          <p
-            className="text-lg md:text-2xl leading-relaxed mx-auto max-w-xl"
-            style={{ fontFamily: 'var(--font-display)', color: 'var(--bone)', fontWeight: 400 }}
-          >
-            We did not write those words. We only refuse to teach any other way.
-            No student here is written off for a bad test, a weak subject, or an
-            empty pocket. <span style={{ color: 'var(--accent)' }}>Nobody gets left on the mountain.</span>
-          </p>
-          <p className="mt-6 text-sm" style={{ color: 'var(--bone-dim)' }}>
-            — the promise every teacher at Vision Success makes on day one
-          </p>
-
-          <Link
-            href="/appointment"
-            className="btn-ghost inline-flex items-center gap-2 px-8 py-3.5 rounded-full mt-10"
-          >
-            Begin Your Climb
-          </Link>
-        </motion.div>
+          We did not write those words — we just refuse to teach any other way.
+          <span style={{ color: 'var(--accent)' }}> Nobody gets left on the mountain.</span>
+        </motion.p>
       </div>
     </section>
   )

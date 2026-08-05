@@ -1026,9 +1026,12 @@ export default function HomePage() {
       <BattlefieldPopup />
       <Stars />
 
+      {/* ─── THE CREED — the words this place runs on, before anything else ─── */}
+      <Creed />
+
       {/* ─── HERO ─── */}
       <section
-        className="relative min-h-screen flex items-center overflow-hidden"
+        className="relative flex items-center overflow-hidden"
         style={{
           background: 'linear-gradient(180deg, var(--ink) 0%, var(--ink-2) 40%, var(--ink-3) 100%)',
         }}
@@ -1050,7 +1053,7 @@ export default function HomePage() {
           style={{ background: 'linear-gradient(90deg, transparent, var(--accent), transparent)' }}
         />
 
-        <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 pt-24 pb-16 md:py-28 relative z-10">
+        <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 pt-12 pb-16 md:pt-16 md:pb-24 relative z-10">
           <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-10 items-center">
             {/* LEFT — the pitch */}
             <div className="text-center lg:text-left">
@@ -1123,6 +1126,32 @@ export default function HomePage() {
                 </a>
               </motion.div>
 
+              {/* JUMP STRIP — the whole site is three taps away */}
+              <motion.nav
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.8, delay: 0.5 }}
+                aria-label="Jump to section"
+                className="mt-5 flex flex-wrap gap-2 justify-center lg:justify-start"
+              >
+                {[
+                  { href: '#courses', label: 'Courses' },
+                  { href: '#stories', label: 'Student Stories' },
+                  { href: '/reviews', label: 'Reviews' },
+                  { href: '/stories', label: 'Documentary' },
+                  { href: '#visit', label: 'Visit Us' },
+                ].map((j) => (
+                  <a
+                    key={j.href}
+                    href={j.href}
+                    className="px-3.5 py-1.5 rounded-full text-[11px] uppercase tracking-[0.14em] transition-colors hover:text-[var(--accent)]"
+                    style={{ border: '1px solid var(--hairline)', color: 'var(--bone-dim)' }}
+                  >
+                    {j.label}
+                  </a>
+                ))}
+              </motion.nav>
+
               {/* the chai promise — warm, homey, disarming */}
               <motion.p
                 initial={{ opacity: 0 }}
@@ -1130,8 +1159,7 @@ export default function HomePage() {
                 transition={{ duration: 0.8, delay: 0.55 }}
                 className="text-sm text-gray-400 mt-4 text-center lg:text-left"
               >
-                ☕ Or just visit us — there&apos;s always a cup of chai and an honest chat waiting.
-                No pressure, no fees to walk in.
+                ☕ Or just visit us — chai and an honest chat, no fees to walk in.
               </motion.p>
 
               {/* PICK YOUR BATTLEFIELD — instant self-segmentation */}
@@ -1232,40 +1260,9 @@ export default function HomePage() {
             </motion.div>
           </div>
 
-          {/* Mobile film strip — real faces above the fold */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.55 }}
-            className="lg:hidden mt-8 -mx-4 px-4 flex gap-3 overflow-x-auto snap-x snap-mandatory pb-2"
-          >
-            {GALLERY.slice(0, 5).map((p, i) => (
-              <div
-                key={p.src}
-                className="flex-shrink-0 w-44 snap-center rounded-sm p-1.5 pb-6 relative"
-                style={{
-                  background: '#F5F0E4',
-                  transform: `rotate(${i % 2 === 0 ? -2 : 2}deg)`,
-                  boxShadow: '0 8px 24px rgba(0,0,0,0.5)',
-                }}
-              >
-                <img
-                  src={p.src}
-                  alt={p.alt}
-                  loading={i < 2 ? 'eager' : 'lazy'}
-                  className="w-full object-cover"
-                  style={{ aspectRatio: '4/3' }}
-                  onError={(e) => { e.target.onerror = null; e.target.src = p.fallback }}
-                />
-                <div
-                  className="absolute bottom-1 left-0 right-0 text-center text-[11px] font-semibold"
-                  style={{ color: '#3B3325', fontFamily: 'var(--font-display)' }}
-                >
-                  {p.caption} {p.emoji}
-                </div>
-              </div>
-            ))}
-          </motion.div>
+          {/* The mobile film strip used to sit here. Removed: the same
+              photographs appear in full on the Wall of Moments below, and
+              the phone hero was carrying too many competing elements. */}
 
           {/* QUICK STATS */}
           <motion.div
@@ -1325,6 +1322,8 @@ export default function HomePage() {
 
       {/* ─── COURSES ─── */}
       <section
+        id="courses"
+        style={{ scrollMarginTop: 70 }}
         className="section-padding relative"
         style={{
           background: 'linear-gradient(180deg, var(--ink-3) 0%, var(--ink-2) 100%)',
@@ -1453,61 +1452,67 @@ export default function HomePage() {
             </div>
           </FadeIn>
 
-          {/* OTHER COURSES — NDA leads the grid, legacy intact */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {/* OTHER COURSES — compact cards; the long copy lives on each
+              course page, so the homepage stays scannable on a phone */}
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-5">
             {COURSES.map((course, i) => (
-              <FadeIn key={course.id} delay={i * 0.1}>
+              <FadeIn key={course.id} delay={i * 0.06}>
                 <Link
                   href={`/courses/${course.id}`}
-                  className="glass-card glass-card-hover rounded-2xl p-6 h-full transition-all duration-300 cursor-pointer group block"
+                  className="glass-card glass-card-hover rounded-2xl p-4 md:p-5 h-full transition-all duration-300 group block"
                 >
-                  <div className="text-4xl mb-3">{course.emoji}</div>
+                  <div className="text-3xl mb-2">{course.emoji}</div>
                   <div
-                    className="text-xs font-bold uppercase tracking-widest mb-2"
+                    className="text-[9px] font-semibold uppercase tracking-[0.16em] mb-1.5"
                     style={{ color: course.color }}
                   >
                     {course.badge}
                   </div>
                   <h3
-                    className="text-2xl font-semibold text-white mb-1"
+                    className="text-lg md:text-xl text-white mb-0.5 leading-tight"
                     style={{ fontFamily: 'var(--font-display)' }}
                   >
                     {course.title}
                   </h3>
-                  <p className="text-xs text-gray-500 mb-3">{course.subtitle}</p>
-                  <p className="text-gray-400 text-sm mb-4 leading-relaxed">{course.description}</p>
+                  <p className="text-[11px] mb-3" style={{ color: 'var(--bone-dim)' }}>
+                    {course.subtitle}
+                  </p>
                   <span
-                    className="text-sm font-semibold group-hover:translate-x-1 transition-transform inline-flex items-center gap-1"
+                    className="text-[11px] uppercase tracking-[0.12em] group-hover:translate-x-1 transition-transform inline-flex items-center gap-1"
                     style={{ color: course.color }}
                   >
-                    Details, Schedule & Fun Facts →
+                    Details →
                   </span>
                 </Link>
               </FadeIn>
             ))}
           </div>
 
-          {/* SUBJECT & LOCAL PAGES */}
+          {/* SUBJECT & LOCAL PAGES — the top few, rest on /courses */}
           <FadeIn delay={0.1}>
-            <div className="mt-10 text-center">
-              <p className="text-sm text-gray-400 mb-4 uppercase tracking-widest" style={{ fontFamily: 'var(--font-ui)' }}>
-                Single-Subject Tuition & More
-              </p>
+            <div className="mt-9 text-center">
+              <p className="eyebrow mb-4">Single-Subject Tuition</p>
               <div className="flex flex-wrap justify-center gap-2">
-                {SUBJECT_LINKS.map((s) => (
+                {SUBJECT_LINKS.slice(0, 8).map((s) => (
                   <Link
                     key={s.href}
                     href={s.href}
-                    className="px-4 py-2 rounded-full text-sm font-semibold text-gray-300 hover:text-gold-400 transition-all hover:-translate-y-0.5"
+                    className="px-3.5 py-1.5 rounded-full text-xs transition-all hover:-translate-y-0.5"
                     style={{
-                      background: 'rgba(255,255,255,0.04)',
-                      border: '1px solid rgba(var(--accent-rgb),0.2)',
-                      fontFamily: 'var(--font-display)',
+                      border: '1px solid var(--hairline)',
+                      color: 'var(--bone-dim)',
                     }}
                   >
                     {s.label}
                   </Link>
                 ))}
+                <Link
+                  href="/courses"
+                  className="px-3.5 py-1.5 rounded-full text-xs transition-all hover:-translate-y-0.5"
+                  style={{ border: '1px solid rgba(var(--accent-rgb),0.4)', color: 'var(--accent)' }}
+                >
+                  All courses →
+                </Link>
               </div>
             </div>
           </FadeIn>
@@ -1544,6 +1549,14 @@ export default function HomePage() {
           </FadeIn>
         </div>
       </section>
+
+      {/* ─── PROOF, EARLY — documentary episodes + student voices ───
+           Moved directly under the courses: a visitor deciding whether to
+           trust us should not have to scroll past six more sections first. */}
+      <div id="stories" style={{ scrollMarginTop: 70 }}>
+        <HomeDocumentary />
+        <StudentStories />
+      </div>
 
       {/* ─── EMOTIONAL ARC: dream → the person who did it → the tool ─── */}
       <Manifesto />
@@ -1656,13 +1669,6 @@ export default function HomePage() {
       {/* ─── WHY FAMILIES TRUST US — credibility (shows always) ─── */}
       <TrustPillars />
 
-      {/* ─── THE CREED — the words we live by (Nims Purja) ─── */}
-      <Creed />
-
-      {/* ─── THE DOCUMENTARY + student voices — compact rails ─── */}
-      <HomeDocumentary />
-      <StudentStories />
-
       {/* ─── FAQ ─── */}
       <section className="section-padding" style={{ background: 'var(--ink-2)' }}>
         <div className="max-w-3xl mx-auto">
@@ -1692,6 +1698,8 @@ export default function HomePage() {
 
       {/* ─── CONTACT + MAP ─── */}
       <section
+        id="visit"
+        style={{ scrollMarginTop: 70 }}
         className="section-padding"
         style={{ background: 'linear-gradient(180deg, var(--ink-2) 0%, var(--ink-3) 100%)' }}
       >

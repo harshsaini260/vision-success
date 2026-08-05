@@ -42,6 +42,15 @@ export default function DemoPrompt() {
 
     const show = () => {
       if (shown) return
+      /* Re-check at FIRE time, not just at mount. BattlefieldPopup opens
+         at 12s and sets this key to claim the screen — but our timer was
+         already scheduled by then, so without this check both modals
+         stacked on top of each other. */
+      try {
+        if (sessionStorage.getItem(SESSION_KEY)) return
+      } catch {}
+      /* And never open on top of any other dialog that is already up. */
+      if (document.querySelector('[data-modal-open="1"]')) return
       shown = true
       try {
         sessionStorage.setItem(SESSION_KEY, '1')
@@ -72,6 +81,7 @@ export default function DemoPrompt() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
+          data-modal-open="1"
           className="fixed inset-0 z-[200] flex items-end sm:items-center justify-center px-4 pb-6 sm:pb-4"
           style={{ background: 'rgba(4,9,15,0.8)' }}
           onClick={() => setOpen(false)}
