@@ -217,6 +217,14 @@ export default function Creed() {
 
           {/* ── THE WORDS ── */}
           <div className="text-center md:text-left">
+            {/* Orientation, before the emotion.
+                Someone arriving from a search for "NDA coaching Una" was
+                landing on a film and a mountaineer's quote with no answer
+                to "am I in the right place?" — and those first seconds
+                are the entire attention budget. One quiet line closes
+                that loop without touching the mood. */}
+            <p className="eyebrow mb-5">Vision Success · Coaching in Una, HP</p>
+
             <blockquote>
               <span className="sr-only">
                 Giving up is not in the blood sir, not in the blood. — Nirmal &ldquo;Nims&rdquo; Purja
@@ -272,6 +280,15 @@ export default function Creed() {
             >
               We did not write those words — we just refuse to teach any other way.
               <span style={{ color: 'var(--accent)' }}> Nobody gets left on the mountain.</span>
+            </p>
+
+            {/* Specific, checkable proof — vague claims ("best results!")
+                are discounted on sight; numbers with nouns are not. */}
+            <p
+              className="mt-4 text-[11px] tracking-[0.1em] uppercase transition-opacity duration-700"
+              style={{ color: 'rgba(237,228,211,0.5)', opacity: lit >= WORDS.length ? 1 : 0.25 }}
+            >
+              NDA · JEE · NEET · SAT · Class 9–12 &nbsp;·&nbsp; 13 years &nbsp;·&nbsp; 7+ officers &nbsp;·&nbsp; 50+ doctors
             </p>
           </div>
         </div>
