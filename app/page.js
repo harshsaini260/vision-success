@@ -14,10 +14,10 @@ import BattlefieldPopup from '@/components/BattlefieldPopup'
 import DepartureBoard from '@/components/DepartureBoard'
 import PolarBuddy from '@/components/PolarBuddy'
 import Scribble from '@/components/Scribble'
-import SATPredictor from '@/components/SATPredictor'
 import StudentStories from '@/components/StudentStories'
 import HomeDocumentary from '@/components/HomeDocumentary'
 import Creed from '@/components/Creed'
+import Mirror from '@/components/Mirror'
 import { playFanfare } from '@/lib/fanfare'
 import { sfxPop, sfxNope, sfxWhoosh, sfxChime } from '@/lib/sfx'
 
@@ -1558,52 +1558,15 @@ export default function HomePage() {
         <StudentStories />
       </div>
 
+      {/* ─── THE MIRROR — the visitor's own worry, answered straight ─── */}
+      <Mirror />
+
       {/* ─── EMOTIONAL ARC: dream → the person who did it → the tool ─── */}
       <Manifesto />
       <MentorLetter />
 
-      {/* ─── SAT PREDICTOR — the 10-second tool + lead magnet ─── */}
-      <section className="section-padding" style={{ background: 'linear-gradient(180deg, var(--ink-3) 0%, var(--ink-2) 100%)' }}>
-        <div className="max-w-2xl mx-auto">
-          <FadeIn>
-            <SATPredictor />
-          </FadeIn>
-        </div>
-      </section>
-
-      {/* ─── THE SCROLLS — today's question, in the reader's face ─── */}
-      <ScrollTeaser />
-
       {/* ─── DEPARTURES — the split-flap showpiece ─── */}
       <DeparturesSection />
-
-      {/* ─── FIND YOUR BATTLEFIELD — invite card that opens the popup ─── */}
-      <section className="section-padding" style={{ background: 'linear-gradient(180deg, var(--ink-2) 0%, var(--ink-3) 100%)' }}>
-        <div className="max-w-2xl mx-auto">
-          <FadeIn>
-            <button
-              type="button"
-              onClick={() => { try { window.dispatchEvent(new Event('open-battlefield')) } catch {} }}
-              className="w-full rounded-3xl p-8 sm:p-10 text-center transition-all duration-300 hover:-translate-y-1 group"
-              style={{ background: 'rgba(var(--accent-rgb),0.05)', border: '1.5px solid rgba(var(--accent-rgb),0.3)' }}
-            >
-              <span className="section-tag mb-4 inline-block">🎯 30 Seconds · 4 Questions</span>
-              <h2
-                className="text-4xl md:text-5xl font-semibold text-white mb-2"
-                style={{ fontFamily: 'var(--font-display)' }}
-              >
-                Find Your <span className="text-gold-shimmer">Battlefield</span>
-              </h2>
-              <p className="text-gray-400 text-sm max-w-md mx-auto mb-6">
-                Four questions. Zero wrong answers. One verdict — stamped, sealed, and yours.
-              </p>
-              <span className="btn-gold inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl text-base group-hover:scale-105 transition-transform">
-                🎮 Play the 30-Second Quiz
-              </span>
-            </button>
-          </FadeIn>
-        </div>
-      </section>
 
       {/* ─── WALL OF MOMENTS — real photos, polaroid wall ─── */}
       <section className="section-padding overflow-hidden" style={{ background: 'var(--ink-2)' }}>

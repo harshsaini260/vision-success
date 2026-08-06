@@ -15,33 +15,92 @@ import { saveLead } from '@/lib/leads'
 import { playFanfare } from '@/lib/fanfare'
 import { sfxPop, sfxChime, sfxWhoosh } from '@/lib/sfx'
 
-/* the 13 questions, in Pola's voice */
+/* ─── THE QUESTIONS ───
+   Order is deliberate, and it changed for a reason.
+
+   This used to open with "your name" and "your WhatsApp" — the two
+   highest-cost things a stranger can ask, demanded before anything of
+   value had been given. That is where surveys bleed people. Contact
+   now comes LAST, after a student has spent two minutes on their own
+   answers: by then they have invested something, and the ask reads as
+   "where do I send this?" rather than "give me your number".
+
+   It opens instead on the dream — the one question with zero risk and
+   the highest pull. Then the practical barriers, then the honest one
+   nobody asks them, then the details, then contact. */
 const QUESTIONS = [
-  { id: 'name', section: 'About You', q: "First — what should I call you?", type: 'text', placeholder: 'your name', sensitive: true, required: true },
-  { id: 'whatsapp', section: 'About You', q: "Your WhatsApp? I'll send your plan there — nowhere else.", type: 'tel', placeholder: '10-digit number', sensitive: true, required: true },
-  { id: 'area', section: 'About You', q: 'Where are you dreaming from?', type: 'single', options: ['Amb', 'Bangana', 'Haroli', 'Daulatpur', 'Mehatpur', 'Una', 'Somewhere else'] },
-  { id: 'currentStatus', section: 'About You', q: 'Right now, you are…', type: 'single', options: ['Studying', 'Graduated', 'Working', 'Preparing full-time'] },
   {
-    id: 'exams', section: 'Exam Choice', q: 'Which dream are you chasing? (pick all that fit)', type: 'multi', required: true,
+    id: 'exams', section: 'The Dream', q: 'Which dream are you chasing? (pick all that fit)', type: 'multi', required: true,
     options: [
       { v: 'Study Abroad — SAT', tag: 'up to 100% scholarship 🎓' },
       { v: 'IELTS' },
       { v: 'NDA — Defence' },
       { v: 'JEE — Engineering' },
       { v: 'NEET — Medical' },
+      { v: 'CUET — Top universities' },
+      { v: 'Merchant Navy — IMU CET' },
       { v: 'CTET / HP TET / JBT — Teaching' },
       { v: 'Bank PO / Clerk / SSC' },
-      { v: 'Still figuring it out' },
+      { v: 'Class 9–12 school marks' },
+      { v: 'Still figuring it out', tag: 'completely fine 🙂' },
     ],
   },
-  { id: 'attempt', section: 'Exam Choice', q: "When's your attempt?", type: 'single', options: ['Next attempt', '~6 months away', '~1 year away', 'Not sure yet'] },
-  { id: 'prep', section: 'Exam Choice', q: 'How are you preparing today?', type: 'single', options: ['Self-study', 'YouTube / free content', 'A coaching institute', "Haven't started yet"] },
-  { id: 'challenge', section: 'Pain Points', q: "What's the biggest thing in your way? (pick all)", type: 'multi', options: ['Confusing syllabus', 'No proper guidance', 'Cost of coaching', 'Distance / travel', 'Poor faculty quality', 'Lack of motivation', 'Something else'] },
-  { id: 'disappointed', section: 'Pain Points', q: 'Tried coaching before? What let you down?', type: 'textarea', placeholder: 'optional — skip if you like', sensitive: true, optional: true },
-  { id: 'matters', section: 'Solution Fit', q: 'What matters MOST to you? (tap in order)', type: 'rank', options: ['Faculty credibility', 'Price', 'Batch timing', 'Result track record', 'Close to home'] },
-  { id: 'budget', section: 'Solution Fit', q: 'Comfortable monthly budget?', type: 'single', sensitive: true, options: ['Under ₹1,500', '₹1,500–3,000', '₹3,000–5,000', '₹5,000+'] },
-  { id: 'mode', section: 'Solution Fit', q: 'Preferred way to learn?', type: 'single', options: ['Offline at the institute', 'Online', 'Hybrid'] },
-  { id: 'timing', section: 'Solution Fit', q: 'Best batch timing for you?', type: 'single', options: ['Morning', 'Afternoon', 'Evening', 'Weekend only'] },
+  { id: 'currentStatus', section: 'The Dream', q: 'Right now, you are…', type: 'single', options: ['In Class 9 or 10', 'In Class 11', 'In Class 12', 'Class 12 done — dropper year', 'Graduated', 'Working'] },
+  { id: 'attempt', section: 'The Dream', q: "When's your attempt?", type: 'single', options: ['Next attempt', '~6 months away', '~1 year away', 'Not sure yet'] },
+  { id: 'prep', section: 'The Dream', q: 'How are you preparing today?', type: 'single', options: ['Self-study, alone', 'YouTube / free content', 'A coaching institute', 'School tuition only', "Haven't started yet"] },
+
+  /* ── the practical barriers ── */
+  {
+    id: 'challenge', section: "What's In The Way", q: "What's actually in your way? (pick all)", type: 'multi',
+    options: [
+      'The cost of coaching',
+      'No proper guidance — nobody to ask',
+      "Don't know where to start",
+      'Studying completely alone',
+      'Distance / travel from my village',
+      'Weak in one subject and it drags everything',
+      'Started too late',
+      'Board marks and entrance prep at the same time',
+      'My phone eats my day',
+      "Can't stay consistent",
+      'Something else',
+    ],
+  },
+  {
+    id: 'weakSubject', section: "What's In The Way", q: 'Which subject makes your stomach drop?', type: 'multi',
+    options: ['Maths', 'Physics', 'Chemistry', 'Biology', 'English', 'Reasoning / Aptitude', 'None — I just need direction'],
+  },
+
+  /* ── the honest one nobody asks them ──
+     Kept anonymous-feeling on purpose: Pola looks away, and this is
+     the question that most often produces the real reason a student
+     never enrolled anywhere. */
+  {
+    id: 'fear', section: 'The Honest One', q: 'Between us — what do you actually worry about?', type: 'multi', sensitive: true,
+    options: [
+      "That I'm not smart enough",
+      "That I'll try hard and still fail",
+      'That my family cannot afford it',
+      "That I'll waste a year",
+      'That people will laugh if I say my goal out loud',
+      "That a small town means I've already lost",
+      'That I have nobody in my family who has done this',
+      'That my parents want something different for me',
+      'Honestly, none of these',
+    ],
+  },
+  { id: 'decider', section: 'The Honest One', q: "Whose decision is this, really?", type: 'single', sensitive: true, options: ['Mine', 'My parents’', 'Ours together', "Haven't discussed it yet"] },
+  { id: 'disappointed', section: 'The Honest One', q: 'Tried coaching before? What let you down?', type: 'textarea', placeholder: 'optional — skip if you like', sensitive: true, optional: true },
+
+  /* ── fit ── */
+  { id: 'matters', section: 'What Would Help', q: 'What matters MOST to you? (tap in order)', type: 'rank', options: ['Faculty credibility', 'Price', 'Batch timing', 'Result track record', 'Close to home'] },
+  { id: 'budget', section: 'What Would Help', q: 'Comfortable monthly budget?', type: 'single', sensitive: true, options: ['Under ₹1,500', '₹1,500–3,000', '₹3,000–5,000', '₹5,000+', "I genuinely don't know"] },
+  { id: 'timing', section: 'What Would Help', q: 'Best batch timing for you?', type: 'single', options: ['Morning', 'Afternoon', 'Evening', 'Weekend only'] },
+
+  /* ── contact, last, once the work is done ── */
+  { id: 'area', section: 'Where To Send It', q: 'Where are you dreaming from?', type: 'single', options: ['Una', 'Amb', 'Bangana', 'Haroli', 'Daulatpur', 'Mehatpur', 'Somewhere else'] },
+  { id: 'name', section: 'Where To Send It', q: 'Almost done — what should I call you?', type: 'text', placeholder: 'your name', sensitive: true, required: true },
+  { id: 'whatsapp', section: 'Where To Send It', q: "Where do I send your plan? WhatsApp only — nowhere else.", type: 'tel', placeholder: '10-digit number', sensitive: true, required: true },
 ]
 
 /* route to the funnel that best matches their chosen exams */
@@ -51,6 +110,8 @@ function routeFor(exams = []) {
   if (has('NDA')) return { href: '/enroll/nda', label: 'the NDA battle plan', fomo: '7+ officers were forged right here. You could be next.' }
   if (has('JEE')) return { href: '/enroll/jee', label: 'the JEE mission — taught by an NIT grad', fomo: 'Learn from someone who sat in the seat you want.' }
   if (has('NEET')) return { href: '/enroll/neet', label: 'the NEET 600+ plan', fomo: '50+ students from this room now wear the white coat.' }
+  if (has('CUET')) return { href: '/cuet-coaching-una', label: 'the CUET route to DU, BHU & JNU', fomo: 'One exam, 250+ universities. Most students in Una never hear about it in time.' }
+  if (has('Merchant')) return { href: '/merchant-navy-coaching-una', label: 'the Merchant Navy path — IMU CET', fomo: 'One of the very few places in Himachal that prepares you for it.' }
   if (has('CTET') || has('Bank') || has('SSC')) return { href: '/courses/govt-jobs', label: 'the Sarkari track — HP TET & Govt Jobs', fomo: 'A secure future, prepared right here in Una.' }
   return { href: '/courses', label: 'every path we teach', fomo: "Let's find the one that's yours." }
 }

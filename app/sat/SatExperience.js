@@ -11,6 +11,7 @@ import Link from 'next/link'
 import { motion, useInView, AnimatePresence } from 'framer-motion'
 import { SITE, wa } from '@/lib/site'
 import { sfxStamp } from '@/lib/sfx'
+import SATPredictor from '@/components/SATPredictor'
 import {
   SAT_DATES,
   SAT_PER_YEAR,
@@ -597,6 +598,16 @@ export default function SatExperience({ faqs = [] }) {
               </FadeIn>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* ═══ THE PREDICTOR — moved here off the homepage, where it now
+             meets people who have already declared SAT intent ═══ */}
+      <section className="px-4 pb-10 md:pb-16" style={{ background: 'var(--ink-2)' }}>
+        <div className="max-w-2xl mx-auto">
+          <FadeIn>
+            <SATPredictor />
+          </FadeIn>
         </div>
       </section>
 
