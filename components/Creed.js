@@ -31,10 +31,11 @@ const WORDS = [
   { t: 'the', hot: true }, { t: 'blood.', hot: true },
 ]
 
-/* The line lands across the film's opening beat — the empty room,
-   before anyone walks in. Last word lands at 8.2s. */
-const START = 1.4
-const PER_WORD = 0.62
+/* The line is written across the film's opening beat — the walk up to
+   the door — and finishes at about 4.2s, just as the film's own first
+   handwritten caption fades in. Two pieces of writing never compete. */
+const START = 0.6
+const PER_WORD = 0.30
 
 export default function Creed() {
   const videoRef = useRef(null)
