@@ -18,6 +18,7 @@ import StudentStories from '@/components/StudentStories'
 import HomeDocumentary from '@/components/HomeDocumentary'
 import Creed from '@/components/Creed'
 import Mirror from '@/components/Mirror'
+import Motto from '@/components/Motto'
 import { playFanfare } from '@/lib/fanfare'
 import { sfxPop, sfxNope, sfxWhoosh, sfxChime } from '@/lib/sfx'
 
@@ -415,7 +416,7 @@ function BrochureMagnet() {
       <div className="max-w-3xl mx-auto relative z-10">
         <FadeIn>
           <div className="text-center mb-8">
-            <span className="section-tag mb-4 inline-block">🤫 Psst… Steal Our SAT Blueprint</span>
+            <span className="section-tag mb-4 inline-block">The SAT Blueprint — Yours Free</span>
             <h2
               className="text-4xl md:text-5xl font-semibold text-white mb-3 leading-tight"
               style={{ fontFamily: 'var(--font-display)' }}
@@ -746,7 +747,7 @@ function ScrollTeaser() {
       <div className="max-w-3xl mx-auto">
         <FadeIn>
           <div className="text-center mb-8">
-            <span className="section-tag mb-4 inline-block">📖 From The Blog</span>
+            <span className="section-tag mb-4 inline-block">From The Journal</span>
             <h2 className="text-4xl md:text-5xl font-semibold text-white mb-2" style={{ fontFamily: 'var(--font-display)' }}>
               Today&apos;s <span className="text-gold-shimmer">Question</span>
             </h2>
@@ -800,7 +801,7 @@ function DeparturesSection() {
       <div className="max-w-3xl mx-auto">
         <FadeIn>
           <div className="text-center mb-8">
-            <span className="section-tag mb-4 inline-block">🛫 Now Boarding</span>
+            <span className="section-tag mb-4 inline-block">Now Boarding</span>
             <h2 className="text-4xl md:text-5xl font-semibold text-white mb-2" style={{ fontFamily: 'var(--font-display)' }}>
               Departures: <span className="text-gold-shimmer">Una → The World</span>
             </h2>
@@ -1293,6 +1294,9 @@ export default function HomePage() {
         </div>
 
       </section>
+
+      {/* ─── THE MOTTO — their sentence, then ours ─── */}
+      <Motto />
 
       {/* ─── ACHIEVEMENT TICKER ─── */}
       <div
