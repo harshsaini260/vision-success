@@ -17,16 +17,29 @@ BONE = (237, 228, 211)
 
 
 def person_mask(img, downscale=3):
-    """Binary-ish alpha of the largest human in the frame, full size."""
+    """Alpha of the largest human in frame, full size.
+
+    Keeps only the biggest connected blob — the raw matte also grabs
+    chair backs and bag straps near the subject, which then float in
+    mid-air once the background is dimmed.
+    """
+    from scipy import ndimage
     small = img.resize((img.width // downscale, img.height // downscale))
     m = remove(small, session=SESSION, only_mask=True)
-    return m.resize(img.size, Image.LANCZOS)
+    a = np.array(m)
+    lab, n = ndimage.label(a > 110)
+    if n > 1:
+        sizes = ndimage.sum(np.ones_like(lab), lab, range(1, n + 1))
+        keep = int(np.argmax(sizes)) + 1
+        a = np.where(lab == keep, a, 0).astype(np.uint8)
+    a = ndimage.binary_fill_holes(a > 110).astype(np.uint8) * 255
+    return Image.fromarray(a).filter(ImageFilter.GaussianBlur(1.0)).resize(img.size, Image.LANCZOS)
 
 
 def outline_card(
     frame_path, out_path, mask=None,
     dim=0.42, blur=6, glow=26, stroke=7,
-    name="", role="", note="", side="left",
+    name="", role="", note="", note2="", side="left",
 ):
     base = Image.open(frame_path).convert("RGB")
     W, H = base.size
@@ -73,9 +86,11 @@ def outline_card(
     ink(role, hand_s, tx, ty + int(W * 0.10), GOLD)
     if note:
         ink(note, hand_s, tx, ty + int(W * 0.155), BONE)
+    if note2:
+        ink(note2, hand_s, tx, ty + int(W * 0.210), BONE)
 
     # a hand-drawn arrow curving from under the writing down to his head
-    ax0, ay0 = tx + int(W * 0.14), ty + int(W * 0.205)
+    ax0, ay0 = tx + int(W * 0.14), ty + int(W * (0.260 if note2 else 0.205))
     ax1, ay1 = sx, top - int(H * 0.014)
     mx, my = (ax0 + ax1) // 2 - int(W * 0.05), (ay0 + ay1) // 2
     pts = []
