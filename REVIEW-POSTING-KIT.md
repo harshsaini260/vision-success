@@ -3,15 +3,18 @@
 **File:** `review_master.mp4` — 1080×1920, 27s, captions burned in, −14 LUFS.
 Same file works for Instagram Reels, Facebook Reels, and YouTube Shorts.
 
-**Before you post:** get a parent's written OK on WhatsApp. He is a minor and
-this goes public on three platforms. One line — *"happy for us to post your
-son's video on our pages?"* — and screenshot the reply.
+**Speaker:** Aniket, Class 9.
+
+**Before you post:** get his parents' written OK on WhatsApp. He is a minor,
+he is now named on screen, and this goes public on three platforms. One line —
+*"happy for us to post Aniket's video, with his name, on our pages?"* — and
+screenshot the reply.
 
 ---
 
 ## Instagram (Reel)
 
-> We asked one of our students what this place actually is.
+> We asked Aniket, one of our Class 9 students, what this place actually is.
 >
 > We were expecting "it's a good coaching institute."
 >
@@ -37,7 +40,7 @@ son's video on our pages?"* — and screenshot the reply.
 
 ## Facebook
 
-> We asked one of our students what Vision Success actually is.
+> We asked Aniket, one of our Class 9 students, what Vision Success actually is.
 >
 > He said: *"For some, it's just a coaching institute. But for us, it's a place where we shape the future… we are not just preparing for exams, we are preparing for something that we are going to become."*
 >
@@ -56,10 +59,10 @@ son's video on our pages?"* — and screenshot the reply.
 ## YouTube Shorts
 
 **Title:**
-> "We're not just preparing for exams" — a student explains what our institute is #shorts
+> "We're not just preparing for exams" — Aniket, Class 9, on what our institute is #shorts
 
 **Description:**
-> We asked one of our students at Vision Success, Una what this place actually is. This is his answer, uncut.
+> We asked Aniket, a Class 9 student at Vision Success, Una, what this place actually is. This is his answer, uncut.
 >
 > Vision Success Coaching Institute — Class 9–12, NDA, JEE, NEET, CUET, SAT and Merchant Navy preparation. Near Old Bus Stand, Una, Himachal Pradesh. Batches capped at 15.
 >
@@ -72,7 +75,7 @@ son's video on our pages?"* — and screenshot the reply.
 
 ## WhatsApp status / broadcast
 
-> One of our students was asked what Vision Success is.
+> We asked Aniket, one of our Class 9 students, what Vision Success is.
 > He said: *"we are not just preparing for exams, we are preparing for something that we are going to become."*
 > 27 seconds. Worth it. 👇
 > Free demo class: wa.me/918219254332

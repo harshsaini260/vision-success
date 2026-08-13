@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { SITE, wa } from '@/lib/site'
 
 /* ─── STUDENT VOICE — one real review, uncut ───
-   A student of ours was asked what this place actually is. What he said
+   Aniket, Class 9, was asked what this place actually is. What he said
    is better than anything we could write about ourselves, so the whole
    section is built to get out of its way: his face, his words, and a
    line to act on. No stock footage, no borrowed clips, no re-enactment.
@@ -16,9 +16,7 @@ import { SITE, wa } from '@/lib/site'
    restarts from zero with sound — nobody should join his sentence
    halfway through. */
 
-/* If he is happy to be named, put his name and class here and it shows
-   under the film instead of the generic line. */
-const SPEAKER = { name: '', klass: '' }
+const SPEAKER = { name: 'Aniket', klass: 'Class 9' }
 
 const PULL = 'we are not just preparing for exams — we are preparing for something that we are going to become'
 
@@ -105,7 +103,7 @@ export default function StudentVoice() {
       id="student-voice"
       style={{ scrollMarginTop: 70, background: 'linear-gradient(180deg, var(--ink) 0%, var(--ink-2) 100%)' }}
       className="relative overflow-hidden grain section-padding"
-      aria-label="A student review"
+      aria-label="A student review — Aniket, Class 9"
     >
       <script
         type="application/ld+json"
@@ -113,8 +111,8 @@ export default function StudentVoice() {
           __html: JSON.stringify({
             '@context': 'https://schema.org',
             '@type': 'VideoObject',
-            name: 'What Vision Success actually is — a student review',
-            description: `A student at Vision Success Coaching Institute, Una, on what the institute is: "${PULL}."`,
+            name: 'What Vision Success actually is — Aniket, Class 9',
+            description: `Aniket, a Class 9 student at Vision Success Coaching Institute, Una, on what the institute is: "${PULL}."`,
             thumbnailUrl: `${SITE.url}/video/review-poster.jpg`,
             contentUrl: `${SITE.url}/video/review-720.mp4`,
             uploadDate: '2026-08-14',
@@ -131,7 +129,7 @@ export default function StudentVoice() {
             className="mt-4 text-3xl sm:text-4xl md:text-5xl font-semibold text-white leading-tight"
             style={{ fontFamily: 'var(--font-display)' }}
           >
-            We asked one of our students<br className="hidden sm:block" />{' '}
+            We asked Aniket, Class 9,<br className="hidden sm:block" />{' '}
             <span className="text-gold-shimmer">what this place really is</span>
           </h2>
           <p className="mt-4 text-sm md:text-base" style={{ color: 'var(--bone-dim)' }}>
@@ -168,7 +166,7 @@ export default function StudentVoice() {
                 onEnded={() => setDone(true)}
                 onClick={listen}
                 className="w-full h-full object-cover cursor-pointer"
-                aria-label="A student of Vision Success describing the institute"
+                aria-label="Aniket, a Class 9 student at Vision Success, describing the institute"
               />
 
               {/* sound affordance — the whole point is that they hear him */}
