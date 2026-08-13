@@ -16,6 +16,7 @@ import PolarBuddy from '@/components/PolarBuddy'
 import Scribble from '@/components/Scribble'
 import StudentStories from '@/components/StudentStories'
 import HomeDocumentary from '@/components/HomeDocumentary'
+import StudentVoice from '@/components/StudentVoice'
 import Creed from '@/components/Creed'
 import Mirror from '@/components/Mirror'
 import Motto from '@/components/Motto'
@@ -1297,6 +1298,12 @@ export default function HomePage() {
 
       {/* ─── THE MOTTO — their sentence, then ours ─── */}
       <Motto />
+
+      {/* ─── THE STUDENT — proof, before we have asked for anything ───
+           High on the page on purpose: after the motto, a visitor has
+           heard us talk about ourselves twice. This is the first voice
+           that is not ours. */}
+      <StudentVoice />
 
       {/* ─── ACHIEVEMENT TICKER ─── */}
       <div
