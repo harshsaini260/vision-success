@@ -17,6 +17,7 @@ import Scribble from '@/components/Scribble'
 import StudentStories from '@/components/StudentStories'
 import HomeDocumentary from '@/components/HomeDocumentary'
 import StudentVoice from '@/components/StudentVoice'
+import FreedomOffer from '@/components/FreedomOffer'
 import Creed from '@/components/Creed'
 import Mirror from '@/components/Mirror'
 import Motto from '@/components/Motto'
@@ -1298,6 +1299,11 @@ export default function HomePage() {
 
       {/* ─── THE MOTTO — their sentence, then ours ─── */}
       <Motto />
+
+      {/* ─── EIGHT DECADES — sits straight after the motto because it is
+           the same sentence, argued by a country instead of an institute.
+           Date-gated: it removes itself on 1 September. ─── */}
+      <FreedomOffer />
 
       {/* ─── THE STUDENT — proof, before we have asked for anything ───
            High on the page on purpose: after the motto, a visitor has

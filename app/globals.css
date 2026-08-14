@@ -25,6 +25,7 @@
      for interface, and Caveat kept for handwritten marginalia. */
   --font-display: 'Cormorant Garamond', 'Iowan Old Style', Georgia, serif;
   --font-ui: 'Inter', -apple-system, sans-serif;
+  --font-hand: 'Caveat', 'Segoe Script', cursive;
 }
 
 * {
@@ -1642,4 +1643,48 @@ body[data-kiosk='1'] main {
 }
 body[data-kiosk='1'] {
   overscroll-behavior: none;
+}
+
+/* ─── INDEPENDENCE DAY LAYER (August only) ───
+   The site is ink and gold all year. For three weeks the three colours
+   are allowed in, but only as a hairline and a watermark — a tricolour
+   wash over an old-money palette would look like a sale, and this is
+   not a sale. */
+.tricolour-rule {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    #FF9933 0%, #FF9933 33.3%,
+    #F6F1E6 33.3%, #F6F1E6 66.6%,
+    #138808 66.6%, #138808 100%
+  );
+  opacity: 0.85;
+}
+
+/* 24 spokes, drawn in light, sitting behind the section like a
+   watermark pressed into the paper. */
+.chakra-watermark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(78vw, 780px);
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  opacity: 0.05;
+  background:
+    repeating-conic-gradient(
+      from 0deg,
+      var(--accent) 0deg 0.9deg,
+      transparent 0.9deg 15deg
+    ),
+    radial-gradient(circle, transparent 0 32%, var(--accent) 32% 33.4%, transparent 33.4%);
+  -webkit-mask-image: radial-gradient(circle, #000 0 34%, transparent 62%);
+  mask-image: radial-gradient(circle, #000 0 34%, transparent 62%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chakra-watermark { opacity: 0.035; }
 }

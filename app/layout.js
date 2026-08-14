@@ -1,6 +1,7 @@
 import './globals.css'
 import { Toaster } from 'react-hot-toast'
 import Navigation from '@/components/Navigation'
+import IndependenceBand from '@/components/IndependenceBand'
 import Footer from '@/components/Footer'
 import FloatingButtons from '@/components/FloatingButtons'
 import { ThemeProvider } from '@/components/ThemeProvider'
@@ -165,6 +166,7 @@ export default function RootLayout({ children }) {
         <ThemeProvider>
           <Analytics />
           <ScrollProgress />
+          <IndependenceBand />
           <Navigation />
           <main>{children}</main>
           <Footer />
