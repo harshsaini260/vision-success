@@ -18,7 +18,7 @@
   --ink-2: #0B1119;           /* page base */
   --ink-3: #111926;           /* raised surface */
   --bone: #EDE4D3;            /* primary text */
-  --bone-dim: rgba(237, 228, 211, 0.62);
+  --bone-dim: rgba(237, 228, 211, 0.74);   /* was 0.62 — too faint to read on a phone outdoors */
   --hairline: rgba(237, 228, 211, 0.10);
 
   /* Three families: a high-contrast serif for voice, a neutral sans
@@ -1688,3 +1688,84 @@ body[data-kiosk='1'] {
 @media (prefers-reduced-motion: reduce) {
   .chakra-watermark { opacity: 0.035; }
 }
+
+/* ─── INDEPENDENCE BAND ───
+   The band sits in normal flow directly beneath the fixed navigation
+   rather than fighting it for the top strip. The nav is fixed at z-50
+   and would not yield `top` to any stylesheet rule — so instead of
+   winning that argument, the band simply stands below it, where nothing
+   can be printed across the flag. It scrolls away with the page, which
+   is what an announcement should do anyway. */
+body[data-kiosk='1'] { padding-top: 0 !important; }
+
+/* ─── PROOF DECK ───
+   Native scroll-snap, so a thumb gets the real swipe it expects and no
+   drag library ships to the phone to fake one. */
+.deck-track {
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.deck-track::-webkit-scrollbar { display: none; }
+.deck-slide {
+  flex: 0 0 100%;
+  min-width: 100%;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+.deck-track:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -4px;
+}
+
+/* the arrow asks once, then stops asking */
+@keyframes deck-nudge {
+  0%, 72%, 100% { transform: translateX(0); }
+  82% { transform: translateX(5px); }
+  92% { transform: translateX(0); }
+}
+.deck-nudge { animation: deck-nudge 2.6s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .deck-track { scroll-behavior: auto; }
+  .deck-nudge { animation: none; }
+}
+
+/* ─── READABILITY ───
+   Most of this site is read on a phone, one-handed, often outside in
+   Himachal daylight. Elegant and unreadable is just unreadable, so the
+   body copy gets a size and a line-height a parent can manage without
+   pinching to zoom, and every tappable thing gets a real target. */
+body {
+  font-size: 16.5px;
+  line-height: 1.65;
+}
+@media (min-width: 768px) {
+  body { font-size: 17px; }
+}
+
+main p {
+  line-height: 1.72;
+  max-width: 74ch;          /* a line nobody loses their place in */
+}
+main p.text-center,
+main .text-center p { margin-left: auto; margin-right: auto; }
+
+/* nothing tappable smaller than a fingertip */
+main a[class*='btn'],
+main button:not([class*='w-']):not([style*='width']) {
+  min-height: 44px;
+}
+
+/* form fields people actually have to type into */
+main input,
+main textarea,
+main select {
+  font-size: 16px;          /* below 16px iOS zooms the whole page on focus */
+  min-height: 48px;
+}
+main label { line-height: 1.5; }

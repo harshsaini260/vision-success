@@ -20,7 +20,7 @@ const SPEAKER = { name: 'Aniket', klass: 'Class 9' }
 
 const PULL = 'we are not just preparing for exams — we are preparing for something that we are going to become'
 
-export default function StudentVoice() {
+export default function StudentVoice({ embedded = false }) {
   const videoRef = useRef(null)
   const wrapRef = useRef(null)
   const [sound, setSound] = useState(false)
@@ -101,8 +101,11 @@ export default function StudentVoice() {
     <section
       ref={wrapRef}
       id="student-voice"
-      style={{ scrollMarginTop: 70, background: 'linear-gradient(180deg, var(--ink) 0%, var(--ink-2) 100%)' }}
-      className="relative overflow-hidden grain section-padding"
+      style={{
+        scrollMarginTop: 70,
+        background: embedded ? 'transparent' : 'linear-gradient(180deg, var(--ink) 0%, var(--ink-2) 100%)',
+      }}
+      className={embedded ? 'relative px-0 py-2' : 'relative overflow-hidden grain section-padding'}
       aria-label="A student review — Aniket, Class 9"
     >
       <script
@@ -123,7 +126,7 @@ export default function StudentVoice() {
       />
 
       <div className="relative max-w-6xl mx-auto px-5">
-        <div className="text-center mb-10 md:mb-14">
+        <div className={embedded ? 'hidden' : 'text-center mb-10 md:mb-14'}>
           <span className="eyebrow">In their own words</span>
           <h2
             className="mt-4 text-3xl sm:text-4xl md:text-5xl font-semibold text-white leading-tight"

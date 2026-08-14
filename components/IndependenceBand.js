@@ -6,20 +6,39 @@ import KhadiFlag from './KhadiFlag'
 import { IND, isLive, daysLeft } from '@/lib/independence'
 
 /* ─── THE BAND ───
-   The first thing on the site for three weeks in August. It sits above
-   everything, states what day it is, and hands the visitor one link.
+   The first thing on the site for three weeks in August.
 
-   Rendered client-side after mount on purpose: the campaign is
-   date-gated, and a statically generated page would otherwise ship a
-   September visitor a banner about August. */
+   It is fixed above the navigation rather than sitting in flow beneath
+   it. The navigation is fixed at z-50, so a band in normal flow ended up
+   underneath it with our own logo printed across the flag — which is not
+   a layout bug so much as a discourtesy. The band now owns the top strip
+   outright and `data-ind` on the body pushes the nav, the scroll bar and
+   the page content down by its exact height.
+
+   The flag stands on a pole, small and upright. Nothing overlaps it.
+
+   Rendered after mount on purpose: the campaign is date-gated, and a
+   statically generated page would otherwise hand a September visitor a
+   banner about August. */
 
 export default function IndependenceBand() {
   const [live, setLive] = useState(false)
   const [left, setLeft] = useState(0)
 
+  const [navH, setNavH] = useState(76)
+
   useEffect(() => {
     setLive(isLive())
     setLeft(daysLeft())
+    /* Clear the fixed navigation by its real height rather than a guess —
+       it differs between the mobile and desktop bars. */
+    const measure = () => {
+      const nav = document.querySelector('.site-nav')
+      if (nav) setNavH(Math.round(nav.getBoundingClientRect().height))
+    }
+    measure()
+    window.addEventListener('resize', measure)
+    return () => window.removeEventListener('resize', measure)
   }, [])
 
   if (!live) return null
@@ -27,28 +46,38 @@ export default function IndependenceBand() {
   return (
     <div
       className="relative overflow-hidden"
-      style={{ background: 'var(--ink)', borderBottom: '1px solid var(--hairline)' }}
+      style={{
+        marginTop: navH,
+        background: 'linear-gradient(180deg, #050A10 0%, var(--ink) 100%)',
+        borderTop: '1px solid var(--hairline)',
+        borderBottom: '1px solid var(--hairline)',
+      }}
     >
-      {/* the three colours, worn thin — this is the only place they run
-          edge to edge, so the rest of the site stays ink and gold */}
       <div className="tricolour-rule" aria-hidden />
 
-      <div className="max-w-6xl mx-auto px-5 py-3 flex items-center justify-center gap-4 sm:gap-6 text-center flex-wrap">
-        <KhadiFlag width={54} className="flex-shrink-0" style={{ filter: 'drop-shadow(0 3px 10px rgba(0,0,0,0.5))' }} />
+      <div className="max-w-6xl mx-auto px-4 py-2.5 flex items-center justify-center gap-3 sm:gap-5">
+        {/* small, on its pole, standing straight — and in front of everything */}
+        <KhadiFlag
+          width={34}
+          pole
+          className="flex-shrink-0"
+          style={{ filter: 'drop-shadow(0 2px 6px rgba(0,0,0,0.65))' }}
+        />
 
-        <p className="text-[13px] sm:text-sm leading-snug" style={{ color: 'var(--bone)' }}>
-          <strong style={{ fontFamily: 'var(--font-display)', fontSize: '1.15em', letterSpacing: '0.02em' }}>
+        <p className="text-[12px] sm:text-sm leading-tight text-center" style={{ color: 'var(--bone)' }}>
+          <strong style={{ fontFamily: 'var(--font-display)', fontSize: '1.2em', letterSpacing: '0.02em' }}>
             {IND.ordinal}th Independence Day
           </strong>
-          <span className="hidden sm:inline" style={{ color: 'var(--bone-dim)' }}>
+          <span className="hidden md:inline" style={{ color: 'var(--bone-dim)' }}>
             {' '}— eight decades of being told it was not possible.{' '}
           </span>
-          <Link href="#freedom" className="underline underline-offset-4" style={{ color: 'var(--accent)' }}>
-            Eight doors, eight funded seats
+          <span className="hidden sm:inline">{' '}</span>
+          <Link href="/#freedom" className="underline underline-offset-4 whitespace-nowrap" style={{ color: 'var(--accent)' }}>
+            8 funded seats
           </Link>
           {left > 0 && (
-            <span style={{ color: 'var(--bone-dim)' }}>
-              {' '}· {left} day{left === 1 ? '' : 's'} left
+            <span className="hidden sm:inline" style={{ color: 'var(--bone-dim)' }}>
+              {' '}· {left} days left
             </span>
           )}
         </p>

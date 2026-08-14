@@ -166,9 +166,11 @@ export default function RootLayout({ children }) {
         <ThemeProvider>
           <Analytics />
           <ScrollProgress />
-          <IndependenceBand />
           <Navigation />
-          <main>{children}</main>
+          <main>
+            <IndependenceBand />
+            {children}
+          </main>
           <Footer />
           <FloatingButtons />
           <StickyActionBar />

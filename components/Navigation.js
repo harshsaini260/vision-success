@@ -84,7 +84,7 @@ export default function Navigation() {
   return (
     <>
       <nav
-        className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+        className="site-nav fixed top-0 left-0 right-0 z-50 transition-all duration-300"
         style={{
           background: scrolled
             ? 'rgba(4,9,15,0.95)'

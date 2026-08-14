@@ -15,8 +15,7 @@ import DepartureBoard from '@/components/DepartureBoard'
 import PolarBuddy from '@/components/PolarBuddy'
 import Scribble from '@/components/Scribble'
 import StudentStories from '@/components/StudentStories'
-import HomeDocumentary from '@/components/HomeDocumentary'
-import StudentVoice from '@/components/StudentVoice'
+import ProofDeck from '@/components/ProofDeck'
 import FreedomOffer from '@/components/FreedomOffer'
 import Creed from '@/components/Creed'
 import Mirror from '@/components/Mirror'
@@ -1305,11 +1304,12 @@ export default function HomePage() {
            Date-gated: it removes itself on 1 September. ─── */}
       <FreedomOffer />
 
-      {/* ─── THE STUDENT — proof, before we have asked for anything ───
-           High on the page on purpose: after the motto, a visitor has
-           heard us talk about ourselves twice. This is the first voice
-           that is not ours. */}
-      <StudentVoice />
+      {/* ─── PROOF — before we have asked for anything ───
+           High on the page on purpose: after the motto a visitor has heard
+           us talk about ourselves twice, and this is the first voice that
+           is not ours. Aniket and the documentary share one swipeable
+           deck so neither is buried under the other. */}
+      <ProofDeck />
 
       {/* ─── ACHIEVEMENT TICKER ─── */}
       <div
@@ -1571,7 +1571,6 @@ export default function HomePage() {
            Moved directly under the courses: a visitor deciding whether to
            trust us should not have to scroll past six more sections first. */}
       <div id="stories" style={{ scrollMarginTop: 70 }}>
-        <HomeDocumentary />
         <StudentStories />
       </div>
 

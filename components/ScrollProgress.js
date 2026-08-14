@@ -13,7 +13,7 @@ export default function ScrollProgress() {
   return (
     <>
       <motion.div
-        className="fixed top-0 left-0 right-0 h-[3px] z-[60] origin-left"
+        className="site-progress fixed top-0 left-0 right-0 h-[3px] z-[60] origin-left"
         style={{
           scaleX,
           background: 'linear-gradient(90deg, var(--accent-dark), var(--accent), var(--accent-light))',
@@ -23,7 +23,7 @@ export default function ScrollProgress() {
       />
       {/* Pola rides the bar tip */}
       <motion.div
-        className="fixed top-[2px] left-0 z-[61] pointer-events-none select-none scroll-bear"
+        className="site-progress-bear fixed top-[2px] left-0 z-[61] pointer-events-none select-none scroll-bear"
         style={{ x: bearX, fontSize: 15, lineHeight: 1 }}
         aria-hidden
       >
