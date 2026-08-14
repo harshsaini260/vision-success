@@ -1627,3 +1627,19 @@ img { max-width: 100%; height: auto; }
   .poster-hook { font-size: 52px; }
   .poster-qr { width: 62mm; }
 }
+
+/* ─── KIOSK MODE ───
+   The college survey runs on a tablet that gets handed from student to
+   student. While it is open, every other thing the site puts on screen —
+   the nav, the footer, the WhatsApp button, the demo popup — is a way to
+   tap out of the form by accident, so all of it goes. <main> is the only
+   direct child of <body> left standing. */
+body[data-kiosk='1'] > *:not(main) {
+  display: none !important;
+}
+body[data-kiosk='1'] main {
+  padding: 0 !important;
+}
+body[data-kiosk='1'] {
+  overscroll-behavior: none;
+}

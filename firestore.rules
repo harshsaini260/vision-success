@@ -104,6 +104,15 @@ service cloud.firestore {
       allow read, update, delete: if isAdmin();
     }
 
+    // Career Clarity survey run from a tablet in colleges (/college).
+    // Same shape as the others: the corridor may write, only admin reads.
+    // The kiosk keeps unsent responses on the tablet until this rule is
+    // live, so nothing collected before deployment is lost.
+    match /collegeSurvey/{id} {
+      allow create: if true;
+      allow read, update, delete: if isAdmin();
+    }
+
     // Community blog scrolls (/blog). Submissions MUST arrive unapproved,
     // so nothing can ever self-publish; only admin flips approved.
     match /blogs/{id} {
