@@ -1832,3 +1832,47 @@ main label { line-height: 1.5; }
   .cinema-bars span { transition: none; }
   .film-portal, .film-portal-arrow { transition: none; }
 }
+
+/* ─── COURSE TILES ───
+   One tap-sized tile per door, eight of them visible at once. Detail
+   lives on the course pages; the homepage's job is only to let somebody
+   find themselves on the map without scrolling for it. */
+.course-tile {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 16px 14px;
+  min-height: 136px;
+  border-radius: 16px;
+  background: rgba(242, 236, 224, 0.045);
+  border: 1px solid var(--hairline);
+  transition: background .22s ease, border-color .22s ease, transform .22s ease;
+}
+.course-tile:hover {
+  background: rgba(var(--accent-rgb), 0.10);
+  border-color: rgba(var(--accent-rgb), 0.50);
+  transform: translateY(-2px);
+}
+.course-tile--star {
+  background: rgba(var(--accent-rgb), 0.075);
+  border-color: rgba(var(--accent-rgb), 0.42);
+}
+.course-tile-emoji { font-size: 24px; line-height: 1; }
+.course-tile-badge {
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  font-weight: 700;
+  color: var(--accent);
+}
+.course-tile-name {
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: 600;
+  color: #fff;
+  line-height: 1.15;
+}
+.course-tile-line {
+  font-size: 12px;
+  line-height: 1.42;
+  color: var(--bone-dim);
+}

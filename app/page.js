@@ -1338,230 +1338,74 @@ export default function HomePage() {
       {/* ─── THE BLUEPRINT — grab it before you even reach the courses ─── */}
       <BrochureMagnet />
 
-      {/* ─── COURSES ─── */}
+      {/* ─── COURSES — the whole map on one screen ───
+           This block was 2,113px: a large featured SAT panel, then seven
+           long cards, then a three-step process strip. Somebody deciding
+           where they fit does not need any of that here — they need to
+           see every door at once and tap the one that is theirs. The long
+           copy already lives on each course page, which is where a person
+           who has chosen actually goes.
+
+           The SAT desk is now featured by treatment rather than by taking
+           up half the section. (The old opening tag also carried two
+           `style` props, so the background was being silently dropped.) */}
       <section
         id="courses"
-        style={{ scrollMarginTop: 70 }}
-        className="section-padding relative"
         style={{
+          scrollMarginTop: 70,
           background: 'linear-gradient(180deg, var(--ink-3) 0%, var(--ink-2) 100%)',
         }}
+        className="section-padding relative"
       >
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-6xl mx-auto">
           <FadeIn>
-            <div className="text-center mb-16">
-              <span className="section-tag mb-4 inline-block">Our Programs</span>
+            <div className="text-center mb-8 md:mb-10">
+              <span className="section-tag mb-3 inline-block">Our Programs</span>
               <h2
-                className="text-4xl md:text-5xl font-semibold text-white mb-4"
+                className="text-3xl md:text-4xl font-semibold text-white mb-3"
                 style={{ fontFamily: 'var(--font-display)' }}
               >
-                Choose Your Path
+                Eight doors. <span className="text-gold-shimmer">Pick yours.</span>
               </h2>
-              <p className="text-gray-400 max-w-xl mx-auto">
-                NDA is our flagship. JEE, NEET, CUET and Foundation complete the map — and the{' '}
-                <Link href="/sat" className="text-gold-400 font-semibold hover:underline">
-                  SAT · IELTS study-abroad desk
-                </Link>{' '}
-                extends it past the border.
+              <p className="max-w-xl mx-auto text-sm md:text-base" style={{ color: 'var(--bone-dim)' }}>
+                Tap any one for its syllabus, batch timings and what it actually costs.
               </p>
             </div>
           </FadeIn>
 
-          {/* SAT — FEATURED BIG. Sold by the man who scored it. */}
-          <FadeIn>
-            <div
-              className="relative rounded-3xl overflow-hidden mb-8 p-8 md:p-12"
-              style={{
-                background: 'linear-gradient(135deg, rgba(var(--accent-rgb),0.12) 0%, rgba(var(--accent-rgb),0.04) 100%)',
-                border: '1.5px solid rgba(var(--accent-rgb),0.35)',
-              }}
-            >
-              <div className="absolute top-6 right-6">
-                <span className="course-badge">FLAGSHIP COURSE</span>
-              </div>
-              <div className="grid md:grid-cols-2 gap-8 items-center">
-                <div>
-                  <div className="text-5xl mb-4">🌍</div>
-                  <h3
-                    className="text-4xl md:text-5xl font-semibold text-white mb-2"
-                    style={{ fontFamily: 'var(--font-display)' }}
-                  >
-                    SAT — Operation 1600
-                  </h3>
-                  <div className="text-gold-400 font-semibold mb-1">
-                    Taught by a mentor who scored <span className="text-gold-shimmer font-semibold">1540</span> himself
-                  </div>
-                  <div className="mb-4">
-                    <Scribble color="red" rotate={-2} size="sm">my favourite classroom ♥</Scribble>
-                  </div>
-                  <p className="text-gray-300 mb-6 leading-relaxed">
-                    Most teachers <em>read</em> about this exam. Your mentor{' '}
-                    <strong className="text-white">walked out of it with a 1540</strong> — top 1%
-                    worldwide. Now he's taking 15 students from Una across the 1500 line, and the
-                    world does not ignore a 1500. The only question:{' '}
-                    <strong className="text-gold-400">is one of those seats yours, or do you watch
-                    someone else take it?</strong>
-                  </p>
-                  <div className="flex flex-wrap gap-3 mb-8">
-                    {['1540 Mentor', 'Digital SAT', 'Math + Reading & Writing', 'Adaptive Mocks', 'IELTS Add-on', 'Abroad Guidance'].map(
-                      (tag) => (
-                        <span
-                          key={tag}
-                          className="px-3 py-1 rounded-full text-sm font-medium"
-                          style={{
-                            background: 'rgba(var(--accent-rgb),0.12)',
-                            border: '1px solid rgba(var(--accent-rgb),0.3)',
-                            color: '#D4AF37',
-                          }}
-                        >
-                          {tag}
-                        </span>
-                      )
-                    )}
-                  </div>
-                  <div className="flex flex-col sm:flex-row gap-4">
-                    <Link
-                      href="/enroll/sat"
-                      className="btn-gold inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl text-base animate-pulse-gold"
-                    >
-                      Claim Your Seat →
-                    </Link>
-                    <Link
-                      href="/sat"
-                      className="btn-ghost inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl text-base"
-                    >
-                      🎬 Watch the Mission Brief
-                    </Link>
-                  </div>
-                  {/* objection killers — close like a wolf */}
-                  <p className="mt-5 text-xs text-gray-500 leading-relaxed">
-                    <em>"Fees?"</em> Negotiated. &nbsp;<em>"English weak?"</em> We build it. &nbsp;
-                    <em>"Not a topper?"</em> Neither were half our selections.{' '}
-                    <strong className="text-gold-400 not-italic">Out of excuses? Good.</strong>
-                  </p>
-                </div>
-                {/* visible on mobile too — 1540 is the money stat */}
-                <div className="grid grid-cols-2 gap-3 md:gap-4">
-                  {[
-                    { n: '1540', l: "Mentor's Own Score" },
-                    { n: 'TOP 1%', l: 'Worldwide' },
-                    { n: '8×', l: 'Exams a Year' },
-                    { n: '15', l: 'Seats. That\'s It.' },
-                  ].map((s) => (
-                    <div
-                      key={s.l}
-                      className="rounded-2xl p-6 text-center"
-                      style={{
-                        background: 'rgba(var(--accent-rgb),0.08)',
-                        border: '1px solid rgba(var(--accent-rgb),0.2)',
-                      }}
-                    >
-                      <div
-                        className="text-3xl font-semibold text-gold-400 mb-1"
-                        style={{ fontFamily: 'var(--font-ui)' }}
-                      >
-                        {s.n}
-                      </div>
-                      <div className="text-xs text-gray-400 uppercase tracking-wider">{s.l}</div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </FadeIn>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+            <Link href="/sat" className="course-tile course-tile--star">
+              <span className="course-tile-emoji" aria-hidden>🌍</span>
+              <span className="course-tile-badge">1540 MENTOR</span>
+              <span className="course-tile-name">SAT &amp; IELTS</span>
+              <span className="course-tile-line">Study abroad — taught by a 1540 scorer.</span>
+            </Link>
 
-          {/* OTHER COURSES — compact cards; the long copy lives on each
-              course page, so the homepage stays scannable on a phone */}
-          <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-5">
-            {COURSES.map((course, i) => (
-              <FadeIn key={course.id} delay={i * 0.06}>
-                <Link
-                  href={`/courses/${course.id}`}
-                  className="glass-card glass-card-hover rounded-2xl p-4 md:p-5 h-full transition-all duration-300 group block"
-                >
-                  <div className="text-3xl mb-2">{course.emoji}</div>
-                  <div
-                    className="text-[9px] font-semibold uppercase tracking-[0.16em] mb-1.5"
-                    style={{ color: course.color }}
-                  >
-                    {course.badge}
-                  </div>
-                  <h3
-                    className="text-lg md:text-xl text-white mb-0.5 leading-tight"
-                    style={{ fontFamily: 'var(--font-display)' }}
-                  >
-                    {course.title}
-                  </h3>
-                  <p className="text-[11px] mb-3" style={{ color: 'var(--bone-dim)' }}>
-                    {course.subtitle}
-                  </p>
-                  <span
-                    className="text-[11px] uppercase tracking-[0.12em] group-hover:translate-x-1 transition-transform inline-flex items-center gap-1"
-                    style={{ color: course.color }}
-                  >
-                    Details →
-                  </span>
-                </Link>
-              </FadeIn>
+            {COURSES.map((c) => (
+              <Link
+                key={c.id}
+                href={`/courses/${c.id}`}
+                className={`course-tile${c.featured ? ' course-tile--star' : ''}`}
+              >
+                <span className="course-tile-emoji" aria-hidden>{c.emoji}</span>
+                {c.badge && <span className="course-tile-badge">{c.badge}</span>}
+                <span className="course-tile-name">{(c.title || '').replace(' Coaching', '')}</span>
+                <span className="course-tile-line">{c.tagline || c.subtitle}</span>
+              </Link>
             ))}
           </div>
 
-          {/* SUBJECT & LOCAL PAGES — the top few, rest on /courses */}
-          <FadeIn delay={0.1}>
-            <div className="mt-9 text-center">
-              <p className="eyebrow mb-4">Single-Subject Tuition</p>
-              <div className="flex flex-wrap justify-center gap-2">
-                {SUBJECT_LINKS.slice(0, 8).map((s) => (
-                  <Link
-                    key={s.href}
-                    href={s.href}
-                    className="px-3.5 py-1.5 rounded-full text-xs transition-all hover:-translate-y-0.5"
-                    style={{
-                      border: '1px solid var(--hairline)',
-                      color: 'var(--bone-dim)',
-                    }}
-                  >
-                    {s.label}
-                  </Link>
-                ))}
-                <Link
-                  href="/courses"
-                  className="px-3.5 py-1.5 rounded-full text-xs transition-all hover:-translate-y-0.5"
-                  style={{ border: '1px solid rgba(var(--accent-rgb),0.4)', color: 'var(--accent)' }}
-                >
-                  All courses →
-                </Link>
-              </div>
-            </div>
-          </FadeIn>
-
-          {/* FEES NOTE — one line, big promise */}
-          <FadeIn delay={0.2}>
-            <p className="mt-8 text-center text-sm text-gray-400">
-              💛 <strong className="text-gold-400">Fees are never a barrier here</strong> — always
-              negotiated on your ability. No capable student is ever turned away.
-            </p>
-          </FadeIn>
-
-          {/* joining is 3 taps */}
-          <FadeIn delay={0.25}>
-            <div
-              className="mt-8 rounded-2xl p-5 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 text-center"
-              style={{ background: 'rgba(var(--accent-rgb),0.06)', border: '1px solid rgba(var(--accent-rgb),0.2)' }}
-            >
-              <span className="text-sm font-bold text-white" style={{ fontFamily: 'var(--font-display)' }}>
-                📞 1. Call / WhatsApp
-              </span>
-              <span className="text-gold-400 hidden sm:inline">→</span>
-              <span className="text-sm font-bold text-white" style={{ fontFamily: 'var(--font-display)' }}>
-                🎓 2. FREE Demo Class
-              </span>
-              <span className="text-gold-400 hidden sm:inline">→</span>
-              <span className="text-sm font-bold text-white" style={{ fontFamily: 'var(--font-display)' }}>
-                🚀 3. Enroll & Rise
-              </span>
-              <Link href="/appointment" className="btn-gold px-5 py-2.5 rounded-xl text-xs sm:ml-4">
-                Start Now →
+          <FadeIn>
+            <div className="mt-8 md:mt-10 flex flex-col sm:flex-row items-center justify-center gap-3">
+              <Link href="/appointment" className="btn-gold px-7 py-3.5 text-sm text-center">
+                Book a free demo class
+              </Link>
+              <Link
+                href="/start"
+                className="px-7 py-3.5 rounded-full text-sm font-semibold text-center"
+                style={{ border: '1px solid rgba(var(--accent-rgb),0.35)', color: 'var(--bone)' }}
+              >
+                Not sure which? Get a free plan →
               </Link>
             </div>
           </FadeIn>
