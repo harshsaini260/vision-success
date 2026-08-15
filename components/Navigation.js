@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { SITE } from '@/lib/site'
 import Logo from '@/components/Logo'
+import NavMenu from '@/components/NavMenu'
 
 /* Six links earn a slot in the bar. Home is the logo, and everything
    else lives behind "More" — a crowded nav reads as a crowded institute.
@@ -207,6 +208,8 @@ export default function Navigation() {
 
           {/* CTA + HAMBURGER */}
           <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0 ml-auto lg:ml-0">
+            {/* everything on the site, from the right-hand corner */}
+            <NavMenu />
             {/* Clickable phone — tap to call on mobile (brief C3) */}
             <a
               href={`tel:${SITE.phoneTel}`}

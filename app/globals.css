@@ -2117,3 +2117,108 @@ main a.link-underline:hover { background-size: 100% 1px; }
   .btn-gold::after, .btn-ghost::after { display: none; }
   .btn-gold:hover, .btn-ghost:hover { transform: none; }
 }
+
+/* ─── THE CORNER MENU ───
+   Professional means legible and predictable; cool means it moves like
+   it was built rather than installed. Both come from restraint: one gold
+   hairline, one shadow, and a stagger measured in tens of milliseconds. */
+.nav-menu-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 16px;
+  min-height: 42px;
+  border-radius: 999px;
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--bone);
+  background: rgba(232, 240, 247, 0.05);
+  border: 1px solid rgba(var(--accent-rgb), 0.34);
+  transition: background .24s ease, border-color .24s ease, transform .16s cubic-bezier(.2,.8,.3,1);
+}
+.nav-menu-btn:hover { background: rgba(var(--accent-rgb), 0.12); border-color: var(--accent); }
+.nav-menu-btn:active { transform: scale(0.96); }
+.nav-menu-btn.is-open { background: rgba(var(--accent-rgb), 0.16); border-color: var(--accent); }
+
+/* three rules that become a cross */
+.nav-menu-bars { display: grid; gap: 4px; width: 16px; }
+.nav-menu-bars i {
+  display: block; height: 1.5px; width: 100%; border-radius: 2px;
+  background: var(--accent);
+  transition: transform .3s cubic-bezier(.6,-0.3,.3,1.4), opacity .2s ease;
+}
+.nav-menu-btn.is-open .nav-menu-bars i:nth-child(1) { transform: translateY(5.5px) rotate(45deg); }
+.nav-menu-btn.is-open .nav-menu-bars i:nth-child(2) { opacity: 0; transform: scaleX(.3); }
+.nav-menu-btn.is-open .nav-menu-bars i:nth-child(3) { transform: translateY(-5.5px) rotate(-45deg); }
+
+.nav-menu-panel {
+  position: absolute;
+  top: calc(100% + 14px);
+  right: 0;
+  width: min(92vw, 780px);
+  padding: 22px 24px 16px;
+  border-radius: 20px;
+  background: linear-gradient(180deg, var(--ink-3), var(--ink));
+  border: 1px solid rgba(var(--accent-rgb), 0.30);
+  box-shadow: 0 30px 80px -18px rgba(0, 0, 0, 0.85);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px) scale(0.985);
+  transform-origin: top right;
+  transition: opacity .26s ease, transform .3s cubic-bezier(.2,.8,.3,1), visibility .26s;
+  z-index: 60;
+}
+.nav-menu-panel.is-open { opacity: 1; visibility: visible; transform: translateY(0) scale(1); }
+
+.nav-menu-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px 26px;
+}
+@media (min-width: 720px) { .nav-menu-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+
+.nav-menu-head {
+  font-size: 9.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--accent);
+  padding-bottom: 8px;
+  margin-bottom: 6px;
+  border-bottom: 1px solid var(--hairline);
+}
+.nav-menu-item {
+  display: block;
+  padding: 7px 8px 7px 0;
+  border-radius: 8px;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity .3s ease, transform .3s cubic-bezier(.2,.8,.3,1), padding-left .2s ease;
+}
+.nav-menu-panel.is-open .nav-menu-item { opacity: 1; transform: none; }
+.nav-menu-item:hover { padding-left: 7px; }
+.nav-menu-label {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 16.5px;
+  font-weight: 600;
+  color: var(--bone);
+  line-height: 1.25;
+}
+.nav-menu-item:hover .nav-menu-label { color: var(--accent-light); }
+.nav-menu-hint { display: block; font-size: 11px; line-height: 1.35; color: var(--bone-dim); }
+.nav-menu-item:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--accent); }
+
+.nav-menu-foot {
+  display: flex; align-items: center; justify-content: space-between; gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 18px; padding-top: 14px;
+  border-top: 1px solid var(--hairline);
+  font-size: 11px; color: var(--bone-dim);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-menu-panel, .nav-menu-item, .nav-menu-bars i, .nav-menu-btn { transition: none; }
+}
