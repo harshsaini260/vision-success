@@ -208,8 +208,6 @@ export default function Navigation() {
 
           {/* CTA + HAMBURGER */}
           <div className="flex items-center gap-1.5 sm:gap-3 flex-shrink-0 ml-auto lg:ml-0">
-            {/* everything on the site, from the right-hand corner */}
-            <NavMenu />
             {/* Clickable phone — tap to call on mobile (brief C3) */}
             <a
               href={`tel:${SITE.phoneTel}`}
@@ -234,30 +232,8 @@ export default function Navigation() {
               Free&nbsp;Demo
             </Link>
 
-            <button
-              onClick={() => setMenuOpen(!menuOpen)}
-              className="lg:hidden w-10 h-10 flex flex-col items-center justify-center gap-1.5"
-              aria-label="Toggle menu"
-            >
-              <motion.span
-                className="w-6 h-0.5 block origin-center"
-                style={{ background: '#D4AF37' }}
-                animate={menuOpen ? { rotate: 45, y: 8 } : { rotate: 0, y: 0 }}
-                transition={{ duration: 0.2 }}
-              />
-              <motion.span
-                className="w-6 h-0.5 block"
-                style={{ background: '#D4AF37' }}
-                animate={menuOpen ? { opacity: 0 } : { opacity: 1 }}
-                transition={{ duration: 0.2 }}
-              />
-              <motion.span
-                className="w-6 h-0.5 block origin-center"
-                style={{ background: '#D4AF37' }}
-                animate={menuOpen ? { rotate: -45, y: -8 } : { rotate: 0, y: 0 }}
-                transition={{ duration: 0.2 }}
-              />
-            </button>
+            {/* the one menu, in the corner where a menu belongs */}
+            <NavMenu />
           </div>
         </div>
       </nav>

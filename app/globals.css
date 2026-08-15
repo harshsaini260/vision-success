@@ -2029,6 +2029,15 @@ h1, h2, h3 {
 }
 h1 { letter-spacing: -0.028em; }
 
+/* `display` goes through :where() so it carries no specificity. Setting
+   it directly on .btn-gold put it later in the stylesheet than Tailwind's
+   .hidden utility and beat it — which rendered BOTH header CTAs at once,
+   the long one and the compact one, side by side. Visibility belongs to
+   the utility classes; this file only says what the button looks like. */
+:where(.btn-gold, .btn-ghost) {
+  display: inline-flex;
+}
+
 /* ─── BUTTONS THAT ANSWER BACK ───
    Every control on the site should feel like it noticed you. Three
    layers, all cheap and all GPU-composited: a lift on hover, a real
@@ -2038,7 +2047,6 @@ h1 { letter-spacing: -0.028em; }
 .btn-gold,
 .btn-ghost {
   position: relative;
-  display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
