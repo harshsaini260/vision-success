@@ -95,11 +95,11 @@ export default function Navigation() {
           borderBottom: scrolled ? '1px solid rgba(var(--accent-rgb),0.15)' : 'none',
         }}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center gap-4 h-16 md:h-[76px]">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 flex items-center gap-2 sm:gap-4 h-16 md:h-[76px] min-w-0">
           {/* LOGO — The Bear & The North Star (tap for a little magic ✨) */}
           <Link
             href="/"
-            className="flex items-center gap-2.5 sm:gap-3 group flex-shrink-0"
+            className="flex items-center gap-2.5 sm:gap-3 group min-w-0 flex-shrink"
             onClick={(e) => {
               // Easter egg: gold sparkles burst from the sigil
               const r = e.currentTarget.getBoundingClientRect()
@@ -207,7 +207,7 @@ export default function Navigation() {
           </div>
 
           {/* CTA + HAMBURGER */}
-          <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0 ml-auto lg:ml-0">
+          <div className="flex items-center gap-1.5 sm:gap-3 flex-shrink-0 ml-auto lg:ml-0">
             {/* everything on the site, from the right-hand corner */}
             <NavMenu />
             {/* Clickable phone — tap to call on mobile (brief C3) */}
@@ -222,16 +222,16 @@ export default function Navigation() {
             <span className="hidden xl:block w-px h-5" style={{ background: 'rgba(var(--accent-rgb),0.2)' }} />
             <Link
               href="/appointment"
-              className="btn-gold hidden sm:flex items-center px-5 py-2.5 rounded-xl text-sm whitespace-nowrap"
+              className="btn-gold hidden md:flex items-center px-5 py-2.5 rounded-xl text-sm whitespace-nowrap"
             >
               Book Free Demo
             </Link>
             {/* Compact button for phones */}
             <Link
               href="/appointment"
-              className="btn-gold sm:hidden flex items-center gap-1 px-3 py-2 rounded-lg text-xs"
+              className="btn-gold md:hidden flex items-center px-3 py-2 rounded-lg text-xs whitespace-nowrap"
             >
-              Free Demo
+              Free&nbsp;Demo
             </Link>
 
             <button

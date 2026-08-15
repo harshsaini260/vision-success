@@ -2250,3 +2250,19 @@ main a.link-underline:hover { background-size: 100% 1px; }
   .nav-menu-item { padding: 9px 8px 9px 0; }
   .nav-menu-foot { flex-direction: column; align-items: flex-start; gap: 10px; }
 }
+
+/* ─── HEADER FITS THE PHONE ───
+   On a narrow handset the wordmark, the menu and the demo button
+   competed for a 375px row and the CTA was pushed past the right edge.
+   The brand text is the only part that can afford to give ground, so it
+   is the only part that does — it truncates, and below 400px it steps
+   aside entirely and leaves the crest. */
+.nav-brandtext { min-width: 0; }
+.nav-wordmark {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+@media (max-width: 400px) {
+  .nav-brandtext { display: none; }
+}

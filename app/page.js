@@ -827,7 +827,7 @@ function DeparturesSection() {
    Retired from the homepage August 2026 — good writing, but a 950px
    letter is not what a visitor with no patience needs before they have
    decided we are worth reading. Kept for a page of its own. */
-/* (was) ───
+/* ─── A NOTE FROM THE MENTOR'S DESK ───
    Warm, handwritten letter. Humanises the whole site and reassures
    the parent reading over a student's shoulder. */
 function MentorLetter() {
@@ -856,22 +856,18 @@ function MentorLetter() {
             >
               <p>Dear parent, dear student,</p>
               <p>
-                When I told people in Una I&apos;d sit an American exam and build a life across an
-                ocean, most of them smiled — the kind of smile you give a child&apos;s daydream.
-                <em> &ldquo;That&apos;s not for people like us,&rdquo;</em> they said.
+                When I told people in Una I&apos;d sit an American exam, most of them smiled — the
+                kind of smile you give a child&apos;s daydream. <em>&ldquo;That&apos;s not for
+                people like us.&rdquo;</em>
               </p>
               <p>
-                I sat it anyway. 1540 — top 1% on Earth — and a one-way ticket to Canada, just to
-                prove a small-town kid could stand anywhere in the world. I&apos;m not a genius. I
-                was simply too stubborn to let someone else decide the size of my dream.
+                I sat it anyway. 1540, top 1% on Earth. I&apos;m not a genius; I was just too
+                stubborn to let someone else decide the size of my dream — and that stubbornness is
+                the only thing I really teach.
               </p>
               <p>
-                That stubbornness — the quiet, unreasonable belief that you are meant for more — is
-                the only thing I really teach. Our institute is founded and led by an NIT Hamirpur
-                alumnus, and we keep our batches to fifteen, never more, so no child is ever a roll
-                number. Come watch a class, drink a cup of chai, ask your hardest question. If
-                we&apos;re the right fit we&apos;ll build the plan together — and fees will never be
-                the reason a capable dreamer is turned away.
+                Come watch a class and ask your hardest question. Fees will never be the reason a
+                capable student is turned away.
               </p>
               <p className="font-bold">Dream louder than your town. I did. So can you.</p>
             </div>
@@ -1041,6 +1037,10 @@ export default function HomePage() {
            verdicts share one horizontal row, so the first thing a visitor
            meets is results rather than claims. */}
       <ProofRail />
+
+      {/* ─── THE LETTER — shorter now, but it stays: it is the only place
+           on the homepage a parent hears one person speak. ─── */}
+      <MentorLetter />
 
       {/* ─── HERO ─── */}
       <section
