@@ -39,7 +39,6 @@ export default function ProofRail() {
   const ourRef = useRef(null)
   const [vlogs, setVlogs] = useState([])
   const [reviews, setReviews] = useState([])
-  const [sound, setSound] = useState(false)
   const [active, setActive] = useState(0)
   const [edges, setEdges] = useState({ l: false, r: true })
   const drag = useRef(null)
@@ -127,14 +126,31 @@ export default function ProofRail() {
     drag.current = null
   }
 
-  const listen = () => {
-    const v = videoRef.current
+  /* Tapping a film should play or pause it — never navigate. The cards
+     used to be links, so a tap on the picture took you off the page,
+     which is the opposite of what a play button looks like it does. */
+  const [playing, setPlaying] = useState({ our: true, aniket: true })
+  const [muted, setMuted] = useState({ our: true, aniket: true })
+
+  const refFor = (k) => (k === 'our' ? ourRef : videoRef)
+
+  const toggle = (k) => {
+    const v = refFor(k).current
     if (!v) return
-    v.muted = !v.muted
-    v.loop = v.muted
-    if (!v.muted) v.currentTime = 0     // nobody joins his sentence halfway
-    setSound(!v.muted)
+    if (v.paused) { v.play().catch(() => {}); setPlaying((p) => ({ ...p, [k]: true })) }
+    else { v.pause(); setPlaying((p) => ({ ...p, [k]: false })) }
+  }
+
+  const listen = (k) => {
+    const v = refFor(k).current
+    if (!v) return
+    const next = !v.muted
+    v.muted = next
+    v.loop = next
+    if (!next) v.currentTime = 0        // nobody joins a sentence halfway
+    setMuted((m) => ({ ...m, [k]: next }))
     v.play().catch(() => {})
+    setPlaying((p) => ({ ...p, [k]: true }))
   }
 
   const cards = 2 + vlogs.length + Math.min(reviews.length, 6) + 1
@@ -183,7 +199,7 @@ export default function ProofRail() {
           }}
         >
           {/* ── 1. our own film, so ours and theirs share the row ── */}
-          <Link href="/stories" className="proof-card proof-card--film" style={{ width: CARD_W }}>
+          <article className="proof-card proof-card--film" style={{ width: CARD_W }}>
             <video
               ref={ourRef}
               poster="/video/film-poster.jpg"
@@ -191,18 +207,28 @@ export default function ProofRail() {
               loop
               playsInline
               preload="none"
+              onClick={() => toggle('our')}
+              onPlay={() => setPlaying((p) => ({ ...p, our: true }))}
+              onPause={() => setPlaying((p) => ({ ...p, our: false }))}
               className="proof-card-video"
-              aria-label="The Vision Success masthead film"
+              aria-label="Inside Vision Success — our own film of the room"
             />
-            <span className="proof-play" aria-hidden>▶</span>
+            <button className="proof-ctl proof-ctl--play" onClick={() => toggle('our')}
+              aria-label={playing.our ? 'Pause' : 'Play'}>
+              <span aria-hidden>{playing.our ? '❚❚' : '▶'}</span>
+            </button>
+            <button className="proof-ctl proof-ctl--sound" onClick={() => listen('our')}
+              aria-pressed={!muted.our} aria-label={muted.our ? 'Turn sound on' : 'Mute'}>
+              <span aria-hidden>{muted.our ? '🔇' : '🔊'}</span>
+            </button>
             <div className="proof-card-foot">
               <span className="proof-card-kicker">Our film</span>
               <span className="proof-card-title">Inside the room</span>
-              <span className="proof-card-line">
-                The place itself — the board, the batch, the mornings. Ninety seconds.
-              </span>
+              <Link href="/stories" className="proof-card-line underline underline-offset-2">
+                The board, the batch, the mornings — see all films →
+              </Link>
             </div>
-          </Link>
+          </article>
 
           {/* ── 2. Aniket ── */}
           <article className="proof-card proof-card--film" style={{ width: CARD_W }}>
@@ -213,12 +239,20 @@ export default function ProofRail() {
               loop
               playsInline
               preload="none"
-              onClick={listen}
+              onClick={() => toggle('aniket')}
+              onPlay={() => setPlaying((p) => ({ ...p, aniket: true }))}
+              onPause={() => setPlaying((p) => ({ ...p, aniket: false }))}
               className="proof-card-video"
               aria-label="Aniket, a Class 9 student at Vision Success, describing the institute"
             />
-            <button onClick={listen} className="proof-sound" aria-pressed={sound}>
-              <span aria-hidden>{sound ? '🔊' : '🔇'}</span> {sound ? 'Sound on' : 'Tap to hear him'}
+            <button className="proof-ctl proof-ctl--play" onClick={() => toggle('aniket')}
+              aria-label={playing.aniket ? 'Pause' : 'Play'}>
+              <span aria-hidden>{playing.aniket ? '❚❚' : '▶'}</span>
+            </button>
+            <button className="proof-ctl proof-ctl--sound" onClick={() => listen('aniket')}
+              aria-pressed={!muted.aniket} aria-label={muted.aniket ? 'Hear him' : 'Mute'}>
+              <span aria-hidden>{muted.aniket ? '🔇' : '🔊'}</span>
+              <span className="proof-ctl-text">{muted.aniket ? 'Hear him' : 'Sound on'}</span>
             </button>
             <div className="proof-card-foot">
               <span className="proof-card-kicker">On film · 27 sec</span>

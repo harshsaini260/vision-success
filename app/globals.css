@@ -2274,3 +2274,32 @@ main a.link-underline:hover { background-size: 100% 1px; }
 @media (max-width: 400px) {
   .nav-brandtext { display: none; }
 }
+
+/* ─── FILM CONTROLS ───
+   A film card is a film, not a link. Tapping the picture plays or pauses
+   it; the two controls say so out loud, because a video that only
+   responds to an invisible tap is a video most people never hear. */
+.proof-ctl {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 11px;
+  min-height: 38px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--bone);
+  background: rgba(8, 20, 40, 0.78);
+  border: 1px solid rgba(var(--accent-rgb), 0.45);
+  backdrop-filter: blur(6px);
+  transition: background .2s ease, transform .14s cubic-bezier(.2,.8,.3,1);
+  z-index: 3;
+}
+.proof-ctl:hover { background: rgba(var(--accent-rgb), 0.28); }
+.proof-ctl:active { transform: scale(0.93); }
+.proof-ctl--play { left: 10px; top: 10px; min-width: 38px; justify-content: center; }
+.proof-ctl--sound { right: 10px; top: 10px; }
+.proof-ctl-text { display: none; }
+@media (min-width: 480px) { .proof-ctl-text { display: inline; } }
+.proof-ctl:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--accent); }
