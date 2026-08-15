@@ -1040,6 +1040,13 @@ export default function HomePage() {
            them. */}
       <Opening />
 
+      {/* ─── PROOF, STILL NEAR THE TOP ───
+           The rail belongs here, directly under the opening — only the
+           film that used to lead the page has been replaced. Aniket, the
+           documentary and the reviews all still arrive before the site
+           has asked for anything. */}
+      <ProofRail />
+
       {/* ─── THE LETTER — shorter now, but it stays: it is the only place
            on the homepage a parent hears one person speak. ─── */}
       <MentorLetter />
@@ -1422,7 +1429,6 @@ export default function HomePage() {
            Moved directly under the courses: a visitor deciding whether to
            trust us should not have to scroll past six more sections first. */}
       <div id="stories" style={{ scrollMarginTop: 70 }}>
-        <ProofRail />
         <StudentStories />
       </div>
 
