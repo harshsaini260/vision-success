@@ -64,8 +64,21 @@ export default function NavMenu() {
   const btnRef = useRef(null)
   const panelRef = useRef(null)
 
+  /* On a phone the panel is anchored to the viewport, not to the button —
+     the button sits mid-header with the demo CTA to its right, so a
+     right-aligned panel 92vw wide ran straight off the left edge. Fixed
+     positioning needs a real `top`, and the header's height changes with
+     the Independence band, so it is measured rather than assumed. */
   useEffect(() => {
     if (!open) return
+    const place = () => {
+      const b = btnRef.current?.getBoundingClientRect()
+      if (b) panelRef.current?.style.setProperty('--menu-top', `${Math.round(b.bottom + 10)}px`)
+    }
+    place()
+    window.addEventListener('resize', place)
+    window.addEventListener('scroll', place, { passive: true })
+
     const onKey = (e) => {
       if (e.key === 'Escape') { setOpen(false); btnRef.current?.focus() }
     }
@@ -76,6 +89,8 @@ export default function NavMenu() {
     document.addEventListener('keydown', onKey)
     document.addEventListener('pointerdown', onClick)
     return () => {
+      window.removeEventListener('resize', place)
+      window.removeEventListener('scroll', place)
       document.removeEventListener('keydown', onKey)
       document.removeEventListener('pointerdown', onClick)
     }

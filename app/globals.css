@@ -2222,3 +2222,31 @@ main a.link-underline:hover { background-size: 100% 1px; }
 @media (prefers-reduced-motion: reduce) {
   .nav-menu-panel, .nav-menu-item, .nav-menu-bars i, .nav-menu-btn { transition: none; }
 }
+
+/* ─── CORNER MENU ON A PHONE ───
+   The trigger sits mid-header with the demo CTA to its right, so a panel
+   anchored to the button's right edge at 92vw overflowed off the left of
+   the screen and clipped half its own labels. Below the four-column
+   breakpoint the panel leaves the button behind entirely: fixed to the
+   viewport, inset from both edges, one column, and scrollable if the
+   list is taller than the screen. */
+@media (max-width: 719px) {
+  .nav-menu-panel {
+    position: fixed;
+    top: var(--menu-top, 76px);
+    left: 10px;
+    right: 10px;
+    width: auto;
+    max-width: none;
+    max-height: calc(100dvh - var(--menu-top, 76px) - 14px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    transform-origin: top center;
+    padding: 18px 18px 12px;
+  }
+  .nav-menu-grid { grid-template-columns: 1fr; gap: 4px 0; }
+  .nav-menu-col + .nav-menu-col { margin-top: 14px; }
+  .nav-menu-item { padding: 9px 8px 9px 0; }
+  .nav-menu-foot { flex-direction: column; align-items: flex-start; gap: 10px; }
+}
