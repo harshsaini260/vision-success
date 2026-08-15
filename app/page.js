@@ -18,7 +18,6 @@ import StudentStories from '@/components/StudentStories'
 import ProofRail from '@/components/ProofRail'
 import FreedomOffer from '@/components/FreedomOffer'
 import Creed from '@/components/Creed'
-import Mirror from '@/components/Mirror'
 import Motto from '@/components/Motto'
 import { playFanfare } from '@/lib/fanfare'
 import { sfxPop, sfxNope, sfxWhoosh, sfxChime } from '@/lib/sfx'
@@ -825,6 +824,10 @@ function DeparturesSection() {
 }
 
 /* ─── A NOTE FROM THE MENTOR'S DESK ───
+   Retired from the homepage August 2026 — good writing, but a 950px
+   letter is not what a visitor with no patience needs before they have
+   decided we are worth reading. Kept for a page of its own. */
+/* (was) ───
    Warm, handwritten letter. Humanises the whole site and reassures
    the parent reading over a student's shoulder. */
 function MentorLetter() {
@@ -1421,10 +1424,8 @@ export default function HomePage() {
       </div>
 
       {/* ─── THE MIRROR — the visitor's own worry, answered straight ─── */}
-      <Mirror />
 
       {/* ─── EMOTIONAL ARC: dream → the person who did it → the tool ─── */}
-      <MentorLetter />
 
       {/* ─── DEPARTURES — the split-flap showpiece ─── */}
       <DeparturesSection />

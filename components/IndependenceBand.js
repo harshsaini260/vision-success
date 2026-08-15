@@ -73,7 +73,7 @@ export default function IndependenceBand() {
           </span>
           <span className="hidden sm:inline">{' '}</span>
           <Link href="/#freedom" className="underline underline-offset-4 whitespace-nowrap" style={{ color: 'var(--accent)' }}>
-            8 funded seats
+            Fees & 10% off
           </Link>
           {left > 0 && (
             <span className="hidden sm:inline" style={{ color: 'var(--bone-dim)' }}>

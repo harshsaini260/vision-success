@@ -2028,3 +2028,92 @@ h1, h2, h3 {
   font-weight: 700 !important;
 }
 h1 { letter-spacing: -0.028em; }
+
+/* ─── BUTTONS THAT ANSWER BACK ───
+   Every control on the site should feel like it noticed you. Three
+   layers, all cheap and all GPU-composited: a lift on hover, a real
+   press on pointer-down, and a gold sheen that travels across the face
+   once — so the button reads as struck metal catching light rather than
+   a rectangle changing colour. */
+.btn-gold,
+.btn-ghost {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  overflow: hidden;
+  isolation: isolate;
+  font-family: var(--font-ui);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  transition: transform .18s cubic-bezier(.2,.8,.3,1),
+              box-shadow .28s ease,
+              border-color .28s ease,
+              background .28s ease;
+  will-change: transform;
+}
+
+.btn-ghost {
+  padding: 12px 26px;
+  border-radius: 999px;
+  font-size: 14px;
+  color: var(--bone);
+  border: 1px solid rgba(var(--accent-rgb), 0.38);
+  background: transparent;
+}
+.btn-ghost:hover { border-color: var(--accent); background: rgba(var(--accent-rgb), 0.10); }
+
+/* the sheen */
+.btn-gold::after,
+.btn-ghost::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(105deg, transparent 32%, rgba(255,255,255,0.30) 48%, transparent 64%);
+  transform: translateX(-120%);
+  transition: transform .62s cubic-bezier(.3,.7,.3,1);
+}
+.btn-gold:hover::after,
+.btn-ghost:hover::after { transform: translateX(120%); }
+
+.btn-gold:hover,
+.btn-ghost:hover { transform: translateY(-2px); }
+.btn-gold:hover { box-shadow: 0 12px 30px -8px rgba(var(--accent-rgb), 0.55); }
+
+/* the press — the one that makes it feel physical */
+.btn-gold:active,
+.btn-ghost:active,
+.course-tile:active,
+.proof-card--last a:active,
+.rail-arrow:active,
+.film-portal:active {
+  transform: translateY(0) scale(0.972);
+  transition-duration: .07s;
+}
+
+/* keyboard users get the same affordance, not a browser outline */
+.btn-gold:focus-visible,
+.btn-ghost:focus-visible,
+.rail-arrow:focus-visible,
+.course-tile:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--ink), 0 0 0 4px var(--accent);
+}
+
+/* links that are really destinations get a rule that draws itself */
+main a.link-underline {
+  background-image: linear-gradient(var(--accent), var(--accent));
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size .32s cubic-bezier(.3,.7,.3,1);
+}
+main a.link-underline:hover { background-size: 100% 1px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-gold, .btn-ghost, .course-tile, .rail-arrow, .film-portal { transition: none; }
+  .btn-gold::after, .btn-ghost::after { display: none; }
+  .btn-gold:hover, .btn-ghost:hover { transform: none; }
+}

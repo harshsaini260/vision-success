@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { motion } from 'framer-motion'
 import KhadiFlag from './KhadiFlag'
 import { IND, OFFER, DOORS, isLive, daysLeft } from '@/lib/independence'
+import { FEES, PRODUCTS, FULL_PAYMENT, PER, rupees } from '@/lib/fees'
 import { wa } from '@/lib/site'
 
 /* ─── EIGHT DECADES, EIGHT DOORS ───
@@ -48,15 +49,15 @@ export default function FreedomOffer() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.4 }}
             transition={{ duration: 0.7 }}
-            className="flex justify-center mb-7"
+            className="flex justify-center mb-5"
           >
-            <KhadiFlag width={210} pole style={{ filter: 'drop-shadow(0 16px 40px rgba(0,0,0,0.65))' }} />
+            <KhadiFlag width={150} pole style={{ filter: 'drop-shadow(0 16px 40px rgba(0,0,0,0.65))' }} />
           </motion.div>
 
           <span className="eyebrow">15 August 1947 — {IND.ordinal}th Independence Day</span>
 
           <h2
-            className="mt-5 text-4xl sm:text-5xl md:text-6xl font-semibold text-white leading-[1.1]"
+            className="mt-4 text-3xl sm:text-4xl md:text-5xl font-semibold text-white leading-[1.08]"
             style={{ fontFamily: 'var(--font-display)' }}
           >
             Eight decades ago<br />
@@ -67,7 +68,7 @@ export default function FreedomOffer() {
             They said: no — it&apos;s necessary.
           </p>
 
-          <p className="mt-7 max-w-2xl mx-auto text-sm md:text-base leading-relaxed" style={{ color: 'var(--bone-dim)' }}>
+          <p className="mt-5 max-w-2xl mx-auto text-sm md:text-base leading-relaxed" style={{ color: 'var(--bone-dim)' }}>
             That is the whole argument this institute is built on, and we did not invent it.
             So this year we are marking the day the only way that means anything here —
             by opening eight doors and paying for eight seats.
@@ -75,15 +76,15 @@ export default function FreedomOffer() {
         </div>
 
         {/* ── the eight doors ── */}
-        <div className="mb-10">
-          <div className="rule-diamond mb-8" aria-hidden />
+        <div className="mb-8">
+          <div className="rule-diamond mb-6" aria-hidden />
           <h3
             className="text-center text-2xl md:text-3xl font-semibold text-white mb-2"
             style={{ fontFamily: 'var(--font-display)' }}
           >
             Eight decades. <span className="text-gold-shimmer">Eight doors out of Una.</span>
           </h3>
-          <p className="text-center text-sm mb-9" style={{ color: 'var(--bone-dim)' }}>
+          <p className="text-center text-sm mb-6" style={{ color: 'var(--bone-dim)' }}>
             One per decade. Every one of them is real, and most students here are told about
             fewer than three.
           </p>
@@ -118,93 +119,90 @@ export default function FreedomOffer() {
           </div>
         </div>
 
-        {/* ── the eight seats — the point of the whole section ── */}
+        {/* ── what it costs, said out loud ── */}
         <div
-          className="rounded-3xl p-7 md:p-10"
+          className="rounded-3xl p-6 md:p-8"
           style={{
-            background: 'linear-gradient(135deg, rgba(255,153,51,0.07) 0%, rgba(232,240,247,0.03) 45%, rgba(19,136,8,0.07) 100%)',
+            background: 'linear-gradient(135deg, rgba(255,153,51,0.06) 0%, rgba(232,240,247,0.03) 45%, rgba(19,136,8,0.06) 100%)',
             border: '1.5px solid rgba(var(--accent-rgb),0.32)',
           }}
         >
-          <div className="grid md:grid-cols-[1.25fr_1fr] gap-9 items-center">
-            <div>
-              <span className="eyebrow">{OFFER.name} · closes {OFFER.closes}</span>
-              <h3
-                className="mt-4 text-3xl md:text-4xl font-semibold text-white leading-tight"
-                style={{ fontFamily: 'var(--font-display)' }}
-              >
-                {OFFER.seatLine}
-              </h3>
-              <p className="mt-4 text-sm md:text-base leading-relaxed" style={{ color: 'var(--bone-dim)' }}>
-                {OFFER.seatBody}
-              </p>
+          <div className="text-center mb-6">
+            <span className="eyebrow">What it costs</span>
+            <h3
+              className="mt-3 text-2xl md:text-3xl font-semibold text-white"
+              style={{ fontFamily: 'var(--font-display)' }}
+            >
+              {FULL_PAYMENT.head}
+            </h3>
+            <p className="mt-3 max-w-2xl mx-auto text-sm md:text-base leading-relaxed" style={{ color: 'var(--bone-dim)' }}>
+              {FULL_PAYMENT.body}
+            </p>
+          </div>
 
-              <div className="mt-7 flex flex-col sm:flex-row gap-3">
-                <a
-                  href={wa(
-                    `I saw the ${OFFER.name} on your website. I would like to ask about one of the eight funded seats.`
-                  )}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-gold text-center whatsapp-cta"
-                >
-                  Ask about a funded seat
-                </a>
-                <Link
-                  href="/start"
-                  className="text-center px-6 py-3 rounded-full text-sm font-semibold"
-                  style={{ border: '1px solid rgba(var(--accent-rgb),0.35)', color: 'var(--bone)' }}
-                >
-                  Get your free plan first
-                </Link>
-              </div>
-            </div>
-
-            {/* what it costs, stated plainly */}
-            <div className="space-y-3">
+          <div className="grid sm:grid-cols-2 gap-3 md:gap-4">
+            {FEES.map((f) => (
               <div
-                className="rounded-2xl p-5"
-                style={{ background: 'rgba(7,12,18,0.5)', border: '1px solid var(--hairline)' }}
+                key={f.id}
+                className="rounded-2xl p-5 md:p-6"
+                style={{ background: 'rgba(8,20,40,0.55)', border: '1px solid var(--hairline)' }}
               >
                 <div className="text-xs uppercase tracking-[0.16em] mb-2" style={{ color: 'var(--accent)' }}>
-                  Everyone else, this fortnight
+                  {f.label}
                 </div>
-                <div className="text-2xl font-semibold text-white mb-1" style={{ fontFamily: 'var(--font-display)' }}>
-                  ₹{OFFER.off} off admission
+                <div className="flex items-baseline gap-2 mb-1">
+                  <span className="text-3xl font-semibold" style={{ color: 'var(--bone)', fontFamily: 'var(--font-display)' }}>
+                    {rupees(f.amount)}
+                  </span>
+                  <span className="text-xs" style={{ color: 'var(--bone-dim)' }}>{f.unit} · {PER}</span>
                 </div>
-                <p className="text-xs leading-relaxed" style={{ color: 'var(--bone-dim)' }}>
-                  {OFFER.offBody}
-                </p>
+                <div className="text-sm mb-2" style={{ color: 'var(--accent-light)' }}>{f.note}</div>
+                <p className="text-xs leading-relaxed" style={{ color: 'var(--bone-dim)' }}>{f.detail}</p>
               </div>
+            ))}
 
-              {OFFER.fixed.map((f) => (
-                <Link
-                  key={f.name}
-                  href={f.href}
-                  className="block rounded-2xl p-5"
-                  style={{ background: 'rgba(7,12,18,0.5)', border: '1px solid var(--hairline)' }}
-                >
-                  <div className="text-sm text-white mb-1">{f.name}</div>
-                  <div className="flex items-baseline gap-3">
-                    <span className="text-xl font-semibold" style={{ color: 'var(--accent-light)', fontFamily: 'var(--font-display)' }}>
-                      ₹{f.now.toLocaleString('en-IN')}
-                    </span>
-                    <span className="text-sm line-through" style={{ color: 'var(--bone-dim)' }}>
-                      ₹{f.was.toLocaleString('en-IN')}
-                    </span>
-                  </div>
-                </Link>
-              ))}
+            {PRODUCTS.map((pr) => (
+              <Link
+                key={pr.id}
+                href={pr.href}
+                className="rounded-2xl p-5 md:p-6 block sm:col-span-2"
+                style={{ background: 'rgba(8,20,40,0.55)', border: '1px solid var(--hairline)' }}
+              >
+                <div className="text-xs uppercase tracking-[0.16em] mb-2" style={{ color: 'var(--accent)' }}>
+                  One-time
+                </div>
+                <div className="flex items-baseline gap-3 flex-wrap">
+                  <span className="text-lg" style={{ color: 'var(--bone)' }}>{pr.name}</span>
+                  <span className="text-2xl font-semibold" style={{ color: 'var(--accent-light)', fontFamily: 'var(--font-display)' }}>
+                    {rupees(pr.amount)}
+                  </span>
+                </div>
+                <p className="text-xs mt-2 leading-relaxed" style={{ color: 'var(--bone-dim)' }}>{pr.detail}</p>
+              </Link>
+            ))}
+          </div>
 
-              {left > 0 && (
-                <p className="text-center text-xs pt-1" style={{ color: 'var(--bone-dim)' }}>
-                  {left} day{left === 1 ? '' : 's'} left · then everything here goes back to normal
-                </p>
-              )}
-            </div>
+          <p className="mt-6 text-xs leading-relaxed text-center max-w-2xl mx-auto" style={{ color: 'var(--bone-dim)' }}>
+            {FULL_PAYMENT.fineprint}
+          </p>
+
+          <div className="mt-7 flex flex-col sm:flex-row gap-3 justify-center">
+            <a
+              href={wa('I saw the fees on your website. I would like to ask about paying in full and the discount.')}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-gold text-center whatsapp-cta"
+            >
+              Ask about paying in full
+            </a>
+            <Link
+              href="/start"
+              className="btn-ghost text-center"
+            >
+              Get your free plan first
+            </Link>
           </div>
         </div>
-
       </div>
     </section>
   )
