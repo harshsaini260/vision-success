@@ -16,6 +16,7 @@ import PolarBuddy from '@/components/PolarBuddy'
 import Scribble from '@/components/Scribble'
 import StudentStories from '@/components/StudentStories'
 import ProofRail from '@/components/ProofRail'
+import Opening from '@/components/Opening'
 import FreedomOffer from '@/components/FreedomOffer'
 import Creed from '@/components/Creed'
 import Motto from '@/components/Motto'
@@ -1031,12 +1032,13 @@ export default function HomePage() {
       {/* ─── THE CREED — the words this place runs on, before anything else ─── */}
       <Creed />
 
-      {/* ─── PROOF, IMMEDIATELY ───
-           Straight under the masthead film, before the hero says a word
-           about us. Our own film of the room and the students' own
-           verdicts share one horizontal row, so the first thing a visitor
-           meets is results rather than claims. */}
-      <ProofRail />
+      {/* ─── THE OPENING ───
+           A film used to sit here. It asked a visitor to wait and watch
+           before it said anything; this says the whole thing on the first
+           frame. The films are still on the site — they are down with the
+           reviews, where somebody who is already interested will find
+           them. */}
+      <Opening />
 
       {/* ─── THE LETTER — shorter now, but it stays: it is the only place
            on the homepage a parent hears one person speak. ─── */}
@@ -1420,6 +1422,7 @@ export default function HomePage() {
            Moved directly under the courses: a visitor deciding whether to
            trust us should not have to scroll past six more sections first. */}
       <div id="stories" style={{ scrollMarginTop: 70 }}>
+        <ProofRail />
         <StudentStories />
       </div>
 

@@ -5,7 +5,6 @@ import IndependenceBand from '@/components/IndependenceBand'
 import Footer from '@/components/Footer'
 import FloatingButtons from '@/components/FloatingButtons'
 import { ThemeProvider } from '@/components/ThemeProvider'
-import ThemeSwitcher from '@/components/ThemeSwitcher'
 import DemoPrompt from '@/components/DemoPrompt'
 import ScrollProgress from '@/components/ScrollProgress'
 import Analytics from '@/components/Analytics'
@@ -175,7 +174,6 @@ export default function RootLayout({ children }) {
           <FloatingButtons />
           <StickyActionBar />
           <DemoPrompt />
-          <ThemeSwitcher />
           <Toaster
             position="top-center"
             toastOptions={{
