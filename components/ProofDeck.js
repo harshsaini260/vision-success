@@ -29,6 +29,7 @@ export default function ProofDeck() {
   const [alive, setAlive] = useState(() => SLIDES.map(() => true))
   const [idx, setIdx] = useState(0)
   const [hinted, setHinted] = useState(false)
+  const [entering, setEntering] = useState(false)
 
   /* A slide with no rendered content is not a slide. */
   useEffect(() => {
@@ -56,11 +57,17 @@ export default function ProofDeck() {
     if (el.scrollLeft > 8) setHinted(true)
   }, [])
 
-  const go = (i) => {
+  /* Going forward into the film gets the cinema treatment: the letterbox
+     bars close, the slide changes behind them, the bars open. Going back
+     is just a scroll — a projector does not run in reverse. */
+  const go = (i, cinematic = false) => {
     const el = trackRef.current
     if (!el) return
     setHinted(true)
-    el.scrollTo({ left: i * el.clientWidth, behavior: 'smooth' })
+    if (!cinematic) { el.scrollTo({ left: i * el.clientWidth, behavior: 'smooth' }); return }
+    setEntering(true)
+    setTimeout(() => el.scrollTo({ left: i * el.clientWidth, behavior: 'auto' }), 380)
+    setTimeout(() => setEntering(false), 470)
   }
 
   const onKey = (e) => {
@@ -120,14 +127,21 @@ export default function ProofDeck() {
               >
                 ←
               </button>
+              {/* the way in — a strip of film with the sprockets punched
+                  through it, not a chevron in a circle */}
               <button
-                onClick={() => go(Math.min(idx + 1, live.length - 1))}
+                onClick={() => go(Math.min(idx + 1, live.length - 1), true)}
                 disabled={idx >= live.length - 1}
-                aria-label={idx < live.length - 1 ? `Next — ${live[idx + 1]?.label}` : 'Next'}
-                className={`grid place-items-center rounded-full disabled:opacity-25 transition-opacity ${!hinted ? 'deck-nudge' : ''}`}
-                style={{ width: 46, height: 46, background: 'rgba(var(--accent-rgb),0.16)', border: '1px solid var(--accent)', color: 'var(--accent-light)' }}
+                aria-label={idx < live.length - 1 ? `Enter — ${live[idx + 1]?.label}` : 'Next'}
+                className={`film-portal group ${!hinted ? 'deck-nudge' : ''}`}
               >
-                →
+                <span className="film-sprockets" aria-hidden />
+                <span className="film-portal-label">
+                  <span className="block text-[9px] tracking-[0.22em] opacity-70">ROLL TWO</span>
+                  <span className="block text-[12px] font-semibold tracking-wide">Enter the documentary</span>
+                </span>
+                <span className="film-portal-arrow" aria-hidden>→</span>
+                <span className="film-sprockets" aria-hidden />
               </button>
             </div>
           </div>
@@ -156,9 +170,14 @@ export default function ProofDeck() {
         ))}
       </div>
 
+      {/* the letterbox — 380ms of cinema between the two slides */}
+      <div className={`cinema-bars ${entering ? 'is-in' : ''}`} aria-hidden>
+        <span /><span />
+      </div>
+
       {many && !hinted && (
         <p className="text-center text-xs mt-5 md:hidden" style={{ color: 'var(--bone-dim)' }}>
-          swipe for the documentary →
+          swipe to enter the documentary →
         </p>
       )}
     </section>

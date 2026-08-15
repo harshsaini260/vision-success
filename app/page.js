@@ -679,8 +679,9 @@ function DeadlineStrip() {
 }
 
 /* ─── THE DREAMERS' MANIFESTO ───
-   The emotional centrepiece. Bold, cinematic, original copy that
-   celebrates the "crazy" ones who dream past their town's borders. */
+   Retired from the homepage: it made the same argument as <Motto/>, three
+   sections above it, and saying it twice made it land less. Kept here
+   because the copy is good and it belongs on a page of its own. */
 function Manifesto() {
   const LINES = [
     { t: 'Some students in Una are handed three roads.', big: false },
@@ -1578,7 +1579,6 @@ export default function HomePage() {
       <Mirror />
 
       {/* ─── EMOTIONAL ARC: dream → the person who did it → the tool ─── */}
-      <Manifesto />
       <MentorLetter />
 
       {/* ─── DEPARTURES — the split-flap showpiece ─── */}
@@ -1664,7 +1664,7 @@ export default function HomePage() {
           </FadeIn>
           <FadeIn delay={0.1}>
             <div className="space-y-3">
-              {HOME_FAQS.map((item) => (
+              {HOME_FAQS.slice(0, 6).map((item) => (
                 <details key={item.q} className="faq-item">
                   <summary>{item.q}</summary>
                   <div className="faq-body">{item.a}</div>

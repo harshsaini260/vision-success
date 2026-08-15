@@ -5,7 +5,7 @@ import { createContext, useContext, useEffect, useState } from 'react'
 /* Every accent is a muted, aged tone — heirloom metals and dyes
    rather than screen primaries. Keeps the site rich at any setting. */
 export const THEMES = [
-  { id: 'gold',    label: 'Antique Gold',  color: '#C8A951', r: 200, g: 169, b: 81  },
+  { id: 'gold',    label: 'Antique Gold',  color: '#D2B463', r: 210, g: 180, b: 99  },
   { id: 'saffron', label: 'Burnt Saffron', color: '#C4712A', r: 196, g: 113, b: 42  },
   { id: 'royal',   label: 'Aubergine',     color: '#6E4E96', r: 110, g: 78,  b: 150 },
   { id: 'emerald', label: 'Hunter Green',  color: '#3E7D63', r: 62,  g: 125, b: 99  },

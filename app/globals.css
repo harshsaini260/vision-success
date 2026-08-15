@@ -9,15 +9,15 @@
    Palette is deliberately "old money": deep ink, antique gold, bone.
    Muted over neon, hairlines over glows, restraint over shine. */
 :root {
-  --accent: #C8A951;          /* antique gold, not showroom yellow */
-  --accent-rgb: 200, 169, 81;
-  --accent-light: #E6D29A;
-  --accent-dark: #8F7530;
+  --accent: #D2B463;          /* antique gold, not showroom yellow */
+  --accent-rgb: 210, 180, 99;
+  --accent-light: #EBD9A8;
+  --accent-dark: #9C8138;
 
-  --ink: #070C12;             /* deepest surface */
-  --ink-2: #0B1119;           /* page base */
-  --ink-3: #111926;           /* raised surface */
-  --bone: #EDE4D3;            /* primary text */
+  --ink: #0C1322;      /* royal navy-ink, lifted off pure black */             /* deepest surface */
+  --ink-2: #111A2C;           /* page base */
+  --ink-3: #18233A;           /* raised surface */
+  --bone: #F2ECE0;            /* primary text */
   --bone-dim: rgba(237, 228, 211, 0.74);   /* was 0.62 — too faint to read on a phone outdoors */
   --hairline: rgba(237, 228, 211, 0.10);
 
@@ -700,17 +700,17 @@ p {
 
 /* ===== MOBILE SPACING ===== */
 @media (max-width: 640px) {
-  .section-padding { padding: 60px 20px; }
-  .hero-padding { padding: 100px 20px 60px; }
+  .section-padding { padding: 40px 20px; }
+  .hero-padding { padding: 76px 20px 44px; }
 }
 
 @media (min-width: 641px) {
-  .section-padding { padding: 80px 32px; }
-  .hero-padding { padding: 120px 32px 80px; }
+  .section-padding { padding: 54px 32px; }
+  .hero-padding { padding: 92px 32px 56px; }
 }
 
 @media (min-width: 1024px) {
-  .section-padding { padding: 100px 48px; }
+  .section-padding { padding: 66px 48px; }
   .hero-padding { padding: 140px 48px 100px; }
 }
 
@@ -1769,3 +1769,66 @@ main select {
   min-height: 48px;
 }
 main label { line-height: 1.5; }
+
+/* ─── THE WAY INTO THE FILM ───
+   Not a chevron in a circle. A short strip of film with the sprockets
+   punched through it, and a letterbox that closes over the deck for the
+   third of a second it takes to change reels. */
+.film-portal {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 16px 8px 12px;
+  min-height: 52px;
+  border-radius: 6px;
+  color: var(--accent-light);
+  background: linear-gradient(180deg, rgba(var(--accent-rgb), 0.10), rgba(var(--accent-rgb), 0.04));
+  border: 1px solid rgba(var(--accent-rgb), 0.45);
+  transition: background .25s ease, border-color .25s ease, transform .25s ease;
+}
+.film-portal:hover:not(:disabled) {
+  background: linear-gradient(180deg, rgba(var(--accent-rgb), 0.20), rgba(var(--accent-rgb), 0.08));
+  border-color: var(--accent);
+  transform: translateX(2px);
+}
+.film-portal:disabled { opacity: 0.25; }
+.film-portal-label { text-align: left; line-height: 1.25; }
+.film-portal-arrow {
+  font-size: 18px;
+  transition: transform .25s ease;
+}
+.film-portal:hover:not(:disabled) .film-portal-arrow { transform: translateX(4px); }
+
+/* the perforations down each edge */
+.film-sprockets {
+  width: 7px;
+  align-self: stretch;
+  border-radius: 2px;
+  background-image: radial-gradient(circle at 50% 50%, var(--ink) 0 2.1px, transparent 2.2px);
+  background-size: 7px 11px;
+  background-repeat: repeat-y;
+  background-color: rgba(var(--accent-rgb), 0.55);
+}
+
+.cinema-bars {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 30;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+}
+.cinema-bars span {
+  background: #05080E;
+  transform: scaleY(0);
+  transition: transform .34s cubic-bezier(.7,0,.3,1);
+}
+.cinema-bars span:first-child { transform-origin: top; }
+.cinema-bars span:last-child { transform-origin: bottom; }
+.cinema-bars.is-in span { transform: scaleY(1); }
+
+@media (prefers-reduced-motion: reduce) {
+  .cinema-bars span { transition: none; }
+  .film-portal, .film-portal-arrow { transition: none; }
+}

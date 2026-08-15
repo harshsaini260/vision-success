@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import KhadiFlag from './KhadiFlag'
-import { IND, OFFER, DOORS, PLEDGE, isLive, daysLeft } from '@/lib/independence'
+import { IND, OFFER, DOORS, isLive, daysLeft } from '@/lib/independence'
 import { wa } from '@/lib/site'
 
 /* ─── EIGHT DECADES, EIGHT DOORS ───
@@ -33,7 +33,7 @@ export default function FreedomOffer() {
     <section
       id="freedom"
       style={{ scrollMarginTop: 70, background: 'linear-gradient(180deg, var(--ink) 0%, var(--ink-2) 55%, var(--ink) 100%)' }}
-      className="relative overflow-hidden grain section-padding"
+      className="relative overflow-hidden grain py-12 md:py-16"
       aria-label="Independence Day"
     >
       {/* a very faint chakra behind everything, like a watermark in paper */}
@@ -42,7 +42,7 @@ export default function FreedomOffer() {
       <div className="relative max-w-6xl mx-auto px-5">
 
         {/* ── the statement ── */}
-        <div className="text-center mb-14">
+        <div className="text-center mb-10">
           <motion.div
             initial={{ opacity: 0, y: 14 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -75,7 +75,7 @@ export default function FreedomOffer() {
         </div>
 
         {/* ── the eight doors ── */}
-        <div className="mb-16">
+        <div className="mb-10">
           <div className="rule-diamond mb-8" aria-hidden />
           <h3
             className="text-center text-2xl md:text-3xl font-semibold text-white mb-2"
@@ -120,7 +120,7 @@ export default function FreedomOffer() {
 
         {/* ── the eight seats — the point of the whole section ── */}
         <div
-          className="rounded-3xl p-7 md:p-12 mb-8"
+          className="rounded-3xl p-7 md:p-10"
           style={{
             background: 'linear-gradient(135deg, rgba(255,153,51,0.07) 0%, rgba(237,228,211,0.03) 45%, rgba(19,136,8,0.07) 100%)',
             border: '1.5px solid rgba(var(--accent-rgb),0.32)',
@@ -205,18 +205,6 @@ export default function FreedomOffer() {
           </div>
         </div>
 
-        {/* ── the two things that do not expire ── */}
-        <div className="grid sm:grid-cols-2 gap-4">
-          {PLEDGE.map((p) => (
-            <div
-              key={p}
-              className="p-5 rounded-2xl text-sm leading-relaxed"
-              style={{ background: 'rgba(237,228,211,0.03)', border: '1px solid var(--hairline)', color: 'var(--bone-dim)' }}
-            >
-              {p}
-            </div>
-          ))}
-        </div>
       </div>
     </section>
   )
