@@ -195,11 +195,8 @@ export default function FreedomOffer() {
             >
               Ask about paying in full
             </a>
-            <Link
-              href="/start"
-              className="btn-ghost text-center"
-            >
-              Get your free plan first
+            <Link href="/fees" className="btn-ghost text-center">
+              See all fees in full
             </Link>
           </div>
         </div>

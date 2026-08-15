@@ -13,6 +13,7 @@ import Logo from '@/components/Logo'
    force the label onto a second line. */
 const primaryLinks = [
   { href: '/courses', label: 'Courses' },
+  { href: '/fees', label: 'Fees' },
   { href: '/sat', label: 'SAT', flagship: true },
   { href: '/enroll', label: 'Enroll' },
   { href: '/materials', label: 'Materials' },
