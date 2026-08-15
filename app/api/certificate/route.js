@@ -30,9 +30,9 @@ function body({ name, ref, date }) {
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#070C12;padding:32px 16px;">
    <tr><td align="center">
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;background:#0B1119;border:1px solid rgba(200,169,81,0.28);border-radius:14px;padding:36px 32px;">
-     <tr><td style="font-family:Georgia,serif;color:#EDE4D3;font-size:26px;letter-spacing:2px;padding-bottom:6px;">VISION SUCCESS</td></tr>
+     <tr><td style="font-family:Georgia,serif;color:#E8F0F7;font-size:26px;letter-spacing:2px;padding-bottom:6px;">VISION SUCCESS</td></tr>
      <tr><td style="font-family:Arial,sans-serif;color:#C8A951;font-size:11px;letter-spacing:3px;padding-bottom:24px;">EDUCATIONAL INSTITUTE &middot; UNA, H.P.</td></tr>
-     <tr><td style="font-family:Arial,sans-serif;color:#EDE4D3;font-size:16px;line-height:1.65;">
+     <tr><td style="font-family:Arial,sans-serif;color:#E8F0F7;font-size:16px;line-height:1.65;">
       <p style="margin:0 0 16px;">${first}, thank you.</p>
       <p style="margin:0 0 16px;">Your certificate of acknowledgement is attached. You earned it by answering
       five questions honestly — which is more than most people are ever asked to do about their own future.</p>
@@ -47,7 +47,7 @@ function body({ name, ref, date }) {
         <a href="https://wa.me/918219254332" style="color:#E6D29A;">Ask us anything on WhatsApp &rarr;</a>
       </p>
      </td></tr>
-     <tr><td style="padding-top:26px;border-top:1px solid rgba(237,228,211,0.12);margin-top:24px;">
+     <tr><td style="padding-top:26px;border-top:1px solid rgba(232,240,247,0.12);margin-top:24px;">
        <p style="font-family:Georgia,serif;color:#C8A951;font-size:18px;font-style:italic;margin:18px 0 6px;">
          They say it's not possible. We say: no &mdash; it's necessary.</p>
        <p style="font-family:Arial,sans-serif;color:#9A927F;font-size:12px;margin:0;">

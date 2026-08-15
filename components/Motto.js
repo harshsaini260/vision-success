@@ -55,7 +55,7 @@ export default function Motto() {
             fontFamily: 'var(--font-ui)',
             letterSpacing: '0.32em',
             textTransform: 'uppercase',
-            color: 'rgba(237,228,211,0.45)',
+            color: 'rgba(232,240,247,0.45)',
           }}
         >
           {/* dims once the answer arrives — the page performs the override */}

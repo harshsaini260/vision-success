@@ -230,7 +230,7 @@ function CommunityScrolls() {
                   
                 </div>
 
-                <div className="text-[15px] leading-[1.85]" style={{ color: 'rgba(237,228,211,0.78)' }}>
+                <div className="text-[15px] leading-[1.85]" style={{ color: 'rgba(232,240,247,0.78)' }}>
                   {(isOpen ? r.body : (r.body || '').slice(0, 260) + ((r.body || '').length > 260 ? '…' : ''))
                     .split('\n')
                     .filter(Boolean)
@@ -340,12 +340,12 @@ export default function BlogIndex() {
                     <p className="text-sm leading-relaxed mb-3" style={{ color: 'var(--bone-dim)' }}>
                       {p.excerpt}
                     </p>
-                    <span className="text-[10px] uppercase tracking-[0.16em]" style={{ color: 'rgba(237,228,211,0.56)' }}>
+                    <span className="text-[10px] uppercase tracking-[0.16em]" style={{ color: 'rgba(232,240,247,0.56)' }}>
                       {p.tag} · {fmtDate(p.date)} · {p.readMins} min read
                     </span>
                     {/* the search phrases this piece actually answers */}
                     {p.keywords?.length > 0 && (
-                      <p className="text-[11px] mt-2.5" style={{ color: 'rgba(237,228,211,0.5)' }}>
+                      <p className="text-[11px] mt-2.5" style={{ color: 'rgba(232,240,247,0.5)' }}>
                         Answers: {p.keywords.slice(0, 3).join(' · ')}
                       </p>
                     )}

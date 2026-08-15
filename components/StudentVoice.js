@@ -190,7 +190,7 @@ export default function StudentVoice({ embedded = false }) {
               </button>
 
               {/* where he is in the sentence */}
-              <div className="absolute left-0 bottom-0 h-[3px] w-full" style={{ background: 'rgba(237,228,211,0.12)' }}>
+              <div className="absolute left-0 bottom-0 h-[3px] w-full" style={{ background: 'rgba(232,240,247,0.12)' }}>
                 <div
                   className="h-full"
                   style={{ width: `${progress * 100}%`, background: 'var(--accent)', transition: 'width .18s linear' }}

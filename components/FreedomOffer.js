@@ -100,7 +100,7 @@ export default function FreedomOffer() {
                 <Link
                   href={d.href}
                   className="group block h-full p-4 md:p-5 rounded-2xl transition-colors"
-                  style={{ background: 'rgba(237,228,211,0.04)', border: '1px solid var(--hairline)' }}
+                  style={{ background: 'rgba(232,240,247,0.04)', border: '1px solid var(--hairline)' }}
                 >
                   <div
                     className="text-3xl md:text-4xl leading-none mb-2"
@@ -122,7 +122,7 @@ export default function FreedomOffer() {
         <div
           className="rounded-3xl p-7 md:p-10"
           style={{
-            background: 'linear-gradient(135deg, rgba(255,153,51,0.07) 0%, rgba(237,228,211,0.03) 45%, rgba(19,136,8,0.07) 100%)',
+            background: 'linear-gradient(135deg, rgba(255,153,51,0.07) 0%, rgba(232,240,247,0.03) 45%, rgba(19,136,8,0.07) 100%)',
             border: '1.5px solid rgba(var(--accent-rgb),0.32)',
           }}
         >

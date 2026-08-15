@@ -14,12 +14,12 @@
   --accent-light: #EBD9A8;
   --accent-dark: #9C8138;
 
-  --ink: #0C1322;      /* royal navy-ink, lifted off pure black */             /* deepest surface */
-  --ink-2: #111A2C;           /* page base */
-  --ink-3: #18233A;           /* raised surface */
-  --bone: #F2ECE0;            /* primary text */
-  --bone-dim: rgba(237, 228, 211, 0.74);   /* was 0.62 — too faint to read on a phone outdoors */
-  --hairline: rgba(237, 228, 211, 0.10);
+  --ink: #081428;             /* deepest surface — the crest's shield, darkened */
+  --ink-2: #0D1C34;           /* page base */
+  --ink-3: #142946;           /* raised surface — nearest the shield's own blue */
+  --bone: #E8F0F7;            /* primary text — the crest's silver field, exactly */
+  --bone-dim: rgba(232, 240, 247, 0.76);   /* the same silver, stepped back */
+  --hairline: rgba(232, 240, 247, 0.12);
 
   /* Three families: a high-contrast serif for voice, a neutral sans
      for interface, and Caveat kept for handwritten marginalia. */
@@ -50,12 +50,22 @@ body {
 
 /* Serif voice for every heading, with the tight optical tracking
    that makes Cormorant read as engraved rather than webby. */
-h1, h2, h3 {
+h1, h2, h3, h4 {
   font-family: var(--font-display);
-  font-weight: 600;
-  letter-spacing: -0.015em;
-  line-height: 1.1;
+  font-weight: 700;
+  letter-spacing: -0.018em;
+  line-height: 1.08;
+  /* Cormorant carries real ligatures and an optical size axis; without
+     these it renders as a thin web serif instead of an engraved one. */
+  font-optical-sizing: auto;
+  font-feature-settings: 'kern' 1, 'liga' 1, 'clig' 1, 'calt' 1;
+  text-rendering: optimizeLegibility;
 }
+
+/* A display serif at large sizes wants to be tighter and heavier; at
+   small sizes it wants neither. */
+h1 { letter-spacing: -0.028em; }
+h4 { font-weight: 600; letter-spacing: -0.008em; }
 
 /* Small-caps eyebrow — the quiet luxury label */
 .eyebrow {
@@ -1982,3 +1992,39 @@ main label { line-height: 1.5; }
   .proof-card { transition: none; }
   .proof-rail { scroll-behavior: auto; }
 }
+
+/* ─── TYPE, RICHER ───
+   Body text gets the same treatment: proper kerning, contextual
+   alternates, and lining figures so a phone number or a fee never
+   renders with old-style digits hopping above and below the line. */
+body {
+  font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1;
+  font-variant-numeric: lining-nums tabular-nums;
+  text-rendering: optimizeLegibility;
+}
+
+/* The gold shimmer should read as struck metal against the silver, not
+   as a highlighter pen. */
+.text-gold-shimmer {
+  background: linear-gradient(100deg, var(--accent-dark) 0%, var(--accent) 26%, var(--accent-light) 50%, var(--accent) 74%, var(--accent-dark) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* Blockquotes and pull-quotes in the display serif, italic — the crest
+   is formal, and so is its voice. */
+main blockquote {
+  font-feature-settings: 'kern' 1, 'liga' 1, 'dlig' 1;
+}
+
+/* Tailwind's `font-semibold` sits on nearly every heading in the markup
+   and outranks an element selector, so the display serif was still
+   rendering at 600. Cormorant at 700 is where it stops looking like a
+   web font and starts looking engraved — that is the whole reason this
+   family was chosen, so it wins here. */
+h1, h2, h3 {
+  font-weight: 700 !important;
+}
+h1 { letter-spacing: -0.028em; }

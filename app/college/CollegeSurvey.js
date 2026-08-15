@@ -152,7 +152,7 @@ export default function CollegeSurvey() {
       {/* progress + the only branding on screen */}
       <div className="px-6 pt-5 pb-3 flex items-center gap-4">
         <img src="/images/shield.png" alt="" className="h-9 w-auto opacity-90" />
-        <div className="flex-1 h-[3px] rounded-full overflow-hidden" style={{ background: 'rgba(237,228,211,0.12)' }}>
+        <div className="flex-1 h-[3px] rounded-full overflow-hidden" style={{ background: 'rgba(232,240,247,0.12)' }}>
           <motion.div
             className="h-full"
             style={{ background: 'var(--accent)' }}
@@ -214,7 +214,7 @@ export default function CollegeSurvey() {
                         className="text-left px-5 py-4 md:py-5 rounded-2xl text-base md:text-lg transition-all active:scale-[0.985]"
                         style={{
                           minHeight: 64,
-                          background: chosen ? 'rgba(var(--accent-rgb),0.16)' : 'rgba(237,228,211,0.045)',
+                          background: chosen ? 'rgba(var(--accent-rgb),0.16)' : 'rgba(232,240,247,0.045)',
                           border: `1.5px solid ${chosen ? 'var(--accent)' : 'var(--hairline)'}`,
                           color: chosen ? 'var(--accent-light)' : 'var(--bone)',
                         }}
@@ -224,7 +224,7 @@ export default function CollegeSurvey() {
                             className="flex-shrink-0 grid place-items-center"
                             style={{
                               width: 22, height: 22, borderRadius: q.multi ? 6 : 999,
-                              border: `1.5px solid ${chosen ? 'var(--accent)' : 'rgba(237,228,211,0.3)'}`,
+                              border: `1.5px solid ${chosen ? 'var(--accent)' : 'rgba(232,240,247,0.3)'}`,
                               background: chosen ? 'var(--accent)' : 'transparent',
                               color: 'var(--ink)', fontSize: 13, fontWeight: 700,
                             }}
@@ -284,7 +284,7 @@ export default function CollegeSurvey() {
                         className="w-full px-4 rounded-xl text-lg outline-none"
                         style={{
                           minHeight: 60,
-                          background: 'rgba(237,228,211,0.05)',
+                          background: 'rgba(232,240,247,0.05)',
                           border: '1.5px solid var(--hairline)',
                           color: 'var(--bone)',
                         }}

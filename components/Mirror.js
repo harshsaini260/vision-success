@@ -123,7 +123,7 @@ export default function Mirror() {
                         >
                           <span
                             className="block text-[15px] leading-[1.8] pt-4"
-                            style={{ color: 'rgba(237,228,211,0.78)' }}
+                            style={{ color: 'rgba(232,240,247,0.78)' }}
                           >
                             {w.a}
                           </span>

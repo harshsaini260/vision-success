@@ -108,7 +108,7 @@ export default function ProofDeck() {
                   style={{
                     width: i === idx ? 30 : 9,
                     height: 9,
-                    background: i === idx ? 'var(--accent)' : 'rgba(237,228,211,0.24)',
+                    background: i === idx ? 'var(--accent)' : 'rgba(232,240,247,0.24)',
                   }}
                 />
               ))}

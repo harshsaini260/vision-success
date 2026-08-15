@@ -30,7 +30,7 @@ export function generateMetadata({ params }) {
 }
 
 /* Plain editorial blocks — the reading is the point */
-const BODY = { color: 'rgba(237,228,211,0.78)' }
+const BODY = { color: 'rgba(232,240,247,0.78)' }
 
 function Block({ b }) {
   if (b.h)
@@ -115,13 +115,13 @@ export default function ScrollPage({ params }) {
             <h1 className="text-4xl md:text-5xl text-white mb-5">{post.title}</h1>
             <p
               className="text-xl leading-relaxed mb-6"
-              style={{ fontFamily: 'var(--font-display)', color: 'rgba(237,228,211,0.82)' }}
+              style={{ fontFamily: 'var(--font-display)', color: 'rgba(232,240,247,0.82)' }}
             >
               {post.excerpt}
             </p>
             <div
               className="text-[11px] uppercase tracking-[0.16em] pt-5"
-              style={{ color: 'rgba(237,228,211,0.56)', borderTop: '1px solid var(--hairline)' }}
+              style={{ color: 'rgba(232,240,247,0.56)', borderTop: '1px solid var(--hairline)' }}
             >
               {post.tag} · {post.readMins} min read ·{' '}
               {new Date(post.date).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })}

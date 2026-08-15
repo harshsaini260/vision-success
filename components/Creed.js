@@ -287,7 +287,7 @@ export default function Creed() {
                 are discounted on sight; numbers with nouns are not. */}
             <p
               className="mt-4 text-[11px] tracking-[0.1em] uppercase transition-opacity duration-700"
-              style={{ color: 'rgba(237,228,211,0.5)', opacity: lit >= WORDS.length ? 1 : 0.25 }}
+              style={{ color: 'rgba(232,240,247,0.5)', opacity: lit >= WORDS.length ? 1 : 0.25 }}
             >
               NDA · JEE · NEET · SAT · Class 9–12 &nbsp;·&nbsp; 13 years &nbsp;·&nbsp; 7+ officers &nbsp;·&nbsp; 50+ doctors
             </p>
