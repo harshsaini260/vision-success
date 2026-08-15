@@ -84,6 +84,11 @@ export default function Footer() {
             <ul className="space-y-3">
               {[
                 { href: '/', label: 'Home' },
+                /* The two a visitor most often wants and could not previously
+                   reach from a course page: what it costs, and the two-minute
+                   questionnaire that asks for nothing. */
+                { href: '/fees', label: 'Fees' },
+                { href: '/start', label: 'Free Study Plan' },
                 { href: '/courses', label: 'Courses' },
                 { href: '/coaching-in-una', label: 'Coaching in Una' },
                 { href: '/nda-coaching-una', label: 'NDA Coaching' },
