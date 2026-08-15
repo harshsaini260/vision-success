@@ -1876,3 +1876,109 @@ main label { line-height: 1.5; }
   line-height: 1.42;
   color: var(--bone-dim);
 }
+
+/* ─── PROOF RAIL ───
+   A shelf you push, not a column you scroll past. */
+.rail-wrap { position: relative; }
+.proof-rail {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  padding: 6px max(20px, calc((100vw - 1152px) / 2)) 20px;
+  scrollbar-width: none;
+  cursor: grab;
+  outline: none;
+}
+.proof-rail:active { cursor: grabbing; }
+.proof-rail::-webkit-scrollbar { display: none; }
+.proof-rail:focus-visible { outline: 2px solid var(--accent); outline-offset: -4px; }
+
+.proof-card {
+  position: relative;
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+  border-radius: 16px;
+  overflow: hidden;
+  background: rgba(242, 236, 224, 0.045);
+  border: 1px solid var(--hairline);
+  display: flex;
+  flex-direction: column;
+  transition: transform .28s cubic-bezier(.2,.7,.3,1), border-color .28s ease, opacity .28s ease;
+  text-decoration: none;
+}
+/* the shelf gets a focus: what you point at lifts, the rest steps back */
+@media (hover: hover) and (min-width: 768px) {
+  .proof-rail:hover .proof-card { opacity: 0.62; }
+  .proof-rail .proof-card:hover {
+    opacity: 1;
+    transform: translateY(-6px) scale(1.035);
+    border-color: rgba(var(--accent-rgb), 0.55);
+    z-index: 2;
+  }
+}
+.proof-card:focus-within { border-color: rgba(var(--accent-rgb), 0.55); opacity: 1; }
+
+.proof-card-video,
+.proof-card-cover {
+  width: 100%;
+  aspect-ratio: 9 / 16;
+  object-fit: cover;
+  display: block;
+  background: var(--ink);
+  pointer-events: auto;
+}
+.proof-card--film .proof-card-video { cursor: pointer; }
+.proof-card-cover--blank {
+  display: grid; place-items: center; font-size: 44px; opacity: .35;
+}
+.proof-play {
+  position: absolute; top: 40%; left: 50%; transform: translate(-50%,-50%);
+  width: 48px; height: 48px; border-radius: 999px;
+  display: grid; place-items: center; font-size: 15px;
+  background: rgba(12,19,34,.72); border: 1px solid rgba(var(--accent-rgb),.5);
+  color: var(--accent-light); backdrop-filter: blur(4px);
+}
+.proof-sound {
+  position: absolute; left: 10px; top: 10px;
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 7px 11px; min-height: 34px; border-radius: 999px;
+  font-size: 10px; font-weight: 600;
+  background: rgba(12,19,34,.74); color: var(--bone);
+  border: 1px solid rgba(var(--accent-rgb),.45); backdrop-filter: blur(5px);
+}
+.proof-card-foot { padding: 12px 14px 15px; display: flex; flex-direction: column; gap: 3px; }
+.proof-card-kicker { font-size: 9.5px; letter-spacing: .17em; text-transform: uppercase; color: var(--accent); font-weight: 700; }
+.proof-card-title { font-family: var(--font-display); font-size: 18px; color: #fff; font-weight: 600; line-height: 1.2; }
+.proof-card-line { font-size: 11.5px; line-height: 1.45; color: var(--bone-dim); }
+
+.proof-card--quote { padding: 18px 16px 0; justify-content: space-between; min-height: 300px; }
+.proof-quote-mark { font-family: var(--font-display); font-size: 52px; line-height: .6; color: rgba(var(--accent-rgb), .55); }
+.proof-quote-text { font-size: 13.5px; line-height: 1.6; color: var(--bone); margin: 10px 0 auto; }
+.proof-card--quote .proof-card-foot { padding-left: 0; padding-right: 0; }
+
+.proof-card--last { border-style: dashed; border-color: rgba(var(--accent-rgb), .40); background: rgba(var(--accent-rgb), .05); }
+.proof-last-inner { padding: 20px 16px; display: flex; flex-direction: column; height: 100%; }
+.proof-last-head { font-size: 21px; color: #fff; line-height: 1.2; margin: 8px 0 8px; }
+
+.rail-arrow {
+  width: 42px; height: 42px; border-radius: 999px;
+  border: 1px solid rgba(var(--accent-rgb), .38); color: var(--bone);
+  display: grid; place-items: center;
+  transition: opacity .2s ease, background .2s ease;
+}
+.rail-arrow:hover:not(:disabled) { background: rgba(var(--accent-rgb), .14); }
+.rail-arrow:disabled { opacity: .22; }
+
+.rail-fade {
+  position: absolute; top: 0; bottom: 0; width: 56px;
+  pointer-events: none; opacity: 0; transition: opacity .3s ease;
+}
+.rail-fade.is-on { opacity: 1; }
+.rail-fade--l { left: 0; background: linear-gradient(90deg, var(--ink), transparent); }
+.rail-fade--r { right: 0; background: linear-gradient(270deg, var(--ink-2), transparent); }
+
+@media (prefers-reduced-motion: reduce) {
+  .proof-card { transition: none; }
+  .proof-rail { scroll-behavior: auto; }
+}

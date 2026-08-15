@@ -15,7 +15,7 @@ import DepartureBoard from '@/components/DepartureBoard'
 import PolarBuddy from '@/components/PolarBuddy'
 import Scribble from '@/components/Scribble'
 import StudentStories from '@/components/StudentStories'
-import ProofDeck from '@/components/ProofDeck'
+import ProofRail from '@/components/ProofRail'
 import FreedomOffer from '@/components/FreedomOffer'
 import Creed from '@/components/Creed'
 import Mirror from '@/components/Mirror'
@@ -403,7 +403,7 @@ function BrochureMagnet() {
   return (
     <section
       id="blueprint"
-      className="relative overflow-hidden py-16 md:py-24 px-4 scroll-mt-20"
+      className="relative overflow-hidden py-11 md:py-16 px-4 scroll-mt-20"
       style={{ background: 'linear-gradient(180deg, var(--ink-2) 0%, var(--ink) 100%)' }}
     >
       <div
@@ -690,7 +690,7 @@ function Manifesto() {
     { t: 'We call it Tuesday.', big: true },
   ]
   return (
-    <section className="relative overflow-hidden py-20 md:py-28 px-4" style={{ background: 'var(--ink)' }}>
+    <section className="relative overflow-hidden py-12 md:py-16 px-4" style={{ background: 'var(--ink)' }}>
       <div
         aria-hidden
         className="absolute inset-0 pointer-events-none"
@@ -829,7 +829,7 @@ function DeparturesSection() {
    the parent reading over a student's shoulder. */
 function MentorLetter() {
   return (
-    <section className="py-16 md:py-24 px-4" style={{ background: 'linear-gradient(180deg, var(--ink-3) 0%, #0C1A2E 100%)' }}>
+    <section className="py-10 md:py-14 px-4" style={{ background: 'linear-gradient(180deg, var(--ink-3) 0%, #0C1A2E 100%)' }}>
       <div className="max-w-2xl mx-auto">
         <FadeIn>
           <div
@@ -1077,7 +1077,7 @@ export default function HomePage() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.1 }}
-                className="text-5xl sm:text-6xl lg:text-7xl font-semibold leading-[0.95] mb-5"
+                className="text-4xl sm:text-5xl lg:text-6xl font-semibold leading-[0.98] mb-4"
                 style={{ fontFamily: 'var(--font-display)', letterSpacing: '-0.02em' }}
               >
                 <span className="text-white">FROM UNA,</span>
@@ -1308,9 +1308,10 @@ export default function HomePage() {
       {/* ─── PROOF — before we have asked for anything ───
            High on the page on purpose: after the motto a visitor has heard
            us talk about ourselves twice, and this is the first voice that
-           is not ours. Aniket and the documentary share one swipeable
-           deck so neither is buried under the other. */}
-      <ProofDeck />
+           is not ours. Aniket, the documentary and every written
+           review share one horizontal shelf, so proof is browsed rather
+           than scrolled past. */}
+      <ProofRail />
 
       {/* ─── ACHIEVEMENT TICKER ─── */}
       <div
@@ -1429,13 +1430,13 @@ export default function HomePage() {
       <DeparturesSection />
 
       {/* ─── WALL OF MOMENTS — real photos, polaroid wall ─── */}
-      <section className="section-padding overflow-hidden" style={{ background: 'var(--ink-2)' }}>
+      <section className="py-10 md:py-14 px-5 overflow-hidden" style={{ background: 'var(--ink-2)' }}>
         <div className="max-w-6xl mx-auto">
           <FadeIn>
-            <div className="text-center mb-12">
+            <div className="text-center mb-6">
               <span className="section-tag mb-4 inline-block">Inside Vision Success</span>
               <h2
-                className="text-4xl md:text-5xl font-semibold text-white mb-2"
+                className="text-2xl md:text-3xl font-semibold text-white mb-2"
                 style={{ fontFamily: 'var(--font-display)' }}
               >
                 The Wall of Moments
