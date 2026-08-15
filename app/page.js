@@ -1032,6 +1032,13 @@ export default function HomePage() {
       {/* ─── THE CREED — the words this place runs on, before anything else ─── */}
       <Creed />
 
+      {/* ─── PROOF, IMMEDIATELY ───
+           Straight under the masthead film, before the hero says a word
+           about us. Our own film of the room and the students' own
+           verdicts share one horizontal row, so the first thing a visitor
+           meets is results rather than claims. */}
+      <ProofRail />
+
       {/* ─── HERO ─── */}
       <section
         className="relative flex items-center overflow-hidden"
@@ -1305,13 +1312,6 @@ export default function HomePage() {
            Date-gated: it removes itself on 1 September. ─── */}
       <FreedomOffer />
 
-      {/* ─── PROOF — before we have asked for anything ───
-           High on the page on purpose: after the motto a visitor has heard
-           us talk about ourselves twice, and this is the first voice that
-           is not ours. Aniket, the documentary and every written
-           review share one horizontal shelf, so proof is browsed rather
-           than scrolled past. */}
-      <ProofRail />
 
       {/* ─── ACHIEVEMENT TICKER ─── */}
       <div

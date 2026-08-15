@@ -6,9 +6,13 @@ import { wa } from '@/lib/site'
 
 /* ─── THE PROOF RAIL ───
    Everything a real student has said about this place, in one horizontal
-   row you push along — Aniket's film first, then any documentary
-   episodes, then the written reviews, then the empty seat with your name
-   on it.
+   row you push along — our own film of the room, Aniket's review beside
+   it, then any documentary episodes, then the written reviews, then the
+   empty seat with nobody's name on it yet.
+
+   Ours and theirs share the row on purpose. A visitor arriving at the
+   top of the page meets results and the place itself in the same
+   gesture, and does not have to take our word for either.
 
    Why a rail and not stacked sections: proof is the one thing a visitor
    wants to browse rather than read. A row invites a push; a column
@@ -25,13 +29,14 @@ import { wa } from '@/lib/site'
    The cards are built from live data. Episodes come from Firestore when
    they exist, reviews likewise, and the rail simply has fewer cards on a
    quiet week. It is never empty: Aniket and the last card are always
-   there. */
+   there. Neither film downloads a byte until it is actually looked at. */
 
 const CARD_W = 268
 
 export default function ProofRail() {
   const railRef = useRef(null)
   const videoRef = useRef(null)
+  const ourRef = useRef(null)
   const [vlogs, setVlogs] = useState([])
   const [reviews, setReviews] = useState([])
   const [sound, setSound] = useState(false)
@@ -57,28 +62,36 @@ export default function ProofRail() {
     })()
   }, [])
 
-  /* ── Aniket's film plays only while it is on the rail and in view ── */
+  /* ── the films play only while they are on the rail and in view ──
+     Both cards share this, so nothing downloads until it is looked at
+     and nothing keeps playing once it is pushed off screen. */
   useEffect(() => {
-    const v = videoRef.current
-    if (!v) return
+    const pairs = [
+      [ourRef.current, ['/video/film-720.mp4', '/video/film-480.mp4']],
+      [videoRef.current, ['/video/review-720.mp4', '/video/review-540.mp4']],
+    ].filter(([el]) => el)
+    if (!pairs.length) return
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
-    let loaded = false
-    const io = new IntersectionObserver(
-      ([e]) => {
-        if (!e.isIntersecting) { if (v.muted) v.pause(); return }
-        if (!loaded) {
-          loaded = true
+
+    const loaded = new WeakSet()
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) {
+        const el = e.target
+        const pair = pairs.find(([v]) => v === el)
+        if (!pair) continue
+        if (!e.isIntersecting) { if (el.muted) el.pause(); continue }
+        if (!loaded.has(el)) {
+          loaded.add(el)
           const dense = CARD_W * (window.devicePixelRatio || 1) > 700
           const c = navigator.connection || {}
           const thrifty = c.saveData || /^((slow-)?2g|3g)$/.test(c.effectiveType || '')
-          v.src = dense && !thrifty ? '/video/review-720.mp4' : '/video/review-540.mp4'
-          v.load()
+          el.src = dense && !thrifty ? pair[1][0] : pair[1][1]
+          el.load()
         }
-        v.play().catch(() => {})
-      },
-      { threshold: 0.5 }
-    )
-    io.observe(v)
+        el.play().catch(() => {})
+      }
+    }, { threshold: 0.5 })
+    pairs.forEach(([el]) => io.observe(el))
     return () => io.disconnect()
   }, [])
 
@@ -124,7 +137,7 @@ export default function ProofRail() {
     v.play().catch(() => {})
   }
 
-  const cards = 1 + vlogs.length + Math.min(reviews.length, 6) + 1
+  const cards = 2 + vlogs.length + Math.min(reviews.length, 6) + 1
 
   return (
     <section
@@ -169,7 +182,29 @@ export default function ProofRail() {
             if (e.key === 'ArrowLeft') { e.preventDefault(); nudge(-1) }
           }}
         >
-          {/* ── 1. Aniket ── */}
+          {/* ── 1. our own film, so ours and theirs share the row ── */}
+          <Link href="/stories" className="proof-card proof-card--film" style={{ width: CARD_W }}>
+            <video
+              ref={ourRef}
+              poster="/video/film-poster.jpg"
+              muted
+              loop
+              playsInline
+              preload="none"
+              className="proof-card-video"
+              aria-label="The Vision Success masthead film"
+            />
+            <span className="proof-play" aria-hidden>▶</span>
+            <div className="proof-card-foot">
+              <span className="proof-card-kicker">Our film</span>
+              <span className="proof-card-title">Inside the room</span>
+              <span className="proof-card-line">
+                The place itself — the board, the batch, the mornings. Ninety seconds.
+              </span>
+            </div>
+          </Link>
+
+          {/* ── 2. Aniket ── */}
           <article className="proof-card proof-card--film" style={{ width: CARD_W }}>
             <video
               ref={videoRef}
@@ -195,7 +230,7 @@ export default function ProofRail() {
             </div>
           </article>
 
-          {/* ── 2. documentary episodes, when they exist ── */}
+          {/* ── 3. documentary episodes, when they exist ── */}
           {vlogs.map((v) => (
             <Link key={v.id} href="/stories" className="proof-card proof-card--doc" style={{ width: CARD_W }}>
               {v.cover ? (
@@ -212,7 +247,7 @@ export default function ProofRail() {
             </Link>
           ))}
 
-          {/* ── 3. what they wrote ── */}
+          {/* ── 4. what they wrote ── */}
           {reviews.slice(0, 6).map((r) => (
             <article key={r.id} className="proof-card proof-card--quote" style={{ width: CARD_W }}>
               <span className="proof-quote-mark" aria-hidden>“</span>
@@ -225,7 +260,7 @@ export default function ProofRail() {
             </article>
           ))}
 
-          {/* ── 4. the empty seat ── */}
+          {/* ── 5. the empty seat ── */}
           <article className="proof-card proof-card--last" style={{ width: CARD_W }}>
             <div className="proof-last-inner">
               <span className="proof-card-kicker">The next one</span>
