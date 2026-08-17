@@ -41,12 +41,12 @@ const FILMS = [
     line: '“We are not just preparing for exams — we are preparing for something that we are going to become.”',
   },
   {
-    id: 'yagyansh', name: 'Yagyansh', klass: 'Class 12 · Medical', len: '27 sec',
+    id: 'yagyansh', name: 'Yagyansh', klass: 'Class 12 · Medical', len: '25 sec',
     hi: '/video/yagyansh-720.mp4', lo: '/video/yagyansh-540.mp4', poster: '/video/yagyansh-poster.jpg',
     line: '“Less students in each batch, so I get proper attention from each teacher — I learn much more than the books.”',
   },
   {
-    id: 'aditi', name: 'Aditi', klass: 'Class 12 · Non-Medical', len: '24 sec',
+    id: 'aditi', name: 'Aditi', klass: 'Class 12 · Non-Medical', len: '19 sec',
     hi: '/video/aditi-720.mp4', lo: '/video/aditi-540.mp4', poster: '/video/aditi-poster.jpg',
     line: '“I did wonder whether it would be worth it. After joining, the fees are completely justified.”',
   },
