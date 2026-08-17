@@ -33,10 +33,29 @@ import { wa } from '@/lib/site'
 
 const CARD_W = 268
 
+/* Every student film. Adding another is a row here, not a component. */
+const FILMS = [
+  {
+    id: 'aniket', name: 'Aniket', klass: 'Class 9', len: '27 sec',
+    hi: '/video/review-720.mp4', lo: '/video/review-540.mp4', poster: '/video/review-poster.jpg',
+    line: '“We are not just preparing for exams — we are preparing for something that we are going to become.”',
+  },
+  {
+    id: 'yagyansh', name: 'Yagyansh', klass: 'Class 12 · Medical', len: '27 sec',
+    hi: '/video/yagyansh-720.mp4', lo: '/video/yagyansh-540.mp4', poster: '/video/yagyansh-poster.jpg',
+    line: '“Less students in each batch, so I get proper attention from each teacher — I learn much more than the books.”',
+  },
+  {
+    id: 'aditi', name: 'Aditi', klass: 'Class 12 · Non-Medical', len: '24 sec',
+    hi: '/video/aditi-720.mp4', lo: '/video/aditi-540.mp4', poster: '/video/aditi-poster.jpg',
+    line: '“I did wonder whether it would be worth it. After joining, the fees are completely justified.”',
+  },
+]
+
 export default function ProofRail() {
   const railRef = useRef(null)
-  const videoRef = useRef(null)
   const ourRef = useRef(null)
+  const filmRefs = useRef({})
   const [vlogs, setVlogs] = useState([])
   const [reviews, setReviews] = useState([])
   const [active, setActive] = useState(0)
@@ -67,7 +86,7 @@ export default function ProofRail() {
   useEffect(() => {
     const pairs = [
       [ourRef.current, ['/video/film-720.mp4', '/video/film-480.mp4']],
-      [videoRef.current, ['/video/review-720.mp4', '/video/review-540.mp4']],
+      ...FILMS.map((f) => [filmRefs.current[f.id], [f.hi, f.lo]]),
     ].filter(([el]) => el)
     if (!pairs.length) return
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
@@ -129,10 +148,10 @@ export default function ProofRail() {
   /* Tapping a film should play or pause it — never navigate. The cards
      used to be links, so a tap on the picture took you off the page,
      which is the opposite of what a play button looks like it does. */
-  const [playing, setPlaying] = useState({ our: true, aniket: true })
-  const [muted, setMuted] = useState({ our: true, aniket: true })
+  const [playing, setPlaying] = useState({})
+  const [muted, setMuted] = useState({})
 
-  const refFor = (k) => (k === 'our' ? ourRef : videoRef)
+  const refFor = (k) => (k === 'our' ? ourRef : { current: filmRefs.current[k] })
 
   const toggle = (k) => {
     const v = refFor(k).current
@@ -153,7 +172,7 @@ export default function ProofRail() {
     setPlaying((p) => ({ ...p, [k]: true }))
   }
 
-  const cards = 2 + vlogs.length + Math.min(reviews.length, 6) + 1
+  const cards = 1 + FILMS.length + vlogs.length + Math.min(reviews.length, 6) + 1
 
   return (
     <section
@@ -230,39 +249,39 @@ export default function ProofRail() {
             </div>
           </article>
 
-          {/* ── 2. Aniket ── */}
-          <article className="proof-card proof-card--film" style={{ width: CARD_W }}>
-            <video
-              ref={videoRef}
-              poster="/video/review-poster.jpg"
-              muted
-              loop
-              playsInline
-              preload="none"
-              onClick={() => toggle('aniket')}
-              onPlay={() => setPlaying((p) => ({ ...p, aniket: true }))}
-              onPause={() => setPlaying((p) => ({ ...p, aniket: false }))}
-              className="proof-card-video"
-              aria-label="Aniket, a Class 9 student at Vision Success, describing the institute"
-            />
-            <button className="proof-ctl proof-ctl--play" onClick={() => toggle('aniket')}
-              aria-label={playing.aniket ? 'Pause' : 'Play'}>
-              <span aria-hidden>{playing.aniket ? '❚❚' : '▶'}</span>
-            </button>
-            <button className="proof-ctl proof-ctl--sound" onClick={() => listen('aniket')}
-              aria-pressed={!muted.aniket} aria-label={muted.aniket ? 'Hear him' : 'Mute'}>
-              <span aria-hidden>{muted.aniket ? '🔇' : '🔊'}</span>
-              <span className="proof-ctl-text">{muted.aniket ? 'Hear him' : 'Sound on'}</span>
-            </button>
-            <div className="proof-card-foot">
-              <span className="proof-card-kicker">On film · 27 sec</span>
-              <span className="proof-card-title">Aniket, Class 9</span>
-              <span className="proof-card-line">
-                “We are not just preparing for exams — we are preparing for something that we are
-                going to become.”
-              </span>
-            </div>
-          </article>
+          {/* ── 2. the students, one card each ── */}
+          {FILMS.map((f) => (
+            <article key={f.id} className="proof-card proof-card--film" style={{ width: CARD_W }}>
+              <video
+                ref={(el) => { filmRefs.current[f.id] = el }}
+                poster={f.poster}
+                muted
+                loop
+                playsInline
+                preload="none"
+                onClick={() => toggle(f.id)}
+                onPlay={() => setPlaying((p) => ({ ...p, [f.id]: true }))}
+                onPause={() => setPlaying((p) => ({ ...p, [f.id]: false }))}
+                className="proof-card-video"
+                aria-label={`${f.name}, ${f.klass} at Vision Success, on the institute`}
+              />
+              <button className="proof-ctl proof-ctl--play" onClick={() => toggle(f.id)}
+                aria-label={playing[f.id] === false ? 'Play' : 'Pause'}>
+                <span aria-hidden>{playing[f.id] === false ? '▶' : '❚❚'}</span>
+              </button>
+              <button className="proof-ctl proof-ctl--sound" onClick={() => listen(f.id)}
+                aria-pressed={muted[f.id] === false}
+                aria-label={muted[f.id] === false ? 'Mute' : 'Turn sound on'}>
+                <span aria-hidden>{muted[f.id] === false ? '🔊' : '🔇'}</span>
+                <span className="proof-ctl-text">{muted[f.id] === false ? 'Sound on' : 'Hear them'}</span>
+              </button>
+              <div className="proof-card-foot">
+                <span className="proof-card-kicker">On film · {f.len}</span>
+                <span className="proof-card-title">{f.name}</span>
+                <span className="proof-card-line">{f.klass} — {f.line}</span>
+              </div>
+            </article>
+          ))}
 
           {/* ── 3. documentary episodes, when they exist ── */}
           {vlogs.map((v) => (
