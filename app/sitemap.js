@@ -8,13 +8,19 @@ export default function sitemap() {
   return [
     { url: `${SITE.url}/`, lastModified: now, changeFrequency: 'weekly', priority: 1 },
     { url: `${SITE.url}/courses`, lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
+    /* Fees is the page people actually search for and the one nobody else
+       in this district publishes. It ranks second only to the homepage. */
+    { url: `${SITE.url}/fees`, lastModified: now, changeFrequency: 'monthly', priority: 0.95 },
     ...COURSES.map((c) => ({
       url: `${SITE.url}/courses/${c.id}`,
       lastModified: now,
       changeFrequency: 'monthly',
       priority: 0.8,
     })),
-    ...SEO_PAGES.map((p) => ({
+    /* online-nda-course was withdrawn and now redirects to /courses/nda.
+       Listing a redirecting URL in a sitemap wastes crawl budget and is a
+       Search Console warning, so it is filtered rather than left to rot. */
+    ...SEO_PAGES.filter((p) => p.slug !== 'online-nda-course').map((p) => ({
       url: `${SITE.url}/${p.slug}`,
       lastModified: now,
       changeFrequency: 'monthly',
