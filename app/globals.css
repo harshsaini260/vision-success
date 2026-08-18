@@ -2303,3 +2303,39 @@ main a.link-underline:hover { background-size: 100% 1px; }
 .proof-ctl-text { display: none; }
 @media (min-width: 480px) { .proof-ctl-text { display: inline; } }
 .proof-ctl:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--accent); }
+
+/* ─── THE BLUEPRINT TAB ───
+   It was pinned to the vertical centre of the screen, which on a phone
+   is exactly where the proof rail sits — so it printed itself across a
+   student's face. It now rides low, out of the way of anything in the
+   middle of the viewport, and it steps aside entirely for the very
+   smallest screens where there simply is not room for a permanent tab.
+
+   z-index dropped from 40 to 30 as well: it is an offer, not a modal,
+   and it should never sit above the menu. */
+.blueprint-tab {
+  top: auto;
+  bottom: 26%;
+  transform: none;
+}
+@media (min-width: 1024px) {
+  .blueprint-tab { top: 50%; bottom: auto; transform: translateY(-50%); }
+}
+@media (max-width: 400px) {
+  .blueprint-tab { display: none !important; }
+}
+
+/* ─── THE LAST CARD ───
+   Its copy was written for a wider card and clipped at 268px —
+   "BOOK A FRE", "This card is". The card scrolls its own overflow now
+   and the button wraps instead of running off the edge. */
+.proof-card--last { overflow: visible; }
+.proof-last-inner { overflow-wrap: anywhere; hyphens: auto; }
+.proof-last-inner .btn-gold {
+  white-space: normal;
+  text-align: center;
+  line-height: 1.25;
+  padding-left: 14px;
+  padding-right: 14px;
+}
+.proof-last-head { font-size: 19px !important; }

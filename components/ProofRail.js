@@ -33,22 +33,17 @@ import { wa } from '@/lib/site'
 
 const CARD_W = 268
 
-/* Every student film. Adding another is a row here, not a component. */
+/* Every student film. Adding another is a row here, not a component.
+
+   Yagyansh's and Aditi's are pulled while they are re-recorded with
+   better audio — both were fighting a hard-walled room. Their files are
+   still in public/video, so putting them back is a matter of restoring
+   two rows, not rebuilding anything. */
 const FILMS = [
   {
     id: 'aniket', name: 'Aniket', klass: 'Class 9', len: '27 sec',
     hi: '/video/review-720.mp4', lo: '/video/review-540.mp4', poster: '/video/review-poster.jpg',
     line: '“We are not just preparing for exams — we are preparing for something that we are going to become.”',
-  },
-  {
-    id: 'yagyansh', name: 'Yagyansh', klass: 'Class 12 · Medical', len: '24 sec',
-    hi: '/video/yagyansh-720.mp4', lo: '/video/yagyansh-540.mp4', poster: '/video/yagyansh-poster.jpg',
-    line: '“Less students in each batch, so I get proper attention from each teacher — I learn much more than the books.”',
-  },
-  {
-    id: 'aditi', name: 'Aditi', klass: 'Class 12 · Non-Medical', len: '17 sec',
-    hi: '/video/aditi-720.mp4', lo: '/video/aditi-540.mp4', poster: '/video/aditi-poster.jpg',
-    line: '“I did wonder whether it would be worth it. After joining, the fees are completely justified.”',
   },
 ]
 

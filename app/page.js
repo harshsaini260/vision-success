@@ -993,7 +993,7 @@ function GiftTab() {
           exit={{ x: 90, opacity: 0 }}
           transition={{ type: 'spring', stiffness: 240, damping: 26 }}
           onClick={() => sfxChime()}
-          className="fixed right-0 top-1/2 -translate-y-1/2 z-40 flex items-center gap-2 pl-3 pr-2 py-3 rounded-l-2xl"
+          className="blueprint-tab fixed right-0 z-30 flex items-center gap-2 pl-3 pr-2 py-3 rounded-l-2xl"
           style={{
             background: 'linear-gradient(135deg, var(--accent), var(--accent-light))',
             color: 'var(--ink-2)',
