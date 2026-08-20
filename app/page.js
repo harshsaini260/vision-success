@@ -16,6 +16,7 @@ import PolarBuddy from '@/components/PolarBuddy'
 import Scribble from '@/components/Scribble'
 import StudentStories from '@/components/StudentStories'
 import ProofRail from '@/components/ProofRail'
+import ConceptRail from '@/components/ConceptRail'
 import Opening from '@/components/Opening'
 import FreedomOffer from '@/components/FreedomOffer'
 import Creed from '@/components/Creed'
@@ -1046,6 +1047,13 @@ export default function HomePage() {
            documentary and the reviews all still arrive before the site
            has asked for anything. */}
       <ProofRail />
+
+      {/* ─── CONCEPT FILMS — what the teaching actually looks like ───
+           Straight after the proof: they have just heard students say we
+           are good, and this is the evidence of it rather than another
+           claim. Grouped by subject so a visitor revising chemistry never
+           has to swipe past physics. */}
+      <ConceptRail />
 
       {/* ─── THE LETTER — shorter now, but it stays: it is the only place
            on the homepage a parent hears one person speak. ─── */}

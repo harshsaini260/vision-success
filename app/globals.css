@@ -2339,3 +2339,89 @@ main a.link-underline:hover { background-size: 100% 1px; }
   padding-right: 14px;
 }
 .proof-last-head { font-size: 19px !important; }
+
+/* ─── CONCEPT CARDS ───
+   Uniform by construction, not by luck. Every card is the same width and
+   the same height; the myth line is clamped to two lines and the truth
+   line to three, so a longer title can never make one card taller than
+   its neighbour. The footer is a fixed-height grid rather than a stack,
+   which is what keeps the titles on one optical line across the row. */
+.concept-card {
+  display: flex;
+  flex-direction: column;
+}
+.concept-foot {
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  gap: 5px;
+  padding: 13px 14px 16px;
+  min-height: 152px;
+}
+.concept-title {
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.18;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.concept-myth {
+  font-size: 11.5px;
+  line-height: 1.35;
+  color: var(--bone-dim);
+  text-decoration: line-through;
+  text-decoration-color: rgba(var(--accent-rgb), 0.65);
+  text-decoration-thickness: 1.5px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.concept-truth {
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--accent-light);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* the duration sits in the same corner on every single card */
+.concept-len {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  padding: 5px 9px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--bone);
+  background: rgba(8, 20, 40, 0.78);
+  border: 1px solid rgba(var(--accent-rgb), 0.4);
+  backdrop-filter: blur(6px);
+  z-index: 3;
+}
+
+.concept-subject {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  font-family: var(--font-display);
+  font-size: 21px;
+  font-weight: 700;
+  color: var(--bone);
+  letter-spacing: 0.01em;
+}
+.concept-count {
+  font-family: var(--font-ui);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
