@@ -30,7 +30,8 @@ const GROUPS = [
     items: [
       ['/courses', 'All courses', 'Eight doors, one screen'],
       ['/fees', 'Fees', 'Published in full'],
-      ['/sat', 'SAT & IELTS', 'Taught by a 1540 scorer'],
+      ['/sat', 'SAT — study abroad', 'Taught by a 1540 scorer'],
+      ['/ielts-coaching-una', 'IELTS', 'All four modules, band strategy'],
       ['/enroll', 'Enrol', 'Start the paperwork'],
     ],
   },

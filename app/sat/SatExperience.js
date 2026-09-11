@@ -12,6 +12,8 @@ import { motion, useInView, AnimatePresence } from 'framer-motion'
 import { SITE, wa } from '@/lib/site'
 import { sfxStamp } from '@/lib/sfx'
 import SATPredictor from '@/components/SATPredictor'
+import SatNumbers from '@/components/SatNumbers'
+import StudyAbroadFilm from '@/components/StudyAbroadFilm'
 import {
   SAT_DATES,
   SAT_PER_YEAR,
@@ -601,6 +603,26 @@ export default function SatExperience({ faqs = [] }) {
         </div>
       </section>
 
+      {/* ═══ SCENE 05 — THE PART NOBODY EXPLAINS ═══
+             Scene 04 hands over the specification. This asks five
+             questions instead, because the specification is the part a
+             visitor skims and a question he has half-answered in his own
+             head is the part he cannot. Every number is one we already
+             publish somewhere else on this site — see lib/satNumbers.js,
+             where each row records where. ═══ */}
+      <section
+        id="numbers"
+        className="px-4 pb-14 md:pb-20"
+        style={{ scrollMarginTop: 70, background: 'var(--ink-2)' }}
+      >
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center">
+            <SceneTag>Scene 05 · The Part Nobody Explains</SceneTag>
+          </div>
+          <SatNumbers embedded />
+        </div>
+      </section>
+
       {/* ═══ THE PREDICTOR — moved here off the homepage, where it now
              meets people who have already declared SAT intent ═══ */}
       <section className="px-4 pb-10 md:pb-16" style={{ background: 'var(--ink-2)' }}>
@@ -611,7 +633,31 @@ export default function SatExperience({ faqs = [] }) {
         </div>
       </section>
 
-      {/* ═══ SCENE 05 — THE FOUNDING SQUAD ═══ */}
+      {/* ═══ SCENE 06 — STRAIGHT FROM THE DESK ═══
+             The homepage has promised "WATCH THE FULL MISSION BRIEF" and
+             pointed here since August, and until now this page held no
+             film at all. It is also the only IELTS content /sat has —
+             every surface on the site labels this route "SAT & IELTS"
+             and the page itself said IELTS exactly zero times. It sits
+             one scroll above the only two real CTAs on the page, so his
+             closing question sets the ask up instead of interrupting
+             it. ═══ */}
+      <section
+        id="film"
+        className="px-4 pb-12 md:pb-16"
+        style={{ scrollMarginTop: 70, background: 'var(--ink-2)' }}
+      >
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center">
+            <SceneTag>Scene 06 · Straight From The Desk</SceneTag>
+          </div>
+          <FadeIn>
+            <StudyAbroadFilm embedded primary="ielts" />
+          </FadeIn>
+        </div>
+      </section>
+
+      {/* ═══ FINAL SCENE — THE FOUNDING SQUAD ═══ */}
       <section className="px-4 pb-10 md:pb-16" style={{ background: 'linear-gradient(180deg, var(--ink-2) 0%, var(--ink-3) 100%)' }}>
         <div className="text-center">
           <SceneTag>Final Scene · The Founding Squad</SceneTag>

@@ -17,6 +17,7 @@ import Scribble from '@/components/Scribble'
 import StudentStories from '@/components/StudentStories'
 import ProofRail from '@/components/ProofRail'
 import ConceptRail from '@/components/ConceptRail'
+import StudyAbroadFilm from '@/components/StudyAbroadFilm'
 import Opening from '@/components/Opening'
 import FreedomOffer from '@/components/FreedomOffer'
 import Creed from '@/components/Creed'
@@ -31,26 +32,6 @@ const TRUST_STATS = [
   { big: 'NIT', label: 'Hamirpur Faculty', icon: '🎓' },
   { big: '90%+', label: 'Board Results', icon: '🏆' },
   { big: '4.9★', label: 'Google Rating', icon: '⭐' },
-]
-
-/* Subject & local landing pages (brief Section E) */
-const SUBJECT_LINKS = [
-  { href: '/sat', label: '🌍 SAT (Study Abroad)' },
-  { href: '/ielts-coaching-una', label: '🗣️ IELTS' },
-  { href: '/maths-coaching-una', label: '📐 Maths' },
-  { href: '/physics-coaching-una', label: '⚡ Physics' },
-  { href: '/chemistry-coaching-una', label: '🧪 Chemistry' },
-  { href: '/biology-coaching-una', label: '🧬 Biology' },
-  { href: '/science-coaching-una', label: '🔬 Science' },
-  { href: '/class-10-coaching-una', label: '📘 Class 10' },
-  { href: '/class-11-coaching-una', label: '📗 Class 11' },
-  { href: '/class-12-coaching-una', label: '📕 Class 12' },
-  { href: '/hp-board-coaching-una', label: '🏔️ HP Board' },
-  { href: '/cuet-coaching-una', label: '🏛️ CUET' },
-  { href: '/merchant-navy-coaching-una', label: '🚢 Merchant Navy' },
-  { href: '/board-crash-course-una', label: '🚀 Board Crash Course' },
-  { href: '/online-nda-course', label: '🇮🇳 Online NDA Course' },
-  { href: '/tuition-una', label: '✏️ Tuition in Una' },
 ]
 
 /* Homepage FAQ (brief D3) — rendered below AND emitted as FAQPage schema */
@@ -547,8 +528,11 @@ function BrochureMagnet() {
 
         <FadeIn delay={0.18}>
           <p className="text-center mt-6">
+            {/* This said "WATCH THE FULL MISSION BRIEF" and landed on a
+                page with no film on it. There is one now, and the anchor
+                goes straight to it. */}
             <Link
-              href="/sat"
+              href="/sat#film"
               className="inline-flex items-center gap-2 text-sm font-bold text-gold-400 hover:text-gold-300 transition-colors"
               style={{ fontFamily: 'var(--font-display)', letterSpacing: '0.06em' }}
             >
@@ -1055,6 +1039,16 @@ export default function HomePage() {
            has to swipe past physics. */}
       <ConceptRail />
 
+      {/* ─── THE STUDY-ABROAD DESK ───
+           The one door in Una that nobody else has, and the only one a
+           visitor cannot already picture. It lands after the concept
+           films on purpose: they have just watched us teach, so "we also
+           teach the exam that gets you out of here" is the next sentence
+           rather than a boast. The film states the choice and both doors
+           sit beside it — /sat and /ielts-coaching-una, which until now
+           had no link pointing at it from any rendered surface. ─── */}
+      <StudyAbroadFilm curiosity />
+
       {/* ─── THE LETTER — shorter now, but it stays: it is the only place
            on the homepage a parent hears one person speak. ─── */}
       <MentorLetter />
@@ -1541,9 +1535,16 @@ export default function HomePage() {
       {/* ─── CONTACT + MAP ─── */}
       <section
         id="visit"
-        style={{ scrollMarginTop: 70 }}
         className="section-padding"
-        style={{ background: 'linear-gradient(180deg, var(--ink-2) 0%, var(--ink-3) 100%)' }}
+        style={{
+          /* Both of these used to be separate style props. React keeps
+             the last one, so scrollMarginTop was dropped and the Visit Us
+             chip in the hero strip scrolled the heading under the
+             masthead — the same bug already fixed once on the courses
+             section below. One object. */
+          scrollMarginTop: 70,
+          background: 'linear-gradient(180deg, var(--ink-2) 0%, var(--ink-3) 100%)',
+        }}
       >
         <div className="max-w-6xl mx-auto">
           <FadeIn>

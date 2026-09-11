@@ -2,10 +2,12 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { SEO_PAGES, getSeoPage, WHY_US, FEES_NOTE } from '@/lib/seoPages'
 import { SITE, wa } from '@/lib/site'
+import { DESK_FILM, deskFilmFiles, deskVideoSchema } from '@/lib/studyAbroad'
+import StudyAbroadFilm from '@/components/StudyAbroadFilm'
 
 /* Static SEO landing pages (developer brief, Section E).
    Registered static routes always win over this dynamic segment,
-   so only the 18 brief slugs render here — everything else 404s. */
+   so only the 19 brief slugs render here — everything else 404s. */
 
 export const dynamicParams = false
 
@@ -25,7 +27,25 @@ export async function generateMetadata({ params }) {
       title: page.seoTitle,
       description: page.metaDescription,
       url: `${SITE.url}/${page.slug}`,
+      /* Declaring openGraph here replaces the root object rather than
+         merging into it, so these two are restated or they vanish. */
+      siteName: SITE.name,
+      locale: 'en_IN',
       type: 'website',
+      /* Gated: eighteen of these nineteen pages have no image to point
+         at, and an openGraph.images entry that 404s is worse than none. */
+      ...(page.film
+        ? {
+            images: [
+              {
+                url: `${SITE.url}${deskFilmFiles(page.film).poster}`,
+                width: 720,
+                height: 1280,
+                alt: DESK_FILM.name,
+              },
+            ],
+          }
+        : {}),
     },
   }
 }
@@ -83,6 +103,8 @@ export default async function SeoLandingPage({ params }) {
     ],
   })
 
+  if (page.film) schemas.push(deskVideoSchema())
+
   return (
     <div className="min-h-screen" style={{ background: 'linear-gradient(180deg, var(--ink) 0%, var(--ink-2) 100%)' }}>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemas) }} />
@@ -130,6 +152,22 @@ export default async function SeoLandingPage({ params }) {
       </div>
 
       <div className="max-w-4xl mx-auto px-4 py-12 space-y-12">
+        {/* THE FILM — gated, exactly like {page.comingSoon} above, because
+            this one template serves all nineteen slugs. Only the IELTS
+            entry carries `film`, and it is the only page on the site that
+            is about the half of the study-abroad desk this reel names out
+            loud. It inherits the column's max-w-4xl gutter and the
+            space-y-12 rhythm, so it reads as one more section among
+            identically shaped siblings. */}
+        {page.film && (
+          <section>
+            <h2 className="text-2xl md:text-3xl font-semibold text-white mb-6" style={{ fontFamily: 'var(--font-display)' }}>
+              🎬 Two Tests. Two Doors.
+            </h2>
+            <StudyAbroadFilm embedded primary="sat" />
+          </section>
+        )}
+
         {/* WHAT WE COVER */}
         <section>
           <h2 className="text-2xl md:text-3xl font-semibold text-white mb-6" style={{ fontFamily: 'var(--font-display)' }}>

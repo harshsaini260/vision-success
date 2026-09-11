@@ -24,7 +24,7 @@ export default function sitemap() {
       url: `${SITE.url}/${p.slug}`,
       lastModified: now,
       changeFrequency: 'monthly',
-      priority: p.slug === 'coaching-in-una' ? 0.9 : 0.8,
+      priority: ['coaching-in-una', 'ielts-coaching-una'].includes(p.slug) ? 0.9 : 0.8,
     })),
     { url: `${SITE.url}/sat`, lastModified: now, changeFrequency: 'weekly', priority: 0.9 },
     { url: `${SITE.url}/enroll/sat`, lastModified: now, changeFrequency: 'weekly', priority: 0.9 },

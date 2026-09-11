@@ -91,6 +91,12 @@ export default function Footer() {
                 { href: '/start', label: 'Free Study Plan' },
                 { href: '/courses', label: 'Courses' },
                 { href: '/coaching-in-una', label: 'Coaching in Una' },
+                /* The study-abroad desk had no footer row at all, and
+                   /ielts-coaching-una had no link from any rendered
+                   surface on the site — the sitemap published it to
+                   Google and a visitor could not reach it. */
+                { href: '/sat', label: 'SAT Coaching' },
+                { href: '/ielts-coaching-una', label: 'IELTS Coaching' },
                 { href: '/nda-coaching-una', label: 'NDA Coaching' },
                 { href: '/jee-coaching-una', label: 'JEE Coaching' },
                 { href: '/neet-coaching-una', label: 'NEET Coaching' },

@@ -2425,3 +2425,280 @@ main a.link-underline:hover { background-size: 100% 1px; }
   text-transform: uppercase;
   color: var(--accent);
 }
+
+/* ─── THE STUDY-ABROAD FILM ───
+   A 9:16 brand film at feature size, with two doors beside it. The
+   frame is capped at 340px on purpose and the cap is not taste: the
+   rung chooser in StudyAbroadFilm.js multiplies this width by the
+   device pixel ratio and asks for the 5.3 MB file above 700. At 340 a
+   DPR-2 screen computes 680 and takes the 3.3 MB one. Widen this and
+   phones start paying double for a film that sits above the hero. */
+.desk-grid {
+  display: grid;
+  gap: 28px;
+  align-items: center;
+}
+@media (min-width: 768px) {
+  .desk-grid { grid-template-columns: minmax(0, 300px) minmax(0, 1fr); gap: 44px; }
+}
+@media (min-width: 1024px) {
+  .desk-grid { grid-template-columns: minmax(0, 340px) minmax(0, 1fr); }
+}
+
+.desk-frame {
+  position: relative;
+  width: 100%;
+  /* 272 on a small phone rather than 300: a 9:16 frame costs its width
+     times 1.78 in height, so every 28px saved here is 50px off a page
+     the client has asked four times to make shorter. 272 × DPR 2 = 544,
+     still comfortably the cheap rung. */
+  max-width: 272px;
+  margin: 0 auto;
+  aspect-ratio: 9 / 16;
+  border-radius: 18px;
+  overflow: hidden;
+  background: var(--ink);
+  border: 1px solid rgba(var(--accent-rgb), 0.30);
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.65);
+}
+@media (min-width: 420px) { .desk-frame { max-width: 300px; } }
+@media (min-width: 1024px) { .desk-frame { max-width: 340px; } }
+
+.desk-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  cursor: pointer;
+  display: block;
+}
+
+.desk-sound.is-on {
+  background: rgba(var(--accent-rgb), 0.92);
+  color: var(--ink);
+}
+/* The rails hide this label below 480px, which is right for them: those
+   reels are silent by design and the icon is decoration. This film is a
+   person talking, and a phone is exactly where a bare 🔇 gets ignored —
+   so here the words stay at every width. */
+.desk-sound .proof-ctl-text { display: inline; }
+
+/* Where he is in the sentence — nineteen seconds should never feel
+   open-ended. */
+.desk-bar {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 3px;
+  background: rgba(232, 240, 247, 0.12);
+  z-index: 3;
+}
+.desk-bar > i { display: block; height: 100%; background: var(--accent); transition: width .18s linear; }
+
+.desk-endcard {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 0 24px;
+  text-align: center;
+  background: rgba(8, 20, 40, 0.88);
+}
+.desk-endcard p {
+  font-family: var(--font-display);
+  font-size: 22px;
+  line-height: 1.25;
+  color: #fff;
+}
+.desk-again {
+  font-size: 12px;
+  text-decoration: underline;
+  color: var(--bone-dim);
+}
+
+/* Capped: the grid hands the rest of the row to this column, which on a
+   wide desktop is 728px — about 110 characters of 13.5px text on one
+   line, well past the point where an eye loses the start of the next. */
+.desk-side { display: flex; flex-direction: column; gap: 18px; max-width: 560px; }
+
+/* Two doors, always side by side. They are short labels and stacking
+   them turns a choice into a list. */
+.desk-doors { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+.desk-door {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 16px 15px;
+  border-radius: 14px;
+  border: 1px solid var(--hairline);
+  background: rgba(232, 240, 247, 0.04);
+  transition: transform .16s cubic-bezier(.2,.8,.3,1), border-color .2s ease, background .2s ease;
+}
+.desk-door:hover {
+  transform: translateY(-3px);
+  border-color: rgba(var(--accent-rgb), 0.5);
+  background: rgba(var(--accent-rgb), 0.07);
+}
+.desk-door:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--accent); }
+.desk-door--starred { border-color: rgba(var(--accent-rgb), 0.42); background: rgba(var(--accent-rgb), 0.08); }
+.desk-door-name {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1;
+  color: #fff;
+}
+.desk-door-opens { font-size: 12px; line-height: 1.4; color: var(--bone-dim); }
+.desk-door-badge {
+  margin-top: 2px;
+  font-family: var(--font-ui);
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.desk-note { font-size: 13.5px; line-height: 1.65; color: var(--bone-dim); }
+:where(.desk-cta) { display: flex; }
+.desk-cta { flex-direction: column; gap: 12px; }
+@media (min-width: 480px) { .desk-cta { flex-direction: row; } }
+.desk-cta > * { flex: 1 1 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  .desk-bar > i { transition: none; }
+  .desk-door { transition: none; }
+  .desk-door:hover { transform: none; }
+}
+
+/* ─── FIVE NUMBERS ───
+   Six cells, 3 × 2, never ragged. Both faces of a card are absolutely
+   positioned inside one fixed-height shell, so the card that holds the
+   longest answer is exactly as tall as the card that holds the
+   shortest. min-height is sized for the longest string in
+   lib/satNumbers.js with room to spare; overflow is the guard, not the
+   plan. */
+.satnum-tally {
+  margin-top: 14px;
+  font-family: var(--font-ui);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.satnum-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+  margin-top: 26px;
+}
+@media (min-width: 560px) { .satnum-grid { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 900px) { .satnum-grid { grid-template-columns: 1fr 1fr 1fr; } }
+
+.satnum-card {
+  position: relative;
+  /* `height`, deliberately, not `min-height`: the global tap-target rule
+     around line 1770 — main button:not([class*='w-']):not([style*='width'])
+     — is (0,2,2) and beats any sane selector a component can write, so a
+     min-height here loses to its 44px and three of the six cards collapse
+     while the rest stretch to their grid row. Both faces are absolutely
+     positioned, so a fixed height is what this wants anyway, and 44px of
+     min-height against 238px of height is simply a no-op. */
+  height: 238px;
+  perspective: 900px;
+  text-align: left;
+  width: 100%;
+}
+.satnum-inner {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transition: transform .55s cubic-bezier(.2,.8,.3,1);
+}
+.satnum-card.is-open .satnum-inner { transform: rotateY(180deg); }
+
+:where(.satnum-face) { display: flex; }
+.satnum-face {
+  position: absolute;
+  inset: 0;
+  flex-direction: column;
+  padding: 18px 17px;
+  border-radius: 16px;
+  border: 1px solid var(--hairline);
+  background: rgba(232, 240, 247, 0.04);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  overflow: auto;
+}
+.satnum-face--a {
+  transform: rotateY(180deg);
+  border-color: rgba(var(--accent-rgb), 0.34);
+  background: rgba(var(--accent-rgb), 0.07);
+}
+.satnum-card:not(.satnum-card--close):hover .satnum-face--q { border-color: rgba(var(--accent-rgb), 0.45); }
+.satnum-card:focus-visible { outline: none; }
+.satnum-card:focus-visible .satnum-face--q { box-shadow: 0 0 0 2px var(--accent); }
+
+.satnum-mark {
+  font-family: var(--font-display);
+  font-size: 34px;
+  line-height: 1;
+  color: rgba(var(--accent-rgb), 0.55);
+}
+.satnum-q {
+  margin-top: auto;
+  font-family: var(--font-display);
+  font-size: 19px;
+  line-height: 1.28;
+  color: #fff;
+}
+.satnum-hint {
+  margin-top: 10px;
+  font-family: var(--font-ui);
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.satnum-figure {
+  font-family: var(--font-display);
+  font-size: 44px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--accent-light);
+  font-variant-numeric: tabular-nums;
+}
+.satnum-a { margin-top: 10px; font-size: 12.5px; line-height: 1.6; color: var(--bone); }
+
+/* The sixth cell: a card until the other five are open, a conclusion
+   afterwards. It is not a button, so it never invites a press it
+   cannot answer. */
+.satnum-card--close .satnum-face--q {
+  border-style: dashed;
+  border-color: rgba(var(--accent-rgb), 0.34);
+  background: rgba(var(--accent-rgb), 0.04);
+}
+.satnum-close-text { font-family: var(--font-display); font-size: 17px; line-height: 1.4; color: #fff; }
+.satnum-close-link {
+  margin-top: auto;
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .satnum-inner { transition: none; }
+}

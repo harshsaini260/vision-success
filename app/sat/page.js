@@ -1,4 +1,5 @@
 import { SITE } from '@/lib/site'
+import { DESK_FILM, deskFilmFiles, deskVideoSchema } from '@/lib/studyAbroad'
 import SatExperience from './SatExperience'
 
 /* ─── /sat — the SAT mission page ───
@@ -15,7 +16,22 @@ export const metadata = {
     description:
       'Live countdown to the next Digital SAT, all 8 test dates a year, and how one exam opens universities across the world. SAT prep in Una, HP.',
     url: `${SITE.url}/sat`,
+    /* Next shallow-merges metadata, so declaring openGraph here replaced
+       the root object wholesale and quietly dropped siteName and locale.
+       They are restated rather than inherited. The poster is the film's
+       own frame, so a WhatsApp share of this page finally renders a card
+       instead of a bare link. */
+    siteName: SITE.name,
+    locale: 'en_IN',
     type: 'website',
+    images: [
+      {
+        url: `${SITE.url}${deskFilmFiles().poster}`,
+        width: 720,
+        height: 1280,
+        alt: DESK_FILM.name,
+      },
+    ],
   },
 }
 
@@ -57,6 +73,12 @@ const SAT_SCHEMA = [
       url: SITE.url,
     },
   },
+  /* The site serves nine films and, until this entry, told Google about
+     none of them: the only VideoObject in the repo lives in
+     components/StudentVoice.js, which is imported only by ProofDeck,
+     which nothing imports. This page is the canonical study-abroad
+     surface, so the film is declared here. */
+  deskVideoSchema(),
   {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
