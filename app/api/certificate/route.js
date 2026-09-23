@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import { resendKey } from '@/lib/mail'
 
 /* ─── EMAIL THE CERTIFICATE ───
    The picture is drawn on the tablet and posted here as a JPEG, so this
@@ -71,7 +72,9 @@ export async function POST(req) {
     return NextResponse.json({ emailed: false, error: 'no-email' }, { status: 400 })
   }
 
-  const key = process.env.RESEND_API_KEY
+  /* Found case-insensitively: the key was added to Vercel as
+     "Resend_API_Key", which process.env.RESEND_API_KEY never saw. */
+  const key = resendKey()
   if (!key) {
     // Not an error: the survey is designed to run before this is set up.
     return NextResponse.json({ emailed: false, reason: 'email-not-configured' })

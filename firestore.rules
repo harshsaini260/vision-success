@@ -128,6 +128,48 @@ service cloud.firestore {
       allow create, update, delete: if isAdmin();
     }
 
+    // Job-Ready Skills Workshop registrations (/workshop, 1 Oct 2026).
+    // The public may create exactly one well-formed registration per
+    // reference — the document id IS the reference, so a second write to
+    // the same id is an update and is refused. Nobody but admin can read
+    // them: they hold phone numbers, emails and UPI references.
+    match /workshopRegistrations/{ref} {
+      allow create: if request.resource.data.keys().hasOnly([
+            'ref', 'eventId', 'name', 'phone', 'email', 'who', 'want',
+            'utr', 'amount', 'vpa', 'status', 'createdAt', 'source'])
+        && request.resource.data.ref == ref
+        && ref.matches('^JRS-[2-9A-HJKMNP-Z]{6}$')
+        && request.resource.data.eventId == 'jrs-2026-10'
+        && request.resource.data.amount == 299
+        && request.resource.data.status == 'submitted'
+        && request.resource.data.createdAt == request.time
+        && request.resource.data.name is string
+        && request.resource.data.name.size() > 1
+        && request.resource.data.name.size() <= 80
+        && request.resource.data.phone.matches('^[6-9][0-9]{9}$')
+        && request.resource.data.email is string
+        && request.resource.data.email.size() <= 120
+        && request.resource.data.utr.matches('^[A-Za-z0-9]{10,35}$');
+      allow read, update, delete: if isAdmin();
+    }
+
+    // The public tally for the workshop page. Anyone may read it; it may
+    // only ever go up by exactly one, and only in the same batch that
+    // creates a registration it has not counted before — so the number on
+    // the page can't be pumped without a matching registration behind it.
+    match /workshopStats/{eventId} {
+      allow read: if true;
+      allow create: if request.resource.data.count == 1
+        && request.resource.data.keys().hasOnly(['count', 'lastId'])
+        && existsAfter(/databases/$(database)/documents/workshopRegistrations/$(request.resource.data.lastId))
+        && !exists(/databases/$(database)/documents/workshopRegistrations/$(request.resource.data.lastId));
+      allow update: if request.resource.data.count == resource.data.count + 1
+        && request.resource.data.keys().hasOnly(['count', 'lastId'])
+        && existsAfter(/databases/$(database)/documents/workshopRegistrations/$(request.resource.data.lastId))
+        && !exists(/databases/$(database)/documents/workshopRegistrations/$(request.resource.data.lastId));
+      allow delete: if isAdmin();
+    }
+
     // ═══════════════ 2. ROLE MAPPING ═══════════════
     // A signed-in user may create ONLY their own doc once (first-run admin
     // bootstrap) and can never update it, so roles can't be self-escalated.
@@ -141,11 +183,18 @@ service cloud.firestore {
     match /students/{sid} {
       allow read: if isAdmin() || linkedTo(sid);
       allow create, delete: if isAdmin();
-      // Students may only nudge their own game stats; all else is admin.
+      // Students may only nudge their own progress counters; all else is
+      // admin. These are the fields the Study Desk and Explainer publish.
       allow update: if isAdmin()
         || (isStudentOf(sid)
             && request.resource.data.diff(resource.data)
-                 .affectedKeys().hasOnly(['xp', 'streak', 'quizTier']));
+                 .affectedKeys().hasOnly([
+                   'xp', 'streak', 'quizTier',
+                   'chaptersRead', 'chaptersMastered',
+                   'canExplain', 'minutesTotal',
+                   'readChapters', 'chapterScores', 'progressUpdatedAt',
+                   'examTier', 'lastExamPercent'
+                 ]));
 
       match /logs/{id} {
         allow read: if isAdmin() || linkedTo(sid);
@@ -188,6 +237,20 @@ service cloud.firestore {
     match /{path=**}/logs/{id}      { allow read: if isAdmin(); }
     match /{path=**}/payments/{id}  { allow read: if isAdmin(); }
     match /{path=**}/absences/{id}  { allow read: if isAdmin(); }
+    // Skyee reads the whole institute's attendance in one query. A
+    // nested match does NOT authorise a collectionGroup read, so this
+    // wildcard is required — admin only, read only, same as the rest.
+    match /{path=**}/attendance/{id} { allow read: if isAdmin(); }
+
+    // ═══ THE PARENT LINE ═══
+    // A record of every message sent home: who, when, and the exact text.
+    // Staff only, in both directions — it holds parents' phone numbers
+    // and candid notes about children, so nothing here is ever readable
+    // by a student or a parent account.
+    match /outreach/{id} {
+      allow read, create: if isAdmin();
+      allow update, delete: if isAdmin();
+    }
     match /{path=**}/creations/{id} { allow read: if isAdmin(); }
 
     // ═══════════════ 4. APP SHARED CONTENT ═══════════════
@@ -244,6 +307,20 @@ service cloud.firestore {
       allow read: if isAdmin() || linkedTo(sid);
       allow create, update: if isAdmin() || isStudentOf(sid);
       allow delete: if isAdmin();
+    }
+
+
+    // ═══════════════ 8. DOUBT BOX ═══════════════
+    // A student raises a doubt from inside a chapter; the teacher answers.
+    // Students may create and read their OWN doubts; only admin answers.
+    match /doubts/{id} {
+      allow read: if isAdmin()
+        || (authed() && resource.data.studentId == userData().studentId);
+      allow create: if isAdmin()
+        || (userExists()
+            && request.resource.data.studentId == userData().studentId
+            && request.resource.data.answer == '');
+      allow update, delete: if isAdmin();
     }
 
     // ═══════════════ 7. PRIVATE PER-USER SPACE ═══════════════

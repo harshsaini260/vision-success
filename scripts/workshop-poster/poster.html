@@ -1,0 +1,736 @@
+<!doctype html>
+<!-- ─── WORKSHOP POSTER · feed / story / og ───
+     One file, three posters, chosen by the URL hash:
+       #feed  1080×1350   Instagram feed, WhatsApp forward
+       #story 1080×1920   WhatsApp status, Instagram story
+       #og    1200×630    the link preview when /workshop is shared
+
+     Why one HTML file and headless Chrome, not a design tool: the words
+     must come from lib/workshop.js (qr.js writes them in below as JSON),
+     and the site's own fonts render here exactly as they do on the
+     site. Re-running make.ps1 after a copy change re-prints every poster
+     in seconds; nobody has to remember to re-export a canvas by hand.
+
+     Why each format has its own markup instead of one layout stretched:
+     a story is watched for three seconds with the top and bottom
+     200-odd pixels under the app's chrome; a feed post is read at
+     thumbnail size in a grid; a link preview is 1.9:1 and mostly seen at
+     a few hundred pixels wide. The hook has to win in all three, so it
+     is re-set for each shape, and each shape drops what it cannot carry.
+
+     Why the katana cut is computed, not drawn: after the fonts load and
+     the hook is fitted, the blade is aimed at the top of the last letter
+     of MARKSHEET and drawn down-left at a shallow angle, so it slices
+     that one word — the thing the poster argues against — and nothing
+     else. The subhead is then tucked under the right half of the word,
+     clear of the blade, and the lower-left becomes a deliberate void for
+     the broken glass. Change the copy and the cut re-aims itself.
+
+     How the cut is made: everything under the glass is rendered twice,
+     each copy clipped to one side of the blade, and the lower copy slides
+     a few pixels along it. No image editing; the type stays vector-sharp.
+     The ember bloom sits under the type so the sliced letters stay
+     legible; only the white-hot edge and the sparks sit on top.
+
+     Why it is honest: every line is read from the source of truth. No
+     seat count, no price rise, no result, no testimonial, no name —
+     lib/workshop.js has none of those, so neither does this. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Workshop poster</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Inter:wght@300;400;500;600;700;800&display=block">
+<style>
+  /* Tokens mirror app/globals.css; the forge colours are the portal's. */
+  :root {
+    --ink: #081428; --ink-2: #0D1C34; --ink-3: #142946;
+    --bone: #E8F0F7; --bone-dim: rgba(232, 240, 247, .76); --hairline: rgba(232, 240, 247, .12);
+    --accent: #D2B463; --accent-light: #EBD9A8; --accent-dark: #9C8138;
+    --ember: #FF7A1A; --hot: #FFB347; --white-hot: #FFE7A8; --hanko: #B3261E;
+    --font-display: 'Cormorant Garamond', Georgia, serif;
+    --font-ui: 'Inter', 'Segoe UI', system-ui, sans-serif;
+    --font-hand: 'Caveat', 'Segoe Print', cursive;
+    --W: 1080px; --H: 1350px;
+  }
+  html, body { margin: 0; padding: 0; background: #050d1c; }
+  body { width: var(--W); height: var(--H); overflow: hidden; position: relative;
+         -webkit-font-smoothing: antialiased; text-rendering: geometricPrecision; }
+
+  /* Cormorant's default figures are old-style, where a 1 is a small-cap
+     I and "1 October" reads "I October" at thumbnail size. Lining, always. */
+  #wp-poster { position: absolute; inset: 0; overflow: hidden; background: #040a16; }
+  #wp-poster *, .wp-defs text { font-variant-numeric: lining-nums; font-feature-settings: 'lnum' 1; }
+  .wp-half { position: absolute; inset: 0; }
+  .wp-art, .wp-front { position: absolute; left: 0; top: 0; display: block; pointer-events: none; }
+
+  /* ── shared type ── */
+  .wp-c { position: absolute; inset: 0; box-sizing: border-box; display: flex; flex-direction: column;
+          color: var(--bone); font-family: var(--font-ui); }
+  .wp-c p { margin: 0; }
+  .wp-rs { font-family: var(--font-ui); font-weight: 600; font-size: .86em; margin-right: .06em; }  /* ₹ from Inter: not every face has it */
+
+  .wp-top { display: flex; justify-content: space-between; align-items: center;
+            font: 600 15px/1 var(--font-ui); letter-spacing: .36em; text-transform: uppercase; }
+  .wp-brand { color: var(--accent); }
+  .wp-place { color: var(--bone-dim); letter-spacing: .28em; }
+
+  .wp-kick { display: flex; align-items: center; gap: 18px; font: 800 21px/1 var(--font-ui);
+             letter-spacing: .3em; text-transform: uppercase; color: var(--hot); }
+  .wp-kick::before { content: ''; width: 58px; height: 2px; background: linear-gradient(90deg, rgba(255,122,26,0), var(--ember)); }
+
+  .wp-hook { margin: 0; font-family: var(--font-display); font-weight: 700; text-transform: uppercase;
+             line-height: .82; letter-spacing: .004em; filter: drop-shadow(0 10px 30px rgba(0, 0, 0, .55)); }
+  .wp-l { display: block; width: max-content; white-space: nowrap; }
+  .wp-l-bone { color: #EEF3F8; }
+  .wp-gold { background: linear-gradient(180deg, #FBEFC9 0%, #EAD08A 30%, #D2B463 56%, #B39346 80%, #8F7532 100%);
+             -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+  .wp-sub { font: italic 500 46px/1.08 var(--font-display); color: var(--bone); letter-spacing: .005em;
+            text-align: right; text-wrap: balance; }
+
+  .wp-hing { font-family: var(--font-hand); font-weight: 700; transform: rotate(-2.2deg); transform-origin: 0 50%; }
+  .wp-h1 { display: block; color: #F5EFE0; line-height: 1; }
+  .wp-h2 { position: relative; display: inline-block; line-height: 1.02; padding: 0 .12em 0 0; }
+  .wp-h2 b { position: relative; font-weight: 700; background: linear-gradient(180deg, #FFF0C4 0%, #FFB347 48%, #FF7A1A 100%);
+             -webkit-background-clip: text; background-clip: text; color: transparent; padding: .08em .1em .12em 0; }
+  .wp-brush { position: absolute; left: -.08em; right: 0; bottom: -.1em; width: 100%; height: .26em; overflow: visible; }
+
+  .wp-lives { display: flex; align-items: center; flex-wrap: nowrap; gap: 16px;
+              font: 700 21px/1 var(--font-ui); letter-spacing: .2em; text-transform: uppercase; color: var(--accent-light); }
+  .wp-life { display: inline-flex; align-items: baseline; gap: 9px; white-space: nowrap; }
+  .wp-life i { font: italic 600 22px/1 var(--font-display); letter-spacing: .02em; color: var(--ember); text-transform: none; }
+  .wp-dot { width: 5px; height: 5px; transform: rotate(45deg); background: var(--accent-dark); flex: none; }
+  .wp-host { font: italic 500 34px/1.1 var(--font-display); color: var(--bone); }
+  .wp-ends { font: 400 23px/1.4 var(--font-ui); color: var(--bone-dim); }
+  .wp-ends em { font-style: normal; font-weight: 700; color: var(--accent-light); }
+
+  .wp-wd { font: 800 20px/1 var(--font-ui); letter-spacing: .34em; text-transform: uppercase; color: var(--hot); }
+  .wp-date { font-family: var(--font-display); font-weight: 700; line-height: .9; letter-spacing: -.005em; white-space: nowrap;
+             padding-bottom: .06em; }
+  .wp-money { display: flex; align-items: center; gap: 22px; }
+  .wp-money-t > b { display: block; font: 700 32px/1.1 var(--font-display); color: var(--bone); letter-spacing: .01em; }
+  .wp-money-t > span { display: block; font: 500 18px/1.35 var(--font-ui); color: var(--bone-dim); margin-top: 6px; }
+  .wp-hanko { display: block; flex: none; filter: drop-shadow(0 6px 18px rgba(179, 38, 30, .35)); }
+
+  .wp-scan { display: flex; flex-direction: column; align-items: center; }
+  .wp-scan-l { font: 800 17px/1 var(--font-ui); letter-spacing: .3em; text-transform: uppercase; color: var(--hot); }
+  .wp-url { font: 600 17px/1 var(--font-ui); color: var(--bone); letter-spacing: .02em; }
+  .wp-wa { font: 500 16px/1 var(--font-ui); color: var(--bone-dim); letter-spacing: .04em; }
+  .wp-wa b { color: var(--bone); font-weight: 700; }
+  .wp-qr { position: relative; flex: none; box-shadow: 0 0 0 1px rgba(210, 180, 99, .9), 0 0 0 9px rgba(8, 20, 40, .92),
+           0 0 0 10px rgba(210, 180, 99, .55), 0 18px 50px rgba(0, 0, 0, .6), 0 0 60px rgba(255, 122, 26, .18); }
+  .wp-qr svg { display: block; }
+
+  .wp-urgent { display: flex; flex-direction: column; gap: 9px; font: 500 19px/1.25 var(--font-ui); color: var(--bone-dim); }
+  .wp-urgent .wp-u1 { color: #FFD9A8; font-weight: 700; }
+  .wp-flame { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 12px; vertical-align: 2px;
+              background: #FFD27A; box-shadow: 0 0 0 3px rgba(255, 122, 26, .28), 0 0 14px 3px rgba(255, 122, 26, .8); }
+
+  .wp-rule { height: 1px; background: linear-gradient(90deg, rgba(210,180,99,.6), rgba(210,180,99,.25) 70%, rgba(210,180,99,0)); }
+  .wp-cta { display: inline-flex; align-items: center; gap: 14px; height: 62px; padding: 0 30px 0 32px; border-radius: 999px; box-sizing: border-box;
+            font: 800 21px/1 var(--font-ui); letter-spacing: .22em; text-transform: uppercase; color: #1A1204;
+            background: linear-gradient(180deg, #F3DE9E 0%, #D2B463 55%, #B0913F 100%);
+            box-shadow: 0 0 0 1px rgba(255, 231, 168, .6) inset, 0 10px 30px rgba(0, 0, 0, .45), 0 0 40px rgba(255, 179, 71, .25); }
+  .wp-cta svg { display: block; }
+
+  /* ── FEED 1080×1350 ── */
+  .wp-f-feed .wp-c { padding: 66px 76px 58px; }
+  .wp-f-feed .wp-kick { margin-top: 54px; }
+  .wp-f-feed .wp-hook { margin-top: 26px; }
+  .wp-f-feed .wp-l-2 { margin-top: 8px; }
+  .wp-f-feed .wp-sub { margin-top: 20px; }
+  .wp-f-feed .wp-hing { margin-top: 34px; }
+  .wp-f-feed .wp-h1 { font-size: 54px; }
+  .wp-f-feed .wp-h2 { font-size: 74px; margin-top: 2px; }
+  .wp-f-feed .wp-lives { margin-top: 40px; }
+  .wp-f-feed .wp-host { margin-top: 14px; }
+  .wp-f-feed .wp-ends { margin-top: 6px; }
+  .wp-f-feed .wp-panel { margin-top: auto; display: grid; grid-template-columns: 1fr auto; column-gap: 40px; align-items: end; }
+  .wp-f-feed .wp-date { font-size: 104px; margin-top: 12px; }
+  .wp-f-feed .wp-money { margin-top: 18px; }
+  .wp-f-feed .wp-urgent { margin-top: 26px; }
+  .wp-f-feed .wp-scan-l { margin-bottom: 22px; }
+  .wp-f-feed .wp-url { margin-top: 22px; }
+  .wp-f-feed .wp-wa { margin-top: 10px; }
+
+  /* ── STORY 1080×1920 ── (top ~200 and bottom ~200 sit under the app's chrome) */
+  .wp-f-story .wp-c { padding: 118px 80px 172px; }
+  .wp-f-story .wp-top { font-size: 16px; }
+  .wp-f-story .wp-kick { margin-top: 60px; font-size: 23px; }
+  .wp-f-story .wp-hook { margin-top: 30px; line-height: .8; }
+  .wp-f-story .wp-l + .wp-l { margin-top: 10px; }
+  .wp-f-story .wp-sub { margin-top: 22px; font-size: 52px; }
+  .wp-f-story .wp-hing { margin-top: 36px; }
+  .wp-f-story .wp-h1 { font-size: 62px; }
+  .wp-f-story .wp-h2 { font-size: 86px; margin-top: 2px; }
+  .wp-f-story .wp-lives { margin-top: 46px; font-size: 22px; gap: 14px; letter-spacing: .16em; }
+  .wp-f-story .wp-host { margin-top: 16px; font-size: 42px; }
+  .wp-f-story .wp-ends { margin-top: 8px; font-size: 25px; }
+  .wp-f-story .wp-panel { margin-top: auto; display: grid; grid-template-columns: 1fr auto; column-gap: 36px; align-items: end; }
+  .wp-f-story .wp-date { font-size: 112px; margin-top: 12px; }
+  .wp-f-story .wp-money { margin-top: 18px; }
+  .wp-f-story .wp-rule { margin-top: 30px; }
+  .wp-f-story .wp-urgent { margin-top: 22px; font-size: 22px; gap: 10px; }
+  .wp-f-story .wp-scan-l { margin-bottom: 22px; }
+  .wp-f-story .wp-url { margin-top: 22px; }
+  .wp-f-story .wp-wa { margin-top: 10px; }
+
+  /* ── OG 1200×630 ── (seen at 300–500px wide: hook, date, fee, a door) */
+  .wp-f-og .wp-c { padding: 46px 60px 44px; }
+  .wp-f-og .wp-top { font-size: 13px; }
+  .wp-f-og .wp-row { flex: 1; display: flex; }
+  .wp-f-og .wp-left { width: 700px; display: flex; flex-direction: column; }
+  .wp-f-og .wp-right { flex: 1; display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-end; padding-left: 44px; }
+  .wp-f-og .wp-kick { font-size: 17px; gap: 14px; margin-top: 30px; }
+  .wp-f-og .wp-kick::before { width: 40px; }
+  .wp-f-og .wp-hook { margin-top: 20px; }
+  .wp-f-og .wp-l-2 { margin-top: 6px; }
+  .wp-f-og .wp-sub { margin-top: 14px; font-size: 34px; }
+  .wp-f-og .wp-wd { font-size: 16px; }
+  .wp-f-og .wp-date { font-size: 76px; margin-top: 8px; }
+  .wp-f-og .wp-money { margin-top: 14px; gap: 18px; }
+  .wp-f-og .wp-money-t > b { font-size: 28px; }
+  .wp-f-og .wp-cta { margin-top: 22px; }
+  .wp-f-og .wp-url { margin-top: 12px; font-size: 15px; color: var(--bone-dim); }
+</style>
+</head>
+<body>
+<!--QR-->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="wp-qr" viewBox="0 0 41 41" data-modules="41"><rect width="41" height="41" fill="#F3EBD3"/><path d="M4 4h7v1h-7zM12 4h2v1h-2zM17 4h1v1h-1zM19 4h2v1h-2zM23 4h1v1h-1zM26 4h2v1h-2zM30 4h7v1h-7zM4 5h1v1h-1zM10 5h1v1h-1zM14 5h1v1h-1zM16 5h2v1h-2zM20 5h3v1h-3zM24 5h5v1h-5zM30 5h1v1h-1zM36 5h1v1h-1zM4 6h1v1h-1zM6 6h3v1h-3zM10 6h1v1h-1zM12 6h2v1h-2zM15 6h4v1h-4zM21 6h1v1h-1zM23 6h1v1h-1zM26 6h1v1h-1zM30 6h1v1h-1zM32 6h3v1h-3zM36 6h1v1h-1zM4 7h1v1h-1zM6 7h3v1h-3zM10 7h1v1h-1zM12 7h1v1h-1zM14 7h1v1h-1zM17 7h2v1h-2zM22 7h2v1h-2zM28 7h1v1h-1zM30 7h1v1h-1zM32 7h3v1h-3zM36 7h1v1h-1zM4 8h1v1h-1zM6 8h3v1h-3zM10 8h1v1h-1zM16 8h1v1h-1zM20 8h1v1h-1zM25 8h1v1h-1zM27 8h1v1h-1zM30 8h1v1h-1zM32 8h3v1h-3zM36 8h1v1h-1zM4 9h1v1h-1zM10 9h1v1h-1zM12 9h1v1h-1zM14 9h2v1h-2zM17 9h1v1h-1zM19 9h1v1h-1zM22 9h3v1h-3zM26 9h1v1h-1zM28 9h1v1h-1zM30 9h1v1h-1zM36 9h1v1h-1zM4 10h7v1h-7zM12 10h1v1h-1zM14 10h1v1h-1zM16 10h1v1h-1zM18 10h1v1h-1zM20 10h1v1h-1zM22 10h1v1h-1zM24 10h1v1h-1zM26 10h1v1h-1zM28 10h1v1h-1zM30 10h7v1h-7zM12 11h2v1h-2zM19 11h4v1h-4zM24 11h3v1h-3zM28 11h1v1h-1zM5 12h1v1h-1zM7 12h1v1h-1zM9 12h4v1h-4zM17 12h1v1h-1zM24 12h2v1h-2zM28 12h4v1h-4zM33 12h2v1h-2zM36 12h1v1h-1zM5 13h1v1h-1zM7 13h3v1h-3zM11 13h2v1h-2zM15 13h1v1h-1zM18 13h2v1h-2zM21 13h1v1h-1zM24 13h3v1h-3zM28 13h4v1h-4zM35 13h2v1h-2zM5 14h1v1h-1zM7 14h1v1h-1zM10 14h2v1h-2zM13 14h1v1h-1zM15 14h1v1h-1zM17 14h1v1h-1zM19 14h5v1h-5zM25 14h1v1h-1zM31 14h2v1h-2zM34 14h1v1h-1zM36 14h1v1h-1zM4 15h1v1h-1zM8 15h1v1h-1zM11 15h2v1h-2zM15 15h2v1h-2zM18 15h1v1h-1zM20 15h1v1h-1zM24 15h3v1h-3zM32 15h2v1h-2zM35 15h1v1h-1zM5 16h2v1h-2zM10 16h1v1h-1zM14 16h1v1h-1zM16 16h2v1h-2zM19 16h1v1h-1zM22 16h1v1h-1zM25 16h1v1h-1zM27 16h4v1h-4zM33 16h1v1h-1zM35 16h1v1h-1zM4 17h4v1h-4zM12 17h3v1h-3zM17 17h2v1h-2zM21 17h1v1h-1zM23 17h3v1h-3zM28 17h3v1h-3zM32 17h2v1h-2zM35 17h2v1h-2zM4 18h2v1h-2zM9 18h2v1h-2zM12 18h3v1h-3zM16 18h2v1h-2zM21 18h2v1h-2zM24 18h8v1h-8zM35 18h1v1h-1zM5 19h1v1h-1zM8 19h2v1h-2zM11 19h1v1h-1zM13 19h2v1h-2zM21 19h1v1h-1zM25 19h3v1h-3zM30 19h1v1h-1zM35 19h1v1h-1zM4 20h5v1h-5zM10 20h1v1h-1zM13 20h1v1h-1zM16 20h1v1h-1zM19 20h1v1h-1zM23 20h1v1h-1zM25 20h4v1h-4zM30 20h1v1h-1zM32 20h1v1h-1zM35 20h1v1h-1zM4 21h1v1h-1zM6 21h1v1h-1zM8 21h2v1h-2zM11 21h1v1h-1zM13 21h1v1h-1zM15 21h3v1h-3zM20 21h1v1h-1zM22 21h1v1h-1zM25 21h4v1h-4zM31 21h1v1h-1zM33 21h1v1h-1zM35 21h1v1h-1zM4 22h5v1h-5zM10 22h2v1h-2zM14 22h1v1h-1zM19 22h2v1h-2zM25 22h2v1h-2zM30 22h1v1h-1zM34 22h1v1h-1zM36 22h1v1h-1zM5 23h3v1h-3zM9 23h1v1h-1zM12 23h1v1h-1zM14 23h1v1h-1zM24 23h3v1h-3zM30 23h2v1h-2zM35 23h1v1h-1zM7 24h1v1h-1zM10 24h3v1h-3zM17 24h3v1h-3zM21 24h2v1h-2zM24 24h2v1h-2zM27 24h3v1h-3zM31 24h1v1h-1zM5 25h2v1h-2zM9 25h1v1h-1zM11 25h3v1h-3zM15 25h1v1h-1zM17 25h1v1h-1zM19 25h2v1h-2zM22 25h1v1h-1zM24 25h2v1h-2zM28 25h3v1h-3zM34 25h3v1h-3zM4 26h2v1h-2zM8 26h8v1h-8zM20 26h1v1h-1zM22 26h2v1h-2zM26 26h1v1h-1zM30 26h4v1h-4zM36 26h1v1h-1zM5 27h1v1h-1zM13 27h1v1h-1zM16 27h5v1h-5zM23 27h5v1h-5zM29 27h1v1h-1zM32 27h2v1h-2zM35 27h1v1h-1zM4 28h1v1h-1zM6 28h2v1h-2zM10 28h1v1h-1zM15 28h2v1h-2zM19 28h2v1h-2zM23 28h3v1h-3zM28 28h5v1h-5zM35 28h1v1h-1zM12 29h6v1h-6zM19 29h1v1h-1zM23 29h4v1h-4zM28 29h1v1h-1zM32 29h2v1h-2zM36 29h1v1h-1zM4 30h7v1h-7zM12 30h4v1h-4zM19 30h1v1h-1zM21 30h1v1h-1zM24 30h1v1h-1zM28 30h1v1h-1zM30 30h1v1h-1zM32 30h4v1h-4zM4 31h1v1h-1zM10 31h1v1h-1zM12 31h1v1h-1zM14 31h4v1h-4zM19 31h1v1h-1zM22 31h1v1h-1zM25 31h2v1h-2zM28 31h1v1h-1zM32 31h1v1h-1zM35 31h2v1h-2zM4 32h1v1h-1zM6 32h3v1h-3zM10 32h1v1h-1zM15 32h1v1h-1zM18 32h1v1h-1zM21 32h6v1h-6zM28 32h6v1h-6zM4 33h1v1h-1zM6 33h3v1h-3zM10 33h1v1h-1zM12 33h1v1h-1zM14 33h2v1h-2zM17 33h2v1h-2zM20 33h1v1h-1zM22 33h1v1h-1zM25 33h1v1h-1zM27 33h1v1h-1zM30 33h1v1h-1zM32 33h4v1h-4zM4 34h1v1h-1zM6 34h3v1h-3zM10 34h1v1h-1zM14 34h2v1h-2zM17 34h1v1h-1zM22 34h1v1h-1zM25 34h2v1h-2zM32 34h3v1h-3zM36 34h1v1h-1zM4 35h1v1h-1zM10 35h1v1h-1zM12 35h2v1h-2zM17 35h2v1h-2zM20 35h1v1h-1zM22 35h4v1h-4zM28 35h1v1h-1zM30 35h1v1h-1zM33 35h1v1h-1zM4 36h7v1h-7zM14 36h1v1h-1zM16 36h1v1h-1zM19 36h1v1h-1zM21 36h2v1h-2zM25 36h1v1h-1zM28 36h3v1h-3zM32 36h2v1h-2zM35 36h1v1h-1z" fill="#081428" shape-rendering="crispEdges"/></symbol></svg>
+<!--/QR-->
+<!--DATA-->
+<script id="wp-data" type="application/json">
+{
+  "brand": "Vision Success",
+  "city": "Una",
+  "region": "Himachal Pradesh",
+  "kicker": "Job-Ready Skills Workshop",
+  "headline": "Nobody hires a marksheet.",
+  "headline2": "They hire what you can show them.",
+  "hinglish": "Marksheet se naukri nahi milti. Kaam dikhana padta hai.",
+  "weekday": "Thursday",
+  "dateLabel": "Thursday 1 October",
+  "year": "2026",
+  "amount": 299,
+  "walkIn": "₹299 to walk in.",
+  "adjusted": "Adjusted in full against the two-month program fee",
+  "lives": [
+    "Physicist",
+    "Artist",
+    "Writer",
+    "Freelancer"
+  ],
+  "hostLine": "One man has been all four.",
+  "endings": [
+    "A different mind",
+    "A portfolio"
+  ],
+  "closesLabel": "Wednesday 30 September, midnight",
+  "venueBy": "Sunday 27 September",
+  "url": "https://visionsuccessuna.com/workshop",
+  "urlLabel": "visionsuccessuna.com/workshop",
+  "phone": "+91 82192 54332",
+  "qrModules": 41
+}
+</script>
+<!--/DATA-->
+<div id="wp-poster" role="img" aria-label="Job-Ready Skills Workshop poster"></div>
+<script>
+(function () {
+  'use strict'
+
+  /* ── format ──
+     angle  the blade's slope, degrees down to the left. Shallow on
+            purpose: steep enough to read as a diagonal cut, shallow
+            enough that it leaves MARKSHEET through its own baseline
+            instead of carving through the lines above and below.
+     along/gap  how far the lower half slides along the blade / opens. */
+  var FORMATS = {
+    feed:  { W: 1080, H: 1350, angle: 14, along: 16, gap: 4, core: 3.2, seed: 1107, clear: 64, ridges: true,  embers: 70, sparks: 46 },
+    story: { W: 1080, H: 1920, angle: 14, along: 18, gap: 4, core: 3.6, seed: 2203, clear: 58, ridges: true,  embers: 110, sparks: 64 },
+    og:    { W: 1200, H: 630,  angle: 12, along: 11, gap: 3, core: 2.6, seed: 3301, clear: 54, ridges: false, embers: 44, sparks: 36 },
+  }
+  var KEY = (location.hash.replace('#', '') || 'feed').toLowerCase()
+  if (!FORMATS[KEY]) KEY = 'feed'
+  var F = FORMATS[KEY]
+  var W = F.W, H = F.H
+  var D = JSON.parse(document.getElementById('wp-data').textContent)
+
+  document.documentElement.style.setProperty('--W', W + 'px')
+  document.documentElement.style.setProperty('--H', H + 'px')
+  document.body.className = 'wp-f-' + KEY
+
+  /* ── a seeded random, so a re-run re-prints the same poster ── */
+  function mulberry(a) {
+    return function () {
+      a |= 0; a = (a + 0x6D2B79F5) | 0
+      var t = Math.imul(a ^ (a >>> 15), 1 | a)
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296
+    }
+  }
+  var R = mulberry(F.seed)
+  function rand(a, b) { return a + (b - a) * R() }
+  function pick(a) { return a[Math.floor(R() * a.length)] }
+  function f1(v) { return Math.round(v * 10) / 10 }
+  function clamp(v, a, b) { return Math.max(a, Math.min(b, v)) }
+
+  /* ── words ── */
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c] }) }
+  function rs(s) { return esc(s).replace(/₹/g, '<span class="wp-rs">₹</span>') }
+  function lcFirst(s) { return s.charAt(0).toLowerCase() + s.slice(1) }
+
+  var words = D.headline.trim().split(/\s+/)
+  var target = words.pop()                       // the marksheet — the word the blade is aimed at
+  var weekday = D.weekday
+  var dayMonth = D.dateLabel.replace(weekday, '').trim()
+  var hing = D.hinglish.match(/[^.!?]+[.!?]+/g) || [D.hinglish]
+  var ROMAN = ['I', 'II', 'III', 'IV', 'V', 'VI']
+
+  function hookLines(n) {
+    var lines = n === 3 ? [words[0], words.slice(1).join(' ')] : [words.join(' ')]
+    var html = lines.map(function (l, i) { return '<span class="wp-l wp-l-bone wp-l-' + (i + 1) + '" data-fit>' + esc(l) + '</span>' }).join('')
+    return html + '<span class="wp-l wp-gold wp-l-' + (lines.length + 1) + '" data-fit data-cut>' + esc(target) + '</span>'
+  }
+  function sub() { return '<p class="wp-sub" data-dodge>' + esc(D.headline2) + '</p>' }
+  function hinglish() {
+    return '<div class="wp-hing"><span class="wp-h1">' + esc(hing[0].trim()) + '</span>' +
+      (hing[1] ? '<span class="wp-h2"><svg class="wp-brush" viewBox="0 0 600 30" preserveAspectRatio="none" aria-hidden="true">' +
+        '<path d="M2 20 C 120 11, 300 7, 598 9 C 420 15, 200 20, 30 27 Z" fill="url(#wp-brush-g)"/></svg><b>' + esc(hing[1].trim()) + '</b></span>' : '') + '</div>'
+  }
+  function lives() {
+    return '<div class="wp-lives">' + D.lives.map(function (w, i) { return '<span class="wp-life"><i>' + ROMAN[i] + '</i>' + esc(w) + '</span>' }).join('<b class="wp-dot"></b>') + '</div>'
+  }
+  function endings() {
+    return '<p class="wp-ends">Walk out with <em>' + esc(lcFirst(D.endings[0])) + '</em> — or <em>' + esc(lcFirst(D.endings[1])) + '</em>. Possibly both.</p>'
+  }
+  function urgent() {
+    return '<div class="wp-urgent"><span class="wp-u1"><i class="wp-flame"></i>Registration closes ' + esc(D.closesLabel) + '</span>' +
+      '<span class="wp-u2">Venue revealed to registered students by ' + esc(D.venueBy) + '</span></div>'
+  }
+  function top() {
+    return '<header class="wp-top"><span class="wp-brand">' + esc(D.brand) + '</span><span class="wp-place">' + esc(D.city) + ' · ' + esc(D.region) + '</span></header>'
+  }
+  /* The seal: a red rounded square with the fee cut out of it. The knock-
+     out is a mask, so what shows through the numerals is the night
+     itself — a stamp, not a sticker. */
+  function hanko(px) {
+    return '<svg class="wp-hanko" width="' + px + '" height="' + px + '" viewBox="0 0 200 200" role="img" aria-label="₹' + D.amount + '">' +
+      '<g transform="rotate(-6 100 100)" filter="url(#wp-hk-rough)"><rect x="8" y="8" width="184" height="184" rx="30" fill="#B3261E" mask="url(#wp-hk-mask)"/></g></svg>'
+  }
+  /* Module-exact size: the QR is drawn at a whole number of pixels per
+     module, so no module is ever smeared across two pixels. */
+  function qr(px) {
+    var m = D.qrModules, k = Math.max(1, Math.floor(px / m)), s = m * k
+    return '<div class="wp-qr" data-keepclear style="width:' + s + 'px;height:' + s + 'px"><svg width="' + s + '" height="' + s + '" viewBox="0 0 ' + m + ' ' + m + '" shape-rendering="crispEdges"><use href="#wp-qr"/></svg></div>'
+  }
+  function scan(px) {
+    return '<div class="wp-scan"><div class="wp-scan-l">Scan to register</div>' + qr(px) +
+      '<div class="wp-url">' + esc(D.urlLabel) + '</div><div class="wp-wa">WhatsApp <b>' + esc(D.phone) + '</b></div></div>'
+  }
+  function when(sealPx, extra, adjusted) {
+    return '<div class="wp-when"><div class="wp-wd">' + esc(weekday) + '</div>' +
+      '<div class="wp-date wp-gold">' + esc(dayMonth) + '</div>' +
+      '<div class="wp-money">' + hanko(sealPx) + '<div class="wp-money-t"><b>' + rs(D.walkIn) + '</b>' +
+      (extra || adjusted ? '<span>' + esc(D.adjusted) + '</span>' : '') + '</div></div>' + (extra ? urgent() : '') + '</div>'
+  }
+
+  var TEMPLATES = {
+    feed: function () {
+      return '<div class="wp-c">' + top() +
+        '<div class="wp-kick">' + esc(D.kicker) + '</div>' +
+        '<h1 class="wp-hook">' + hookLines(2) + '</h1>' + sub() + hinglish() +
+        lives() + '<p class="wp-host">' + esc(D.hostLine) + '</p>' + endings() +
+        '<section class="wp-panel" data-horizon>' + when(122, true) + scan(250) + '</section>' +
+        '</div>'
+    },
+    story: function () {
+      return '<div class="wp-c">' + top() +
+        '<div class="wp-kick">' + esc(D.kicker) + '</div>' +
+        '<h1 class="wp-hook">' + hookLines(3) + '</h1>' + sub() + hinglish() +
+        lives() + '<p class="wp-host">' + esc(D.hostLine) + '</p>' + endings() +
+        '<section class="wp-panel" data-horizon>' + when(128, false, true) + scan(250) + '</section>' +
+        '<div class="wp-rule"></div>' + urgent() +
+        '</div>'
+    },
+    og: function () {
+      return '<div class="wp-c">' + top() + '<div class="wp-row"><div class="wp-left">' +
+        '<div class="wp-kick">' + esc(D.kicker) + '</div>' +
+        '<h1 class="wp-hook">' + hookLines(2) + '</h1>' + sub() + '</div>' +
+        '<div class="wp-right">' + when(104, false) +
+        '<div class="wp-cta">Register<svg width="26" height="16" viewBox="0 0 26 16" aria-hidden="true"><path d="M0 8h23M16 1l7 7-7 7" fill="none" stroke="#1A1204" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>' +
+        '<div class="wp-url">' + esc(D.urlLabel) + '</div></div></div></div>'
+    },
+  }
+
+  /* width each fitted hook line is set to — the measure of the column */
+  var FIT = { feed: W - 152, story: W - 184, og: 700 }
+
+  /* ── shared SVG definitions (one copy, outside the two halves) ── */
+  function defs() {
+    return '<svg class="wp-defs" width="0" height="0" style="position:absolute" aria-hidden="true"><defs>' +
+      '<linearGradient id="wp-brush-g" x1="0" x2="1" y1="0" y2="0">' +
+        '<stop offset="0" stop-color="#FF7A1A" stop-opacity=".95"/><stop offset=".7" stop-color="#FFB347" stop-opacity=".8"/><stop offset="1" stop-color="#FFE7A8" stop-opacity="0"/></linearGradient>' +
+      '<mask id="wp-hk-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="200" height="200">' +
+        '<rect width="200" height="200" fill="#fff"/>' +
+        '<rect x="20" y="20" width="160" height="160" rx="19" fill="none" stroke="#000" stroke-width="4.5"/>' +
+        '<text x="100" y="74" text-anchor="middle" font-family="Inter" font-weight="800" font-size="36" fill="#000">₹</text>' +
+        '<text x="101" y="152" text-anchor="middle" font-family="Cormorant Garamond" font-weight="700" font-size="96" letter-spacing="-1" fill="#000" stroke="#000" stroke-width="3.2" stroke-linejoin="round">' + D.amount + '</text>' +
+      '</mask>' +
+      /* uneven ink: a warped edge and a scatter of dry spots, like a real
+         stamp pressed once, a little too fast */
+      '<filter id="wp-hk-rough" x="-6%" y="-6%" width="112%" height="112%">' +
+        '<feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="3" seed="4" result="w"/>' +
+        '<feDisplacementMap in="SourceGraphic" in2="w" scale="5" xChannelSelector="R" yChannelSelector="G" result="d"/>' +
+        '<feTurbulence type="fractalNoise" baseFrequency="0.6" numOctaves="2" seed="11" result="g"/>' +
+        '<feColorMatrix in="g" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  13 0 0 0 -8.6" result="h"/>' +
+        '<feComposite in="d" in2="h" operator="out"/>' +
+      '</filter>' +
+    '</defs></svg>'
+  }
+
+  /* ── geometry of the cut ── */
+  function capBox(el) {
+    var r = el.getBoundingClientRect()
+    var mark = document.createElement('i')
+    mark.style.cssText = 'display:inline-block;width:0;height:0;vertical-align:baseline'
+    el.appendChild(mark)
+    var base = mark.getBoundingClientRect().top
+    el.removeChild(mark)
+    var cs = getComputedStyle(el), ctx = document.createElement('canvas').getContext('2d')
+    ctx.font = cs.fontWeight + ' ' + cs.fontSize + ' ' + cs.fontFamily
+    var capH = ctx.measureText('H').actualBoundingBoxAscent || parseFloat(cs.fontSize) * 0.63
+    return { left: r.left, right: r.right, w: r.width, top: base - capH, bottom: base, h: capH }
+  }
+  function cutGeometry(box) {
+    var th = F.angle * Math.PI / 180
+    var u = { x: -Math.cos(th), y: Math.sin(th) }      // blade travel: upper right → lower left
+    var n = { x: Math.sin(th), y: Math.cos(th) }       // normal, pointing into the lower half
+    // enters at the top of the last letter, crosses the word, leaves through its baseline
+    var A = { x: box.right - box.h * 0.12, y: box.top + box.h * 0.1 }
+    var sMid = (box.top + box.h * 0.55 - A.y) / u.y
+    var P = { x: A.x + u.x * sMid, y: A.y + u.y * sMid }
+    var m = 80
+    var sx = [(W + m - P.x) / u.x, (-m - P.x) / u.x].sort(function (a, b) { return a - b })
+    var sy = [(-m - P.y) / u.y, (H + m - P.y) / u.y].sort(function (a, b) { return a - b })
+    var s0 = Math.max(sx[0], sy[0]), s1 = Math.min(sx[1], sy[1])
+    var E = { x: P.x + u.x * s0, y: P.y + u.y * s0 }, X = { x: P.x + u.x * s1, y: P.y + u.y * s1 }
+    return { u: u, n: n, P: P, A: A, E: E, X: X, len: s1 - s0, tp: -s0 / (s1 - s0), th: th }
+  }
+  function at(G, t) { return { x: G.E.x + (G.X.x - G.E.x) * t, y: G.E.y + (G.X.y - G.E.y) * t } }
+  function xAtY(G, y) { return G.P.x + G.u.x * (y - G.P.y) / G.u.y }
+  function tAtX(G, x) { return (x - G.E.x) / (G.X.x - G.E.x) }
+  function halfPlane(G, side) {
+    var L = 6000, a = { x: G.E.x - G.u.x * L, y: G.E.y - G.u.y * L }, b = { x: G.X.x + G.u.x * L, y: G.X.y + G.u.y * L }
+    var o = { x: G.n.x * L * side, y: G.n.y * L * side }
+    return 'polygon(' + [a, b, { x: b.x + o.x, y: b.y + o.y }, { x: a.x + o.x, y: a.y + o.y }]
+      .map(function (p) { return f1(p.x) + 'px ' + f1(p.y) + 'px' }).join(',') + ')'
+  }
+  function pts(list) { return list.map(function (p) { return f1(p.x) + ' ' + f1(p.y) }).join(' L') }
+
+  /* ── broken glass ──
+     A spider web where the blade leaves the glass, a smaller one where it
+     enters, and a fringe of short cracks all along the cut. Spokes first,
+     then rings joining neighbouring spokes; a few inner cells get a faint
+     fill so they read as separate pieces catching the forge light. */
+  function web(c, scale, out) {
+    var spokes = 10 + Math.floor(R() * 5), base = R() * Math.PI * 2
+    var rings = [0.1, 0.24, 0.44, 0.7, 1.02, 1.4]
+    var reach = [], P = []
+    for (var i = 0; i < spokes; i++) {
+      var a = base + (i + rand(-0.28, 0.28)) * (Math.PI * 2 / spokes)
+      reach.push(2 + Math.floor(R() * (rings.length - 1)))
+      P.push(rings.map(function (rr) {
+        var aa = a + rand(-0.07, 0.07), d = rr * scale * rand(0.86, 1.14)
+        return { x: c.x + Math.cos(aa) * d, y: c.y + Math.sin(aa) * d }
+      }))
+    }
+    for (i = 0; i < spokes; i++) {
+      var line = [c]
+      for (var j = 0; j <= reach[i] && j < rings.length; j++) {
+        var p0 = line[line.length - 1], p1 = P[i][j]
+        line.push({ x: (p0.x + p1.x) / 2 + rand(-3, 3), y: (p0.y + p1.y) / 2 + rand(-3, 3) }, p1)
+      }
+      out.crack.push({ d: 'M' + pts(line), w: rand(1, 1.6), o: rand(0.5, 0.8) })
+    }
+    var prob = [0.95, 0.85, 0.66, 0.46, 0.3, 0.18]
+    for (i = 0; i < spokes; i++) {
+      var k = (i + 1) % spokes
+      for (j = 0; j < rings.length; j++) {
+        if (j > reach[i] || j > reach[k] || R() > prob[j]) continue
+        var A = P[i][j], B = P[k][j], mid = { x: (A.x + B.x) / 2 + rand(-4, 4), y: (A.y + B.y) / 2 + rand(-4, 4) }
+        out.crack.push({ d: 'M' + pts([A, mid, B]), w: rand(0.6, 1.05), o: rand(0.3, 0.65) })
+        if (j < 3 && j + 1 <= Math.min(reach[i], reach[k]) && R() < 0.45) {
+          out.shard.push({ d: 'M' + pts([A, B, P[k][j + 1], P[i][j + 1]]) + 'Z', o: rand(0.02, 0.07), hot: R() < 0.4 })
+        }
+      }
+    }
+    out.impact.push({ c: c, r: scale * 0.08 })
+  }
+  function crackLine(o, a, len, depth, out) {
+    var line = [o], x = o.x, y = o.y, left = len
+    while (left > 0) {
+      var step = rand(7, 16)
+      a += rand(-0.38, 0.38)
+      x += Math.cos(a) * step; y += Math.sin(a) * step
+      line.push({ x: x, y: y }); left -= step
+      if (depth < 2 && R() < 0.1) crackLine({ x: x, y: y }, a + (R() < 0.5 ? -1 : 1) * rand(0.45, 1), left * rand(0.35, 0.7), depth + 1, out)
+    }
+    out.crack.push({ d: 'M' + pts(line), w: depth ? rand(0.5, 0.8) : rand(0.7, 1.1), o: depth ? rand(0.22, 0.45) : rand(0.3, 0.6) })
+  }
+  function fringe(G, out) {
+    for (var s = rand(8, 20); s < G.len; s += rand(18, 46)) {
+      var t = s / G.len, c = at(G, t), side = R() < 0.5 ? 1 : -1
+      var base = Math.atan2(G.n.y * side, G.n.x * side) + rand(-0.85, 0.85)
+      var len = R() < 0.12 ? rand(70, 150) : rand(8, 44)
+      crackLine(c, base, len, 0, out)
+    }
+  }
+
+  /* ── the forge light ── */
+  function inside(x, y, rects) {
+    for (var i = 0; i < rects.length; i++) { var r = rects[i]; if (x > r.l && x < r.r && y > r.t && y < r.b) return true }
+    return false
+  }
+  function embers(count, region, big, avoid) {
+    var out = ''
+    for (var i = 0, tries = 0; i < count && tries < count * 20; tries++) {
+      var x = rand(-20, W + 20)
+      var y = region(R())
+      if (avoid && inside(x, y, avoid)) continue
+      i++
+      var r = big ? rand(1.6, 3.8) : rand(0.8, 2.3)
+      var col = pick(['#FFE7A8', '#FFB347', '#FFB347', '#FF7A1A', '#FF7A1A', '#FFD27A'])
+      var o = rand(0.45, 1)
+      /* a rising ember is a short vertical streak (motion, not a trail —
+         curled trails read as stray brackets next to type) */
+      var ry = R() < 0.45 ? r * rand(1.6, 3.2) : r
+      out += '<ellipse cx="' + f1(x) + '" cy="' + f1(y) + '" rx="' + f1(r) + '" ry="' + f1(ry) + '" fill="' + col + '" fill-opacity="' + f1(o) + '"' +
+        (ry > r ? ' transform="rotate(' + f1(rand(-14, 14)) + ' ' + f1(x) + ' ' + f1(y) + ')"' : '') + '/>'
+    }
+    return out
+  }
+  /* Sparks leave a blade the way it is travelling — down and to the
+     left, into the void — and fall as they go. */
+  function sparks(G, count, avoid) {
+    var grads = '', paths = ''
+    for (var i = 0, tries = 0; i < count && tries < count * 20; tries++) {
+      // a third leave the letters themselves; the rest the stretch of blade just past the word
+      var t = clamp(R() < 0.25 ? G.tp + rand(-0.08, 0.06) : G.tp + rand(0.04, 0.3), 0.03, 0.97)
+      var o = at(G, t), side = R() < 0.22 ? -1 : 1
+      var dx = G.u.x * rand(0.35, 1) + G.n.x * side * rand(0, 0.8)
+      var dy = G.u.y * rand(0.35, 1) + G.n.y * side * rand(0, 0.8) - rand(0, 0.45)
+      var dl = Math.hypot(dx, dy); dx /= dl; dy /= dl
+      var L = R() < 0.18 ? rand(120, 280) : rand(24, 120)
+      var g = 0.0016 * rand(0.5, 1.6)
+      var e = { x: o.x + dx * L, y: o.y + dy * L + g * L * L }
+      if (avoid && inside(e.x, e.y, avoid)) continue
+      i++
+      var q = { x: o.x + dx * L * 0.55, y: o.y + dy * L * 0.55 }
+      var id = 'wp-sp' + i
+      grads += '<linearGradient id="' + id + '" gradientUnits="userSpaceOnUse" x1="' + f1(o.x) + '" y1="' + f1(o.y) + '" x2="' + f1(e.x) + '" y2="' + f1(e.y) + '">' +
+        '<stop offset="0" stop-color="#FF7A1A" stop-opacity="0"/><stop offset=".55" stop-color="#FFB347" stop-opacity=".75"/><stop offset="1" stop-color="#FFF6DE"/></linearGradient>'
+      paths += '<path d="M' + f1(o.x) + ' ' + f1(o.y) + ' Q ' + f1(q.x) + ' ' + f1(q.y) + ' ' + f1(e.x) + ' ' + f1(e.y) + '" stroke="url(#' + id + ')" stroke-width="' + f1(rand(1.1, 2.4)) + '" fill="none" stroke-linecap="round"/>' +
+        '<circle cx="' + f1(e.x) + '" cy="' + f1(e.y) + '" r="' + f1(rand(1, 1.8)) + '" fill="#FFF6DE"/>'
+    }
+    return { grads: grads, paths: paths }
+  }
+  /* Una sits in the Shivalik foothills. A few big peaks, then detail by
+     midpoint displacement, then squeezed into a band so the ridge line
+     never runs through type. */
+  function ridge(topY, bottomY, n0) {
+    var line = []
+    for (var i = 0; i <= n0; i++) line.push({ x: -60 + (W + 120) * i / n0, y: R() })
+    var d = 0.32
+    for (var it = 0; it < 6; it++) {
+      var next = []
+      for (i = 0; i < line.length - 1; i++) next.push(line[i], { x: (line[i].x + line[i + 1].x) / 2, y: (line[i].y + line[i + 1].y) / 2 + rand(-d, d) })
+      next.push(line[line.length - 1]); line = next; d *= 0.55
+    }
+    var lo = Math.min.apply(null, line.map(function (p) { return p.y })), hi = Math.max.apply(null, line.map(function (p) { return p.y }))
+    line.forEach(function (p) { p.y = topY + (p.y - lo) / (hi - lo) * (bottomY - topY) })
+    return { top: 'M' + pts(line), fill: 'M' + pts(line) + ' L' + (W + 60) + ' ' + (H + 80) + ' L-60 ' + (H + 80) + 'Z' }
+  }
+  function taper(G, maxW, pow) {
+    var N = 140, L = [], Rr = []
+    for (var i = 0; i <= N; i++) {
+      var t = i / N, c = at(G, t)
+      var k = t < G.tp ? t / G.tp : (1 - t) / (1 - G.tp)
+      var w = maxW * Math.pow(Math.sin(Math.PI / 2 * clamp(k * 1.25, 0, 1)), pow)
+      L.push({ x: c.x + G.n.x * w, y: c.y + G.n.y * w }); Rr.push({ x: c.x - G.n.x * w, y: c.y - G.n.y * w })
+    }
+    return 'M' + pts(L.concat(Rr.reverse())) + 'Z'
+  }
+  /* A soft-edged hole for every block of copy: whatever is drawn through
+     this mask thins out and vanishes over the words. */
+  function copyMask(id, copy) {
+    var fu = 'filterUnits="userSpaceOnUse" x="-100" y="-100" width="' + (W + 200) + '" height="' + (H + 200) + '"'
+    return '<filter id="' + id + '-f" ' + fu + '><feGaussianBlur stdDeviation="9"/></filter>' +
+      '<mask id="' + id + '" maskUnits="userSpaceOnUse" x="-100" y="-100" width="' + (W + 200) + '" height="' + (H + 200) + '">' +
+      fullRect('#fff') + '<g filter="url(#' + id + '-f)">' + copy.map(function (r) {
+        return '<rect x="' + f1(r.l) + '" y="' + f1(r.t) + '" width="' + f1(r.r - r.l) + '" height="' + f1(r.b - r.t) + '" rx="10" fill="#000"/>'
+      }).join('') + '</g></mask>'
+  }
+  function fullRect(fill, extra) {
+    return '<rect x="-80" y="-80" width="' + (W + 160) + '" height="' + (H + 160) + '" fill="' + fill + '"' + (extra || '') + '/>'
+  }
+
+  function backArt(G, sky, copy) {
+    var fu = 'filterUnits="userSpaceOnUse" x="-100" y="-100" width="' + (W + 200) + '" height="' + (H + 200) + '"'
+    var P = G.P, deg = -F.angle
+    var hills = ''
+    /* the hills live in the gap between the last line of copy and the
+       panel; if the copy has eaten that gap, there are no hills */
+    var band = sky ? sky.floor - sky.ceiling : 0
+    if (F.ridges && band > 56) {
+      var top = Math.max(sky.ceiling + 10, sky.floor - 150), bot = sky.floor - 12
+      var far = ridge(top, top + (bot - top) * 0.72, 5), near = ridge(top + (bot - top) * 0.45, bot, 4)
+      hills = '<path d="' + far.fill + '" fill="url(#wp-rg1)"/>' +
+        '<path d="' + far.top + '" fill="none" stroke="#D2B463" stroke-opacity=".2" stroke-width="1.2"/>' +
+        '<path d="' + near.fill + '" fill="url(#wp-rg2)"/>' +
+        '<path d="' + near.top + '" fill="none" stroke="#FF9A4A" stroke-opacity=".14" stroke-width="1"/>'
+    }
+    var bokeh = ''
+    for (var i = 0; i < (KEY === 'og' ? 7 : 14); i++) {
+      bokeh += '<circle cx="' + f1(rand(0, W)) + '" cy="' + f1(H * rand(0.35, 1)) + '" r="' + f1(rand(8, 30)) + '" fill="' + pick(['#FF7A1A', '#FFB347']) + '" fill-opacity="' + f1(rand(0.05, 0.14)) + '"/>'
+    }
+    return '<svg class="wp-art" width="' + W + '" height="' + H + '" viewBox="0 0 ' + W + ' ' + H + '" aria-hidden="true"><defs>' +
+      '<linearGradient id="wp-bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0C1B33"/><stop offset=".5" stop-color="#081428"/><stop offset="1" stop-color="#050C1A"/></linearGradient>' +
+      '<radialGradient id="wp-forge" gradientUnits="userSpaceOnUse" cx="' + f1(P.x) + '" cy="' + f1(P.y) + '" r="1" gradientTransform="translate(' + f1(P.x) + ' ' + f1(P.y) + ') rotate(' + deg + ') scale(' + f1(W * 0.72) + ' ' + f1(W * 0.26) + ') translate(' + f1(-P.x) + ' ' + f1(-P.y) + ')">' +
+        '<stop offset="0" stop-color="#FF7A1A" stop-opacity=".24"/><stop offset=".35" stop-color="#FF7A1A" stop-opacity=".09"/><stop offset="1" stop-color="#FF7A1A" stop-opacity="0"/></radialGradient>' +
+      '<radialGradient id="wp-pit" cx=".5" cy="1.04" r=".7"><stop offset="0" stop-color="#FF7A1A" stop-opacity=".16"/><stop offset=".5" stop-color="#B3261E" stop-opacity=".05"/><stop offset="1" stop-color="#B3261E" stop-opacity="0"/></radialGradient>' +
+      '<radialGradient id="wp-haze" cx=".1" cy="0" r=".7"><stop offset="0" stop-color="#D2B463" stop-opacity=".08"/><stop offset="1" stop-color="#D2B463" stop-opacity="0"/></radialGradient>' +
+      '<radialGradient id="wp-vig" cx=".5" cy=".45" r=".78"><stop offset=".55" stop-color="#02060E" stop-opacity="0"/><stop offset="1" stop-color="#02060E" stop-opacity=".7"/></radialGradient>' +
+      '<linearGradient id="wp-rg1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#11243F"/><stop offset=".3" stop-color="#0A172B"/><stop offset="1" stop-color="#060E1C"/></linearGradient>' +
+      '<linearGradient id="wp-rg2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0B1930"/><stop offset=".25" stop-color="#07101F"/><stop offset="1" stop-color="#050B16"/></linearGradient>' +
+      '<filter id="wp-soft" ' + fu + '><feGaussianBlur stdDeviation="9"/></filter>' +
+      '<filter id="wp-b24" ' + fu + '><feGaussianBlur stdDeviation="22"/></filter>' +
+      '<filter id="wp-b7" ' + fu + '><feGaussianBlur stdDeviation="7"/></filter>' +
+      '<filter id="wp-glow-s" ' + fu + '><feGaussianBlur stdDeviation="2.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>' +
+      copyMask('wp-copy-b', copy) +
+      '<filter id="wp-grain" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" stitchTiles="stitch"/>' +
+        '<feColorMatrix values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 1.4 -.55"/></filter>' +
+      '</defs>' +
+      fullRect('url(#wp-bg)') + fullRect('url(#wp-haze)') + fullRect('url(#wp-forge)') +
+      hills + fullRect('url(#wp-pit)') +
+      '<g filter="url(#wp-soft)">' + bokeh + '</g>' +
+      '<g mask="url(#wp-copy-b)"><g filter="url(#wp-glow-s)">' + embers(F.embers, function (v) { return H * (1 - Math.pow(v, 1.7) * 0.85) }, false) + '</g></g>' +
+      '<rect width="' + W + '" height="' + H + '" filter="url(#wp-grain)" opacity=".03"/>' +
+      fullRect('url(#wp-vig)') +
+      /* the forge light of the blade, under the type: it warms the letters
+         it passes without washing them out */
+      '<path d="' + taper(G, F.core * 14, 0.5) + '" fill="#FF7A1A" opacity=".5" filter="url(#wp-b24)"/>' +
+      '<path d="' + taper(G, F.core * 4, 0.45) + '" fill="#FFB347" opacity=".65" filter="url(#wp-b7)"/>' +
+      frame() +
+      '</svg>'
+  }
+  function frame() {
+    var i = KEY === 'og' ? 22 : 30, c = 28, g = 'stroke="#D2B463" fill="none"'
+    return '<rect x="' + i + '" y="' + i + '" width="' + (W - 2 * i) + '" height="' + (H - 2 * i) + '" ' + g + ' stroke-opacity=".26" stroke-width="1"/>' +
+      [[i, i, 1, 1], [W - i, i, -1, 1], [i, H - i, 1, -1], [W - i, H - i, -1, -1]].map(function (k) {
+        return '<path d="M' + (k[0] + c * k[2]) + ' ' + (k[1] - 6 * k[3]) + ' H' + (k[0] - 6 * k[2]) + ' V' + (k[1] + c * k[3]) + '" ' + g + ' stroke-opacity=".9" stroke-width="2"/>'
+      }).join('')
+  }
+
+  function frontArt(G, keep, copy) {
+    var fu = 'filterUnits="userSpaceOnUse" x="-100" y="-100" width="' + (W + 200) + '" height="' + (H + 200) + '"'
+    var glass = { crack: [], shard: [], impact: [] }
+    var big = KEY === 'og' ? 120 : KEY === 'story' ? 210 : 190
+    // the big web where the blade leaves the glass, a small one where it enters
+    var exitT = tAtX(G, KEY === 'og' ? 40 : 34)
+    if (at(G, exitT).y > H - 40) exitT = (H - 60 - G.E.y) / (G.X.y - G.E.y)
+    web(at(G, clamp(exitT, 0.05, 0.97)), big, glass)
+    web(at(G, clamp(tAtX(G, W - 26), 0.02, 0.9)), big * 0.42, glass)
+    fringe(G, glass)
+    var sp = sparks(G, F.sparks, keep)
+    var line = 'M' + pts([G.E, G.X])
+    return '<svg class="wp-front" width="' + W + '" height="' + H + '" viewBox="0 0 ' + W + ' ' + H + '" aria-hidden="true"><defs>' +
+      '<filter id="wp-b6" ' + fu + '><feGaussianBlur stdDeviation="5"/></filter>' +
+      '<filter id="wp-b2" ' + fu + '><feGaussianBlur stdDeviation="1.8"/></filter>' +
+      '<filter id="wp-glow" ' + fu + '><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>' +
+      '<linearGradient id="wp-sheen" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".06"/><stop offset=".26" stop-color="#fff" stop-opacity="0"/></linearGradient>' +
+      copyMask('wp-copy', copy) +
+      '<linearGradient id="wp-shard-hot" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFE7A8" stop-opacity=".2"/><stop offset="1" stop-color="#FFE7A8" stop-opacity="0"/></linearGradient>' +
+      sp.grads + '</defs>' +
+      '<rect width="' + W + '" height="' + H + '" fill="url(#wp-sheen)"/>' +
+      /* glass: pieces first, then the cracks that outline them */
+      '<g mask="url(#wp-copy)">' + glass.shard.map(function (s) { return '<path d="' + s.d + '" fill="' + (s.hot ? 'url(#wp-shard-hot)' : 'rgba(232,240,247,' + f1(s.o * 100) / 100 + ')') + '"/>' }).join('') +
+      '<g fill="none" stroke="#EEF4FF" stroke-linecap="round" stroke-linejoin="round">' +
+        glass.crack.map(function (c) { return '<path d="' + c.d + '" stroke-width="' + f1(c.w) + '" stroke-opacity="' + f1(c.o * 100) / 100 + '"/>' }).join('') + '</g>' +
+      glass.impact.map(function (m) { return '<circle cx="' + f1(m.c.x) + '" cy="' + f1(m.c.y) + '" r="' + f1(m.r) + '" fill="#FFF6DE" fill-opacity=".45" filter="url(#wp-b6)"/>' }).join('') + '</g>' +
+      /* the edge itself: a tight hot glow, a white-hot core, a hairline */
+      '<path d="' + taper(G, F.core * 2.2, 0.45) + '" fill="#FFB347" opacity=".75" filter="url(#wp-b2)"/>' +
+      '<path d="' + taper(G, F.core, 0.4) + '" fill="#FFF3D6"/>' +
+      '<path d="' + line + '" stroke="#FFFFFF" stroke-width=".8" stroke-opacity=".8"/>' +
+      '<g mask="url(#wp-copy)"><g filter="url(#wp-glow)">' + sp.paths + '</g></g>' +
+      '<g mask="url(#wp-copy)"><g filter="url(#wp-glow)">' + embers(KEY === 'og' ? 10 : 22, function (v) { return H * (1 - Math.pow(v, 1.3) * 0.9) }, true, keep) + '</g></g>' +
+      '</svg>'
+  }
+
+  /* ── build ── */
+  var root = document.getElementById('wp-poster')
+  root.insertAdjacentHTML('beforebegin', defs())
+  var half = document.createElement('div')
+  half.className = 'wp-half wp-a'
+  half.innerHTML = TEMPLATES[KEY]()
+  root.appendChild(half)
+
+  function fonts() {
+    var want = [
+      '700 100px "Cormorant Garamond"', 'italic 500 40px "Cormorant Garamond"', 'italic 600 20px "Cormorant Garamond"',
+      '700 60px "Caveat"', '800 20px "Inter"', '700 20px "Inter"', '600 20px "Inter"', '500 20px "Inter"', '400 20px "Inter"',
+    ]
+    var loads = want.map(function (f) { return document.fonts.load(f, 'AaZz09₹·—') })
+    var timeout = new Promise(function (res) { setTimeout(res, 3000) })
+    return Promise.race([Promise.all(loads).then(function () { return document.fonts.ready }), timeout])
+  }
+
+  fonts().then(function () {
+    /* fit every hook line to the column: lines of different length
+       become one solid block of type */
+    Array.prototype.forEach.call(half.querySelectorAll('[data-fit]'), function (el) {
+      el.style.fontSize = '100px'
+      var w = el.getBoundingClientRect().width
+      el.style.fontSize = (100 * FIT[KEY] / w).toFixed(2) + 'px'
+    })
+
+    var G = cutGeometry(capBox(half.querySelector('[data-cut]')))
+
+    /* the subhead steps out of the blade's way: its left edge sits a
+       clear margin to the right of where the cut is at that height */
+    Array.prototype.forEach.call(half.querySelectorAll('[data-dodge]'), function (el) {
+      var r = el.getBoundingClientRect()
+      var need = xAtY(G, r.top) + F.clear - r.left
+      if (need > 0) el.style.marginLeft = Math.min(need, r.width - 260) + 'px'
+    })
+
+    var hz = half.querySelector('[data-horizon]')
+    var sky = hz && hz.previousElementSibling
+      ? { ceiling: hz.previousElementSibling.getBoundingClientRect().bottom, floor: hz.getBoundingClientRect().top }
+      : null
+    function box(el, pad) { var r = el.getBoundingClientRect(); return { l: r.left - pad, r: r.right + pad, t: r.top - pad, b: r.bottom + pad } }
+    var keep = Array.prototype.map.call(half.querySelectorAll('[data-keepclear]'), function (el) { return box(el, 26) })
+    /* every block of reading copy: the glass and the sparks fade out
+       over these, so the cracks sit behind the words, never through them */
+    var copy = Array.prototype.map.call(half.querySelectorAll(
+      '.wp-top > *, .wp-kick, .wp-sub, .wp-h1, .wp-h2, .wp-lives, .wp-host, .wp-ends, .wp-wd, .wp-date, .wp-money, .wp-urgent > *, .wp-scan, .wp-cta, .wp-url'),
+      function (el) { return box(el, 14) })
+    half.insertAdjacentHTML('afterbegin', backArt(G, sky, copy))
+
+    var b = half.cloneNode(true)
+    b.className = 'wp-half wp-b'
+    half.style.clipPath = halfPlane(G, -1)
+    b.style.clipPath = halfPlane(G, 1)
+    b.style.transform = 'translate(' + f1(G.u.x * F.along + G.n.x * F.gap) + 'px,' + f1(G.u.y * F.along + G.n.y * F.gap) + 'px)'
+    root.appendChild(b)
+    root.insertAdjacentHTML('beforeend', frontArt(G, keep, copy))
+    document.documentElement.setAttribute('data-ready', '1')
+    document.title = 'ready ' + KEY
+  })
+})()
+</script>
+</body>
+</html>

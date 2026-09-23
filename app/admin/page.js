@@ -11,13 +11,14 @@ import {
 } from 'firebase/auth'
 import { db, auth } from '@/lib/firebase'
 import toast from 'react-hot-toast'
+import WorkshopAdmin from '@/components/workshop/WorkshopAdmin'
 
 /* Legacy password gate (works only while Firestore rules are open).
    The REAL admin login is Firebase Auth — see README "Admin Setup". */
 const ADMIN_PASSWORD = process.env.NEXT_PUBLIC_ADMIN_PASSWORD || 'VisionSuccess@2025'
 
 const CATEGORIES = ['NDA', 'JEE', 'NEET', 'Foundation', 'General']
-const TABS = ['Appointments', 'Enrollments', 'Schools', 'Surveys', 'Predictions', 'Vlogs', 'Blog', 'Materials', 'Reviews']
+const TABS = ['Workshop', 'Appointments', 'Enrollments', 'Schools', 'Surveys', 'Predictions', 'Vlogs', 'Blog', 'Materials', 'Reviews']
 
 const AUTH_ERRORS = {
   'auth/invalid-credential': 'Wrong email or password.',
@@ -1307,7 +1308,9 @@ export default function AdminPage() {
   const [user, setUser] = useState(null)
   const [legacy, setLegacy] = useState(false)
   const [ready, setReady] = useState(false)
-  const [activeTab, setActiveTab] = useState('Appointments')
+  /* The workshop tab leads until 1 October — it is the one list that
+     needs checking every day, against the UPI statement. */
+  const [activeTab, setActiveTab] = useState('Workshop')
 
   useEffect(() => {
     if (sessionStorage.getItem('vsAdminAuth') === '1') setLegacy(true)
@@ -1397,6 +1400,7 @@ export default function AdminPage() {
             exit={{ opacity: 0, y: -16 }}
             transition={{ duration: 0.25 }}
           >
+            {activeTab === 'Workshop' && <WorkshopAdmin />}
             {activeTab === 'Appointments' && <AppointmentsTab />}
             {activeTab === 'Enrollments' && <EnrollmentsTab />}
             {activeTab === 'Schools' && <SeminarsTab />}

@@ -21,6 +21,7 @@ import StudyAbroadFilm from '@/components/StudyAbroadFilm'
 import Opening from '@/components/Opening'
 import FreedomOffer from '@/components/FreedomOffer'
 import Creed from '@/components/Creed'
+import WorkshopHero from '@/components/workshop/WorkshopHero'
 import Motto from '@/components/Motto'
 import { playFanfare } from '@/lib/fanfare'
 import { sfxPop, sfxNope, sfxWhoosh, sfxChime } from '@/lib/sfx'
@@ -1013,6 +1014,13 @@ export default function HomePage() {
       <GiftTab />
       <BattlefieldPopup />
       <Stars />
+
+      {/* ─── THE WORKSHOP — 1 October 2026, and only until then ───
+           Above the creed on purpose, and only for the ten days before the
+           workshop: a date-bound invitation is the one thing on this page
+           that expires. It removes itself when Thursday is over, and the
+           fixed order below (creed, three roads, proof) is untouched. ─── */}
+      <WorkshopHero />
 
       {/* ─── THE CREED — the words this place runs on, before anything else ─── */}
       <Creed />

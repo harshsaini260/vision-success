@@ -1,0 +1,659 @@
+/* ─── SHATTER QR ───
+   The whole strike is choreographed here, not in JavaScript. React
+   renders once at the strike and once at the end; between the two,
+   every stage is a CSS animation with an inline delay, so a busy main
+   thread on a mid-range phone can slow a frame but cannot pull the
+   cracks, the shards and the forge out of step with each other.
+
+   What moves is transform and opacity on small, separately layered
+   boxes (the shards, the sparks, the flash, the heat front), which the
+   compositor can run on its own. What has to repaint — the cracks being
+   drawn, the sixteen bands of the code cooling — is a handful of paths,
+   for well under a second each.
+
+   Three house rules shape the declarations below:
+   · every `display` sits inside :where(), at zero specificity, so a
+     utility class passed in from outside always wins;
+   · heights are `height`, never `min-height` — the global tap-target
+     rule on `main button` is (0,2,2) and would win any min-height fight;
+   · the frame clips sideways only (overflow-x: clip) — shards and
+     sparks may fall past the phone, but never widen the page on a
+     320px handset. */
+
+.sqr {
+  --sqr-shatter: 420ms;
+  position: relative;
+  width: 100%;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 4px 0 18px;
+  overflow: hidden;                   /* fallback: clip both ways */
+  -webkit-tap-highlight-color: transparent;
+}
+:where(.sqr) { display: flex; }
+@supports (overflow: clip) {
+  .sqr { overflow: visible; overflow-x: clip; }
+}
+
+/* ── the phone ── 9 : 19.5, a bezel of 3.5% of the width all round.
+   The screen's insets and radii below are that same geometry written in
+   percentages (top/bottom are % of height, so 3.5 × 9 / 19.5), which is
+   what lets the fracture be computed in one fixed 300 × 676 space. */
+.sqr-phone {
+  position: relative;
+  flex: none;
+  width: min(100% - 8px, 300px);      /* 4px a side: the keys and the focus ring */
+  aspect-ratio: 9 / 19.5;
+  container-type: inline-size;
+  border-radius: 12.8% / 5.908%;
+  background:
+    linear-gradient(150deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 22%),
+    linear-gradient(160deg, #1E2B45 0%, #0B1424 42%, #05090F 100%);
+  box-shadow:
+    0 0 0 1px rgba(var(--accent-rgb), 0.42),
+    inset 0 0 0 1.5px #02040A,
+    inset 0 1.5px 0 1.5px rgba(255, 255, 255, 0.06),
+    0 26px 44px -20px rgba(0, 0, 0, 0.85),
+    0 14px 60px -28px rgba(255, 122, 26, 0.4);
+}
+.sqr--compact .sqr-phone { width: min(100% - 8px, 240px); }
+
+/* power key and volume rocker, in the antique gold of the rim */
+.sqr-phone::before,
+.sqr-phone::after {
+  content: '';
+  position: absolute;
+  width: 2.5px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, var(--accent-dark), #5A4A22);
+}
+.sqr-phone::before { right: -2.5px; top: 21%; height: 8%; }
+.sqr-phone::after { left: -2.5px; top: 16%; height: 13%; }
+
+.sqr-screen {
+  position: absolute;
+  inset: 1.6154% 3.5%;
+  border-radius: 10% / 4.438%;
+  overflow: hidden;
+  isolation: isolate;
+  background: #050A14;
+}
+
+.sqr-cam {
+  position: absolute;
+  z-index: 4;
+  left: 50%;
+  top: 1.7%;
+  width: 3.9cqw;
+  height: 3.9cqw;
+  margin-left: -1.95cqw;
+  border-radius: 50%;
+  background: radial-gradient(circle at 38% 35%, #2A3550 0, #0A0F1C 45%, #000 70%);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+.sqr-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+/* ── the forged screen (under the glass from the first paint) ── */
+.sqr-forge {
+  position: absolute;
+  inset: 0;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4cqw;
+  padding: 12% 0 10%;
+  color: var(--bone);
+  background:
+    radial-gradient(130% 45% at 50% 108%, rgba(255, 122, 26, 0.18), rgba(255, 122, 26, 0) 70%),
+    linear-gradient(180deg, #0B1A30 0%, #081428 55%, #050D1B 100%);
+}
+:where(.sqr-forge) { display: flex; }
+
+.sqr-head {
+  align-items: center;
+  gap: 3.2cqw;
+  padding: 0 6%;
+}
+:where(.sqr-head) { display: flex; }
+.sqr-hanko {
+  flex: none;
+  width: 10.5cqw;
+  height: 10.5cqw;
+  transform: rotate(-6deg);
+}
+.sqr-head-text {
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 1.15;
+}
+:where(.sqr-head-text) { display: flex; }
+.sqr-kicker {
+  font: 600 9px/1.2 var(--font-ui);
+  font-size: max(9px, 3.1cqw);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.sqr-title {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;                   /* the site loads Cormorant italic at 400 and 600 only */
+  font-size: 20px;
+  font-size: 7cqw;
+  color: var(--bone);
+}
+
+/* The bone runs the full width of the screen: the code's own quiet zone
+   is its margin, and every pixel of width goes to the modules. */
+.sqr-plate {
+  position: relative;
+  width: 100%;
+  margin: 0;
+  padding-bottom: 3.4cqw;
+  background: #F4EFE2;
+  box-shadow:
+    0 -1px 0 rgba(var(--accent-rgb), 0.75),
+    0 1px 0 rgba(var(--accent-rgb), 0.75);
+}
+.sqr-plate:focus { outline: none; }
+.sqr-plate:focus-visible {
+  outline: none;
+  box-shadow: inset 0 0 0 2px var(--accent);
+}
+.sqr-qr {
+  width: 100%;
+  height: auto;
+  margin: 0 auto;
+}
+:where(.sqr-qr) { display: block; }
+
+.sqr-cap {
+  flex-direction: column;
+  align-items: center;
+  gap: 1cqw;
+  padding: 0 5%;
+  text-align: center;
+  font-family: var(--font-ui);
+  font-variant-numeric: tabular-nums;
+  color: #0B1422;
+}
+:where(.sqr-cap) { display: flex; }
+.sqr-cap-line {
+  font-weight: 600;
+  font-size: 11px;
+  font-size: max(10.5px, 3.9cqw);
+  letter-spacing: 0.01em;
+}
+.sqr-cap-ref {
+  font-weight: 500;
+  font-size: 10px;
+  font-size: max(9.5px, 3.4cqw);
+  letter-spacing: 0.18em;
+  color: rgba(11, 20, 34, 0.66);
+}
+.sqr-foot {
+  max-width: 84%;
+  text-align: center;
+  font-family: var(--font-ui);
+  font-size: 10px;
+  font-size: max(9.5px, 3.3cqw);
+  line-height: 1.45;
+  color: var(--bone-dim);
+}
+
+/* ── the glass (idle) ──
+   The box itself is opaque: the SVG surface's edges fall on fractions
+   of a pixel and anti-alias, and without a solid base a hairline of the
+   bone band waiting underneath shows down both sides of the glass. */
+.sqr-glass {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: #0B1930;
+}
+.sqr-surface {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+:where(.sqr-surface) { display: block; }
+
+.sqr-lock {
+  position: absolute;
+  inset: 0;
+  color: var(--bone);
+  text-align: center;
+}
+.sqr-lock-top {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 9%;
+  flex-direction: column;
+  align-items: center;
+  gap: 1cqw;
+}
+:where(.sqr-lock-top) { display: flex; }
+.sqr-kick {
+  font: 600 9px/1.2 var(--font-ui);
+  font-size: max(9px, 3cqw);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.sqr-date {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 18px;
+  font-size: 6.4cqw;
+  color: var(--bone-dim);
+}
+
+.sqr-lock-mid {
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  width: 64cqw;
+  height: 64cqw;
+  margin: -32cqw 0 0 -32cqw;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+:where(.sqr-lock-mid) { display: flex; }
+.sqr-enso {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  opacity: 0.55;
+}
+.sqr-enso-thin { stroke-width: 0.7; opacity: 0.6; }
+.sqr-amt {
+  position: relative;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 50px;
+  font-size: 17cqw;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  color: var(--bone);
+}
+.sqr-upi {
+  position: relative;
+  margin-top: 2cqw;
+  padding-left: 0.55em;               /* re-centres the tracked word */
+  font: 600 10px/1 var(--font-ui);
+  font-size: max(9px, 3.2cqw);
+  letter-spacing: 0.55em;
+  color: var(--accent);
+}
+
+.sqr-lock-hint {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 11%;
+  flex-direction: column;
+  align-items: center;
+  gap: 3cqw;
+}
+:where(.sqr-lock-hint) { display: flex; }
+.sqr-tap {
+  position: relative;
+  width: 8cqw;
+  height: 8cqw;
+  border-radius: 50%;
+  border: 1px solid rgba(var(--accent-rgb), 0.7);
+}
+.sqr-tap::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 28%;
+  height: 28%;
+  margin: -14% 0 0 -14%;
+  border-radius: 50%;
+  background: var(--accent);
+}
+.sqr-tap::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 50%;
+  border: 1px solid rgba(var(--accent-rgb), 0.6);
+  animation: sqr-ring 1.9s ease-out infinite;
+}
+.sqr-hint {
+  font: 500 12px/1.3 var(--font-ui);
+  font-size: max(11px, 4cqw);
+  letter-spacing: 0.02em;
+  color: var(--bone-dim);
+  animation: sqr-pulse 1.9s ease-in-out infinite;
+}
+
+/* the katana glint: one hard white line with a warm falloff, crossing
+   the glass in a second and then waiting. A narrow bar tilted 22° and
+   slid sideways — not a screen-wide gradient box — so the layer the
+   compositor carries is a sliver, about a fifth of the glass. */
+.sqr-glint {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.sqr-glint::after {
+  content: '';
+  position: absolute;
+  top: -25%;
+  left: -110%;
+  width: 40%;
+  height: 150%;
+  background: linear-gradient(
+    90deg,
+    rgba(235, 217, 168, 0) 0%,
+    rgba(235, 217, 168, 0.07) 30%,
+    rgba(255, 248, 230, 0.3) 47%,
+    rgba(255, 255, 255, 0.75) 50%,
+    rgba(255, 248, 230, 0.28) 53%,
+    rgba(235, 217, 168, 0.05) 70%,
+    rgba(235, 217, 168, 0) 100%
+  );
+  transform: translate3d(0, 0, 0) rotate(22deg);
+  animation: sqr-glint 5.2s cubic-bezier(0.55, 0, 0.35, 1) 1s infinite;
+  will-change: transform;
+}
+
+.sqr[data-still] .sqr-glint::after,
+.sqr[data-still] .sqr-hint,
+.sqr[data-still] .sqr-tap::after { animation-play-state: paused; }
+
+/* ── the button: the whole phone, and nothing else ── */
+.sqr-hit {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 12.8% / 5.908%;
+  background: transparent;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.sqr-hit:focus { outline: none; }
+.sqr-hit:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;                /* 2 + 2 = the 4px a side the phone leaves */
+  border-radius: 12.8% / 5.908%;
+}
+.sqr-phone:has(.sqr-hit:active) { transform: scale(0.992); }
+
+/* ── the strike ── */
+.sqr.is-struck .sqr-phone { animation: sqr-jolt 300ms cubic-bezier(0.2, 0.8, 0.3, 1); }
+.sqr.is-struck .sqr-lock { animation: sqr-die 200ms linear forwards; }
+.sqr.is-struck .sqr-glint::after { animation: none; opacity: 0; }
+.sqr.is-struck .sqr-glass { animation: sqr-hide 0s linear var(--sqr-shatter) forwards; }
+
+.sqr-fx {
+  position: absolute;
+  inset: 1.6154% 3.5%;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.sqr-wash {
+  position: absolute;
+  inset: 0;
+  border-radius: 10% / 4.438%;
+  background: rgba(255, 250, 235, 0.3);
+  opacity: 0;
+  animation: sqr-wash 160ms ease-out;
+}
+.sqr-flash {
+  position: absolute;
+  width: 90cqw;
+  height: 90cqw;
+  margin: -45cqw 0 0 -45cqw;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    #fff 0,
+    rgba(255, 247, 222, 0.92) 10%,
+    rgba(255, 179, 71, 0.45) 28%,
+    rgba(255, 122, 26, 0.14) 48%,
+    rgba(255, 122, 26, 0) 68%
+  );
+  opacity: 0;
+  animation: sqr-flash 360ms cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
+  will-change: transform, opacity;
+}
+
+/* cracks: every path is pathLength=100, so one keyframe draws them all.
+   The 100/102 pattern starts inside the gap, so nothing shows early. */
+.sqr-cracks {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  animation: sqr-hide 0s linear var(--sqr-shatter) forwards;
+}
+.sqr-crack {
+  fill: none;
+  stroke-linecap: butt;
+  stroke-linejoin: round;
+  stroke-dasharray: 100 102;
+  stroke-dashoffset: 101;
+  animation: sqr-draw var(--t) cubic-bezier(0.15, 0.7, 0.35, 1) var(--d) forwards;
+}
+.sqr-crack--halo { stroke: rgba(150, 226, 255, 0.36); stroke-width: 2.6; }
+.sqr-crack--core { stroke: rgba(255, 255, 255, 0.92); stroke-width: 0.95; }
+
+/* shards: invisible until the glass lets go, then each falls on its
+   own delay. Their strokes are the same lines the cracks just drew. */
+.sqr-shards {
+  position: absolute;
+  inset: 0;
+  visibility: hidden;
+  animation: sqr-show 0s linear var(--sqr-shatter) forwards;
+}
+.sqr-shard {
+  position: absolute;
+  overflow: visible;
+  will-change: transform, opacity;
+  animation: sqr-fall var(--t) linear var(--d) forwards;
+}
+:where(.sqr-shard) { display: block; }
+.sqr-shard-body {
+  stroke: rgba(150, 226, 255, 0.2);
+  stroke-width: 2.4;
+  stroke-linejoin: round;
+}
+.sqr-shard-edge {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.85);
+  stroke-width: 0.9;
+  stroke-linejoin: round;
+}
+
+.sqr-spark {
+  position: absolute;
+  border-radius: 50%;
+  box-shadow: 0 0 6px 1px rgba(255, 122, 26, 0.8);
+  opacity: 0;
+  will-change: transform, opacity;
+  animation: sqr-fall var(--t) linear var(--d) forwards;
+}
+
+/* ── the forge ── heat that blooms from the impact, a quench front
+   that rolls outward with the bands, and the bands themselves */
+.sqr-heat {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    circle at var(--ix) var(--iy),
+    rgba(255, 231, 168, 0.5) 0,
+    rgba(255, 122, 26, 0.34) 16%,
+    rgba(179, 38, 30, 0.16) 34%,
+    rgba(179, 38, 30, 0) 58%
+  );
+  opacity: 0;
+  animation: sqr-heat 1500ms ease-out 380ms forwards;
+}
+.sqr-front {
+  position: absolute;
+  width: 60cqw;
+  height: 60cqw;
+  margin: -30cqw 0 0 -30cqw;
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(
+    circle,
+    rgba(255, 179, 71, 0) 52%,
+    rgba(255, 179, 71, 0.28) 62%,
+    rgba(255, 122, 26, 0.16) 68%,
+    rgba(255, 122, 26, 0) 74%
+  );
+  opacity: 0;
+  transform: scale(0.05);
+  animation: sqr-front 1050ms cubic-bezier(0.3, 0.6, 0.4, 1) 560ms forwards;
+  will-change: transform, opacity;
+}
+.sqr-band {
+  fill: transparent;
+  stroke: none;
+  stroke-linejoin: round;
+  animation: sqr-quench 480ms linear forwards;
+}
+
+/* ── keyframes ── */
+/* 700% of a bar 40% wide = 2.8 glass-widths: from wholly off the left
+   edge (tilt included) to wholly off the right */
+@keyframes sqr-glint {
+  0% { transform: translate3d(0, 0, 0) rotate(22deg); }
+  24%, 100% { transform: translate3d(700%, 0, 0) rotate(22deg); }
+}
+@keyframes sqr-pulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+@keyframes sqr-ring {
+  0% { transform: scale(1); opacity: 0.8; }
+  100% { transform: scale(2.1); opacity: 0; }
+}
+@keyframes sqr-jolt {
+  0% { transform: none; }
+  14% { transform: translate(var(--jx), var(--jy)) rotate(var(--jr)) scale(0.985); }
+  32% { transform: translate(calc(var(--jx) * -0.7), calc(var(--jy) * -0.6)) rotate(calc(var(--jr) * -0.6)); }
+  52% { transform: translate(calc(var(--jx) * 0.4), calc(var(--jy) * 0.3)); }
+  74% { transform: translate(calc(var(--jx) * -0.18), 0); }
+  100% { transform: none; }
+}
+/* the display dies under the blow: flicker, tear, collapse to a line */
+@keyframes sqr-die {
+  0% { opacity: 1; transform: none; }
+  18% { opacity: 0.25; transform: translateX(3px); }
+  30% { opacity: 0.95; transform: translateX(-2px) skewX(-6deg); }
+  52% { opacity: 0.5; transform: scaleY(0.04); }
+  100% { opacity: 0; transform: scaleX(0.3) scaleY(0.01); }
+}
+@keyframes sqr-wash {
+  0% { opacity: 1; }
+  100% { opacity: 0; }
+}
+@keyframes sqr-flash {
+  0% { transform: scale(0.12); opacity: 1; }
+  35% { opacity: 0.9; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+@keyframes sqr-draw { to { stroke-dashoffset: 0; } }
+@keyframes sqr-hide { to { visibility: hidden; } }
+@keyframes sqr-show { to { visibility: visible; } }
+
+/* A parabola in four straight steps: x = vx·τ, y = vy·τ + g·τ².
+   Shards and sparks share it; only their custom properties differ. */
+@keyframes sqr-fall {
+  0% {
+    transform: translate(0, 0) rotate(0deg) scale(1);
+    opacity: 1;
+  }
+  25% {
+    transform: translate(calc(var(--vx) * 0.25), calc(var(--vy) * 0.25 + var(--g) * 0.0625))
+      rotate(calc(var(--r) * 0.25)) scale(calc(1 + var(--s) * 0.25));
+    opacity: 1;
+  }
+  50% {
+    transform: translate(calc(var(--vx) * 0.5), calc(var(--vy) * 0.5 + var(--g) * 0.25))
+      rotate(calc(var(--r) * 0.5)) scale(calc(1 + var(--s) * 0.5));
+    opacity: 0.92;
+  }
+  75% {
+    transform: translate(calc(var(--vx) * 0.75), calc(var(--vy) * 0.75 + var(--g) * 0.5625))
+      rotate(calc(var(--r) * 0.75)) scale(calc(1 + var(--s) * 0.75));
+    opacity: 0.6;
+  }
+  100% {
+    transform: translate(var(--vx), calc(var(--vy) + var(--g))) rotate(var(--r)) scale(calc(1 + var(--s)));
+    opacity: 0;
+  }
+}
+
+@keyframes sqr-heat {
+  0% { opacity: 0; }
+  12% { opacity: 1; }
+  55% { opacity: 0.7; }
+  100% { opacity: 0; }
+}
+@keyframes sqr-front {
+  0% { transform: scale(0.05); opacity: 0; }
+  10% { opacity: 1; }
+  80% { opacity: 0.6; }
+  100% { transform: scale(6); opacity: 0; }
+}
+/* hot metal cooling: white-hot with a wide ember rim, through orange and
+   blood red, to ink with no rim at all */
+@keyframes sqr-quench {
+  0% { fill: #FFF6D8; stroke: #FFB347; stroke-opacity: 0.95; stroke-width: 1.1px; }
+  14% { fill: #FFE7A8; stroke: #FF7A1A; stroke-opacity: 0.85; stroke-width: 0.9px; }
+  34% { fill: #FFB347; stroke: #FF7A1A; stroke-opacity: 0.6; stroke-width: 0.6px; }
+  58% { fill: #FF7A1A; stroke: #B3261E; stroke-opacity: 0.35; stroke-width: 0.35px; }
+  80% { fill: #6E1F12; stroke: #B3261E; stroke-opacity: 0.12; stroke-width: 0.2px; }
+  100% { fill: #0B1422; stroke: #B3261E; stroke-opacity: 0; stroke-width: 0px; }
+}
+
+/* ── assistive tech ── */
+.sqr-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ── reduced motion ── The glass never shows, even for the instant
+   before JavaScript arrives to skip to the last frame. */
+@media (prefers-reduced-motion: reduce) {
+  .sqr-glass,
+  .sqr-fx,
+  .sqr-heat,
+  .sqr-front,
+  .sqr-hit { visibility: hidden; }
+  .sqr-band { fill: #0B1422; stroke: none; animation: none; }
+  .sqr-phone:has(.sqr-hit:active) { transform: none; }
+}

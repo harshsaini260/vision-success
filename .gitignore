@@ -16,3 +16,4 @@ out/
 .env*
 
 .env*
+scripts/workshop-poster/.build/

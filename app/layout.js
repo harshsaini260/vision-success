@@ -9,6 +9,7 @@ import DemoPrompt from '@/components/DemoPrompt'
 import ScrollProgress from '@/components/ScrollProgress'
 import Analytics from '@/components/Analytics'
 import StickyActionBar from '@/components/StickyActionBar'
+import PortalHost from '@/components/workshop/PortalHost'
 import { SITE } from '@/lib/site'
 
 export const metadata = {
@@ -173,6 +174,10 @@ export default function RootLayout({ children }) {
           <Footer />
           <FloatingButtons />
           <StickyActionBar />
+          {/* The workshop's payment portal. Holds no payment code until someone
+              asks to register; outside <main> so none of main's global form
+              rules reach into it. */}
+          <PortalHost />
           <DemoPrompt />
           <Toaster
             position="top-center"
