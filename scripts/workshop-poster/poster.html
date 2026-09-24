@@ -106,6 +106,10 @@
   .wp-host { font: italic 500 34px/1.1 var(--font-display); color: var(--bone); }
   .wp-ends { font: 400 23px/1.4 var(--font-ui); color: var(--bone-dim); }
   .wp-ends em { font-style: normal; font-weight: 700; color: var(--accent-light); }
+  /* stories · songs · work — three short verses, the second and third warmer */
+  .wp-triad { display: flex; flex-wrap: wrap; gap: 0 18px; font: italic 600 31px/1.25 var(--font-display); color: #fff; }
+  .wp-triad span:nth-child(2) { color: var(--accent-light); }
+  .wp-triad span:nth-child(3) { color: #FFB347; }
 
   .wp-wd { font: 800 20px/1 var(--font-ui); letter-spacing: .34em; text-transform: uppercase; color: var(--hot); }
   .wp-date { font-family: var(--font-display); font-weight: 700; line-height: .9; letter-spacing: -.005em; white-space: nowrap;
@@ -126,6 +130,8 @@
 
   .wp-urgent { display: flex; flex-direction: column; gap: 9px; font: 500 19px/1.25 var(--font-ui); color: var(--bone-dim); }
   .wp-urgent .wp-u1 { color: #FFD9A8; font-weight: 700; }
+  .wp-urgent .wp-u3 { color: #fff; font-weight: 700; }
+  .wp-urgent .wp-u3 b { color: #FF9B7A; font-weight: 700; }
   .wp-flame { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 12px; vertical-align: 2px;
               background: #FFD27A; box-shadow: 0 0 0 3px rgba(255, 122, 26, .28), 0 0 14px 3px rgba(255, 122, 26, .8); }
 
@@ -142,12 +148,13 @@
   .wp-f-feed .wp-hook { margin-top: 26px; }
   .wp-f-feed .wp-l-2 { margin-top: 8px; }
   .wp-f-feed .wp-sub { margin-top: 20px; }
-  .wp-f-feed .wp-hing { margin-top: 34px; }
+  .wp-f-feed .wp-hing { margin-top: 26px; }
   .wp-f-feed .wp-h1 { font-size: 54px; }
   .wp-f-feed .wp-h2 { font-size: 74px; margin-top: 2px; }
-  .wp-f-feed .wp-lives { margin-top: 40px; }
+  .wp-f-feed .wp-lives { margin-top: 30px; }
   .wp-f-feed .wp-host { margin-top: 14px; }
   .wp-f-feed .wp-ends { margin-top: 6px; }
+  .wp-f-feed .wp-triad { margin-top: 16px; margin-bottom: 26px; }
   .wp-f-feed .wp-panel { margin-top: auto; display: grid; grid-template-columns: 1fr auto; column-gap: 40px; align-items: end; }
   .wp-f-feed .wp-date { font-size: 104px; margin-top: 12px; }
   .wp-f-feed .wp-money { margin-top: 18px; }
@@ -157,23 +164,24 @@
   .wp-f-feed .wp-wa { margin-top: 10px; }
 
   /* ── STORY 1080×1920 ── (top ~200 and bottom ~200 sit under the app's chrome) */
-  .wp-f-story .wp-c { padding: 118px 80px 172px; }
+  .wp-f-story .wp-c { padding: 108px 80px 172px; }
   .wp-f-story .wp-top { font-size: 16px; }
-  .wp-f-story .wp-kick { margin-top: 60px; font-size: 23px; }
-  .wp-f-story .wp-hook { margin-top: 30px; line-height: .8; }
+  .wp-f-story .wp-kick { margin-top: 44px; font-size: 23px; }
+  .wp-f-story .wp-hook { margin-top: 22px; line-height: .8; }
   .wp-f-story .wp-l + .wp-l { margin-top: 10px; }
-  .wp-f-story .wp-sub { margin-top: 22px; font-size: 52px; }
-  .wp-f-story .wp-hing { margin-top: 36px; }
+  .wp-f-story .wp-sub { margin-top: 16px; font-size: 50px; }
+  .wp-f-story .wp-hing { margin-top: 26px; }
   .wp-f-story .wp-h1 { font-size: 62px; }
   .wp-f-story .wp-h2 { font-size: 86px; margin-top: 2px; }
-  .wp-f-story .wp-lives { margin-top: 46px; font-size: 22px; gap: 14px; letter-spacing: .16em; }
-  .wp-f-story .wp-host { margin-top: 16px; font-size: 42px; }
+  .wp-f-story .wp-lives { margin-top: 32px; font-size: 22px; gap: 14px; letter-spacing: .16em; }
+  .wp-f-story .wp-host { margin-top: 12px; font-size: 40px; }
   .wp-f-story .wp-ends { margin-top: 8px; font-size: 25px; }
+  .wp-f-story .wp-triad { margin-top: 18px; font-size: 31px; }
   .wp-f-story .wp-panel { margin-top: auto; display: grid; grid-template-columns: 1fr auto; column-gap: 36px; align-items: end; }
   .wp-f-story .wp-date { font-size: 112px; margin-top: 12px; }
   .wp-f-story .wp-money { margin-top: 18px; }
-  .wp-f-story .wp-rule { margin-top: 30px; }
-  .wp-f-story .wp-urgent { margin-top: 22px; font-size: 22px; gap: 10px; }
+  .wp-f-story .wp-rule { margin-top: 20px; }
+  .wp-f-story .wp-urgent { margin-top: 16px; font-size: 21px; gap: 8px; }
   .wp-f-story .wp-scan-l { margin-bottom: 22px; }
   .wp-f-story .wp-url { margin-top: 22px; }
   .wp-f-story .wp-wa { margin-top: 10px; }
@@ -228,6 +236,12 @@
     "A different mind",
     "A portfolio"
   ],
+  "triad": [
+    "Stories will be told.",
+    "Songs will be sung.",
+    "Work will be built."
+  ],
+  "gate": "The only way into the two-month program.",
   "closesLabel": "Wednesday 30 September, midnight",
   "venueBy": "Sunday 27 September",
   "url": "https://visionsuccessuna.com/workshop",
@@ -307,8 +321,12 @@
   function endings() {
     return '<p class="wp-ends">Walk out with <em>' + esc(lcFirst(D.endings[0])) + '</em> — or <em>' + esc(lcFirst(D.endings[1])) + '</em>. Possibly both.</p>'
   }
+  function triad() {
+    return '<p class="wp-triad">' + D.triad.map(function (t) { return '<span>' + esc(t) + '</span>' }).join('') + '</p>'
+  }
   function urgent() {
     return '<div class="wp-urgent"><span class="wp-u1"><i class="wp-flame"></i>Registration closes ' + esc(D.closesLabel) + '</span>' +
+      '<span class="wp-u3"><b>Attendees only:</b> ' + esc(D.gate) + '</span>' +
       '<span class="wp-u2">Venue revealed to registered students by ' + esc(D.venueBy) + '</span></div>'
   }
   function top() {
@@ -343,7 +361,7 @@
       return '<div class="wp-c">' + top() +
         '<div class="wp-kick">' + esc(D.kicker) + '</div>' +
         '<h1 class="wp-hook">' + hookLines(2) + '</h1>' + sub() + hinglish() +
-        lives() + '<p class="wp-host">' + esc(D.hostLine) + '</p>' + endings() +
+        lives() + '<p class="wp-host">' + esc(D.hostLine) + '</p>' + endings() + triad() +
         '<section class="wp-panel" data-horizon>' + when(122, true) + scan(250) + '</section>' +
         '</div>'
     },
@@ -351,7 +369,7 @@
       return '<div class="wp-c">' + top() +
         '<div class="wp-kick">' + esc(D.kicker) + '</div>' +
         '<h1 class="wp-hook">' + hookLines(3) + '</h1>' + sub() + hinglish() +
-        lives() + '<p class="wp-host">' + esc(D.hostLine) + '</p>' + endings() +
+        lives() + '<p class="wp-host">' + esc(D.hostLine) + '</p>' + endings() + triad() +
         '<section class="wp-panel" data-horizon>' + when(128, false, true) + scan(250) + '</section>' +
         '<div class="wp-rule"></div>' + urgent() +
         '</div>'

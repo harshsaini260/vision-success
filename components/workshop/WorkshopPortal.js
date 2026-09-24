@@ -4,13 +4,14 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import dynamic from 'next/dynamic'
 import { SITE, wa } from '@/lib/site'
 import {
-  EVENT, PAY, COPY, WHO_OPTIONS, WANT_OPTIONS,
+  EVENT, PAY, COPY, GATE, WHO_OPTIONS, WANT_OPTIONS,
   REG_COLLECTION, STATS_DOC, STORE_KEY, WORKSHOP_PATH,
   makeRef, upiUri, receiptFields, calendarUrl,
   cleanPhone, validPhone, validEmail, cleanUtr, validUtr,
   isOpen, canConfirm,
 } from '@/lib/workshop'
 import useCountdown from './useCountdown'
+import useWorkshopLive from './useWorkshopLive'
 
 /* ─── THE PORTAL — who, pay, confirm, receipt ───
    Four steps, each one sentence long, in a full-screen room of its own so
@@ -80,6 +81,7 @@ export default function WorkshopPortal({ onClose, source = 'site' }) {
   const dialogRef = useRef(null)
   const honey = useRef(null)
   const clock = useCountdown()
+  const L = useWorkshopLive()
 
   const update = useCallback((patch, save = true) => {
     setS((prev) => {
@@ -110,7 +112,9 @@ export default function WorkshopPortal({ onClose, source = 'site' }) {
   }, [busy, onClose])
 
   const stageIndex = STEPS.findIndex((x) => x.id === s.stage)
-  const closedForNew = !isOpen() && !s.ref
+  /* Closed for someone new: past the deadline, or paused from the admin
+     panel. Anyone already holding a reference can still finish. */
+  const closedForNew = (!isOpen() || L.paused) && !s.ref
   const closedForAll = !canConfirm() && s.stage !== 'done'
 
   /* ── step 1 ── */
@@ -198,7 +202,7 @@ export default function WorkshopPortal({ onClose, source = 'site' }) {
     let image
     try {
       const { receiptJpeg } = await import('./receiptCanvas')
-      image = await withTimeout(receiptJpeg(receiptFields({ ...reg, issued: issuedLocal })), 8000)
+      image = await withTimeout(receiptJpeg(receiptFields({ ...reg, issued: issuedLocal }, L)), 8000)
     } catch { /* the email still goes, without the picture */ }
 
     let api = null
@@ -233,8 +237,8 @@ export default function WorkshopPortal({ onClose, source = 'site' }) {
   }
 
   const fields = useMemo(
-    () => (s.stage === 'done' ? receiptFields({ ref: s.ref, name: s.name, phone: s.phone, email: s.email, utr: s.utr, issued: s.issued }) : null),
-    [s.stage, s.ref, s.name, s.phone, s.email, s.utr, s.issued],
+    () => (s.stage === 'done' ? receiptFields({ ref: s.ref, name: s.name, phone: s.phone, email: s.email, utr: s.utr, issued: s.issued }, L) : null),
+    [s.stage, s.ref, s.name, s.phone, s.email, s.utr, s.issued, L],
   )
 
   const waConfirm = wa(
@@ -313,11 +317,11 @@ export default function WorkshopPortal({ onClose, source = 'site' }) {
             <section className="wsp-panel wsp-center">
               <h2 id="wsp-title" className="wsp-h">Registration has closed.</h2>
               <p className="wsp-p">
-                The workshop is {EVENT.dateLabel}. The two-month {EVENT.program} is still open to anyone —
-                ask us about the next batch.
+                The workshop is {EVENT.dateLabel}, and the two-month {EVENT.program} is only for people who
+                attend it. Ask us when the next workshop is — that is the way in.
               </p>
-              <a className="btn-gold wsp-btn whatsapp-cta" href={wa(`Namaste! I missed the ${EVENT.name}. When does the ${EVENT.program} start?`)} target="_blank" rel="noopener noreferrer">
-                Ask about the two-month program
+              <a className="btn-gold wsp-btn whatsapp-cta" href={wa(`Namaste! I missed registration for the ${EVENT.name}. When is the next one?`)} target="_blank" rel="noopener noreferrer">
+                Tell me when the next one is
               </a>
             </section>
           ) : s.stage === 'details' ? (
@@ -407,7 +411,7 @@ export default function WorkshopPortal({ onClose, source = 'site' }) {
               <button type="submit" className="btn-gold wsp-btn">
                 Forge my payment QR — ₹{PAY.amount} →
               </button>
-              <p className="wsp-fine">{PAY.adjusted}. {COPY.venue}</p>
+              <p className="wsp-fine">{PAY.adjusted}. {GATE.short} {L.venueLine}</p>
             </form>
           ) : s.stage === 'pay' ? (
             /* ── 2 · pay ── */

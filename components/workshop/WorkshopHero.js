@@ -2,10 +2,11 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { EVENT, PAY, COPY, HOST, WORKSHOP_PATH, phase } from '@/lib/workshop'
+import { EVENT, PAY, COPY, HOST, TRIAD, GATE, WORKSHOP_PATH, phase } from '@/lib/workshop'
 import { openWorkshop } from './open'
 import useCountdown from './useCountdown'
 import useWorkshopCount from './useWorkshopCount'
+import useWorkshopLive from './useWorkshopLive'
 
 /* ─── THE WORKSHOP, ON THE FRONT DOOR ───
    The first thing on the homepage for the ten days before 1 October, and
@@ -36,11 +37,15 @@ export default function WorkshopHero({ as: H = 'h2', from = 'home' }) {
   const [ph, setPh] = useState(null)
   const clock = useCountdown()
   const count = useWorkshopCount()
+  const L = useWorkshopLive()
 
   useEffect(() => { setPh(phase()) }, [])
   if (ph !== 'open' && ph !== 'closed') return null
 
   const today = ph === 'closed'
+  /* The admin can pause registration from the panel — the room is full,
+     say — without waiting for a deploy. */
+  const paused = L.paused && !today
 
   return (
     <section className="wsh" aria-labelledby="wsh-title">
@@ -82,7 +87,12 @@ export default function WorkshopHero({ as: H = 'h2', from = 'home' }) {
             </H>
             <p className="wsh-h2 text-gold-shimmer">{COPY.headline2}</p>
             <p className="wsh-hinglish" lang="hi-Latn">{COPY.hinglish}</p>
-            <p className="wsh-lede">{COPY.lede}</p>
+            <p className="wsh-lede">{COPY.ledeShort}</p>
+            <ol className="wsh-triad" aria-label="What the day is made of">
+              {TRIAD.map((line, i) => (
+                <li key={line} style={{ animationDelay: `${1.1 + i * 0.28}s` }}>{line}</li>
+              ))}
+            </ol>
 
             <div className="wsh-lives" aria-label="The host">
               {HOST.lives.map((l) => <span key={l}>{l}</span>)}
@@ -111,15 +121,23 @@ export default function WorkshopHero({ as: H = 'h2', from = 'home' }) {
               </>
             )}
 
+            {L.announcement && <p className="wsh-announce" role="status">{L.announcement}</p>}
+
             <ul className="wsh-facts">
-              <li><i>◆</i><span><b>{EVENT.dateLong.replace(', 2026', '')}</b> — one day, one room.</span></li>
-              <li><i>◆</i><span><b>₹{PAY.amount}</b> — adjusted in full against the two-month program. If you continue, Thursday is free.</span></li>
-              <li><i>◆</i><span>The venue goes to <b>registered students first</b>, by {EVENT.venueBy}.</span></li>
-              <li><i>◆</i><span>You leave with <b>a different mind, or a portfolio</b>. Possibly both.</span></li>
+              <li><i>◆</i><span><b>{EVENT.dateLong.replace(', 2026', '')}</b>{L.time ? ` · ${L.time}` : ''} — one day, one room.</span></li>
+              <li><i>◆</i><span><b>{GATE.short}</b> Only people who attend can join it.</span></li>
+              <li><i>◆</i><span><b>₹{PAY.amount}</b> — adjusted in full against that program. If you continue, Thursday is free.</span></li>
+              <li><i>◆</i><span>
+                {L.venuePublic
+                  ? <>Venue: <b>{L.venuePublic}</b>, {EVENT.city}.</>
+                  : <>The venue goes to <b>registered students first</b>, by {EVENT.venueBy}.</>}
+              </span></li>
             </ul>
 
             {today ? (
               <Link href={WORKSHOP_PATH} className="btn-gold wsh-cta">About the two-month program →</Link>
+            ) : paused ? (
+              <p className="wsh-paused">Registration is paused for now. WhatsApp us and we will tell you the moment it reopens.</p>
             ) : (
               <button type="button" className="btn-gold wsh-cta" onClick={() => openWorkshop(from)}>
                 Register — ₹{PAY.amount}

@@ -17,3 +17,4 @@ out/
 
 .env*
 scripts/workshop-poster/.build/
+scripts/workshop-poster/guide.html

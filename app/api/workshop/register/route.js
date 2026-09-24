@@ -2,10 +2,11 @@ import { NextResponse } from 'next/server'
 import { SITE, wa } from '@/lib/site'
 import { sendMail, esc } from '@/lib/mail'
 import {
-  EVENT, PAY, COPY, WHO_OPTIONS, WANT_OPTIONS,
+  EVENT, PAY, COPY, GATE, TRIAD, GUIDE_PDF, WHO_OPTIONS, WANT_OPTIONS,
   REF_RE, cleanUtr, validUtr, cleanPhone, validPhone, validEmail,
-  canConfirm, receiptFields, calendarUrl,
+  canConfirm, receiptFields, calendarUrl, withLive, CONFIG_DOC,
 } from '@/lib/workshop'
+import { workshopConfig } from '@/lib/firestoreRest'
 
 /* ─── WORKSHOP REGISTRATION — the receipt and the institute's copy ───
    The registration itself is written to Firestore by the browser, where
@@ -47,7 +48,7 @@ function limited(ip) {
   return recent.length > 6
 }
 
-function receiptHtml(f, first) {
+function receiptHtml(f, first, L) {
   const row = (k, v) => `
     <tr>
       <td style="padding:9px 0;border-bottom:1px solid rgba(232,240,247,0.10);font-family:Arial,sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#D2B463;width:38%;vertical-align:top;">${k}</td>
@@ -78,7 +79,14 @@ function receiptHtml(f, first) {
      <tr><td style="font-family:Arial,sans-serif;color:#B9C3D0;font-size:13px;line-height:1.65;padding:18px 0 4px;">
        ${esc(f.note)}<br>
        We check every payment against our UPI statement and confirm your seat on WhatsApp.
-       ${esc(COPY.time)}
+       ${esc(L.timeLine)}
+     </td></tr>
+     <tr><td style="font-family:Georgia,serif;color:#EBD9A8;font-size:17px;font-style:italic;line-height:1.6;padding:16px 0 0;">
+       ${esc(TRIAD.join(' '))}
+     </td></tr>
+     <tr><td style="font-family:Arial,sans-serif;color:#B9C3D0;font-size:13px;line-height:1.65;padding:8px 0 0;">
+       ${esc(GATE.long)}
+       <a href="${esc(SITE.url + GUIDE_PDF)}" style="color:#E6D29A;">Read the workshop guide (PDF) &rarr;</a>
      </td></tr>
      <tr><td style="padding:22px 0 6px;">
        <a href="${esc(calendarUrl())}" style="display:inline-block;background:#D2B463;color:#081428;font-family:Arial,sans-serif;font-weight:bold;font-size:13px;letter-spacing:1px;text-decoration:none;padding:12px 18px;border-radius:999px;margin:0 8px 8px 0;">Add ${esc(EVENT.dateLabel)} to your calendar</a>
@@ -149,7 +157,10 @@ export async function POST(req) {
   const issued = new Date().toLocaleString('en-IN', {
     timeZone: 'Asia/Kolkata', day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: '2-digit',
   })
-  const f = receiptFields({ ref, name, phone, email, utr, issued })
+  /* Whatever the admin panel has published — time, a public venue — goes
+     on the receipt; the private venue does not, it is sent separately. */
+  const L = withLive(await workshopConfig(CONFIG_DOC.join('/')))
+  const f = receiptFields({ ref, name, phone, email, utr, issued }, L)
   const first = name.split(' ')[0]
 
   /* The picture is optional and only ever a JPEG of sane size. */
@@ -163,7 +174,7 @@ export async function POST(req) {
     sendMail({
       to: email,
       subject: `Your receipt ${ref} — ${EVENT.name}, ${EVENT.dateLabel}`,
-      html: receiptHtml(f, first),
+      html: receiptHtml(f, first, L),
       replyTo: SITE.email,
       attachments,
     }),

@@ -114,7 +114,7 @@ function inject(html, name, content) {
 }
 
 async function main() {
-  const { EVENT, PAY, HOST, COPY, ENDINGS, WORKSHOP_PATH } = await load('lib/workshop.js')
+  const { EVENT, PAY, HOST, COPY, ENDINGS, TRIAD, GATE, WORKSHOP_PATH } = await load('lib/workshop.js')
   const { SITE } = await load('lib/site.js')
 
   /* The poster says SCAN TO REGISTER, so the scan lands inside the
@@ -144,6 +144,8 @@ async function main() {
     lives: HOST.lives,
     hostLine: HOST.line,
     endings: ENDINGS.map((e) => e.title),
+    triad: TRIAD,
+    gate: GATE.short,
     closesLabel: EVENT.closesLabel,
     venueBy: EVENT.venueBy,
     url,
