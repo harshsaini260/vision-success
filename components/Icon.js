@@ -25,6 +25,9 @@ const P = {
   arrowRight: <path d="M5 12h13M13 6.5 18.5 12 13 17.5" />,
   lockOpen: <><rect x="5" y="11" width="14" height="9.5" rx="2.2" /><path d="M8.5 11V8a3.5 3.5 0 0 1 6.8-1.2" /></>,
   download: <><path d="M12 4v11M7 10.5l5 5 5-5" /><path d="M5 19.5h14" /></>,
+  target: <><circle cx="12" cy="12" r="8.5" /><circle cx="12" cy="12" r="4.5" /><circle cx="12" cy="12" r="1.2" fill="currentColor" stroke="none" /></>,
+  globe: <><circle cx="12" cy="12" r="8.5" /><path d="M3.5 12h17M12 3.5c2.4 2.4 3.6 5.2 3.6 8.5s-1.2 6.1-3.6 8.5c-2.4-2.4-3.6-5.2-3.6-8.5S9.6 5.9 12 3.5z" /></>,
+  repeat: <><path d="M4.5 11V9.5A3 3 0 0 1 7.5 6.5H18M15 3.5l3 3-3 3" /><path d="M19.5 13v1.5a3 3 0 0 1-3 3H6M9 20.5l-3-3 3-3" /></>,
   calendar: <><rect x="3.5" y="5" width="17" height="15" rx="2.5" /><path d="M3.5 9.5h17M8 3.5v3M16 3.5v3" /></>,
 }
 

@@ -26,6 +26,7 @@ import {
   SAT_WA_TEXT,
 } from '@/lib/sat'
 import Icon from '@/components/Icon'
+import { SatDoor, SatTry, SatMentor, SatDepartures, SatRoad } from '@/components/sat/SatChapters'
 
 const SQUAD_SEATS = 15
 
@@ -345,7 +346,7 @@ function StickyMissionBar() {
             <button
               aria-label="Dismiss"
               onClick={() => setDismissed(true)}
-              className="flex-shrink-0 w-8 h-8 rounded-full text-gray-500 text-sm"
+              className="flex-shrink-0 w-11 h-11 rounded-full text-gray-400 text-sm"
               style={{ border: '1px solid rgba(255,255,255,0.12)' }}
             >
               ✕
@@ -360,15 +361,15 @@ function StickyMissionBar() {
 /* ─── MAIN — the film ─── */
 export default function SatExperience({ faqs = [] }) {
   const BRIEF = [
-    { icon: '🧠', title: 'The Weapon', text: 'One digital exam — 2 hrs 14 min. Reading & Writing + Math, on a laptop. Adaptive: it studies you while you solve it.' },
-    { icon: '🎯', title: 'The Score', text: '400–1600. Zero negative marking — guessing is free ammo. Built-in Desmos calculator for ALL of Math.' },
-    { icon: '🌍', title: 'The Prize', text: '4,000+ universities — US, UK, Canada, Singapore, Australia. Scholarships worth lakhs. One score, every border.' },
-    { icon: '🔁', title: 'The Reloads', text: `${SAT_PER_YEAR} attempts a year, every year. Colleges only ever see your best. The house odds are on YOUR side.` },
+    { icon: 'clock', title: 'The Weapon', text: 'One digital exam — 2 hrs 14 min. Reading & Writing, 54 questions; Math, 44. Adaptive: the second module adjusts to how you did on the first.' },
+    { icon: 'target', title: 'The Score', text: '400–1600. No marks off for a wrong answer — guessing is free ammo. A Desmos calculator is built in for all of Math.' },
+    { icon: 'globe', title: 'The Prize', text: 'Considered by 4,000+ colleges in the US and 65 other countries, and 60 institutions in India. In the UK and Singapore it works alongside AP exams.' },
+    { icon: 'repeat', title: 'The Reloads', text: `${SAT_PER_YEAR} test dates a year, as many attempts as you want. You choose which dates’ scores to send — though some colleges ask for all.` },
   ]
 
   const DESTINATIONS = [
-    '🗽 NEW YORK', '🍁 TORONTO', '🦁 SINGAPORE', '🎡 LONDON', '🏙️ DUBAI',
-    '🌉 SAN FRANCISCO', '🏰 EDINBURGH', '🦘 MELBOURNE', '🍺 MUNICH', '📚 BOSTON',
+    'BOSTON', 'TORONTO', 'SINGAPORE', 'LONDON', 'MELBOURNE',
+    'SONIPAT', 'MOHALI', 'PUNE', 'VANCOUVER', 'SYDNEY',
   ]
 
   return (
@@ -411,8 +412,8 @@ export default function SatExperience({ faqs = [] }) {
             transition={{ delay: 1.1, duration: 0.7 }}
             className="text-gray-300 text-base sm:text-lg mb-6 leading-relaxed"
           >
-            Every year, <strong className="text-white">19 lakh students</strong> around the world
-            sit one quiet exam that opens every border.
+            In one US graduating class alone, <strong className="text-white">over 20 lakh students</strong>{' '}
+            sat one quiet exam that opens every border.
             <br className="hidden sm:block" />
             <span className="text-gray-500"> Around here? Almost nobody's heard of it.</span>
           </motion.p>
@@ -470,6 +471,8 @@ export default function SatExperience({ faqs = [] }) {
         </FadeIn>
       </section>
 
+      <SatDoor />
+
       {/* ═══ SCENE 02 — NOBODY ELSE ═══ */}
       <section
         className="px-4 py-16 md:py-24 relative overflow-hidden film-grain"
@@ -504,8 +507,8 @@ export default function SatExperience({ faqs = [] }) {
           <FadeIn delay={0.15}>
             <div className="grid grid-cols-3 gap-2 sm:gap-4 max-w-md mx-auto">
               {[
-                { n: '19L+', l: 'took the SAT last year, worldwide' },
-                { n: '4,000+', l: 'universities accept it' },
+                { n: '20L+', l: 'in the US class of 2025 took the SAT' },
+                { n: '4,000+', l: 'colleges in the US & 65 countries consider it' },
                 { n: '≈0', l: 'students competing from Una' },
               ].map((st, i) => (
                 <div
@@ -526,6 +529,10 @@ export default function SatExperience({ faqs = [] }) {
                 </div>
               ))}
             </div>
+          </FadeIn>
+
+          <FadeIn delay={0.18}>
+            <SatMentor />
           </FadeIn>
 
           <FadeIn delay={0.2}>
@@ -592,7 +599,7 @@ export default function SatExperience({ faqs = [] }) {
             {BRIEF.map((b, i) => (
               <FadeIn key={b.title} delay={i * 0.08}>
                 <div className="glass-card rounded-2xl p-5 h-full">
-                  <div className="text-3xl mb-2">{b.icon}</div>
+                  <div className="mb-3 text-gold-400"><Icon name={b.icon} size={30} /></div>
                   <h3 className="text-lg font-bold text-white mb-1.5" style={{ fontFamily: 'var(--font-display)' }}>
                     {b.title}
                   </h3>
@@ -603,6 +610,10 @@ export default function SatExperience({ faqs = [] }) {
           </div>
         </div>
       </section>
+
+      <SatTry />
+      <SatDepartures />
+      <SatRoad />
 
       {/* ═══ SCENE 05 — THE PART NOBODY EXPLAINS ═══
              Scene 04 hands over the specification. This asks five
@@ -713,6 +724,8 @@ export default function SatExperience({ faqs = [] }) {
           </div>
         </FadeIn>
       </section>
+
+      <SatDoor full />
 
       {/* ═══ POST-CREDITS — QUICK INTEL ═══ */}
       {faqs.length > 0 && (

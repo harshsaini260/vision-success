@@ -751,7 +751,7 @@ function SeminarsTab() {
   return (
     <div className="space-y-4">
       <h2 className="text-xl font-semibold text-white" style={{ fontFamily: 'var(--font-display)' }}>
-        School Seminar Requests ({rows.length})
+        School Requests — seminars &amp; SAT ({rows.length})
       </h2>
       {loading ? (
         <div className="py-12 text-center text-gray-500">Loading…</div>
@@ -772,6 +772,11 @@ function SeminarsTab() {
               <div className="text-xs text-gray-500 mb-3 space-y-0.5">
                 <div>🗓️ Preferred timing: {s.when || 'flexible'}</div>
                 <div>🎓 Classes wanted: {s.classes || 'not specified'}</div>
+                {s.interest === 'SAT' && (
+                  <div style={{ color: '#E6D29A' }}>
+                    SAT for schools · wants: {(s.offers || []).join(', ') || 'to talk'} · via {s.source || 'site'}
+                  </div>
+                )}
               </div>
             }
           />

@@ -9,7 +9,7 @@ import SatExperience from './SatExperience'
 export const metadata = {
   title: 'SAT Coaching in Una, HP | Digital SAT Prep & Next Exam Countdown',
   description:
-    'What is the SAT? One digital exam, one score out of 1600, 4,000+ universities worldwide. Learn from a mentor who scored 1540 himself. All 8 SAT test dates a year, a live countdown to the next one, and Digital SAT prep in Una — free demo class.',
+    'What is the SAT? One digital exam, one score out of 1600, considered by 4,000+ colleges in the US and 65 other countries and 60 institutions in India. Learn from a mentor who scored 1540 himself. All 8 SAT test dates, three questions to try, and Digital SAT prep in Una — free demo class.',
   alternates: { canonical: `${SITE.url}/sat` },
   openGraph: {
     title: 'SAT — One Score. Every Border. | Vision Success Una',
@@ -38,7 +38,7 @@ export const metadata = {
 const SAT_FAQS = [
   {
     q: 'What is the SAT exam?',
-    a: 'The SAT is a digital entrance exam by the College Board, accepted by 4,000+ universities worldwide (US, UK, Canada, Singapore, and more). It tests Reading & Writing and Math, takes about 2 hours 14 minutes, and is scored from 400 to 1600.',
+    a: 'The SAT is a digital admission test by the College Board. According to College Board, more than 4,000 colleges and universities in the US and 65 other countries consider SAT scores, and 60 institutions in India use them. It tests Reading and Writing (54 questions, 64 minutes) and Math (44 questions, 70 minutes) — 2 hours 14 minutes in all — and is scored from 400 to 1600.',
   },
   {
     q: 'How many times is the SAT held in a year?',
@@ -54,7 +54,15 @@ const SAT_FAQS = [
   },
   {
     q: 'Who teaches the SAT at Vision Success Una?',
-    a: 'Your SAT mentor scored 1540 out of 1600 on the SAT himself — a top 1% score worldwide. You learn the exam from someone who has actually beaten it, not just read about it.',
+    a: 'Your SAT mentor scored 1540 out of 1600 on the SAT himself — the 99th percentile of SAT test takers. You learn the exam from someone who has actually beaten it, not just read about it.',
+  },
+  {
+    q: 'Which universities in India accept the SAT?',
+    a: 'Among others: Ashoka University, Plaksha University (Mohali), FLAME University, O.P. Jindal Global University, Krea University, Shiv Nadar University, Mahindra University, NMIMS, Bennett University, Ahmedabad University and Amity University — each checked on the university’s own admissions page in September 2026. College Board lists 60 Indian institutions in all.',
+  },
+  {
+    q: 'I am a school principal. Can you speak to our students?',
+    a: 'Yes — one free 40-minute period for Classes 9 to 12 that explains what the SAT is, when to sit it and where it leads. Nothing is sold and a teacher stays in the room. Read the proposal at visionsuccessuna.com/sat/schools.',
   },
 ]
 
