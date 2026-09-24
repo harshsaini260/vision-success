@@ -273,7 +273,7 @@ export default function WorkshopPortal({ onClose, source = 'site' }) {
   }
 
   return (
-    <div className="wsp-backdrop" role="presentation">
+    <div className="wsp-backdrop" role="presentation" data-modal-open="1">
       <div className="wsp-embers" aria-hidden><i /><i /><i /><i /><i /><i /><i /><i /><i /><i /></div>
 
       <div

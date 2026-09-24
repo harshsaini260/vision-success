@@ -25,6 +25,7 @@ import {
   urgency,
   SAT_WA_TEXT,
 } from '@/lib/sat'
+import Icon from '@/components/Icon'
 
 const SQUAD_SEATS = 15
 
@@ -220,7 +221,7 @@ function WarClock() {
                 </div>
                 <div
                   className="text-[9px] sm:text-[11px] tracking-[0.3em] mt-2"
-                  style={{ color: 'rgba(var(--accent-rgb),0.55)', textShadow: 'none' }}
+                  style={{ color: 'rgba(var(--accent-rgb),0.85)', textShadow: 'none' }}
                 >
                   {un.l}
                 </div>
@@ -671,7 +672,7 @@ export default function SatExperience({ faqs = [] }) {
             />
             <span
               className="ink-stamp absolute top-3 right-3"
-              style={{ fontSize: 9 }}
+              style={{ fontSize: 11 }}
               aria-hidden
             >
               BATCH Nº 001
@@ -703,7 +704,7 @@ export default function SatExperience({ faqs = [] }) {
                 className="whatsapp-cta inline-flex items-center justify-center gap-2 px-7 py-4 rounded-xl text-base font-bold uppercase tracking-wider"
                 style={{ fontFamily: 'var(--font-display)', border: '2px solid #3B3325', color: '#3B3325' }}
               >
-                💬 WhatsApp Us
+                <Icon name="whatsapp" size={20} /> WhatsApp Us
               </a>
             </div>
             <p className="text-[11px] opacity-60 mt-5">

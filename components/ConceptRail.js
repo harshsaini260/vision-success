@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, useCallback } from 'react'
 import Link from 'next/link'
 import { CONCEPTS, SUBJECTS, conceptFiles } from '@/lib/concepts'
 import { wa } from '@/lib/site'
+import Icon from '@/components/Icon'
 
 /* ─── CONCEPT FILMS ───
    Our own animated explainers, one idea each, grouped by subject.
@@ -182,7 +183,7 @@ export default function ConceptRail() {
                         onClick={() => toggle(c.slug)}
                         aria-label={isPlaying ? 'Pause' : 'Play'}
                       >
-                        <span aria-hidden>{isPlaying ? '❚❚' : '▶'}</span>
+                        <Icon name={isPlaying ? 'pause' : 'play'} size={16} />
                       </button>
                       <span className="concept-len">{c.len}</span>
 

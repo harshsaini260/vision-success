@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { AnimatePresence, motion } from 'framer-motion'
 import { DEMO_WA } from '@/lib/site'
+import { isVisible as workshopLive } from '@/lib/workshop'
 
 /* ─── DEMO PROMPT ───
    Invites the visitor to book a free demo:
@@ -51,6 +52,10 @@ export default function DemoPrompt() {
       } catch {}
       /* And never open on top of any other dialog that is already up. */
       if (document.querySelector('[data-modal-open="1"]')) return
+      /* While the workshop is live it is the one thing we are asking for;
+         a second, different ask would only compete with it (HIG:
+         deference). The prompt returns by itself when the window closes. */
+      if (workshopLive()) return
       shown = true
       try {
         sessionStorage.setItem(SESSION_KEY, '1')

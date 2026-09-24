@@ -1,6 +1,14 @@
 import Link from 'next/link'
 import { SITE } from '@/lib/site'
 import Logo from '@/components/Logo'
+import Icon from '@/components/Icon'
+
+/* Apple HIG: every tappable thing is at least 44 × 44 points. The
+   links used to be 20 points tall in a single column; they now sit two
+   to a row, 44 points tall — compliant, and the column is shorter than
+   it was. Contact rows and social marks use one symbol set instead of
+   emoji, so they follow the theme and pass the contrast check. */
+const ROW = 'min-h-[44px] flex items-center gap-2.5 hover:text-gold-400 transition-colors'
 
 export default function Footer() {
   return (
@@ -38,30 +46,30 @@ export default function Footer() {
               Una's leading coaching institute. We don't just teach — we build officers,
               engineers, and doctors. One student at a time.
             </p>
-            <div className="flex flex-col gap-2 text-sm text-gray-400">
-              <div className="flex items-center gap-2">
-                <span>📍</span>
+            <div className="flex flex-col text-[15px] text-gray-400">
+              <div className="min-h-[44px] flex items-center gap-2.5">
+                <Icon name="pin" size={18} className="text-gold-400 shrink-0" />
                 <span>{SITE.address}</span>
               </div>
-              <a href={`tel:${SITE.phoneTel}`} className="phone-cta flex items-center gap-2 hover:text-gold-400 transition-colors">
-                <span>📞</span>
+              <a href={`tel:${SITE.phoneTel}`} className={`phone-cta ${ROW}`}>
+                <Icon name="phone" size={18} className="text-gold-400 shrink-0" />
                 <span>{SITE.phoneDisplay}</span>
               </a>
               <a
                 href={`https://wa.me/${SITE.whatsapp}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="whatsapp-cta flex items-center gap-2 hover:text-gold-400 transition-colors"
+                className={`whatsapp-cta ${ROW}`}
               >
-                <span>💬</span>
-                <span>WhatsApp Us</span>
+                <Icon name="whatsapp" size={18} className="text-gold-400 shrink-0" />
+                <span>WhatsApp us</span>
               </a>
-              <a href={`mailto:${SITE.email}`} className="flex items-center gap-2 hover:text-gold-400 transition-colors">
-                <span>✉️</span>
+              <a href={`mailto:${SITE.email}`} className={ROW}>
+                <Icon name="mail" size={18} className="text-gold-400 shrink-0" />
                 <span>{SITE.email}</span>
               </a>
-              <div className="flex items-center gap-2">
-                <span>🕐</span>
+              <div className="min-h-[44px] flex items-center gap-2.5">
+                <Icon name="clock" size={18} className="text-gold-400 shrink-0" />
                 <span>{SITE.hours}</span>
               </div>
             </div>
@@ -81,7 +89,7 @@ export default function Footer() {
             >
               Quick Links
             </h4>
-            <ul className="space-y-3">
+            <ul className="grid grid-cols-2 gap-x-4">
               {[
                 { href: '/', label: 'Home' },
                 /* The two a visitor most often wants and could not previously
@@ -114,14 +122,9 @@ export default function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm text-gray-400 hover:text-gold-400 transition-colors flex items-center gap-2 group"
+                    className="min-h-[44px] text-[15px] text-gray-400 hover:text-gold-400 transition-colors flex items-center"
                     style={{ fontFamily: 'var(--font-display)' }}
                   >
-                    <span
-                      className="text-gold-500/30 group-hover:text-gold-500 transition-colors"
-                    >
-                      →
-                    </span>
                     {link.label}
                   </Link>
                 </li>
@@ -141,25 +144,25 @@ export default function Footer() {
               {[
                 {
                   href: 'https://www.facebook.com/share/18UW6amdDh/',
-                  icon: 'f',
+                  icon: 'facebook',
                   label: 'Facebook',
                   color: '#1877F2',
                 },
                 {
                   href: 'https://instagram.com/visionsuccessuna',
-                  icon: '📷',
+                  icon: 'instagram',
                   label: 'Instagram',
                   color: '#E1306C',
                 },
                 {
                   href: 'https://youtube.com/@visionsuccessuna',
-                  icon: '▶',
+                  icon: 'youtube',
                   label: 'YouTube',
                   color: '#FF0000',
                 },
                 {
                   href: 'https://wa.me/918219254332',
-                  icon: '💬',
+                  icon: 'whatsapp',
                   label: 'WhatsApp',
                   color: '#25D366',
                 },
@@ -169,15 +172,15 @@ export default function Footer() {
                   href={s.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  title={s.label}
-                  className="w-10 h-10 rounded-xl flex items-center justify-center text-sm transition-all hover:-translate-y-1"
+                  aria-label={`${s.label} — Vision Success`}
+                  className="w-11 h-11 rounded-xl flex items-center justify-center transition-all hover:-translate-y-0.5"
                   style={{
                     background: 'rgba(255,255,255,0.05)',
-                    border: '1px solid rgba(255,255,255,0.08)',
-                    color: s.color,
+                    border: '1px solid rgba(255,255,255,0.10)',
+                    color: 'var(--bone)',
                   }}
                 >
-                  {s.icon}
+                  <Icon name={s.icon} size={20} />
                 </a>
               ))}
             </div>
@@ -186,14 +189,14 @@ export default function Footer() {
               className="rounded-xl p-4"
               style={{ background: 'rgba(var(--accent-rgb),0.06)', border: '1px solid rgba(var(--accent-rgb),0.15)' }}
             >
-              <p className="text-xs text-gray-400 mb-3">Get updates on WhatsApp</p>
+              <p className="text-[13px] text-gray-400 mb-1">Get updates on WhatsApp</p>
               <a
                 href="https://wa.me/918219254332?text=Hi! Please add me to Vision Success updates"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-sm font-semibold text-gold-400 hover:underline flex items-center gap-1"
+                className="min-h-[44px] text-[15px] font-semibold text-gold-400 hover:underline flex items-center gap-1.5"
               >
-                Join WhatsApp Group →
+                Join the WhatsApp group <Icon name="arrowRight" size={16} />
               </a>
             </div>
           </div>
@@ -201,7 +204,7 @@ export default function Footer() {
 
         {/* BOTTOM */}
         <div
-          className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-gray-600"
+          className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[13px] text-gray-500"
           style={{ borderTop: '1px solid rgba(var(--accent-rgb),0.08)' }}
         >
           <p>© {new Date().getFullYear()} Vision Success Coaching Institute, Una, Himachal Pradesh. All rights reserved.</p>

@@ -9,6 +9,9 @@ export default function ScrollProgress() {
   const { scrollYProgress } = useScroll()
   const scaleX = useSpring(scrollYProgress, { stiffness: 120, damping: 28, restDelta: 0.001 })
   const bearX = useTransform(scaleX, (v) => `calc(${v * 100}vw - ${18 * v}px)`)
+  /* At the very top the bar is empty and the bear sat on the crest in the
+     corner. It now appears once there is a bar to ride. */
+  const bearOpacity = useTransform(scaleX, [0, 0.02, 0.04], [0, 0, 1])
 
   return (
     <>
@@ -24,7 +27,7 @@ export default function ScrollProgress() {
       {/* Pola rides the bar tip */}
       <motion.div
         className="site-progress-bear fixed top-[2px] left-0 z-[61] pointer-events-none select-none scroll-bear"
-        style={{ x: bearX, fontSize: 15, lineHeight: 1 }}
+        style={{ x: bearX, opacity: bearOpacity, fontSize: 15, lineHeight: 1 }}
         aria-hidden
       >
         🐻‍❄️

@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { wa } from '@/lib/site'
 import { DESK_FILM, DESK_DOORS, DESK_WA, deskFilmFiles } from '@/lib/studyAbroad'
+import Icon from '@/components/Icon'
 
 /* ─── THE STUDY-ABROAD FILM — one film, two doors ───
    Nineteen seconds, shot on a street in Una, in which the founder names
@@ -174,7 +175,7 @@ export default function StudyAbroadFilm({
         onClick={toggle}
         aria-label={playing ? 'Pause the film' : 'Play the film'}
       >
-        <span aria-hidden>{playing ? '❚❚' : '▶'}</span>
+        <Icon name={playing ? 'pause' : 'play'} size={16} />
       </button>
 
       <button
@@ -184,7 +185,7 @@ export default function StudyAbroadFilm({
         aria-pressed={sound}
         aria-label={sound ? 'Mute the film' : 'Turn the sound on'}
       >
-        <span aria-hidden>{sound ? '🔊' : '🔇'}</span>
+        <Icon name={sound ? 'speaker' : 'speakerOff'} size={17} />
         <span className="proof-ctl-text">{sound ? 'Sound on' : 'Hear him'}</span>
       </button>
 

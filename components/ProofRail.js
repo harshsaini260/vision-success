@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, useCallback } from 'react'
 import Link from 'next/link'
 import { wa } from '@/lib/site'
+import Icon from '@/components/Icon'
 
 /* ─── THE PROOF RAIL ───
    Everything a real student has said about this place, in one horizontal
@@ -236,11 +237,11 @@ export default function ProofRail() {
             />
             <button className="proof-ctl proof-ctl--play" onClick={() => toggle('our')}
               aria-label={playing.our ? 'Pause' : 'Play'}>
-              <span aria-hidden>{playing.our ? '❚❚' : '▶'}</span>
+              <Icon name={playing.our ? 'pause' : 'play'} size={16} />
             </button>
             <button className="proof-ctl proof-ctl--sound" onClick={() => listen('our')}
               aria-pressed={!muted.our} aria-label={muted.our ? 'Turn sound on' : 'Mute'}>
-              <span aria-hidden>{muted.our ? '🔇' : '🔊'}</span>
+              <Icon name={muted.our ? 'speakerOff' : 'speaker'} size={17} />
             </button>
             <div className="proof-card-foot">
               <span className="proof-card-kicker">Our film</span>
@@ -269,12 +270,12 @@ export default function ProofRail() {
               />
               <button className="proof-ctl proof-ctl--play" onClick={() => toggle(f.id)}
                 aria-label={playing[f.id] === false ? 'Play' : 'Pause'}>
-                <span aria-hidden>{playing[f.id] === false ? '▶' : '❚❚'}</span>
+                <Icon name={playing[f.id] === false ? 'play' : 'pause'} size={16} />
               </button>
               <button className="proof-ctl proof-ctl--sound" onClick={() => listen(f.id)}
                 aria-pressed={muted[f.id] === false}
                 aria-label={muted[f.id] === false ? 'Mute' : 'Turn sound on'}>
-                <span aria-hidden>{muted[f.id] === false ? '🔊' : '🔇'}</span>
+                <Icon name={muted[f.id] === false ? 'speaker' : 'speakerOff'} size={17} />
                 <span className="proof-ctl-text">{muted[f.id] === false ? 'Sound on' : 'Hear them'}</span>
               </button>
               <div className="proof-card-foot">

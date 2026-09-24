@@ -12,6 +12,7 @@ import { wa } from '@/lib/site'
 import { saveLead, trackLead } from '@/lib/leads'
 import { playFanfare } from '@/lib/fanfare'
 import { sfxChime, sfxPop } from '@/lib/sfx'
+import Icon from '@/components/Icon'
 
 const UNLOCK_KEY = 'vs-vault-unlocked'
 
@@ -124,7 +125,8 @@ export default function MaterialVault({ items = [] }) {
               </div>
             )}
             <button onClick={() => request(m)} className="btn-gold w-full py-3 rounded-xl text-sm">
-              {unlocked ? '⬇ Download PDF' : '🔓 Unlock & Download'}
+              <Icon name={unlocked ? 'download' : 'lockOpen'} size={18} />
+              {unlocked ? 'Download PDF' : 'Unlock & Download'}
             </button>
           </motion.div>
         ))}
@@ -190,7 +192,8 @@ export default function MaterialVault({ items = [] }) {
                 />
                 {error && <p className="text-sm" style={{ color: '#F87171' }}>{error}</p>}
                 <button type="submit" disabled={saving} className="btn-gold w-full py-3.5 rounded-xl text-sm disabled:opacity-60">
-                  {saving ? 'Unlocking…' : '🔓 Unlock The Library'}
+                  {!saving && <Icon name="lockOpen" size={18} />}
+                  {saving ? 'Unlocking…' : 'Unlock the Library'}
                 </button>
                 <p className="text-[10px] text-gray-500">
                   Free forever. No spam — one message about your plan, that&apos;s it. 🤝
@@ -201,9 +204,9 @@ export default function MaterialVault({ items = [] }) {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => sfxChime()}
-                className="whatsapp-cta inline-block mt-4 text-xs font-semibold text-gold-400"
+                className="whatsapp-cta inline-flex items-center gap-2 min-h-[44px] mt-2 text-sm font-semibold text-gold-400"
               >
-                💬 or ask us on WhatsApp instead
+                <Icon name="whatsapp" size={18} /> or ask us on WhatsApp instead
               </a>
             </motion.div>
           </motion.div>

@@ -25,6 +25,7 @@ import WorkshopHero from '@/components/workshop/WorkshopHero'
 import Motto from '@/components/Motto'
 import { playFanfare } from '@/lib/fanfare'
 import { sfxPop, sfxNope, sfxWhoosh, sfxChime } from '@/lib/sfx'
+import Icon from '@/components/Icon'
 
 /* ─── CONSTANTS ─── */
 /* Trust bar (brief C8) — static values, not counters */
@@ -1148,13 +1149,13 @@ export default function HomePage() {
                   rel="noopener noreferrer"
                   className="whatsapp-hero whatsapp-cta inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl text-lg font-bold"
                 >
-                  💬 WhatsApp Us
+                  <Icon name="whatsapp" size={22} /> WhatsApp Us
                 </a>
                 <a
                   href={`tel:${SITE.phoneTel}`}
                   className="btn-ghost phone-cta inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl text-lg"
                 >
-                  📞 Call Now
+                  <Icon name="phone" size={20} /> Call Now
                 </a>
               </motion.div>
 
@@ -1176,7 +1177,7 @@ export default function HomePage() {
                   <a
                     key={j.href}
                     href={j.href}
-                    className="px-3.5 py-1.5 rounded-full text-[11px] uppercase tracking-[0.14em] transition-colors hover:text-[var(--accent)]"
+                    className="inline-flex items-center min-h-[44px] px-3.5 rounded-full text-[11px] uppercase tracking-[0.14em] transition-colors hover:text-[var(--accent)]"
                     style={{ border: '1px solid var(--hairline)', color: 'var(--bone-dim)' }}
                   >
                     {j.label}
@@ -1590,7 +1591,7 @@ export default function HomePage() {
                     <span>{SITE.address}</span>
                   </div>
                   <a href={`tel:${SITE.phoneTel}`} className="phone-cta flex items-center gap-3 hover:text-gold-400 transition-colors">
-                    <span className="text-xl">📞</span>
+                    <Icon name="phone" size={22} className="text-gold-400" />
                     <span className="font-semibold">{SITE.phoneDisplay}</span>
                   </a>
                   <a

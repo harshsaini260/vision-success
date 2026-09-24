@@ -99,7 +99,7 @@ export default function Navigation() {
           {/* LOGO — The Bear & The North Star (tap for a little magic ✨) */}
           <Link
             href="/"
-            className="flex items-center gap-2.5 sm:gap-3 group min-w-0 flex-shrink"
+            className="flex items-center min-h-[44px] gap-2.5 sm:gap-3 group min-w-0 flex-shrink"
             onClick={(e) => {
               // Easter egg: gold sparkles burst from the sigil
               const r = e.currentTarget.getBoundingClientRect()
@@ -211,7 +211,7 @@ export default function Navigation() {
             {/* Clickable phone — tap to call on mobile (brief C3) */}
             <a
               href={`tel:${SITE.phoneTel}`}
-              className="phone-cta hidden xl:flex items-center gap-1.5 text-[13px] font-semibold text-gray-400 hover:text-gold-400 transition-colors"
+              className="phone-cta hidden xl:flex items-center min-h-[44px] gap-1.5 text-[13px] font-semibold text-gray-400 hover:text-gold-400 transition-colors"
               style={{ fontFamily: 'var(--font-display)', letterSpacing: '0.04em' }}
             >
               <PhoneGlyph />
@@ -220,14 +220,14 @@ export default function Navigation() {
             <span className="hidden xl:block w-px h-5" style={{ background: 'rgba(var(--accent-rgb),0.2)' }} />
             <Link
               href="/appointment"
-              className="btn-gold hidden md:flex items-center px-5 py-2.5 rounded-xl text-sm whitespace-nowrap"
+              className="btn-gold hidden md:flex items-center min-h-[44px] px-5 py-2.5 rounded-xl text-sm whitespace-nowrap"
             >
               Book Free Demo
             </Link>
             {/* Compact button for phones */}
             <Link
               href="/appointment"
-              className="btn-gold md:hidden flex items-center px-3 py-2 rounded-lg text-xs whitespace-nowrap"
+              className="btn-gold md:hidden flex items-center min-h-[44px] px-3.5 py-2 rounded-xl text-[13px] whitespace-nowrap"
             >
               Free&nbsp;Demo
             </Link>

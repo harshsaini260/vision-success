@@ -17,6 +17,7 @@ import { usePathname } from 'next/navigation'
 import { SITE, wa } from '@/lib/site'
 import { PAY, isOpen } from '@/lib/workshop'
 import { openWorkshop } from '@/components/workshop/open'
+import Icon from '@/components/Icon'
 
 const HIDE_ON = ['/sat', '/hello', '/start', '/appointment', '/enroll', '/admin']
 
@@ -41,10 +42,10 @@ export default function StickyActionBar() {
         className="sab-wa whatsapp-cta"
         aria-label="WhatsApp us"
       >
-        {workshop ? '💬' : '💬 WhatsApp Us'}
+        <Icon name="whatsapp" size={22} />{!workshop && <span>WhatsApp us</span>}
       </a>
       <a href={`tel:${SITE.phoneTel}`} className="sab-call phone-cta" aria-label="Call us">
-        {workshop ? '📞' : '📞 Call'}
+        <Icon name="phone" size={20} />{!workshop && <span>Call</span>}
       </a>
     </div>
   )

@@ -208,7 +208,7 @@ export default function FeesPage() {
                 className="rounded-2xl p-5"
                 style={{ background: 'rgba(232,240,247,0.04)', border: '1px solid var(--hairline)' }}
               >
-                <summary className="cursor-pointer text-base" style={{ color: 'var(--bone)' }}>
+                <summary className="cursor-pointer text-base min-h-[44px] py-2.5" style={{ color: 'var(--bone)' }}>
                   {f.q}
                 </summary>
                 <p className="mt-3 text-sm leading-relaxed" style={{ color: 'var(--bone-dim)' }}>{f.a}</p>

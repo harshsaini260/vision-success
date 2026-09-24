@@ -103,7 +103,7 @@ export default function CoursesPage() {
                         className="text-3xl md:text-4xl font-semibold text-white"
                         style={{ fontFamily: 'var(--font-display)' }}
                       >
-                        <Link href={`/courses/${course.id}`} className="hover:text-gold-400 transition-colors">
+                        <Link href={`/courses/${course.id}`} className="inline-flex items-center min-h-[44px] hover:text-gold-400 transition-colors">
                           {course.title}
                         </Link>
                       </h2>

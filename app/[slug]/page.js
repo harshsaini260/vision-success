@@ -4,6 +4,7 @@ import { SEO_PAGES, getSeoPage, WHY_US, FEES_NOTE } from '@/lib/seoPages'
 import { SITE, wa } from '@/lib/site'
 import { DESK_FILM, deskFilmFiles, deskVideoSchema } from '@/lib/studyAbroad'
 import StudyAbroadFilm from '@/components/StudyAbroadFilm'
+import Icon from '@/components/Icon'
 
 /* Static SEO landing pages (developer brief, Section E).
    Registered static routes always win over this dynamic segment,
@@ -142,10 +143,10 @@ export default async function SeoLandingPage({ params }) {
               href="/appointment"
               className="btn-gold px-7 py-3.5 rounded-xl text-sm inline-flex items-center gap-2"
             >
-              📅 Book Free Demo Class
+              <Icon name="calendar" size={18} /> Book Free Demo Class
             </Link>
             <a href={`tel:${SITE.phoneTel}`} className="btn-ghost phone-cta px-7 py-3.5 rounded-xl text-sm inline-flex items-center gap-2">
-              📞 Call {SITE.phoneDisplay}
+              <Icon name="phone" size={18} /> Call {SITE.phoneDisplay}
             </a>
           </div>
         </div>
@@ -294,10 +295,10 @@ export default async function SeoLandingPage({ params }) {
             rel="noopener noreferrer"
             className="btn-gold whatsapp-cta px-8 py-4 rounded-2xl text-base inline-flex items-center gap-2 animate-pulse-gold"
           >
-            💬 WhatsApp Us Now
+            <Icon name="whatsapp" size={20} /> WhatsApp Us Now
           </a>
           <a href={`tel:${SITE.phoneTel}`} className="btn-ghost phone-cta px-8 py-4 rounded-2xl text-base inline-flex items-center gap-2">
-            📞 Call Now
+            <Icon name="phone" size={18} /> Call Now
           </a>
         </div>
       </div>

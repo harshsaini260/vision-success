@@ -327,7 +327,7 @@ export default function BlogIndex() {
                 style={{ borderBottom: '1px solid var(--hairline)' }}
               >
                 <div className="flex items-baseline gap-4">
-                  <span className="text-xs tabular-nums" style={{ color: 'rgba(var(--accent-rgb),0.55)' }}>
+                  <span className="text-xs tabular-nums" style={{ color: 'rgba(var(--accent-rgb),0.85)' }}>
                     {String(i + 1).padStart(2, '0')}
                   </span>
                   <div className="flex-1">

@@ -1,6 +1,7 @@
 'use client'
 
 import { createContext, useContext, useEffect, useState } from 'react'
+import { MotionConfig } from 'framer-motion'
 
 /* Every accent is a muted, aged tone — heirloom metals and dyes
    rather than screen primaries. Keeps the site rich at any setting. */
@@ -47,7 +48,16 @@ export function ThemeProvider({ children }) {
     applyTheme(id)
   }
 
-  return <ThemeCtx.Provider value={{ theme, themes: THEMES, setTheme }}>{children}</ThemeCtx.Provider>
+  /* Reduce Motion (Apple HIG). framer-motion ignores the system setting
+     unless told otherwise, and this site animates dozens of sections with
+     it. reducedMotion="user" makes every one of them drop movement —
+     slides, lifts, scales — for anyone who has turned Reduce Motion on,
+     while keeping the fades that carry no motion. One line, whole site. */
+  return (
+    <MotionConfig reducedMotion="user">
+      <ThemeCtx.Provider value={{ theme, themes: THEMES, setTheme }}>{children}</ThemeCtx.Provider>
+    </MotionConfig>
+  )
 }
 
 export const useTheme = () => useContext(ThemeCtx)

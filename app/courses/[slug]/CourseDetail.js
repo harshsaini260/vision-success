@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { COURSES } from '@/lib/courses'
 import { SITE, wa } from '@/lib/site'
+import Icon from '@/components/Icon'
 
 function FadeIn({ children, delay = 0 }) {
   return (
@@ -139,7 +140,7 @@ export default function CourseDetail({ course }) {
                 href={`/appointment?course=${course.id}`}
                 className="btn-gold px-7 py-3.5 rounded-xl text-sm inline-flex items-center gap-2"
               >
-                📅 Book Free Demo Class
+                <Icon name="calendar" size={18} /> Book Free Demo Class
               </Link>
               <Link href={`/enroll?course=${course.id}`} className="btn-ghost px-7 py-3.5 rounded-xl text-sm inline-flex items-center">
                 Enroll Now →
@@ -148,7 +149,7 @@ export default function CourseDetail({ course }) {
                 href={`tel:${SITE.phoneTel}`}
                 className="btn-ghost phone-cta px-7 py-3.5 rounded-xl text-sm inline-flex items-center gap-2"
               >
-                📞 {SITE.phoneDisplay}
+                <Icon name="phone" size={18} /> {SITE.phoneDisplay}
               </a>
             </div>
 

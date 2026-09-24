@@ -70,7 +70,7 @@ h4 { font-weight: 600; letter-spacing: -0.008em; }
 /* Small-caps eyebrow — the quiet luxury label */
 .eyebrow {
   font-family: var(--font-ui);
-  font-size: 0.68rem;
+  font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.28em;
   text-transform: uppercase;
@@ -259,7 +259,7 @@ p {
   background: transparent;
   border: 1px solid rgba(var(--accent-rgb),0.28);
   color: var(--accent);
-  font-size: 0.68rem;
+  font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.26em;
   text-transform: uppercase;
@@ -380,7 +380,7 @@ p {
 .course-badge {
   background: linear-gradient(135deg, var(--accent), var(--accent-light));
   color: var(--ink-3);
-  font-size: 0.65rem;
+  font-size: 0.72rem;
   font-weight: 800;
   letter-spacing: 0.15em;
   text-transform: uppercase;
@@ -499,7 +499,7 @@ p {
 
 .nav-more-hint {
   display: block;
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
   color: rgba(240,234,214,0.35);
   margin-top: 1px;
 }
@@ -802,7 +802,7 @@ img { max-width: 100%; height: auto; }
   border-radius: 4px;
   color: #B3402E;
   font-family: var(--font-ui);
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -1869,7 +1869,7 @@ main label { line-height: 1.5; }
 }
 .course-tile-emoji { font-size: 24px; line-height: 1; }
 .course-tile-badge {
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: 0.16em;
   font-weight: 700;
   color: var(--accent);
@@ -1953,12 +1953,12 @@ main label { line-height: 1.5; }
   position: absolute; left: 10px; top: 10px;
   display: inline-flex; align-items: center; gap: 6px;
   padding: 7px 11px; min-height: 34px; border-radius: 999px;
-  font-size: 10px; font-weight: 600;
+  font-size: 11px; font-weight: 600;
   background: rgba(12,19,34,.74); color: var(--bone);
   border: 1px solid rgba(var(--accent-rgb),.45); backdrop-filter: blur(5px);
 }
 .proof-card-foot { padding: 12px 14px 15px; display: flex; flex-direction: column; gap: 3px; }
-.proof-card-kicker { font-size: 9.5px; letter-spacing: .17em; text-transform: uppercase; color: var(--accent); font-weight: 700; }
+.proof-card-kicker { font-size: 11px; letter-spacing: .17em; text-transform: uppercase; color: var(--accent); font-weight: 700; }
 .proof-card-title { font-family: var(--font-display); font-size: 18px; color: #fff; font-weight: 600; line-height: 1.2; }
 .proof-card-line { font-size: 11.5px; line-height: 1.45; color: var(--bone-dim); }
 
@@ -1972,7 +1972,7 @@ main label { line-height: 1.5; }
 .proof-last-head { font-size: 21px; color: #fff; line-height: 1.2; margin: 8px 0 8px; }
 
 .rail-arrow {
-  width: 42px; height: 42px; border-radius: 999px;
+  width: 44px; height: 44px; border-radius: 999px;
   border: 1px solid rgba(var(--accent-rgb), .38); color: var(--bone);
   display: grid; place-items: center;
   transition: opacity .2s ease, background .2s ease;
@@ -2188,7 +2188,7 @@ main a.link-underline:hover { background-size: 100% 1px; }
 @media (min-width: 720px) { .nav-menu-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
 
 .nav-menu-head {
-  font-size: 9.5px;
+  font-size: 11px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   font-weight: 700;
@@ -2298,7 +2298,7 @@ main a.link-underline:hover { background-size: 100% 1px; }
 }
 .proof-ctl:hover { background: rgba(var(--accent-rgb), 0.28); }
 .proof-ctl:active { transform: scale(0.93); }
-.proof-ctl--play { left: 10px; top: 10px; min-width: 38px; justify-content: center; }
+.proof-ctl--play { left: 10px; top: 10px; min-width: 44px; justify-content: center; }
 .proof-ctl--sound { right: 10px; top: 10px; }
 .proof-ctl-text { display: none; }
 @media (min-width: 480px) { .proof-ctl-text { display: inline; } }
@@ -2397,7 +2397,7 @@ main a.link-underline:hover { background-size: 100% 1px; }
   top: 10px;
   padding: 5px 9px;
   border-radius: 999px;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.06em;
   color: var(--bone);
@@ -2419,7 +2419,7 @@ main a.link-underline:hover { background-size: 100% 1px; }
 }
 .concept-count {
   font-family: var(--font-ui);
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -2557,14 +2557,14 @@ main a.link-underline:hover { background-size: 100% 1px; }
 .desk-door-badge {
   margin-top: 2px;
   font-family: var(--font-ui);
-  font-size: 9.5px;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--accent);
 }
 
-.desk-note { font-size: 13.5px; line-height: 1.65; color: var(--bone-dim); }
+.desk-note { font-size: 15px; line-height: 1.65; color: var(--bone-dim); }
 :where(.desk-cta) { display: flex; }
 .desk-cta { flex-direction: column; gap: 12px; }
 @media (min-width: 480px) { .desk-cta { flex-direction: row; } }
@@ -2586,7 +2586,7 @@ main a.link-underline:hover { background-size: 100% 1px; }
 .satnum-tally {
   margin-top: 14px;
   font-family: var(--font-ui);
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.2em;
   text-transform: uppercase;
@@ -2662,7 +2662,7 @@ main a.link-underline:hover { background-size: 100% 1px; }
 .satnum-hint {
   margin-top: 10px;
   font-family: var(--font-ui);
-  font-size: 9.5px;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -2677,7 +2677,7 @@ main a.link-underline:hover { background-size: 100% 1px; }
   color: var(--accent-light);
   font-variant-numeric: tabular-nums;
 }
-.satnum-a { margin-top: 10px; font-size: 12.5px; line-height: 1.6; color: var(--bone); }
+.satnum-a { margin-top: 10px; font-size: 13.5px; line-height: 1.55; color: var(--bone); }
 
 /* The sixth cell: a card until the other five are open, a conclusion
    afterwards. It is not a button, so it never invites a press it
@@ -2702,3 +2702,54 @@ main a.link-underline:hover { background-size: 100% 1px; }
 @media (prefers-reduced-motion: reduce) {
   .satnum-inner { transition: none; }
 }
+
+
+/* ═══════════════ APPLE HIG LAYER — September 2026 audit ═══════════════
+   Measured across thirteen pages on an iPhone-sized screen and a
+   desktop. What the Human Interface Guidelines ask for, and what is
+   done about it here, once, for the whole site:
+
+   LEGIBILITY   nothing below 11 points; reading copy on a phone at
+                15–16 points rather than Tailwind's 14 and 12.
+   CONTRAST     4.5:1 for text. Tailwind's gray-500 and gray-600 were
+                built for white pages — on this navy they measured 3.5:1
+                and 2.3:1. Re-tuned below, still dimmer than primary text.
+   TARGETS      44 × 44 points for anything tappable. The iPad takes the
+                desktop layout with a finger, so desktop controls count.
+   DEFERENCE    lives in the components: the pop-ups stand down while
+                the workshop is live and never open over another dialog.
+
+   Hand-written rules win over Tailwind's utilities here because
+   @tailwind utilities is loaded at the top of this file. */
+
+/* legibility: the 11-point floor for arbitrary tiny utilities */
+.text-\[8px\], .text-\[9px\], .text-\[10px\] { font-size: 11px; }
+/* html-prefixed: Tailwind v3 emits responsive variants at the very end of
+   the stylesheet, after this file, so equal specificity would lose. */
+@media (min-width: 640px) { html .sm\:text-\[9px\], html .sm\:text-\[10px\] { font-size: 11px; } }
+
+/* legibility: reading sizes on a phone */
+@media (max-width: 640px) {
+  main p.text-sm, main li.text-sm { font-size: 15px; line-height: 1.6; }
+  main p.text-xs, main li.text-xs { font-size: 13px; line-height: 1.55; }
+}
+
+/* contrast: grays re-tuned for a navy ground (≥ 4.6:1 on every surface) */
+.text-gray-500 { color: #919DB1; }
+.text-gray-600 { color: #8B98AC; }
+/* …but not on the cream paper cards, where the light grays would vanish.
+   Dark again there: 6.8:1 and 5.3:1 on the paper. */
+.paper-note .text-gray-600, .paper-note .text-gray-700 { color: #4B5563; }
+.paper-note .text-gray-500 { color: #5C6573; }
+
+/* targets: 44 points */
+.nav-link { min-height: 44px; min-width: 44px; justify-content: center; }
+.nav-link::after { bottom: 7px; }
+.nav-menu-btn { min-height: 44px; }
+.faq-item summary { min-height: 44px; }
+.proof-ctl { min-height: 44px; min-width: 44px; justify-content: center; }
+
+/* buttons read as words: title case as written, not forced capitals.
+   All-caps strips the shape out of a word and slows reading; Apple
+   sets controls in title or sentence case. Sizes are untouched. */
+.btn-gold, .btn-ghost { text-transform: none; letter-spacing: 0.005em; }

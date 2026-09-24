@@ -20,7 +20,7 @@ function StarRating({ value, onChange, readonly = false }) {
           onClick={() => onChange && onChange(n)}
           onMouseEnter={() => !readonly && setHovered(n)}
           onMouseLeave={() => !readonly && setHovered(0)}
-          className="text-2xl transition-transform disabled:cursor-default"
+          className="text-2xl min-w-[44px] min-h-[44px] transition-transform disabled:cursor-default"
           style={{ transform: (hovered || value) >= n ? 'scale(1.2)' : 'scale(1)' }}
         >
           <span style={{ color: (hovered || value) >= n ? '#D4AF37' : 'rgba(240,234,214,0.2)' }}>★</span>

@@ -4,12 +4,22 @@
    Pops after 5s on the homepage (once per session), and can be
    re-opened any time via a window 'open-battlefield' event (fired by
    the inline invite card). Suppresses the DemoPrompt for the session
-   so the two never stack. */
+   so the two never stack.
+
+   Deference (Apple HIG): an interface should not get between a person
+   and what they came for. So the automatic open now stands down while
+   the workshop is live — the workshop IS the call to action on the
+   homepage for those ten days, and a second modal at 12 seconds was
+   competing with its Register button — and it never opens over another
+   dialog, the payment portal included. It also no longer plays a sound
+   when it opens by itself: sound follows a person's own tap, never a
+   timer. Opened by hand, it still chimes. */
 
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import BattlefieldQuiz from '@/components/BattlefieldQuiz'
 import { sfxChime } from '@/lib/sfx'
+import { isVisible as workshopLive } from '@/lib/workshop'
 
 const SESSION_KEY = 'vs-battlefield-shown'
 const DEMO_KEY = 'vs-demo-prompt-shown' // shared with DemoPrompt
@@ -17,18 +27,23 @@ const DEMO_KEY = 'vs-demo-prompt-shown' // shared with DemoPrompt
 export default function BattlefieldPopup() {
   const [open, setOpen] = useState(false)
 
-  const show = () => {
+  const show = (byHand) => {
     try {
       sessionStorage.setItem(SESSION_KEY, '1')
       sessionStorage.setItem(DEMO_KEY, '1') // keep the demo popup from stacking
     } catch {}
-    sfxChime()
+    if (byHand) sfxChime()
     setOpen(true)
+  }
+  const autoShow = () => {
+    if (workshopLive()) return
+    if (document.querySelector('[data-modal-open="1"]')) return
+    show(false)
   }
 
   useEffect(() => {
     // manual re-open from the inline invite card — always allowed
-    const onOpen = () => show()
+    const onOpen = () => show(true)
     window.addEventListener('open-battlefield', onOpen)
 
     /* 12s: let the hero's 10-second promise finish its job first —
@@ -36,10 +51,10 @@ export default function BattlefieldPopup() {
     let timer
     try {
       if (!sessionStorage.getItem(SESSION_KEY)) {
-        timer = setTimeout(show, 12000)
+        timer = setTimeout(autoShow, 12000)
       }
     } catch {
-      timer = setTimeout(show, 12000)
+      timer = setTimeout(autoShow, 12000)
     }
     return () => {
       window.removeEventListener('open-battlefield', onOpen)
