@@ -219,9 +219,8 @@
   "headline": "Nobody hires a marksheet.",
   "headline2": "They hire what you can show them.",
   "hinglish": "Marksheet se naukri nahi milti. Kaam dikhana padta hai.",
-  "weekday": "Thursday",
-  "dateLabel": "Thursday 1 October",
-  "year": "2026",
+  "dateWord": "The date?",
+  "dateBig": "Sealed.",
   "amount": 299,
   "walkIn": "₹299 to walk in.",
   "adjusted": "Adjusted in full against the two-month program fee",
@@ -242,11 +241,11 @@
     "Work will be built."
   ],
   "gate": "The only way into the two-month program.",
-  "closesLabel": "Wednesday 30 September, midnight",
-  "venueBy": "Sunday 27 September",
+  "venueLine": "Your college — the workshop comes to your campus.",
+  "sealedLine": "The date goes only to each college’s registered students",
   "url": "https://visionsuccessuna.com/workshop",
   "urlLabel": "visionsuccessuna.com/workshop",
-  "phone": "+91 82192 54332",
+  "phone": "+91 62833 27481",
   "qrModules": 41
 }
 </script>
@@ -299,8 +298,8 @@
 
   var words = D.headline.trim().split(/\s+/)
   var target = words.pop()                       // the marksheet — the word the blade is aimed at
-  var weekday = D.weekday
-  var dayMonth = D.dateLabel.replace(weekday, '').trim()
+  var weekday = D.dateWord
+  var dayMonth = D.dateBig
   var hing = D.hinglish.match(/[^.!?]+[.!?]+/g) || [D.hinglish]
   var ROMAN = ['I', 'II', 'III', 'IV', 'V', 'VI']
 
@@ -325,9 +324,9 @@
     return '<p class="wp-triad">' + D.triad.map(function (t) { return '<span>' + esc(t) + '</span>' }).join('') + '</p>'
   }
   function urgent() {
-    return '<div class="wp-urgent"><span class="wp-u1"><i class="wp-flame"></i>Registration closes ' + esc(D.closesLabel) + '</span>' +
+    return '<div class="wp-urgent"><span class="wp-u1"><i class="wp-flame"></i>' + esc(D.venueLine) + '</span>' +
       '<span class="wp-u3"><b>Attendees only:</b> ' + esc(D.gate) + '</span>' +
-      '<span class="wp-u2">Venue revealed to registered students by ' + esc(D.venueBy) + '</span></div>'
+      '<span class="wp-u2">' + esc(D.sealedLine) + '</span></div>'
   }
   function top() {
     return '<header class="wp-top"><span class="wp-brand">' + esc(D.brand) + '</span><span class="wp-place">' + esc(D.city) + ' · ' + esc(D.region) + '</span></header>'

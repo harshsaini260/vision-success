@@ -844,3 +844,30 @@
 .wad-tools button { font-size: 12px; padding: 8px 12px; border-radius: 10px; color: rgba(236, 217, 168, 0.85); border: 1px solid rgba(var(--accent-rgb), 0.35); }
 .wad-search { flex: 1 1 220px; padding: 9px 12px; border-radius: 10px; font-size: 14px; color: #fff; background: rgba(0, 0, 0, 0.25); border: 1px solid rgba(232, 240, 247, 0.14); }
 .wad-tag { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #7BE3A0; border: 1px solid rgba(123, 227, 160, 0.45); padding: 2px 7px; border-radius: 999px; }
+
+.wsp-err { display: block; margin-top: -4px; font-style: normal; font-size: 13.5px; line-height: 1.4; color: #FF9B8C; }
+
+/* ── admin · the tour ── */
+.wad-tour { gap: 14px; }
+.wad-tour-head { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.wad-tour-head > div { flex: 1 1 320px; }
+.wad-stops { list-style: none; display: grid; gap: 10px; }
+.wad-stop { border-radius: 14px; border: 1px solid rgba(var(--accent-rgb), 0.22); background: rgba(0, 0, 0, 0.18); overflow: hidden; }
+.wad-stop.is-next { border-color: rgba(var(--accent-rgb), 0.7); }
+.wad-stop.is-held { opacity: 0.8; }
+.wad-stop-bar { width: 100%; min-height: 56px; display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 4px 10px; align-items: center; padding: 10px 14px; text-align: left; }
+.wad-stop-n { grid-row: span 2; font-family: var(--font-display); font-size: 22px; font-weight: 700; color: var(--accent); }
+.wad-stop-name { font-family: var(--font-display); font-size: 18px; font-weight: 600; color: #fff; }
+.wad-stop-name em { margin-left: 8px; font-style: normal; font-family: var(--font-ui); font-size: 12px; color: #97A3B6; }
+.wad-stop-meta { font-size: 12.5px; color: #B7C1D0; }
+.wad-stop-meta b { color: #fff; }
+.wad-stop-body { display: grid; gap: 12px; padding: 4px 14px 16px; border-top: 1px solid rgba(255, 255, 255, 0.06); }
+.wad-two { display: grid; gap: 10px; }
+@media (min-width: 640px) { .wad-two { grid-template-columns: 1fr 1fr; } }
+.wad-seg { display: flex; flex-wrap: wrap; gap: 6px; }
+.wad-seg button { min-height: 40px; padding: 0 14px; border-radius: 999px; font-size: 13px; font-weight: 600; color: #D5DCE6; border: 1px solid rgba(232, 240, 247, 0.2); }
+.wad-seg button.on { background: var(--accent); color: var(--ink); border-color: var(--accent); }
+.wad-private { display: grid; gap: 10px; padding: 12px; border-radius: 12px; border: 1px dashed rgba(224, 92, 66, 0.55); background: rgba(179, 38, 30, 0.06); }
+.wad-lock { font-size: 11px; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; color: #FF9B7A; }
+.wad-stop-actions { display: grid; gap: 10px; }
+.wad-stop-list { display: grid; gap: 10px; }

@@ -28,7 +28,7 @@ const GROUPS = [
   {
     head: 'Study with us',
     items: [
-      ['/workshop', 'Job-Ready Workshop', 'Thursday 1 October · ₹299'],
+      ['/workshop', 'Job-Ready Workshop', 'On tour · date sealed · ₹299'],
       ['/courses', 'All courses', 'Eight doors, one screen'],
       ['/fees', 'Fees', 'Published in full'],
       ['/sat', 'SAT — study abroad', 'Taught by a 1540 scorer'],

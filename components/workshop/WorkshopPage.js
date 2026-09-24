@@ -8,13 +8,14 @@ import {
   WORKSHOP_PATH, faqFor, phase,
 } from '@/lib/workshop'
 import WorkshopHero from './WorkshopHero'
+import WorkshopTour from './WorkshopTour'
 import { openWorkshop } from './open'
 import useWorkshopLive from './useWorkshopLive'
 
 /* ─── /workshop — the whole argument, in the order a sceptic needs it ───
    The homepage section makes someone curious. This page has to survive
    the second question, which is always "fine — but is it worth a
-   Thursday and ₹299?" So it answers, in order:
+   day and ₹299?" So it answers, in order:
 
      who is he          one man, four lives
      what is the day    stories told, songs sung, work built
@@ -23,14 +24,14 @@ import useWorkshopLive from './useWorkshopLive'
      is it a lecture    no
      is it for me       four kinds of person, named
      what does it cost  ₹299, and then nothing
-     then what          two months, and only through Thursday
+     then what          two months, and only through the workshop
      the fine print     every fact, including the ones not settled yet
 
    Each section is one idea and one screen on a phone. Nothing here
    claims a result, a student, a seat limit or a price rise — the page
    is persuasive because every line of it can be checked on the day.
 
-   After 1 October the page does not 404 and does not pretend: it says
+   When the tour ends the page does not 404 and does not pretend: it says
    the workshop happened, that the program was for the people in the
    room, and how to be in the room next time. */
 
@@ -59,14 +60,14 @@ export default function WorkshopPage() {
   const faq = faqFor(L)
 
   const shareText =
-    `${COPY.headline} ${COPY.headline2}\n${COPY.hinglish}\n\n${EVENT.name} · ${EVENT.dateLabel} · ₹${PAY.amount} ` +
+    `${COPY.headline} ${COPY.headline2}\n${COPY.hinglish}\n\n${EVENT.name} · coming to your college · date sealed · ₹${PAY.amount} ` +
     `(adjusted against the two-month program).\n${SITE.url}${WORKSHOP_PATH}`
 
-  if (ph === 'over') {
+  if (ph === 'over' || L.ended) {
     return (
       <div className="wpg">
         <section className="wpg-over">
-          <p className="eyebrow">{EVENT.name} · {EVENT.dateLabel}</p>
+          <p className="eyebrow">{EVENT.name}</p>
           <h1 className="wpg-h">It happened.</h1>
           <p className="wpg-p">
             The workshop is over. The two-month {EVENT.program} belongs to the people who were in the room —
@@ -84,6 +85,7 @@ export default function WorkshopPage() {
   return (
     <div className="wpg">
       <WorkshopHero as="h1" from="page" />
+      <WorkshopTour />
 
       {/* the guide, one tap below the fold, for the visitor who reads before deciding */}
       <p className="wpg-guide">
@@ -112,7 +114,7 @@ export default function WorkshopPage() {
         </h2>
         <div ref={dayRef} className={`wpg-bill${dayOn ? ' is-on' : ''}`}>
           <div className="wpg-bill-head" aria-hidden>
-            <span>Programme</span><span>{EVENT.dateLabel}</span>
+            <span>Programme</span><span>On your college’s day</span>
           </div>
           {DAY.map((act, i) => (
             <article key={act.id} className={`wpg-act wpg-act--${act.id}`} style={{ transitionDelay: `${i * 160}ms` }}>
@@ -157,7 +159,7 @@ export default function WorkshopPage() {
       {/* ── for whom ── */}
       <section className="wpg-sec" aria-labelledby="wpg-who">
         <p className="eyebrow">Anyone can walk in</p>
-        <h2 id="wpg-who" className="wpg-h">If you are one of these, this Thursday is yours.</h2>
+        <h2 id="wpg-who" className="wpg-h">If you are one of these, this day is yours.</h2>
         <ul className="wpg-who">
           {FOR_WHOM.map((f) => (
             <li key={f.who}><b>{f.who}</b><span>{f.why}</span></li>
@@ -185,7 +187,7 @@ export default function WorkshopPage() {
           <span className="wpg-gate-lock" aria-hidden>
             <svg viewBox="0 0 48 48"><rect x="11" y="21" width="26" height="20" rx="4" /><path d="M17 21v-6a7 7 0 0 1 14 0v6" fill="none" strokeWidth="3" /><circle cx="24" cy="30" r="2.6" /><path d="M24 32v4" strokeWidth="2.4" strokeLinecap="round" /></svg>
           </span>
-          <p className="eyebrow">After Thursday</p>
+          <p className="eyebrow">After the workshop</p>
           <h2 id="wpg-gate" className="wpg-h">{GATE.short}</h2>
           <p className="wpg-p">{GATE.long}</p>
         </div>
@@ -196,13 +198,13 @@ export default function WorkshopPage() {
         <p className="eyebrow">The fine print, all of it</p>
         <h2 id="wpg-facts" className="wpg-h">Everything we know today.</h2>
         <dl className="wpg-facts">
-          <div><dt>When</dt><dd>{EVENT.dateLong}. {L.timeLine}</dd></div>
+          <div><dt>When</dt><dd>Sealed. {L.timeLine}</dd></div>
           <div><dt>Where</dt><dd>
             {L.venueLine}
             {L.mapUrlPublic && <> <a className="wpg-map" href={L.mapUrlPublic} target="_blank" rel="noopener noreferrer">Open in Maps →</a></>}
           </dd></div>
           <div><dt>The program after</dt><dd>{GATE.long}</dd></div>
-          <div><dt>Registration closes</dt><dd>{EVENT.closesLabel}.</dd></div>
+          <div><dt>Registration</dt><dd>Open while your college is on the tour. Not on it yet? WhatsApp {SITE.contactName} on {SITE.phoneDisplay}.</dd></div>
           <div><dt>Fee</dt><dd>₹{PAY.amount}, by UPI to {PAY.vpa}. {PAY.adjusted}.</dd></div>
           <div><dt>Receipt</dt><dd>Emailed the moment you confirm, and shown on screen. We check every payment against our UPI statement and confirm your seat on WhatsApp.</dd></div>
         </dl>

@@ -29,7 +29,7 @@ screenshot the reply.
 > If your child is in Class 9–12 in Una: the first class is free, and we will tell you honestly whether we are the right place for them.
 >
 > 📍 Near Old Bus Stand, Una, H.P.
-> 📞 82192 54332 · link in bio
+> 📞 62833 27481 · link in bio
 >
 > #VisionSuccess #Una #UnaHimachal #NDA #JEE #NEET #CUET #SAT #MerchantNavy #Class10 #Class12 #HimachalPradesh #CoachingInUna #StudentVoice
 
@@ -51,7 +51,7 @@ screenshot the reply.
 > Parents — if your child is in Class 9 to 12, come and sit in on a class before you decide anything. It costs nothing, and if we are not the right fit for your child we will say so.
 >
 > 📍 Near Old Bus Stand, Near Sabji Mandi, Una, H.P. 174303
-> 📞 +91 82192 54332
+> 📞 +91 62833 27481
 > 🌐 visionsuccessuna.com
 
 ---
@@ -67,7 +67,7 @@ screenshot the reply.
 > Vision Success Coaching Institute — Class 9–12, NDA, JEE, NEET, CUET, SAT and Merchant Navy preparation. Near Old Bus Stand, Una, Himachal Pradesh. Batches capped at 15.
 >
 > Free demo class and a written study plan: https://visionsuccessuna.com/start
-> WhatsApp: +91 82192 54332
+> WhatsApp: +91 62833 27481
 >
 > #shorts #NDA #JEE #NEET #Una #HimachalPradesh #CoachingInstitute
 
@@ -78,7 +78,7 @@ screenshot the reply.
 > We asked Aniket, one of our Class 9 students, what Vision Success is.
 > He said: *"we are not just preparing for exams, we are preparing for something that we are going to become."*
 > 27 seconds. Worth it. 👇
-> Free demo class: wa.me/918219254332
+> Free demo class: wa.me/916283327481
 
 ---
 

@@ -155,17 +155,14 @@ async function main() {
   const W = await load('lib/workshop.js')
   const { CONTEXT, INSTITUTE } = await load('lib/satSchools.js')
   const { SITE, wa } = await load('lib/site.js')
-  const { EVENT, PAY, COPY, HOST, DAY, TRIAD, PROMISE, GATE, ENDINGS, FOR_WHOM } = W
+  const { EVENT, PAY, COPY, HOST, DAY, TRIAD, PROMISE, GATE, ENDINGS, FOR_WHOM, VENUE, SEALED } = W
   const L = W.withLive()
 
   const base = SITE.url.replace(/\/+$/, '')
   const pageUrl = base + W.WORKSHOP_PATH
   const regUrl = pageUrl + '#register'
   const bare = (u) => u.replace(/^https?:\/\//, '')
-  const day = EVENT.dateLabel.replace(/^\w+\s+/, '')                 // '1 October'
-  const dayShort = day.replace(/^(\d+) (\w{3})\w*$/, '$1 $2')        // '1 Oct'
-  const closesDay = EVENT.closesLabel.split(',')[0]                  // 'Wednesday 30 September'
-  const waPrincipal = wa(`Namaste! I am from ___ college. Question about the ${EVENT.short} on ${day}.`)
+  const waPrincipal = wa(`Namaste! I am from ___ college. Can the ${EVENT.short} come to our college?`)
   const rec = Object.fromEntries(INSTITUTE.record)
   const shield = '../../public/images/shield.png'
   const TOTAL = 6
@@ -187,9 +184,9 @@ async function main() {
     <div class="c-for">For principals, heads of department<br>and placement officers</div>
   </header>
 
-  <div class="c-kicker">${esc(EVENT.name)}<i></i>${esc(EVENT.dateLong)}</div>
+  <div class="c-kicker">${esc(EVENT.name)}<i></i>Coming to your college</div>
   <h1>Your students<br>will graduate.<br><em>Will they be hired?</em></h1>
-  <p class="c-dek">One day in ${esc(EVENT.city)}, for students about to hold a degree — and wanting something to show with it. ${esc(COPY.notALecture.replace('It is not a lecture you sit through. It is a day you build something in.', 'Not a lecture they sit through: a day they build something in.'))}</p>
+  <p class="c-dek">One day at your college, for students about to hold a degree — and wanting something to show with it. ${esc(COPY.notALecture.replace('It is not a lecture you sit through. It is a day you build something in.', 'Not a lecture they sit through: a day they build something in.'))}</p>
 
   <div class="c-voice">
     <div class="c-sheet">${marksheet()}</div>
@@ -202,13 +199,13 @@ async function main() {
   </div>
 
   <div class="c-facts">
-    <div><span class="k">When</span><b>${esc(EVENT.weekday)}<br>${esc(day)}</b><small>${esc(EVENT.date.slice(0, 4))} · ${esc(L.time || 'timing goes out with the venue')}</small></div>
-    <div><span class="k">Where</span><b>${esc(L.venuePublic || EVENT.city)}</b><small>${L.venuePublic ? esc(EVENT.city) : `The exact venue goes to registered students by ${esc(EVENT.venueBy)}`}</small></div>
+    <div><span class="k">When</span><b>Sealed</b><small>Fixed with your college, told only to the students who register</small></div>
+    <div><span class="k">Where</span><b>${esc(VENUE.short)}</b><small>The workshop comes to your campus — one day, one room</small></div>
     <div><span class="k">Fee</span><b>${rs(PAY.amount)}</b><small>${esc(PAY.adjusted)}</small></div>
   </div>
-  <div class="c-close"><span>Registration closes <b>${esc(EVENT.closesLabel)}</b></span><span class="c-url">${esc(bare(pageUrl))}</span></div>
+  <div class="c-close"><span>The date is <b>sealed</b> — only registered students are told</span><span class="c-url">${esc(bare(pageUrl))}</span></div>
 
-  <div class="seal" aria-hidden="true"><small>${esc(EVENT.weekday.slice(0, 3).toUpperCase())}</small>${esc(dayShort.split(' ')[0])}<small>${esc(dayShort.split(' ')[1].toUpperCase())}</small></div>
+  <div class="seal" aria-hidden="true"><small>DATE</small>?<small>SEALED</small></div>
   ${foot(1, 'A brief for colleges')}
 </section>`
 
@@ -244,7 +241,7 @@ async function main() {
       <p>That is not a failure of anyone’s teaching. It is a gap between two things that were never designed to meet, and it is not only a gap in ${esc(EVENT.city)}.</p>
       <blockquote>${esc(E.printable)}</blockquote>
       <p>The national policy points the same way. ${esc(N.printable)}</p>
-      <p>We cannot close that gap in a day, and we will not pretend to. What one day can do is change what a student is looking for — and put something real in their hands. On <b>${esc(EVENT.dateLong)}</b> we are running the <b>${esc(EVENT.name)}</b> in ${esc(EVENT.city)}. ${esc(COPY.lede)}</p>
+      <p>We cannot close that gap in a day, and we will not pretend to. What one day can do is change what a student is looking for — and put something real in their hands. We are taking the <b>${esc(EVENT.name)}</b> from college to college — one day on your campus, on a date we fix with you and keep sealed until your students have registered. ${esc(COPY.ledeShort)}</p>
       <p>It costs your college nothing, and it asks for three small things, all on page 5. Page 6 is a notice for your board.</p>
       <div class="sign">
         <span>With respect,</span>
@@ -275,13 +272,13 @@ async function main() {
 
   <div class="bill">
     <span class="cn tl"></span><span class="cn tr"></span><span class="cn bl"></span><span class="cn br"></span>
-    <div class="bill-head"><span>Programme</span><span>${esc(EVENT.name)}</span><span>${esc(EVENT.city)} · ${esc(EVENT.dateLabel)}</span></div>
+    <div class="bill-head"><span>Programme</span><span>${esc(EVENT.name)}</span><span>On your college’s day</span></div>
 
     <div class="bill-host">
       <div class="small-caps">Your host</div>
       <h3>${L.hostName ? `${esc(L.hostName)}. ` : ''}${esc(HOST.line)}</h3>
       <div class="lives">${HOST.lives.map((l) => `<div><span class="lg">${lifeGlyph[l] || ''}</span><b>${esc(l)}</b></div>`).join('')}</div>
-      <p>${esc(HOST.body)}${L.hostName ? '' : ' You meet him on Thursday.'}</p>
+      <p>${esc(HOST.body)}${L.hostName ? '' : ' You meet him on the day.'}</p>
     </div>
 
     ${orn()}
@@ -334,7 +331,7 @@ async function main() {
   <div class="gate">
     <div class="lock">${G.lock}</div>
     <div>
-      <div class="eyebrow ember">After ${esc(EVENT.weekday)}</div>
+      <div class="eyebrow ember">After the workshop</div>
       <h3>${esc(GATE.short)}</h3>
       <p>${esc(GATE.long)}</p>
       <p class="then">${esc(COPY.then)}</p>
@@ -345,17 +342,17 @@ async function main() {
 
   /* ───────────── 5 · FOR THE COLLEGE ───────────── */
   const facts = [
-    ['When', `${EVENT.dateLong}. ${L.timeLine}`],
+    ['When', `Sealed. ${SEALED.line}`],
     ['Where', L.venueLine],
     ['Fee', `₹${PAY.amount} per student, by UPI from any app. ${PAY.adjusted}.`],
-    ['Registration closes', `${EVENT.closesLabel}.`],
+    ['Registration', 'Open while your college is on the tour.'],
     ['Receipt', 'Emailed to the student on the spot. Every payment is then checked against our UPI statement.'],
     ['Questions', `WhatsApp or call ${SITE.phoneDisplay} · ${SITE.email}`],
   ]
   const week = [
-    { d: EVENT.venueBy, t: 'Venue sent to registered students' },
-    { d: closesDay, t: 'Registration closes at midnight' },
-    { d: EVENT.dateLabel, t: 'The workshop', hot: true },
+    { d: 'Your college joins', t: 'We fix a day with you — and seal it' },
+    { d: 'Students register', t: `₹${PAY.amount} by UPI, two minutes each` },
+    { d: 'The seal breaks', t: 'The date goes to your registered students only', hot: true },
   ]
   const forCollege = `
 <section class="page" id="p-college">
@@ -367,21 +364,21 @@ async function main() {
     <div class="costs">
       <div class="small-caps">What it costs the college</div>
       <div class="nothing">Nothing.</div>
-      <p>No fee, no paperwork, no agreement to sign, no session to host. The day happens at our venue in ${esc(EVENT.city)}.</p>
+      <p>No fee, no paperwork, no agreement to sign. We bring the day to your campus; you give us a room.</p>
     </div>
     <ol class="asks">
-      <li><b>Forward the link</b> to your students’ WhatsApp groups — today, if you can. <span class="mono">${esc(bare(pageUrl))}</span></li>
+      <li><b>Give us a room and a day.</b> We fix the date with you; it stays sealed from everyone but your registered students.</li>
+      <li><b>Forward the link</b> to your students’ WhatsApp groups. <span class="mono">${esc(bare(pageUrl))}</span></li>
       <li><b>Pin page 6</b> on the notice board. It is built to be read from across a corridor.</li>
-      <li><b>Tell your faculty.</b> Registration is open to anyone — teachers are welcome to register too.</li>
     </ol>
   </div>
 
   <div class="plain">
-    <b>Plainly.</b> Each student registers on their own, and gets their own receipt and their own venue message. There is no group rate, no campus session, no certificate, no placement promise and no seat limit — none of them exists, so none is offered.
+    <b>Plainly.</b> Each student registers on their own and gets their own receipt; the date reaches each of them privately. There is no group rate, no certificate, no placement promise and no seat limit — none of them exists, so none is offered.
   </div>
 
   <div class="week">
-    <div class="small-caps">The week, at a glance</div>
+    <div class="small-caps">How the tour works</div>
     <div class="wk">
       ${week.map((w) => `<div class="wk-i${w.hot ? ' hot' : ''}"><span class="dot"></span><b>${esc(w.d)}</b><span>${esc(w.t)}</span></div>`).join('')}
     </div>
@@ -396,7 +393,7 @@ async function main() {
         <ol>
           <li><b>Scan or open the link.</b> Name, phone and email — nothing is paid before this.</li>
           <li><b>Pay ${rs(PAY.amount)} by UPI</b> from any app, then type the 12-digit UPI reference into the form.</li>
-          <li><b>Receipt by email</b> on the spot. The venue follows by ${esc(EVENT.venueBy)}.</li>
+          <li><b>Receipt by email</b> on the spot. The sealed date follows — to registered students only.</li>
         </ol>
       </div>
     </div>
@@ -416,7 +413,7 @@ async function main() {
 </section>`
 
   /* ───────────── 6 · THE NOTICE BOARD ───────────── */
-  const tabs = Array.from({ length: 8 }, () => `<div class="tab"><div><b>${esc(EVENT.short)} · ${esc(dayShort)}</b><span>${esc(bare(pageUrl))}</span></div></div>`).join('')
+  const tabs = Array.from({ length: 8 }, () => `<div class="tab"><div><b>${esc(EVENT.short)} · date sealed</b><span>${esc(bare(pageUrl))}</span></div></div>`).join('')
   const notice = `
 <section class="page notice" id="p-notice">
   <header class="n-top">
@@ -430,9 +427,9 @@ async function main() {
   <div class="n-grid">
     <div class="n-left">
       <ol class="n-triad">${TRIAD.map((t, i) => `<li><span>${esc(DAY[i] ? DAY[i].n : '')}</span>${esc(t)}</li>`).join('')}</ol>
-      <div class="n-when">${esc(EVENT.weekday)} ${esc(day)}</div>
-      <div class="n-where">${esc(L.venuePublic ? `${L.venuePublic}, ${EVENT.city}` : EVENT.city)} <i>·</i> ${rs(PAY.amount)}</div>
-      <div class="n-close">Register by <b>${esc(EVENT.closesLabel)}</b></div>
+      <div class="n-when">Date: sealed.</div>
+      <div class="n-where">${esc(VENUE.short)} <i>·</i> ${rs(PAY.amount)}</div>
+      <div class="n-close">Only registered students are told the day. <b>Register to find out.</b></div>
       <div class="n-fine">${rs(PAY.amount)} is adjusted in full against the two-month program — ${esc(GATE.short.replace(/^The /, 'the ').replace(/\.$/, ''))}.</div>
     </div>
     <div class="n-right">
@@ -451,7 +448,7 @@ async function main() {
 <html lang="en"><head><meta charset="utf-8">
 <title>${esc(EVENT.name)} — for colleges · ${esc(SITE.shortName)}</title>
 <meta name="author" content="${esc(SITE.name)}">
-<meta name="description" content="${esc(EVENT.name)}, ${esc(EVENT.dateLong)}, ${esc(EVENT.city)}. A brief for principals, heads of department and placement officers.">
+<meta name="description" content="${esc(EVENT.name)} — coming to your college. A brief for principals, heads of department and placement officers.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600;1,700&family=Inter:wght@400;500;600;700;800&family=Caveat:wght@700&display=block" rel="stylesheet">

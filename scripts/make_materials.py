@@ -73,7 +73,7 @@ GREEN = HexColor("#6FAA7A")
 
 M = 46  # margin
 SITE = "VISIONSUCCESSUNA.COM"
-PHONE = "+91 82192 54332"
+PHONE = "+91 62833 27481"
 
 
 # ───────────────────────── helpers ─────────────────────────

@@ -639,7 +639,7 @@ export default function ShatterQR({
               <div className="sqr-lock">
                 <span className="sqr-lock-top">
                   <span className="sqr-kick">{EVENT.short}</span>
-                  <span className="sqr-date">{EVENT.dateLabel}</span>
+                  <span className="sqr-date">Coming to your college</span>
                 </span>
                 <span className="sqr-lock-mid">
                   <svg className="sqr-enso" viewBox="0 0 100 100">

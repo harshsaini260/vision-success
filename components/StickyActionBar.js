@@ -6,7 +6,7 @@
    (/sat, /hello) or its own dedicated form (/appointment, /enroll,
    /admin) so nothing double-stacks.
 
-   For the ten days before 1 October the first slot belongs to the
+   While the workshop tour is on, the first slot belongs to the
    workshop: it is the one thing on the site with a deadline, and this
    bar is the one element a phone visitor sees on every single page. It
    swaps back to WhatsApp-first the moment registration closes. Decided
@@ -32,20 +32,20 @@ export default function StickyActionBar() {
     <div className="sticky-action-bar md:hidden" aria-label="Quick contact">
       {workshop && (
         <button type="button" className="wsb" onClick={() => openWorkshop('bar')}>
-          <span>Workshop · ₹{PAY.amount}<small>Thursday 1 Oct · register</small></span>
+          <span>Workshop · ₹{PAY.amount}<small>Coming to your college</small></span>
         </button>
       )}
       <a
-        href={wa('Namaste! Vision Success ke baare mein jaanna hai 🙏 (Course: ___, Class: ___)')}
+        href={wa(`Namaste ${SITE.contactName}! Vision Success ke baare mein jaanna hai. Course: ___, Class: ___`)}
         target="_blank"
         rel="noopener noreferrer"
         className="sab-wa whatsapp-cta"
-        aria-label="WhatsApp us"
+        aria-label={`WhatsApp ${SITE.contactName}`}
       >
-        <Icon name="whatsapp" size={22} />{!workshop && <span>WhatsApp us</span>}
+        <Icon name="whatsapp" size={22} />{!workshop && <span>WhatsApp {SITE.contactName}</span>}
       </a>
-      <a href={`tel:${SITE.phoneTel}`} className="sab-call phone-cta" aria-label="Call us">
-        <Icon name="phone" size={20} />{!workshop && <span>Call</span>}
+      <a href={`tel:${SITE.phoneTel}`} className="sab-call phone-cta" aria-label={`Call ${SITE.contactName}`}>
+        <Icon name="phone" size={20} />{!workshop && <span>Call {SITE.contactName}</span>}
       </a>
     </div>
   )

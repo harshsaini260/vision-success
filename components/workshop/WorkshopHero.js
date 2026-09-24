@@ -2,16 +2,16 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { EVENT, PAY, COPY, HOST, TRIAD, GATE, WORKSHOP_PATH, phase } from '@/lib/workshop'
+import { PAY, COPY, HOST, TRIAD, GATE, VENUE, WORKSHOP_PATH, phase } from '@/lib/workshop'
 import { openWorkshop } from './open'
-import useCountdown from './useCountdown'
+import SealedDate from './SealedDate'
 import useWorkshopCount from './useWorkshopCount'
 import useWorkshopLive from './useWorkshopLive'
 
 /* ─── THE WORKSHOP, ON THE FRONT DOOR ───
-   The first thing on the homepage for the ten days before 1 October, and
-   gone the moment the day is over — the frozen order underneath it
-   (creed, three roads, proof) comes straight back without an edit.
+   The first thing on the homepage while the tour is on, and gone the
+   moment the owner ends it from the admin panel — the frozen order
+   underneath it (creed, three roads, proof) comes straight back.
 
    It leads with a sentence rather than an event name, because nobody in
    Una is searching for "job-ready skills workshop" — but every student
@@ -20,32 +20,29 @@ import useWorkshopLive from './useWorkshopLive'
    visible, in the first second.
 
    The card on the right carries every fact needed to decide, and every
-   one of them is true: the real close of registration counting down, the
-   real price, the fact that the price comes back, and the fact that the
-   venue goes to registered students first. The live count appears only
-   once there is a count worth reading.
+   one of them is true: the workshop comes to your college, the date is
+   sealed and told only to that college's registered students (the
+   SealedDate roll is where a countdown used to be), the real price, and
+   the fact that the price comes back. The live count appears only once
+   there is a count worth reading.
 
    Rendered after mount, like the Independence band before it: a page
    generated at build time must never hand a visitor on 2 October a
    countdown for a day that has passed. */
 
-const pad = (n) => String(n).padStart(2, '0')
-
 /* `as` lets /workshop make this the page's h1; on the homepage it is an h2
    under the site's own heading. `from` tags the registration's source. */
 export default function WorkshopHero({ as: H = 'h2', from = 'home' }) {
   const [ph, setPh] = useState(null)
-  const clock = useCountdown()
   const count = useWorkshopCount()
   const L = useWorkshopLive()
 
   useEffect(() => { setPh(phase()) }, [])
-  if (ph !== 'open' && ph !== 'closed') return null
+  if (ph !== 'open' || L.ended) return null
 
-  const today = ph === 'closed'
-  /* The admin can pause registration from the panel — the room is full,
-     say — without waiting for a deploy. */
-  const paused = L.paused && !today
+  /* The admin can pause registration from the panel without waiting for
+     a deploy; the message makes no claim about why. */
+  const paused = L.paused
 
   return (
     <section className="wsh" aria-labelledby="wsh-title">
@@ -76,7 +73,7 @@ export default function WorkshopHero({ as: H = 'h2', from = 'home' }) {
       <div className="wsh-inner">
         <div className="wsh-grid">
           <div>
-            <span className="wsh-kicker"><i aria-hidden />{today ? 'Today' : EVENT.dateLabel} · {COPY.kicker}</span>
+            <span className="wsh-kicker"><i aria-hidden />Coming to your college · {COPY.kicker}</span>
 
             <H id="wsh-title" className="wsh-h">
               Nobody hires a{' '}
@@ -103,40 +100,17 @@ export default function WorkshopHero({ as: H = 'h2', from = 'home' }) {
           <div className="wsh-card">
             <div className="wsh-seal" aria-hidden>₹{PAY.amount}<small>SEAL</small></div>
 
-            {today ? (
-              <p className="wsh-clock-l">Registration has closed — the workshop is today</p>
-            ) : (
-              <>
-                <p className="wsh-clock-l">Registration closes in</p>
-                <div className="wsh-clock" role="timer" aria-live="off">
-                  {[
-                    [clock?.d, 'days'],
-                    [clock?.h, 'hours'],
-                    [clock?.m, 'min'],
-                    [clock?.s, 'sec'],
-                  ].map(([v, l]) => (
-                    <div key={l}><b>{v == null ? '--' : pad(v)}</b><span>{l}</span></div>
-                  ))}
-                </div>
-              </>
-            )}
+            <SealedDate />
 
             {L.announcement && <p className="wsh-announce" role="status">{L.announcement}</p>}
 
             <ul className="wsh-facts">
-              <li><i>◆</i><span><b>{EVENT.dateLong.replace(', 2026', '')}</b>{L.time ? ` · ${L.time}` : ''} — one day, one room.</span></li>
+              <li><i>◆</i><span><b>{L.venuePublic || VENUE.short}</b> — {L.venuePublic ? 'one day, one room.' : 'the workshop comes to your campus. One day, one room.'}</span></li>
               <li><i>◆</i><span><b>{GATE.short}</b> Only people who attend can join it.</span></li>
-              <li><i>◆</i><span><b>₹{PAY.amount}</b> — adjusted in full against that program. If you continue, Thursday is free.</span></li>
-              <li><i>◆</i><span>
-                {L.venuePublic
-                  ? <>Venue: <b>{L.venuePublic}</b>, {EVENT.city}.</>
-                  : <>The venue goes to <b>registered students first</b>, by {EVENT.venueBy}.</>}
-              </span></li>
+              <li><i>◆</i><span><b>₹{PAY.amount}</b> — adjusted in full against that program. If you continue, the day is free.</span></li>
             </ul>
 
-            {today ? (
-              <Link href={WORKSHOP_PATH} className="btn-gold wsh-cta">About the two-month program →</Link>
-            ) : paused ? (
+            {paused ? (
               <p className="wsh-paused">Registration is paused for now. WhatsApp us and we will tell you the moment it reopens.</p>
             ) : (
               <button type="button" className="btn-gold wsh-cta" onClick={() => openWorkshop(from)}>

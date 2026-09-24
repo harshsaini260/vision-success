@@ -136,7 +136,10 @@ service cloud.firestore {
     match /workshopRegistrations/{ref} {
       allow create: if request.resource.data.keys().hasOnly([
             'ref', 'eventId', 'name', 'phone', 'email', 'who', 'want',
+            'college', 'stopId',
             'utr', 'amount', 'vpa', 'status', 'createdAt', 'source'])
+        && (!('college' in request.resource.data) || (request.resource.data.college is string && request.resource.data.college.size() <= 120))
+        && (!('stopId' in request.resource.data) || (request.resource.data.stopId is string && request.resource.data.stopId.size() <= 40))
         && request.resource.data.ref == ref
         && ref.matches('^JRS-[2-9A-HJKMNP-Z]{6}$')
         && request.resource.data.eventId == 'jrs-2026-10'
@@ -171,11 +174,11 @@ service cloud.firestore {
     }
 
     // What the admin panel publishes about the workshop. The public doc
-    // holds only what may be shown to anyone (host name, time, an
-    // announcement, a registration pause, and the venue once the admin
-    // chooses to show it). The private doc holds the real venue, which
-    // is emailed to registered students and is never publicly readable —
-    // that is what keeps "registered students hear first" true.
+    // holds only what may be shown to anyone: host name, an announcement,
+    // registration open/paused/ended, and the tour's stops (college and
+    // town, never a date). The private doc holds each stop's date, time
+    // and venue, which go only to that college's registered students —
+    // the date is never publicly readable.
     match /workshopConfig/{id} {
       allow read: if true;
       allow write: if isAdmin();

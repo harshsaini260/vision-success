@@ -22,6 +22,7 @@ import Opening from '@/components/Opening'
 import FreedomOffer from '@/components/FreedomOffer'
 import Creed from '@/components/Creed'
 import WorkshopHero from '@/components/workshop/WorkshopHero'
+import { WorkshopTourHome } from '@/components/workshop/WorkshopTour'
 import Motto from '@/components/Motto'
 import { playFanfare } from '@/lib/fanfare'
 import { sfxPop, sfxNope, sfxWhoosh, sfxChime } from '@/lib/sfx'
@@ -1016,12 +1017,14 @@ export default function HomePage() {
       <BattlefieldPopup />
       <Stars />
 
-      {/* ─── THE WORKSHOP — 1 October 2026, and only until then ───
-           Above the creed on purpose, and only for the ten days before the
-           workshop: a date-bound invitation is the one thing on this page
-           that expires. It removes itself when Thursday is over, and the
-           fixed order below (creed, three roads, proof) is untouched. ─── */}
+      {/* ─── THE WORKSHOP, ON TOUR ───
+           Above the creed on purpose, and only while the tour runs: it
+           removes itself when the owner ends the tour from the admin panel,
+           and the fixed order below (creed, three roads, proof) is
+           untouched. The rail under it is the tour — college by college,
+           every date sealed. ─── */}
       <WorkshopHero />
+      <WorkshopTourHome />
 
       {/* ─── THE CREED — the words this place runs on, before anything else ─── */}
       <Creed />

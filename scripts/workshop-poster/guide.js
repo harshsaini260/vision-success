@@ -163,7 +163,7 @@ async function main() {
   <div class="frame"></div>
   <div class="top"><span>Vision Success · ${esc(EVENT.city)}, Himachal Pradesh</span><span>The workshop guide</span></div>
   <div class="seal">₹${PAY.amount}<small>SEAL</small></div>
-  <div class="kicker">${esc(EVENT.name)} · ${esc(EVENT.dateLong)}</div>
+  <div class="kicker">${esc(EVENT.name)} · coming to your college</div>
   <h1>Nobody hires<br>a marksheet.</h1>
   <div class="slash"></div>
   <div class="h1b">${esc(COPY.headline2)}</div>
@@ -193,7 +193,7 @@ async function main() {
 
 <section class="page">
   <div class="frame"></div>
-  <div class="top"><span>${esc(EVENT.name)}</span><span>${esc(EVENT.dateLabel)}</span></div>
+  <div class="top"><span>${esc(EVENT.name)}</span><span>Date sealed</span></div>
 
   <div class="sec" style="margin-top:7mm">
     <div class="eyebrow">What you walk out with</div>
@@ -211,7 +211,7 @@ async function main() {
 
   <div class="gate">
     <div class="lock"><svg viewBox="0 0 48 48"><rect x="11" y="21" width="26" height="20" rx="4" fill="#FFF4EC"/><path d="M17 21v-6a7 7 0 0 1 14 0v6" fill="none" stroke="#FFF4EC" stroke-width="3"/><circle cx="24" cy="30" r="2.6" fill="#B3261E"/></svg></div>
-    <div class="eyebrow" style="color:#FFB347">After Thursday</div>
+    <div class="eyebrow" style="color:#FFB347">After the workshop</div>
     <h2>${esc(GATE.short)}</h2>
     <p style="margin-top:1.6mm">${esc(GATE.long)}</p>
   </div>
@@ -224,9 +224,9 @@ async function main() {
 
   <div class="row">
     <dl class="facts">
-      <div><dt>When</dt><dd>${esc(EVENT.dateLong)}. ${esc(L.timeLine)}</dd></div>
+      <div><dt>When</dt><dd>Sealed. ${esc(L.timeLine)}</dd></div>
       <div><dt>Where</dt><dd>${esc(L.venueLine)}</dd></div>
-      <div><dt>Registration closes</dt><dd>${esc(EVENT.closesLabel)}.</dd></div>
+      <div><dt>Registration</dt><dd>Open while your college is on the tour.</dd></div>
       <div><dt>Fee</dt><dd>₹${PAY.amount} by UPI — any app. ${esc(PAY.adjusted)}.</dd></div>
       <div><dt>Receipt</dt><dd>Emailed the moment you confirm your payment. We check every payment against our UPI statement and confirm your seat on WhatsApp.</dd></div>
       <div><dt>Questions</dt><dd>WhatsApp ${esc(SITE.phoneDisplay)}</dd></div>

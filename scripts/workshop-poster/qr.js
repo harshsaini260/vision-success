@@ -114,7 +114,7 @@ function inject(html, name, content) {
 }
 
 async function main() {
-  const { EVENT, PAY, HOST, COPY, ENDINGS, TRIAD, GATE, WORKSHOP_PATH } = await load('lib/workshop.js')
+  const { EVENT, PAY, HOST, COPY, ENDINGS, TRIAD, GATE, VENUE, WORKSHOP_PATH } = await load('lib/workshop.js')
   const { SITE } = await load('lib/site.js')
 
   /* The poster says SCAN TO REGISTER, so the scan lands inside the
@@ -135,9 +135,9 @@ async function main() {
     headline: COPY.headline,
     headline2: COPY.headline2,
     hinglish: COPY.hinglish,
-    weekday: EVENT.weekday,
-    dateLabel: EVENT.dateLabel,
-    year: EVENT.date.slice(0, 4),
+    /* No date is ever printed: the big date block reads "The date? Sealed." */
+    dateWord: 'The date?',
+    dateBig: 'Sealed.',
     amount: PAY.amount,
     walkIn: COPY.math[0],
     adjusted: PAY.adjusted,
@@ -146,8 +146,8 @@ async function main() {
     endings: ENDINGS.map((e) => e.title),
     triad: TRIAD,
     gate: GATE.short,
-    closesLabel: EVENT.closesLabel,
-    venueBy: EVENT.venueBy,
+    venueLine: VENUE.line,
+    sealedLine: 'The date goes only to each college’s registered students',
     url,
     urlLabel: url.replace(/^https?:\/\//, ''),
     phone: SITE.phoneDisplay,
@@ -163,7 +163,7 @@ async function main() {
   html = inject(html, 'DATA', block)
   fs.writeFileSync(HTML, html, 'utf8')
 
-  console.log(`qr.js  ${url}  ->  ${qr.modules}x${qr.modules} modules (ECC Q), copy for ${EVENT.dateLabel}`)
+  console.log(`qr.js  ${url}  ->  ${qr.modules}x${qr.modules} modules (ECC Q), copy: date sealed, venue ${VENUE.short}`)
 }
 
 main().catch((err) => {

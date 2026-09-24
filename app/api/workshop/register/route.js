@@ -4,7 +4,7 @@ import { sendMail, esc } from '@/lib/mail'
 import {
   EVENT, PAY, COPY, GATE, TRIAD, GUIDE_PDF, WHO_OPTIONS, WANT_OPTIONS,
   REF_RE, cleanUtr, validUtr, cleanPhone, validPhone, validEmail,
-  canConfirm, receiptFields, calendarUrl, withLive, CONFIG_DOC,
+  canConfirm, receiptFields, withLive, CONFIG_DOC,
 } from '@/lib/workshop'
 import { workshopConfig } from '@/lib/firestoreRest'
 
@@ -62,7 +62,8 @@ function receiptHtml(f, first, L) {
      <tr><td style="font-family:Arial,sans-serif;color:#D2B463;font-size:11px;letter-spacing:3px;padding:4px 0 22px;">RECEIPT &middot; ${esc(EVENT.name.toUpperCase())}</td></tr>
      <tr><td style="font-family:Georgia,serif;color:#E8F0F7;font-size:17px;line-height:1.6;padding-bottom:18px;">
        ${esc(first)}, you are in. Your receipt is below and attached as a picture &mdash;
-       keep it on your phone and show it at the door on ${esc(EVENT.dateLabel)}.
+       keep it on your phone and show it at the door on your college’s day. The date is sealed:
+       we send it to you privately, before the day.
      </td></tr>
      <tr><td>
       <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
@@ -72,7 +73,7 @@ function receiptHtml(f, first, L) {
         ${row('UPI reference', `<span style="font-family:Consolas,monospace;">${esc(f.utr)}</span>`)}
         ${row('Paid to', esc(f.paidTo))}
         ${row('Event', `${esc(f.event)}<br><span style="color:#B9C3D0;font-size:14px;">${esc(f.when)}</span>`)}
-        ${row('Venue', esc(f.where))}
+        ${row('Where', esc(f.where))}
         ${row('Issued', esc(f.issued))}
       </table>
      </td></tr>
@@ -89,8 +90,7 @@ function receiptHtml(f, first, L) {
        <a href="${esc(SITE.url + GUIDE_PDF)}" style="color:#E6D29A;">Read the workshop guide (PDF) &rarr;</a>
      </td></tr>
      <tr><td style="padding:22px 0 6px;">
-       <a href="${esc(calendarUrl())}" style="display:inline-block;background:#D2B463;color:#081428;font-family:Arial,sans-serif;font-weight:bold;font-size:13px;letter-spacing:1px;text-decoration:none;padding:12px 18px;border-radius:999px;margin:0 8px 8px 0;">Add ${esc(EVENT.dateLabel)} to your calendar</a>
-       <a href="${esc(wa(`Hi! I registered for the ${EVENT.name}. Receipt ${f.ref}, UPI ref ${f.utr}.`))}" style="display:inline-block;border:1px solid #D2B463;color:#E8F0F7;font-family:Arial,sans-serif;font-size:13px;text-decoration:none;padding:11px 18px;border-radius:999px;">Message us on WhatsApp</a>
+       <a href="${esc(wa(`Namaste ${SITE.contactName}! I registered for the ${EVENT.name}. Receipt ${f.ref}, UPI ref ${f.utr}.`))}" style="display:inline-block;background:#D2B463;color:#081428;font-family:Arial,sans-serif;font-weight:bold;font-size:13px;text-decoration:none;padding:12px 18px;border-radius:999px;">WhatsApp ${esc(SITE.contactName)} — ${esc(SITE.phoneDisplay)}</a>
      </td></tr>
      <tr><td style="padding-top:22px;border-top:1px solid rgba(232,240,247,0.12);">
        <p style="font-family:Georgia,serif;color:#D2B463;font-size:18px;font-style:italic;margin:16px 0 6px;">${esc(COPY.headline)} ${esc(COPY.headline2)}</p>
@@ -111,6 +111,7 @@ function notifyHtml(f, who, want, ip) {
       <tr><td><b>Email</b></td><td>${esc(f.email)}</td></tr>
       <tr><td><b>Is</b></td><td>${esc(who || '—')}</td></tr>
       <tr><td><b>Wants</b></td><td>${esc(want || '—')}</td></tr>
+      <tr><td><b>College</b></td><td><b>${esc(f.college || '—')}</b></td></tr>
       <tr><td><b>Amount</b></td><td>${esc(f.amount)}</td></tr>
       <tr><td><b>UPI ref</b></td><td style="font-family:Consolas,monospace;font-size:16px;"><b>${esc(f.utr)}</b></td></tr>
       <tr><td><b>Issued</b></td><td>${esc(f.issued)}</td></tr>
@@ -145,6 +146,7 @@ export async function POST(req) {
   const utr = cleanUtr(p?.utr)
   const who = WHO_OPTIONS.includes(p?.who) ? p.who : ''
   const want = WANT_OPTIONS.find((o) => o.id === p?.want)?.label || ''
+  const college = String(p?.college || '').replace(/\s+/g, ' ').trim().slice(0, 120)
 
   const bad = []
   if (!REF_RE.test(ref)) bad.push('ref')
@@ -160,7 +162,7 @@ export async function POST(req) {
   /* Whatever the admin panel has published — time, a public venue — goes
      on the receipt; the private venue does not, it is sent separately. */
   const L = withLive(await workshopConfig(CONFIG_DOC.join('/')))
-  const f = receiptFields({ ref, name, phone, email, utr, issued }, L)
+  const f = { ...receiptFields({ ref, name, phone, email, utr, issued, college }, L), college }
   const first = name.split(' ')[0]
 
   /* The picture is optional and only ever a JPEG of sane size. */
@@ -173,14 +175,14 @@ export async function POST(req) {
   const [student, institute] = await Promise.all([
     sendMail({
       to: email,
-      subject: `Your receipt ${ref} — ${EVENT.name}, ${EVENT.dateLabel}`,
+      subject: `Your receipt ${ref} — ${EVENT.name}, date sealed`,
       html: receiptHtml(f, first, L),
       replyTo: SITE.email,
       attachments,
     }),
     sendMail({
       to: NOTIFY,
-      subject: `Workshop · ${name} · UPI ${utr} · ${ref}`,
+      subject: `Workshop · ${name} · ${college || 'college not given'} · UPI ${utr} · ${ref}`,
       html: notifyHtml(f, who, want, ip),
       replyTo: email,
     }),

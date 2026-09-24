@@ -2753,3 +2753,11 @@ main a.link-underline:hover { background-size: 100% 1px; }
    All-caps strips the shape out of a word and slows reading; Apple
    sets controls in title or sentence case. Sizes are untouched. */
 .btn-gold, .btn-ghost { text-transform: none; letter-spacing: 0.005em; }
+
+/* Tarun's name rides the floating WhatsApp button on desktop: it slides
+   out on hover and on keyboard focus, so the button says who answers. */
+.floating-whatsapp { overflow: visible; }
+.fw-name { position: absolute; left: calc(100% + 10px); top: 50%; transform: translate(-8px, -50%); opacity: 0; pointer-events: none; white-space: nowrap;
+  padding: 8px 12px; border-radius: 999px; background: #0D1C34; border: 1px solid rgba(37, 211, 102, 0.55); color: #E8F0F7;
+  font-family: var(--font-ui); font-size: 13px; font-weight: 700; transition: opacity .2s ease, transform .2s ease; }
+.floating-whatsapp:hover .fw-name, .floating-whatsapp:focus-visible .fw-name { opacity: 1; transform: translate(0, -50%); }

@@ -231,9 +231,9 @@ function SuccessScreen({ name, course, booking }) {
         style={{ borderTop: '1px solid rgba(255,255,255,0.08)' }}
       >
         <p className="text-gray-500 text-sm">
-          Need us urgently?{' '}
-          <a href="tel:+918219254332" className="font-semibold hover:underline" style={{ color: 'var(--accent)' }}>
-            +91 82192 54332
+          Need us urgently? Call {SITE.contactName}:{' '}
+          <a href={`tel:${SITE.phoneTel}`} className="font-semibold hover:underline phone-cta" style={{ color: 'var(--accent)' }}>
+            {SITE.phoneDisplay}
           </a>
         </p>
       </motion.div>

@@ -1313,7 +1313,7 @@ export default function AdminPage() {
   const [user, setUser] = useState(null)
   const [legacy, setLegacy] = useState(false)
   const [ready, setReady] = useState(false)
-  /* The workshop tab leads until 1 October — it is the one list that
+  /* The workshop tab leads while the tour runs — it is the one list that
      needs checking every day, against the UPI statement. */
   const [activeTab, setActiveTab] = useState('Workshop')
 

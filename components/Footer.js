@@ -1,5 +1,6 @@
 import Link from 'next/link'
-import { SITE } from '@/lib/site'
+import { SITE, wa } from '@/lib/site'
+import TarunCard from '@/components/TarunCard'
 import Logo from '@/components/Logo'
 import Icon from '@/components/Icon'
 
@@ -62,7 +63,7 @@ export default function Footer() {
                 className={`whatsapp-cta ${ROW}`}
               >
                 <Icon name="whatsapp" size={18} className="text-gold-400 shrink-0" />
-                <span>WhatsApp us</span>
+                <span>WhatsApp {SITE.contactName}</span>
               </a>
               <a href={`mailto:${SITE.email}`} className={ROW}>
                 <Icon name="mail" size={18} className="text-gold-400 shrink-0" />
@@ -161,7 +162,7 @@ export default function Footer() {
                   color: '#FF0000',
                 },
                 {
-                  href: 'https://wa.me/918219254332',
+                  href: `https://wa.me/${SITE.whatsapp}`,
                   icon: 'whatsapp',
                   label: 'WhatsApp',
                   color: '#25D366',
@@ -185,20 +186,15 @@ export default function Footer() {
               ))}
             </div>
 
-            <div
-              className="rounded-xl p-4"
-              style={{ background: 'rgba(var(--accent-rgb),0.06)', border: '1px solid rgba(var(--accent-rgb),0.15)' }}
+            <TarunCard />
+            <a
+              href={wa(`Namaste ${SITE.contactName}! Please add me to Vision Success updates.`)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-2 min-h-[44px] text-[15px] font-semibold text-gold-400 hover:underline flex items-center gap-1.5 whatsapp-cta"
             >
-              <p className="text-[13px] text-gray-400 mb-1">Get updates on WhatsApp</p>
-              <a
-                href="https://wa.me/918219254332?text=Hi! Please add me to Vision Success updates"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="min-h-[44px] text-[15px] font-semibold text-gold-400 hover:underline flex items-center gap-1.5"
-              >
-                Join the WhatsApp group <Icon name="arrowRight" size={16} />
-              </a>
-            </div>
+              Get updates on WhatsApp <Icon name="arrowRight" size={16} />
+            </a>
           </div>
         </div>
 

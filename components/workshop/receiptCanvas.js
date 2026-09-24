@@ -3,7 +3,7 @@
    is the one thing the student keeps. So it is not a till slip. It is
    the back of a haori, a nobori banner: indigo cloth, a gold border tied
    at the corners, a crest, and a red seal pressed into it. The whole
-   portal promises that you walk out of Thursday carrying something; this
+   portal promises that you walk out of the day carrying something; this
    is the first thing you carry.
 
    Why a canvas, and not HTML or SVG:
@@ -137,7 +137,7 @@ export function receiptText(fields) {
       { label: 'Amount', value: or(f.amount), kind: 'amount' },
       { label: 'UPI reference', value: or(f.utr), kind: 'code' },
       { label: 'Paid to', value: or(f.paidTo), kind: 'code' },
-      { label: 'Date of event', value: or(f.when), kind: 'date' },
+      { label: 'Date', value: or(f.when), kind: 'date' },
       { label: 'Venue', value: or(f.where), kind: 'place' },
       { label: 'Issued', value: issuedLabel(f.issued), kind: 'plain' },
     ],

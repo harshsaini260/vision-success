@@ -283,9 +283,9 @@ export default function SatSchools({ faqs = [] }) {
           {sent ? (
             <div className="sts-done" role="status">
               <h3>Thank you — we have it.</h3>
-              <p>We will be in touch to agree the date and send you the script. If you would rather talk now, WhatsApp us.</p>
+              <p>We will be in touch to agree the date and send you the script. If you would rather talk now, WhatsApp {SITE.contactName}.</p>
               <a className="sts-wa whatsapp-cta" href={wa(WA_PRINCIPAL.replace('___', f.school.trim() || '___'))} target="_blank" rel="noopener noreferrer">
-                <Icon name="whatsapp" size={20} /> WhatsApp the institute
+                <Icon name="whatsapp" size={20} /> WhatsApp {SITE.contactName}
               </a>
             </div>
           ) : (
@@ -315,7 +315,7 @@ export default function SatSchools({ faqs = [] }) {
               <label className="sts-field"><span>A possible date or period</span><input value={f.when} onChange={set('when')} placeholder="e.g. any Saturday in October, 4th period" /></label>
               {err && <p className="sts-err" role="alert">{err}</p>}
               <button type="submit" className="btn-gold sts-submit" disabled={busy}>{busy ? 'Sending…' : 'Request the SAT session'}</button>
-              <p className="sts-fine">We use this only to arrange the session. Or WhatsApp us directly: <a className="whatsapp-cta" style={{ color: 'var(--accent-light)', textDecoration: 'underline' }} href={wa(WA_PRINCIPAL)} target="_blank" rel="noopener noreferrer">{SITE.phoneDisplay}</a></p>
+              <p className="sts-fine">We use this only to arrange the session. Or WhatsApp {SITE.contactName} directly: <a className="whatsapp-cta" style={{ color: 'var(--accent-light)', textDecoration: 'underline' }} href={wa(WA_PRINCIPAL)} target="_blank" rel="noopener noreferrer">{SITE.phoneDisplay}</a></p>
             </form>
           )}
         </div>

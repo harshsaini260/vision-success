@@ -1,0 +1,29 @@
+/* ─── Tarun — the person behind the number ─── */
+.tarun { padding: 16px; border-radius: 18px; background: rgba(var(--accent-rgb), 0.06); border: 1px solid rgba(var(--accent-rgb), 0.22); }
+.tarun-top { display: flex; align-items: center; gap: 12px; }
+.tarun-face { position: relative; flex: 0 0 56px; width: 56px; height: 56px; }
+.tarun-face svg { width: 100%; height: 100%; display: block; }
+.tf-bg { fill: #142946; stroke: rgba(210, 180, 99, 0.6); stroke-width: 1.5; }
+.tf-body { fill: #D2B463; }
+.tf-skin { fill: #C68B5E; }
+.tf-hair { fill: #1B1410; }
+.tf-eye { fill: #1B1410; }
+.tf-smile { fill: none; stroke: #1B1410; stroke-width: 1.4; stroke-linecap: round; }
+.tf-arm { stroke: #D2B463; stroke-width: 3.2; stroke-linecap: round; }
+.tf-hand { transform-origin: 47px 49px; animation: tf-wave 2.4s ease-in-out 1s 2; }
+@keyframes tf-wave { 0%, 60%, 100% { transform: rotate(0); } 10%, 30% { transform: rotate(-18deg); } 20%, 40% { transform: rotate(10deg); } }
+.tarun-dot { position: absolute; right: 1px; bottom: 2px; width: 13px; height: 13px; border-radius: 50%; background: #8E9AAE; border: 2px solid #0D1C34; }
+.tarun-dot.is-open { background: #4AD07D; box-shadow: 0 0 0 0 rgba(74, 208, 125, 0.6); animation: wsh-pulse 1.8s ease-out infinite; }
+.tarun-hi { font-family: var(--font-display); font-size: 21px; font-weight: 600; line-height: 1.15; color: #fff; }
+.tarun-role { margin-top: 2px; font-size: 14px; line-height: 1.45; color: #B7C1D0; }
+.tarun-status { margin-top: 12px; font-size: 14px; line-height: 1.45; color: #D5DCE6; min-height: 20px; }
+.tarun-asks { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 8px; }
+.tarun-ask { min-height: 44px; display: inline-flex; align-items: center; padding: 0 14px; border-radius: 999px; font-family: var(--font-ui); font-size: 14px; font-weight: 600;
+  color: #E8F0F7; border: 1px solid rgba(232, 240, 247, 0.22); background: rgba(0, 0, 0, 0.18); }
+.tarun-ask:hover { border-color: #25D366; color: #fff; }
+.tarun-go { margin-top: 14px; display: flex; gap: 8px; flex-wrap: wrap; }
+.tarun-wa, .tarun-call { min-height: 48px; display: inline-flex; align-items: center; gap: 8px; padding: 0 16px; border-radius: 12px; font-family: var(--font-ui); font-size: 15px; font-weight: 700; }
+.tarun-wa { background: #25D366; color: #05320f; flex: 1 1 auto; justify-content: center; }
+.tarun-call { color: var(--bone); border: 1px solid rgba(var(--accent-rgb), 0.45); }
+.tarun--compact { padding: 14px; }
+@media (prefers-reduced-motion: reduce) { .tf-hand, .tarun-dot.is-open { animation: none; } }

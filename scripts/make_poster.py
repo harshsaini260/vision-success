@@ -146,7 +146,7 @@ def build(path="public/qr/Vision-Success-Scan-Me-Poster.pdf"):
     c.setLineWidth(0.6)
     c.line(28 * mm, 34 * mm, W - 28 * mm, 34 * mm)
     centered(c, "VISION SUCCESS", serif, 17, 25 * mm, INK, tracking=2.2)
-    centered(c, "Near Old Bus Stand, Near Sabji Mandi, Una  ·  +91 82192 54332", sans, 8.5, 19 * mm, FAINT)
+    centered(c, "Near Old Bus Stand, Near Sabji Mandi, Una  ·  +91 62833 27481", sans, 8.5, 19 * mm, FAINT)
     centered(c, "visionsuccessuna.com/start", sans, 8.5, 14 * mm, FAINT)
 
     c.showPage()

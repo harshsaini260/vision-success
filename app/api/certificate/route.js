@@ -45,14 +45,14 @@ function body({ name, ref, date }) {
         <a href="https://visionsuccessuna.com/start" style="color:#E6D29A;">Get a free written study plan &rarr;</a>
       </p>
       <p style="margin:0;">
-        <a href="https://wa.me/918219254332" style="color:#E6D29A;">Ask us anything on WhatsApp &rarr;</a>
+        <a href="https://wa.me/916283327481" style="color:#E6D29A;">Ask us anything on WhatsApp &rarr;</a>
       </p>
      </td></tr>
      <tr><td style="padding-top:26px;border-top:1px solid rgba(232,240,247,0.12);margin-top:24px;">
        <p style="font-family:Georgia,serif;color:#C8A951;font-size:18px;font-style:italic;margin:18px 0 6px;">
          They say it's not possible. We say: no &mdash; it's necessary.</p>
        <p style="font-family:Arial,sans-serif;color:#9A927F;font-size:12px;margin:0;">
-         Near Old Bus Stand, Una, Himachal Pradesh 174303 &middot; +91 82192 54332 &middot; visionsuccessuna.com</p>
+         Near Old Bus Stand, Una, Himachal Pradesh 174303 &middot; +91 62833 27481 &middot; visionsuccessuna.com</p>
      </td></tr>
     </table>
    </td></tr>

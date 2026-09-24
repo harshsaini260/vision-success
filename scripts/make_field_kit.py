@@ -70,7 +70,7 @@ PAPER = HexColor("#FBFCFE")
 
 M = 50
 SITE = "VisionSuccessUna.com"
-PHONE = "+91 82192 54332"
+PHONE = "+91 62833 27481"
 ADDR = "Near Old Bus Stand, Near Sabji Mandi, Una, Himachal Pradesh 174303"
 
 # ── the three people, in the order they appear in the brochure ──

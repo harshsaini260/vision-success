@@ -9,7 +9,7 @@ export default function GlobalError({ error, reset }) {
           <div>
             <div style={{ fontSize: '56px', marginBottom: '16px' }}>⚠️</div>
             <h1 style={{ fontSize: '28px', margin: '0 0 12px' }}>Something went wrong</h1>
-            <p style={{ color: '#9aa3ad', margin: '0 0 24px' }}>Please refresh the page or call us at +91 82192 54332.</p>
+            <p style={{ color: '#9aa3ad', margin: '0 0 24px' }}>Please refresh the page or call Tarun at +91 62833 27481.</p>
             <button
               onClick={() => reset()}
               style={{ background: '#D4AF37', color: 'var(--ink-3)', border: 'none', padding: '14px 28px', borderRadius: '12px', fontWeight: 700, fontSize: '15px', cursor: 'pointer' }}

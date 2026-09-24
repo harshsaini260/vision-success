@@ -6,11 +6,10 @@ import { SITE, wa } from '@/lib/site'
 import {
   EVENT, PAY, COPY, GATE, WHO_OPTIONS, WANT_OPTIONS,
   REG_COLLECTION, STATS_DOC, STORE_KEY, WORKSHOP_PATH,
-  makeRef, upiUri, receiptFields, calendarUrl,
+  makeRef, upiUri, receiptFields, SEALED,
   cleanPhone, validPhone, validEmail, cleanUtr, validUtr,
   isOpen, canConfirm,
 } from '@/lib/workshop'
-import useCountdown from './useCountdown'
 import useWorkshopLive from './useWorkshopLive'
 
 /* ─── THE PORTAL — who, pay, confirm, receipt ───
@@ -29,7 +28,7 @@ import useWorkshopLive from './useWorkshopLive'
                on their receipt, in our inbox and in the admin panel, and
                it is what we check against the statement.
    4  RECEIPT  The cloak. Emailed, downloadable, and one tap from our
-               WhatsApp, which is where the venue goes first.
+               WhatsApp, which is where each college's sealed date goes.
 
    Nothing is lost to a closed tab. Each step is written to localStorage
    the moment it is reached, and the host reopens the portal where the
@@ -61,13 +60,11 @@ const persist = (s) => {
 const withTimeout = (p, ms) =>
   Promise.race([p, new Promise((_, rej) => setTimeout(() => rej(new Error('timeout')), ms))])
 
-const pad = (n) => String(n).padStart(2, '0')
-
 export default function WorkshopPortal({ onClose, source = 'site' }) {
   const [s, setS] = useState(() => {
     const saved = typeof window === 'undefined' ? {} : load()
     if (saved.ref && saved.stage) return saved
-    return { stage: 'details', ref: '', name: '', phone: '', email: '', who: '', want: '', utr: '' }
+    return { stage: 'details', ref: '', name: '', phone: '', email: '', who: '', want: '', utr: '', college: '', stopId: '' }
   })
   const [errors, setErrors] = useState({})
   const [busy, setBusy] = useState(false)
@@ -80,8 +77,8 @@ export default function WorkshopPortal({ onClose, source = 'site' }) {
   const paySide = useRef(null)
   const dialogRef = useRef(null)
   const honey = useRef(null)
-  const clock = useCountdown()
   const L = useWorkshopLive()
+  const openStops = L.stops.filter((st) => st.status !== 'held' && st.open !== false)
 
   const update = useCallback((patch, save = true) => {
     setS((prev) => {
@@ -114,7 +111,7 @@ export default function WorkshopPortal({ onClose, source = 'site' }) {
   const stageIndex = STEPS.findIndex((x) => x.id === s.stage)
   /* Closed for someone new: past the deadline, or paused from the admin
      panel. Anyone already holding a reference can still finish. */
-  const closedForNew = (!isOpen() || L.paused) && !s.ref
+  const closedForNew = (!isOpen() || L.paused || L.ended) && !s.ref
   const closedForAll = !canConfirm() && s.stage !== 'done'
 
   /* ── step 1 ── */
@@ -123,12 +120,13 @@ export default function WorkshopPortal({ onClose, source = 'site' }) {
     if (honey.current?.value) return
     const err = {}
     if (s.name.trim().length < 2) err.name = 'Your full name, as it should appear on the receipt.'
-    if (!validPhone(s.phone)) err.phone = 'A 10-digit Indian mobile number — the venue comes here on WhatsApp.'
+    if (!validPhone(s.phone)) err.phone = 'A 10-digit Indian mobile number — your college’s date comes here on WhatsApp.'
     if (!validEmail(s.email)) err.email = 'Your receipt is emailed here, so it has to be real.'
+    if (String(s.college || '').trim().length < 2) err.college = 'Pick your college — or type it — so your sealed date reaches you.'
     setErrors(err)
     if (Object.keys(err).length) return
     const ref = s.ref || makeRef()
-    update({ ref, stage: 'pay', name: s.name.trim(), phone: cleanPhone(s.phone), email: s.email.trim().toLowerCase(), source: s.source || source })
+    update({ ref, stage: 'pay', name: s.name.trim(), phone: cleanPhone(s.phone), email: s.email.trim().toLowerCase(), college: String(s.college).trim().slice(0, 120), stopId: s.stopId || '', source: s.source || source })
   }
 
   /* ── step 2 ── */
@@ -161,7 +159,8 @@ export default function WorkshopPortal({ onClose, source = 'site' }) {
 
     const reg = {
       ref: s.ref, eventId: EVENT.id, name: s.name, phone: s.phone, email: s.email,
-      who: s.who || '', want: s.want || '', utr, amount: PAY.amount, vpa: PAY.vpa,
+      who: s.who || '', want: s.want || '', college: String(s.college || '').slice(0, 120), stopId: String(s.stopId || '').slice(0, 40),
+      utr, amount: PAY.amount, vpa: PAY.vpa,
       status: 'submitted', source: (s.source || 'site').slice(0, 20),
     }
 
@@ -237,20 +236,20 @@ export default function WorkshopPortal({ onClose, source = 'site' }) {
   }
 
   const fields = useMemo(
-    () => (s.stage === 'done' ? receiptFields({ ref: s.ref, name: s.name, phone: s.phone, email: s.email, utr: s.utr, issued: s.issued }, L) : null),
+    () => (s.stage === 'done' ? receiptFields({ ref: s.ref, name: s.name, phone: s.phone, email: s.email, utr: s.utr, issued: s.issued, college: s.college }, L) : null),
     [s.stage, s.ref, s.name, s.phone, s.email, s.utr, s.issued, L],
   )
 
   const waConfirm = wa(
-    `Namaste! I have registered for the ${EVENT.name} (${EVENT.dateLabel}).\n` +
-    `Name: ${s.name}\nReceipt: ${s.ref}\nUPI ref: ${cleanUtr(s.utr) || '—'}\nPlease send me the venue.`,
+    `Namaste ${SITE.contactName}! I have registered for the ${EVENT.name}.\n` +
+    `Name: ${s.name}\nCollege: ${s.college || '—'}\nReceipt: ${s.ref}\nUPI ref: ${cleanUtr(s.utr) || '—'}\nPlease send me my college’s date.`,
   )
   const waStuck = wa(
     `Namaste! I paid ₹${PAY.amount} for the ${EVENT.name} but could not finish online.\n` +
     `Name: ${s.name}\nPhone: ${s.phone}\nReference: ${s.ref}\nUPI ref: ${cleanUtr(s.utr) || '—'}`,
   )
   const shareText =
-    `${COPY.headline} ${COPY.headline2}\n${EVENT.name} · ${EVENT.dateLabel} · ₹${PAY.amount}, adjusted against the two-month program.\n` +
+    `${COPY.headline} ${COPY.headline2}\n${EVENT.name} · coming to your college · date sealed · ₹${PAY.amount}, adjusted against the two-month program.\n` +
     `${SITE.url}${WORKSHOP_PATH}`
 
   const share = async () => {
@@ -265,7 +264,7 @@ export default function WorkshopPortal({ onClose, source = 'site' }) {
     attempts.current = 0
     setForged(false)
     setFail(null)
-    setS({ stage: 'details', ref: '', name: '', phone: '', email: '', who: '', want: '', utr: '' })
+    setS({ stage: 'details', ref: '', name: '', phone: '', email: '', who: '', want: '', utr: '', college: '', stopId: '' })
   }
 
   const download = async () => {
@@ -286,7 +285,7 @@ export default function WorkshopPortal({ onClose, source = 'site' }) {
       >
         <header className="wsp-head">
           <div className="wsp-head-row">
-            <span className="wsp-brand">{EVENT.name} · {EVENT.dateLabel}</span>
+            <span className="wsp-brand">{EVENT.name} · coming to your college</span>
             <button type="button" className="wsp-x" onClick={onClose} aria-label="Close" disabled={busy}>×</button>
           </div>
           {!closedForNew && !closedForAll && (
@@ -303,11 +302,8 @@ export default function WorkshopPortal({ onClose, source = 'site' }) {
               ))}
             </ol>
           )}
-          {clock && clock.phase === 'open' && s.stage !== 'done' && (
-            <p className="wsp-clock" aria-live="off">
-              Registration closes in{' '}
-              <b>{clock.d > 0 ? `${clock.d}d ` : ''}{pad(clock.h)}:{pad(clock.m)}:{pad(clock.s)}</b>
-            </p>
+          {s.stage !== 'done' && (
+            <p className="wsp-clock">Date: <b>sealed</b> — told only to your college’s registered students.</p>
           )}
         </header>
 
@@ -315,20 +311,20 @@ export default function WorkshopPortal({ onClose, source = 'site' }) {
           {/* ── registration is over ── */}
           {(closedForNew || closedForAll) ? (
             <section className="wsp-panel wsp-center">
-              <h2 id="wsp-title" className="wsp-h">Registration has closed.</h2>
+              <h2 id="wsp-title" className="wsp-h">{L.paused ? 'Registration is paused.' : 'The tour has ended.'}</h2>
               <p className="wsp-p">
-                The workshop is {EVENT.dateLabel}, and the two-month {EVENT.program} is only for people who
-                attend it. Ask us when the next workshop is — that is the way in.
+                The two-month {EVENT.program} is only for people who attend the workshop. WhatsApp {SITE.contactName} and
+                he will tell you when registration reopens — or when the workshop can come to your college.
               </p>
-              <a className="btn-gold wsp-btn whatsapp-cta" href={wa(`Namaste! I missed registration for the ${EVENT.name}. When is the next one?`)} target="_blank" rel="noopener noreferrer">
-                Tell me when the next one is
+              <a className="btn-gold wsp-btn whatsapp-cta" href={wa(`Namaste ${SITE.contactName}! Please tell me when the ${EVENT.name} registration reopens.`)} target="_blank" rel="noopener noreferrer">
+                Ask {SITE.contactName} on WhatsApp
               </a>
             </section>
           ) : s.stage === 'details' ? (
             /* ── 1 · you ── */
             <form className="wsp-panel" onSubmit={submitDetails} noValidate>
-              <h2 id="wsp-title" className="wsp-h">Who is walking in on {EVENT.weekday}?</h2>
-              <p className="wsp-p">Three things, so your receipt and the venue reach you. Nothing else, ever.</p>
+              <h2 id="wsp-title" className="wsp-h">Who is walking in?</h2>
+              <p className="wsp-p">A few things, so your receipt — and your college’s sealed date — reach you. Nothing else, ever.</p>
 
               <label className="wsp-field">
                 <span>Full name</span>
@@ -374,6 +370,45 @@ export default function WorkshopPortal({ onClose, source = 'site' }) {
                 />
                 {errors.email && <em role="alert">{errors.email}</em>}
               </label>
+
+              {openStops.length > 0 && (
+              <fieldset className="wsp-chips">
+                <legend>My college</legend>
+                {openStops.map((st) => (
+                  <button
+                    key={st.id}
+                    type="button"
+                    className={`wsp-chip${s.stopId === st.id ? ' is-on' : ''}`}
+                    aria-pressed={s.stopId === st.id}
+                    onClick={() => update({ stopId: st.id, college: st.college }, false)}
+                  >
+                    {st.college}
+                  </button>
+                ))}
+                <button
+                  type="button"
+                  className={`wsp-chip${s.stopId === 'other' ? ' is-on' : ''}`}
+                  aria-pressed={s.stopId === 'other'}
+                  onClick={() => update({ stopId: 'other', college: '' }, false)}
+                >
+                  Not listed
+                </button>
+              </fieldset>
+              )}
+              {(s.stopId === 'other' || !openStops.length) && (
+                <label className="wsp-field">
+                  <span>Your college — or school, or where you work</span>
+                  <input
+                    value={s.stopId === 'other' || !openStops.length ? s.college || '' : ''}
+                    onChange={(e) => update({ college: e.target.value, stopId: 'other' }, false)}
+                    maxLength={120}
+                    autoComplete="organization"
+                    aria-invalid={!!errors.college}
+                    placeholder="e.g. Govt. College, Una"
+                  />
+                </label>
+              )}
+              {errors.college && <em className="wsp-err" role="alert">{errors.college}</em>}
 
               <fieldset className="wsp-chips">
                 <legend>I am</legend>
@@ -539,12 +574,9 @@ export default function WorkshopPortal({ onClose, source = 'site' }) {
 
               <div className="wsp-actions">
                 <a className="btn-gold wsp-btn whatsapp-cta" href={waConfirm} target="_blank" rel="noopener noreferrer">
-                  Send it to us on WhatsApp — the venue comes here first
+                  Send it to {SITE.contactName} on WhatsApp — your college’s date comes here
                 </a>
-                <div className="wsp-row">
-                  <button type="button" className="btn-ghost wsp-btn" onClick={download}>Download receipt</button>
-                  <a className="btn-ghost wsp-btn" href={calendarUrl()} target="_blank" rel="noopener noreferrer">Add to calendar</a>
-                </div>
+                <button type="button" className="btn-ghost wsp-btn" onClick={download}>Download receipt</button>
                 <button type="button" className="wsp-bring" onClick={share}>
                   Bring someone who needs this →
                 </button>
