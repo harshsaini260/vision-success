@@ -40,7 +40,9 @@ export default function PortalHost() {
        that is where the poster's QR code and every shared link land. */
     const url = new URL(window.location.href)
     if (url.hash === '#register' || url.searchParams.get('register') === '1') {
-      if (isVisible() || canConfirm()) { setFrom('link'); setOpen(true) }
+      /* Only while the workshop is live — a poster scanned during the
+         hold lands on /workshop's held page, not on a payment form. */
+      if (isVisible()) { setFrom('link'); setOpen(true) }
     } else {
       try {
         const s = JSON.parse(localStorage.getItem(STORE_KEY) || 'null')
@@ -53,7 +55,7 @@ export default function PortalHost() {
     /* A #register link followed from within the site changes only the hash
        — no reload — so the check above never sees it. Listen for that too. */
     const onHash = () => {
-      if (window.location.hash === '#register' && (isVisible() || canConfirm())) {
+      if (window.location.hash === '#register' && isVisible()) {
         setFrom('link')
         setOpen(true)
       }

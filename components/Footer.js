@@ -97,7 +97,8 @@ export default function Footer() {
                    reach from a course page: what it costs, and the two-minute
                    questionnaire that asks for nothing. */
                 { href: '/fees', label: 'Fees' },
-                { href: '/workshop', label: 'Job-Ready Workshop' },
+                { href: '/defence', label: 'NDA · Air Force · Navy' },
+                /* ON HOLD — { href: '/workshop', label: 'Job-Ready Workshop' }, */
                 { href: '/start', label: 'Free Study Plan' },
                 { href: '/courses', label: 'Courses' },
                 { href: '/coaching-in-una', label: 'Coaching in Una' },

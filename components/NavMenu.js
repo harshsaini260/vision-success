@@ -28,7 +28,8 @@ const GROUPS = [
   {
     head: 'Study with us',
     items: [
-      ['/workshop', 'Job-Ready Workshop', 'On tour · date sealed · ₹299'],
+      ['/defence', 'NDA · Air Force · Navy', 'And the Merchant Navy — from Una'],
+      /* ON HOLD — ['/workshop', 'Job-Ready Workshop', 'On tour · date sealed · ₹299'], */
       ['/courses', 'All courses', 'Eight doors, one screen'],
       ['/fees', 'Fees', 'Published in full'],
       ['/sat', 'SAT — study abroad', 'Taught by a 1540 scorer'],

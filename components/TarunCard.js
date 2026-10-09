@@ -23,7 +23,7 @@ const ASKS = [
   ['Fees', 'Fees ke baare mein jaanna hai.'],
   ['A free demo', 'Free demo class book karni hai.'],
   ['The SAT', 'SAT ke baare mein jaanna hai.'],
-  ['The workshop', 'Job-Ready Workshop ke baare mein jaanna hai.'],
+  /* ON HOLD — ['The workshop', 'Job-Ready Workshop ke baare mein jaanna hai.'], */
 ]
 
 /* Office hours from SITE.hours: Mon–Sat, 9:00–14:00, India time. */

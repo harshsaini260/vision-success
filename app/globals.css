@@ -26,6 +26,35 @@
   --font-display: 'Cormorant Garamond', 'Iowan Old Style', Georgia, serif;
   --font-ui: 'Inter', -apple-system, sans-serif;
   --font-hand: 'Caveat', 'Segoe Script', cursive;
+
+  /* ── The uniform (lib/defence.js) ──
+     Two more voices for the defence pages only: an inscriptional capital
+     for names cut in stone — the letters of a war memorial — and a
+     Devanagari serif for the services' mottos, printed as they print
+     them. */
+  --font-engrave: 'Cinzel', 'Trajan Pro', 'Cormorant Garamond', Georgia, serif;
+  --font-deva: 'Tiro Devanagari Sanskrit', 'Noto Serif Devanagari', 'Nirmala UI', serif;
+
+  /* The flag, as a thread: its three colours, muted to sit on ink
+     without shouting. Used as hairlines, never as fills. */
+  --saffron: #E8913A;
+  --saffron-rgb: 232, 145, 58;
+  --india-green: #2A9152;
+  --india-green-rgb: 42, 145, 82;
+  --chakra: #2B3F9E;
+
+  /* One palette per uniform: [deep, base, light]. */
+  --army-deep: #1F2617;  --army: #6E7C43;  --army-light: #B7C38A;   /* olive drab, sun on a ridge */
+  --navy-deep: #06162F;  --navy: #1D4B8F;  --navy-light: #8FB2E6;   /* deep water, a white ensign */
+  --sky-deep: #0C2238;   --sky: #4F8CC9;   --sky-light: #BFDDF7;    /* altitude, contrail white */
+  --sea-deep: #052E31;   --sea: #12807F;   --sea-light: #86D3CB;    /* open ocean, a brass compass */
+
+  /* The Param Vir Chakra's ribbon is plain purple; bronze is the medal. */
+  --pvc: #5B2C86;
+  --pvc-light: #A27CCB;
+  --bronze-deep: #6B4E2A;
+  --bronze: #B08A52;
+  --bronze-light: #EBD2A0;
 }
 
 * {

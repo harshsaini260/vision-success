@@ -11,6 +11,7 @@ import Analytics from '@/components/Analytics'
 import StickyActionBar from '@/components/StickyActionBar'
 import PortalHost from '@/components/workshop/PortalHost'
 import { SITE } from '@/lib/site'
+import { DEVANAGARI_TEXT } from '@/lib/defence'
 
 export const metadata = {
   metadataBase: new URL(SITE.url),
@@ -146,7 +147,13 @@ export default function RootLayout({ children }) {
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700;800&family=Caveat:wght@600;700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700;800&family=Caveat:wght@600;700&family=Cinzel:wght@500;600;700&display=swap"
+          rel="stylesheet"
+        />
+        {/* The services' mottos in Devanagari: only the glyphs those few
+            words use (lib/defence.js → DEVANAGARI_TEXT), a few kilobytes. */}
+        <link
+          href={`https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Sanskrit&display=swap&text=${encodeURIComponent(DEVANAGARI_TEXT)}`}
           rel="stylesheet"
         />
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />

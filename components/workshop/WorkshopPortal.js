@@ -8,7 +8,7 @@ import {
   REG_COLLECTION, STATS_DOC, STORE_KEY, WORKSHOP_PATH,
   makeRef, upiUri, receiptFields, SEALED,
   cleanPhone, validPhone, validEmail, cleanUtr, validUtr,
-  isOpen, canConfirm,
+  isOpen, canConfirm, phase,
 } from '@/lib/workshop'
 import useWorkshopLive from './useWorkshopLive'
 
@@ -311,7 +311,7 @@ export default function WorkshopPortal({ onClose, source = 'site' }) {
           {/* ── registration is over ── */}
           {(closedForNew || closedForAll) ? (
             <section className="wsp-panel wsp-center">
-              <h2 id="wsp-title" className="wsp-h">{L.paused ? 'Registration is paused.' : 'The tour has ended.'}</h2>
+              <h2 id="wsp-title" className="wsp-h">{phase() === 'hold' ? 'The workshop is on hold.' : L.paused ? 'Registration is paused.' : 'The tour has ended.'}</h2>
               <p className="wsp-p">
                 The two-month {EVENT.program} is only for people who attend the workshop. WhatsApp {SITE.contactName} and
                 he will tell you when registration reopens — or when the workshop can come to your college.

@@ -1,0 +1,281 @@
+/* ─── DefenceHero (components/defence/DefenceHero.js) ───
+   Every entrance here is a CSS keyframe with fill-mode both, so the words
+   arrive on the first frame from the stylesheet alone — no waiting for
+   React to hydrate before the headline exists. */
+
+.dh {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  min-height: 100vh;
+  min-height: 100svh;
+  padding: 116px 20px 210px;
+  background:
+    radial-gradient(110% 70% at 78% 6%, rgba(79, 140, 201, 0.2), transparent 60%),
+    radial-gradient(80% 55% at 8% 96%, rgba(var(--saffron-rgb), 0.08), transparent 60%),
+    linear-gradient(180deg, #040A18 0%, var(--ink) 52%, var(--ink-2) 100%);
+}
+@media (min-width: 900px) {
+  .dh { min-height: 94vh; padding: 140px 48px 230px; }
+}
+
+/* a sky of very small, slow stars */
+.dh-sky {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background-image:
+    radial-gradient(1px 1px at 12% 22%, rgba(255, 255, 255, 0.55), transparent 60%),
+    radial-gradient(1px 1px at 28% 64%, rgba(255, 255, 255, 0.35), transparent 60%),
+    radial-gradient(1.5px 1.5px at 44% 14%, rgba(255, 255, 255, 0.5), transparent 60%),
+    radial-gradient(1px 1px at 61% 38%, rgba(255, 255, 255, 0.4), transparent 60%),
+    radial-gradient(1px 1px at 72% 58%, rgba(255, 255, 255, 0.3), transparent 60%),
+    radial-gradient(1.5px 1.5px at 86% 26%, rgba(255, 255, 255, 0.55), transparent 60%),
+    radial-gradient(1px 1px at 93% 70%, rgba(255, 255, 255, 0.35), transparent 60%),
+    radial-gradient(1px 1px at 6% 48%, rgba(255, 255, 255, 0.4), transparent 60%);
+  animation: dh-twinkle 7s ease-in-out infinite alternate;
+}
+@keyframes dh-twinkle { from { opacity: 0.55; } to { opacity: 1; } }
+
+/* जय हिन्द — felt more than read */
+.dh-mark {
+  position: absolute;
+  z-index: -1;
+  right: -6vw;
+  top: 16%;
+  font-family: var(--font-deva);
+  font-size: clamp(8rem, 30vw, 24rem);
+  line-height: 1;
+  white-space: nowrap;
+  color: rgba(var(--accent-rgb), 0.06);
+  pointer-events: none;
+  user-select: none;
+  animation: dh-breathe 11s ease-in-out infinite alternate;
+}
+@keyframes dh-breathe { from { opacity: 0.6; } to { opacity: 1; } }
+
+/* the contrail */
+.dh-trail {
+  position: absolute;
+  z-index: -1;
+  top: 64px;
+  right: 0;
+  width: min(100%, 980px);
+  height: 52%;
+  pointer-events: none;
+}
+.dh-trail-line {
+  fill: none;
+  stroke: url(#dh-trail-g);
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: dh-draw-trail 14s linear infinite;
+}
+@keyframes dh-draw-trail {
+  0% { stroke-dashoffset: 1; opacity: 1; }
+  26% { stroke-dashoffset: 0; opacity: 1; }
+  60% { stroke-dashoffset: 0; opacity: 0.55; }
+  86% { stroke-dashoffset: 0; opacity: 0; }
+  100% { stroke-dashoffset: 1; opacity: 0; }
+}
+
+.dh-inner {
+  position: relative;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+/* the flag, as a thread */
+.dh-thread {
+  display: grid;
+  gap: 3px;
+  width: 132px;
+  margin-bottom: 22px;
+}
+.dh-thread i {
+  display: block;
+  height: 1.5px;
+  border-radius: 2px;
+  transform-origin: left center;
+  animation: dh-thread 1.1s cubic-bezier(0.2, 0.7, 0.1, 1) both;
+}
+.dh-thread i:nth-child(1) { background: var(--saffron); animation-delay: 0.05s; }
+.dh-thread i:nth-child(2) { background: var(--bone); animation-delay: 0.18s; }
+.dh-thread i:nth-child(3) { background: var(--india-green); animation-delay: 0.31s; }
+@keyframes dh-thread { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+.dh-kicker {
+  font-family: var(--font-engrave);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--accent);
+  animation: dh-fade 0.9s ease both 0.25s;
+}
+
+.dh-title {
+  margin: 18px 0 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(2.55rem, 10.4vw, 5.6rem);
+  line-height: 1.02;
+  letter-spacing: -0.01em;
+  color: var(--bone);
+}
+.dh-line { display: block; }
+.dh-phrase {
+  position: relative;
+  display: inline-block;
+  margin-right: 0.28em;
+}
+.dh-mask {
+  display: inline-block;
+  overflow: hidden;
+  padding: 0 0.04em 0.14em 0;
+  margin-bottom: -0.14em;
+  vertical-align: bottom;
+}
+.dh-word {
+  display: inline-block;
+  animation: dh-rise 1s cubic-bezier(0.2, 0.75, 0.1, 1) both;
+  animation-delay: calc(0.35s + var(--i) * 0.24s);
+}
+@keyframes dh-rise { from { transform: translateY(108%); } to { transform: none; } }
+
+.dh-under {
+  position: absolute;
+  left: 0;
+  right: 0.3em;
+  bottom: 0.02em;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--tone);
+  opacity: 0.85;
+  transform-origin: left center;
+  animation: dh-thread 0.9s cubic-bezier(0.2, 0.7, 0.1, 1) both;
+  animation-delay: calc(1.05s + var(--i) * 0.24s);
+}
+
+.dh-turn {
+  display: block;
+  margin-top: 0.18em;
+  font-style: italic;
+  font-weight: 500;
+  background: linear-gradient(100deg, var(--accent-light) 0%, var(--accent) 45%, var(--accent-dark) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: dh-fade-up 1.1s cubic-bezier(0.2, 0.7, 0.1, 1) both 1.55s;
+}
+
+.dh-dek {
+  max-width: 38rem;
+  margin-top: 22px;
+  font-size: 1.02rem;
+  line-height: 1.65;
+  color: var(--bone-dim);
+  animation: dh-fade-up 1s ease both 1.8s;
+}
+
+.dh-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 28px;
+  animation: dh-fade-up 1s ease both 2s;
+}
+.dh-ctas a { min-height: 48px; }
+@media (max-width: 480px) {
+  .dh-ctas a { flex: 1 1 100%; }
+}
+
+.dh-stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 42px;
+  max-width: 880px;
+  border-top: 1px solid var(--hairline);
+  animation: dh-fade 1.2s ease both 2.2s;
+}
+@media (min-width: 760px) {
+  .dh-stats { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+.dh-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 18px 14px 4px 0;
+  border-bottom: 1px solid var(--hairline);
+}
+@media (min-width: 760px) {
+  .dh-stat { border-bottom: 0; padding-right: 18px; }
+  .dh-stat + .dh-stat { padding-left: 18px; border-left: 1px solid var(--hairline); }
+}
+.dh-stat-n {
+  font-family: var(--font-display);
+  font-size: clamp(1.9rem, 6vw, 2.5rem);
+  font-weight: 600;
+  line-height: 1;
+  color: var(--accent-light);
+  font-variant-numeric: tabular-nums;
+}
+.dh-stat-n small {
+  font-size: 0.5em;
+  font-weight: 500;
+  color: var(--bone-dim);
+}
+.dh-stat-l {
+  font-size: 0.78rem;
+  line-height: 1.4;
+  color: var(--bone-dim);
+}
+
+/* the hills */
+.dh-ridge {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  pointer-events: none;
+}
+.dh-ridge--far {
+  bottom: -10px;
+  height: 200px;
+  z-index: -1;
+  fill: #0B1A31;
+  opacity: 0.9;
+}
+.dh-ridge--near {
+  bottom: -40px;
+  height: 190px;
+  z-index: 0;
+}
+@media (min-width: 900px) {
+  .dh-ridge--far { height: 260px; }
+  .dh-ridge--near { height: 230px; }
+}
+.dh-ridge-fill { fill: var(--ink-2); }
+.dh-ridge-rim {
+  fill: none;
+  stroke: rgba(var(--accent-rgb), 0.55);
+  stroke-width: 1.2;
+  vector-effect: non-scaling-stroke;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: dh-rim 3.2s cubic-bezier(0.3, 0.6, 0.2, 1) both 0.6s;
+}
+@keyframes dh-rim { to { stroke-dashoffset: 0; } }
+
+@keyframes dh-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes dh-fade-up {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dh *, .dh *::before, .dh *::after { animation: none !important; }
+  .dh-trail { display: none; }
+  .dh-ridge-rim { stroke-dashoffset: 0; }
+}

@@ -11,7 +11,8 @@ export default function sitemap() {
     /* Fees is the page people actually search for and the one nobody else
        in this district publishes. It ranks second only to the homepage. */
     { url: `${SITE.url}/fees`, lastModified: now, changeFrequency: 'monthly', priority: 0.95 },
-    { url: `${SITE.url}/workshop`, lastModified: now, changeFrequency: 'daily', priority: 0.95 },
+    { url: `${SITE.url}/defence`, lastModified: now, changeFrequency: 'weekly', priority: 0.95 },
+    /* ON HOLD — { url: `${SITE.url}/workshop`, lastModified: now, changeFrequency: 'daily', priority: 0.95 }, */
     ...COURSES.map((c) => ({
       url: `${SITE.url}/courses/${c.id}`,
       lastModified: now,
