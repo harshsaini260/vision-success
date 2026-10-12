@@ -16,7 +16,7 @@ import './tour.css'
 
    Statuses the admin sets: 'next' (the ticket is lit), 'sealed' (ahead),
    'held' (stamped done). The last ticket is always an open invitation —
-   "your college next?" — straight to Tarun on WhatsApp. */
+   "your college next?" — straight to Surinder Singh on WhatsApp. */
 
 export default function WorkshopTour({ title = true, stops: preview }) {
   const L = useWorkshopLive()
@@ -55,7 +55,7 @@ export default function WorkshopTour({ title = true, stops: preview }) {
         <a role="listitem" className="wtr-tix wtr-tix--you whatsapp-cta" href={ask} target="_blank" rel="noopener noreferrer">
           <div className="wtr-tix-top"><span>Stop {String(stops.length + 1).padStart(2, '0')}</span><span>Open</span></div>
           <h3 className="wtr-college">Your college?</h3>
-          <p className="wtr-town">{stops.length ? 'Not on the tour yet? One message to Tarun puts it in line.' : 'The first stops are being sealed now. Yours could be one of them.'}</p>
+          <p className="wtr-town">{stops.length ? 'Not on the tour yet? One message to Surinder Singh puts it in line.' : 'The first stops are being sealed now. Yours could be one of them.'}</p>
           <div className="wtr-perf" aria-hidden />
           <div className="wtr-foot">
             <div><span className="wtr-k">Ask {SITE.contactName}</span><b className="wtr-wa"><Icon name="whatsapp" size={18} /> WhatsApp</b></div>

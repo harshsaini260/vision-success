@@ -42,10 +42,10 @@ export default function StickyActionBar() {
         className="sab-wa whatsapp-cta"
         aria-label={`WhatsApp ${SITE.contactName}`}
       >
-        <Icon name="whatsapp" size={22} />{!workshop && <span>WhatsApp {SITE.contactName}</span>}
+        <Icon name="whatsapp" size={22} />{!workshop && <span>WhatsApp {SITE.contactName.split(" ")[0]}</span>}
       </a>
       <a href={`tel:${SITE.phoneTel}`} className="sab-call phone-cta" aria-label={`Call ${SITE.contactName}`}>
-        <Icon name="phone" size={20} />{!workshop && <span>Call {SITE.contactName}</span>}
+        <Icon name="phone" size={20} />{!workshop && <span>Call {SITE.contactName.split(" ")[0]}</span>}
       </a>
     </div>
   )
