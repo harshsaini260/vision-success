@@ -9,7 +9,7 @@ import { SAT_SCHOOL_FAQS } from './faq'
    its back-cover QR code points here. */
 
 export const metadata = {
-  title: 'The SAT, For Your School — A Free Session for Classes 9–12 | Vision Success Una',
+  title: { absolute: 'Free SAT Session for Schools, Classes 9–12 | Vision Success' },
   description:
     'A proposal for principals in and around Una, Himachal Pradesh: one free 40-minute period that tells Classes 9–12 what the Digital SAT is, when to sit it and where it leads — from Una’s first SAT desk. Nothing sold; every figure sourced.',
   alternates: { canonical: `${SITE.url}/sat/schools` },

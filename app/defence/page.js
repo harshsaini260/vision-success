@@ -13,7 +13,7 @@ const DESC =
   'Watch our 60-second NDA briefing, then talk to us.'
 
 export const metadata = {
-  title: 'NDA, Air Force, Navy & Merchant Navy Coaching in Una',
+  title: 'NDA, Air Force & Navy Coaching in Una, HP',
   description: DESC,
   alternates: { canonical: `${SITE.url}${DEFENCE_PATH}` },
   openGraph: {
@@ -23,7 +23,6 @@ export const metadata = {
     siteName: SITE.name,
     locale: 'en_IN',
     type: 'website',
-    images: [{ url: `${SITE.url}/video/nda-briefing-poster.jpg`, width: 576, height: 1024 }],
   },
 }
 

@@ -1,4 +1,4 @@
-import { SITE } from '@/lib/site'
+import { SITE, OG_IMAGE } from '@/lib/site'
 import { getExamLanding } from '@/lib/examLanding'
 import ExamLanding from '@/components/ExamLanding'
 
@@ -9,6 +9,7 @@ export const metadata = {
   description: cfg.meta.description,
   alternates: { canonical: `${SITE.url}/enroll/neet` },
   openGraph: {
+    images: [OG_IMAGE],
     title: cfg.meta.title,
     description: cfg.meta.description,
     url: `${SITE.url}/enroll/neet`,

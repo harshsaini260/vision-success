@@ -7,7 +7,7 @@ import SatExperience from './SatExperience'
    lives in SatExperience (client). */
 
 export const metadata = {
-  title: 'SAT Coaching in Una, HP | Digital SAT Prep & Next Exam Countdown',
+  title: 'SAT Coaching in Una, HP — Digital SAT Prep',
   description:
     'What is the SAT? One digital exam, one score out of 1600, considered by 4,000+ colleges in the US and 65 other countries and 60 institutions in India. Learn from a mentor who scored 1540 himself. All 8 SAT test dates, three questions to try, and Digital SAT prep in Una — free demo class.',
   alternates: { canonical: `${SITE.url}/sat` },

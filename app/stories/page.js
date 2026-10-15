@@ -1,14 +1,15 @@
-import { SITE } from '@/lib/site'
+import { SITE, OG_IMAGE } from '@/lib/site'
 import Documentary from '@/components/Documentary'
 
 export const metadata = {
-  title: 'Student Stories — The Documentary | Vision Success Una',
+  title: { absolute: 'Student Stories — The Documentary | Vision Success Una' },
   description:
     'Real students from Una, filmed in our classroom: how they prepared for the SAT, NDA, NEET and JEE, in their own words. Not actors, not stock footage.',
   keywords:
     'Vision Success student stories, coaching results Una, NDA success story Himachal, SAT student Una, student testimonial video',
   alternates: { canonical: `${SITE.url}/stories` },
   openGraph: {
+    images: [OG_IMAGE],
     title: 'Student Stories — The Documentary | Vision Success',
     description: 'Real students, real preparation, filmed in Una.',
     url: `${SITE.url}/stories`,

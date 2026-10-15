@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation'
 import { COURSES, getCourse } from '@/lib/courses'
-import { SITE } from '@/lib/site'
+import { SITE, OG_IMAGE } from '@/lib/site'
 import CourseDetail from './CourseDetail'
 
 export function generateStaticParams() {
@@ -16,6 +16,7 @@ export async function generateMetadata({ params }) {
     description: course.description.slice(0, 158),
     alternates: { canonical: `/courses/${course.id}` },
     openGraph: {
+    images: [OG_IMAGE],
       title: `${course.title} — Vision Success Una`,
       description: course.tagline,
       url: `${SITE.url}/courses/${course.id}`,

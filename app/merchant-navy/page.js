@@ -10,11 +10,11 @@ import MerchantNavyPage from '@/components/merchant/MerchantNavyPage'
 const URL_ = `${SITE.url}${MN_PATH}`
 const TITLE = 'Merchant Navy after Class 12 — the full roadmap'
 const DESC =
-  'IMU-CET, DNS vs B.Sc Nautical Science vs Marine Engineering, preparation, the interview and life at sea — ' +
-  'watch the 84-second film, then get the full Merchant Navy roadmap free on WhatsApp. Vision Success, Una.'
+  'Merchant Navy after Class 12: IMU-CET, DNS vs B.Sc Nautical Science vs Marine Engineering, preparation and ' +
+  'life at sea. Free roadmap on WhatsApp.'
 
 export const metadata = {
-  title: { absolute: `${TITLE} | Vision Success Una` },
+  title: { absolute: `${TITLE} | Vision Success` },
   description: DESC,
   alternates: { canonical: URL_ },
   openGraph: {
@@ -24,9 +24,8 @@ export const metadata = {
     siteName: SITE.name,
     locale: 'en_IN',
     type: 'website',
-    images: [{ url: `${SITE.url}${MN_FILM.poster}`, width: 720, height: 1280, alt: TITLE }],
   },
-  twitter: { card: 'summary_large_image', title: TITLE, description: DESC, images: [`${SITE.url}${MN_FILM.poster}`] },
+  twitter: { card: 'summary_large_image', title: TITLE, description: DESC },
 }
 
 const SCHEMA = {

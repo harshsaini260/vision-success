@@ -14,7 +14,7 @@ import { NextResponse } from 'next/server'
 
 const OWNER_EMAIL = 'harshsaini0502@gmail.com'
 const FIREBASE_API_KEY =
-  process.env.NEXT_PUBLIC_FIREBASE_API_KEY || 'AIzaSyBo2AbB75E2TWoqcJ0oGhY-fCuga6yCyEI'
+  process.env.NEXT_PUBLIC_FIREBASE_API_KEY || 'AIzaSyDs5Mtwm_kYW4_Yq-pWpDndvMZDaHBRF2o'
 
 async function isOwner(idToken) {
   if (!idToken) return false

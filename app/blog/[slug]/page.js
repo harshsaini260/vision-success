@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { SITE } from '@/lib/site'
+import { SITE, OG_IMAGE } from '@/lib/site'
 import { POSTS, getPost } from '@/lib/blog'
 
 /* Statically generated at build time — instantly indexable, zero JS
@@ -20,6 +20,7 @@ export function generateMetadata({ params }) {
     keywords: (post.keywords || []).join(', '),
     alternates: { canonical: `${SITE.url}/blog/${post.slug}` },
     openGraph: {
+    images: [OG_IMAGE],
       title: post.seoTitle || post.title,
       description: post.seoDescription || post.excerpt,
       url: `${SITE.url}/blog/${post.slug}`,

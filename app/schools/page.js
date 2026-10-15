@@ -1,14 +1,15 @@
-import { SITE } from '@/lib/site'
+import { SITE, OG_IMAGE } from '@/lib/site'
 import SchoolsPage from './SchoolsPage'
 
 export const metadata = {
-  title: 'Free Career Seminar For Your School | Vision Success, Una Himachal',
+  title: { absolute: 'Free Career Seminar for Schools in Una | Vision Success' },
   description:
     'A free 40-minute career-awareness seminar for Class 9–12 students in Una, Himachal Pradesh. No fees, no sales pitch, nothing sold to students. Read the proposal and request a date.',
   keywords:
     'free career seminar school Una, career counselling Himachal Pradesh, school career guidance Una, career awareness session Class 10, stream selection guidance Himachal, NDA NEET JEE SAT awareness seminar',
   alternates: { canonical: `${SITE.url}/schools` },
   openGraph: {
+    images: [OG_IMAGE],
     title: 'Career Clarity, Before It’s Late — A Free Seminar For Your School',
     description:
       'A free 40-minute career-awareness session for Class 9–12. Zero cost to the school or families. Nothing sold to students.',

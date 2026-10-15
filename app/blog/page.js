@@ -1,17 +1,18 @@
-import { SITE } from '@/lib/site'
+import { SITE, OG_IMAGE } from '@/lib/site'
 import { POSTS } from '@/lib/blog'
 import BlogIndex from './BlogIndex'
 
 export const metadata = {
   /* absolute: the root layout template already appends the institute
      name, which was producing "… | Vision Success Una | Vision Success Una" */
-  title: { absolute: 'Blog — Study Strategy, Exam Method & Ambition | Vision Success Una' },
+  title: { absolute: 'Blog — Study Strategy & Exam Method | Vision Success' },
   description:
     'Honest writing on SAT strategy, NDA and NEET preparation, study method and ambition — from Vision Success Coaching Institute, Una, Himachal Pradesh. Plus a new question to think about every day.',
   keywords:
     'SAT strategy blog, NDA preparation tips, NEET biology strategy, how to study without motivation, study abroad from small town India, coaching blog Una Himachal',
   alternates: { canonical: `${SITE.url}/blog` },
   openGraph: {
+    images: [OG_IMAGE],
     title: 'Vision Success Blog — Una, Himachal',
     description: 'Strategy, method, and arguments about ambition. A new question every day.',
     url: `${SITE.url}/blog`,

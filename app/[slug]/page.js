@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { SEO_PAGES, getSeoPage, WHY_US, FEES_NOTE } from '@/lib/seoPages'
-import { SITE, wa } from '@/lib/site'
+import { SITE, wa, OG_IMAGE } from '@/lib/site'
 import { DESK_FILM, deskFilmFiles, deskVideoSchema } from '@/lib/studyAbroad'
 import StudyAbroadFilm from '@/components/StudyAbroadFilm'
 import Icon from '@/components/Icon'
@@ -46,7 +46,7 @@ export async function generateMetadata({ params }) {
               },
             ],
           }
-        : {}),
+        : { images: [OG_IMAGE] }),
     },
   }
 }
@@ -210,8 +210,8 @@ export default async function SeoLandingPage({ params }) {
           <p className="text-gray-300 text-sm mb-2">{page.fee}</p>
           <p className="text-gray-400 text-sm">
             💛 {FEES_NOTE}{' '}
-            <a href={enquiryWa} target="_blank" rel="noopener noreferrer" className="whatsapp-cta text-gold-400 font-semibold hover:underline">
-              Ask about current fees on WhatsApp →
+            <a href="/fees" className="text-gold-400 font-semibold hover:underline">
+              See every fee →
             </a>
           </p>
         </section>

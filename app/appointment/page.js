@@ -806,9 +806,28 @@ function BookingFlow() {
 
 /* useSearchParams requires a Suspense boundary in the App Router —
    without this wrapper, `next build` fails on this page. */
+/* What the server sends before the form hydrates — and all a crawler
+   ever sees of this page, because useSearchParams() makes everything
+   inside the Suspense boundary client-only. It used to be null: an empty
+   page in Google's eyes. Now it carries the heading and the two ways to
+   book without the form. */
+function AppointmentShell() {
+  return (
+    <section className="min-h-[70vh] px-5 pt-28 pb-16 text-center" style={{ background: 'var(--ink)' }}>
+      <h1 className="text-3xl sm:text-5xl font-semibold text-white leading-tight" style={{ fontFamily: 'var(--font-display)' }}>
+        Book Your Free Demo Class in Una
+      </h1>
+      <p className="mt-4 text-base" style={{ color: 'var(--bone-dim)' }}>
+        A free class and free counselling at Vision Success, Una — NDA, Merchant Navy, JEE, NEET, SAT, IELTS and Class 9–12.
+        Call or WhatsApp {SITE.contactName} on <a href={`tel:${SITE.phoneTel}`} className="underline">{SITE.phoneDisplay}</a>.
+      </p>
+    </section>
+  )
+}
+
 export default function AppointmentPage() {
   return (
-    <Suspense fallback={null}>
+    <Suspense fallback={<AppointmentShell />}>
       <BookingFlow />
     </Suspense>
   )

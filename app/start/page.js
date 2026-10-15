@@ -5,6 +5,7 @@ import SurveyExperience from './SurveyExperience'
    noindexed: it's a doorway, not a page to be found by search. */
 
 export const metadata = {
+  alternates: { canonical: '/start' },
   title: 'One question at a time 🐾',
   description: 'Pola has a few things to ask you.',
   robots: { index: false, follow: false },
