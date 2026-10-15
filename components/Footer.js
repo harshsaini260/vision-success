@@ -98,6 +98,7 @@ export default function Footer() {
                    questionnaire that asks for nothing. */
                 { href: '/fees', label: 'Fees' },
                 { href: '/defence', label: 'NDA · Air Force · Navy' },
+                { href: '/merchant-navy', label: 'Merchant Navy roadmap' },
                 /* ON HOLD — { href: '/workshop', label: 'Job-Ready Workshop' }, */
                 { href: '/start', label: 'Free Study Plan' },
                 { href: '/courses', label: 'Courses' },

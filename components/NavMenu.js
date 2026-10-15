@@ -28,7 +28,8 @@ const GROUPS = [
   {
     head: 'Study with us',
     items: [
-      ['/defence', 'NDA · Air Force · Navy', 'And the Merchant Navy — from Una'],
+      ['/defence', 'NDA · Air Force · Navy', 'The uniform — from Una'],
+      ['/merchant-navy', 'Merchant Navy roadmap', 'After Class 12 · IMU-CET · free'],
       /* ON HOLD — ['/workshop', 'Job-Ready Workshop', 'On tour · date sealed · ₹299'], */
       ['/courses', 'All courses', 'Eight doors, one screen'],
       ['/fees', 'Fees', 'Published in full'],
