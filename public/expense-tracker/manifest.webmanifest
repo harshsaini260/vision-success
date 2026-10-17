@@ -1,0 +1,91 @@
+{
+ "id": "./",
+ "name": "Vision Success Ledger",
+ "short_name": "VS Ledger",
+ "description": "Every rupee the institute takes and spends, in one calm place.",
+ "lang": "en-IN",
+ "dir": "ltr",
+ "start_url": "./",
+ "scope": "./",
+ "display": "standalone",
+ "orientation": "any",
+ "background_color": "#e8eee5",
+ "theme_color": "#e8eee5",
+ "categories": [
+  "finance",
+  "business",
+  "education"
+ ],
+ "icons": [
+  {
+   "src": "icon-192.png",
+   "sizes": "192x192",
+   "type": "image/png",
+   "purpose": "any"
+  },
+  {
+   "src": "icon-512.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "any"
+  },
+  {
+   "src": "icon-maskable-512.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "maskable"
+  },
+  {
+   "src": "icon.svg",
+   "sizes": "any",
+   "type": "image/svg+xml"
+  }
+ ],
+ "shortcuts": [
+  {
+   "name": "Students and fees",
+   "short_name": "Students and fees",
+   "url": "./students",
+   "icons": [
+    {
+     "src": "icon-192.png",
+     "sizes": "192x192"
+    }
+   ]
+  },
+  {
+   "name": "Staff and salaries",
+   "short_name": "Staff and salaries",
+   "url": "./staff",
+   "icons": [
+    {
+     "src": "icon-192.png",
+     "sizes": "192x192"
+    }
+   ]
+  },
+  {
+   "name": "Rent",
+   "short_name": "Rent",
+   "url": "./rent",
+   "icons": [
+    {
+     "src": "icon-192.png",
+     "sizes": "192x192"
+    }
+   ]
+  },
+  {
+   "name": "Posting",
+   "short_name": "Posting",
+   "url": "./social",
+   "icons": [
+    {
+     "src": "icon-192.png",
+     "sizes": "192x192"
+    }
+   ]
+  }
+ ],
+ "screenshots": []
+}

@@ -14,7 +14,7 @@ import { SITE } from '@/lib/site'
    The llms.txt files (app/llms.txt, app/llms-full.txt) are the plain-text
    summary these assistants read first. */
 
-const PRIVATE = ['/admin', '/api/']
+const PRIVATE = ['/admin', '/api/', '/expense-tracker']
 
 const AI_AGENTS = [
   'GPTBot', 'OAI-SearchBot', 'ChatGPT-User',            // OpenAI
