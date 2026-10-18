@@ -13,6 +13,7 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import { sfxPop } from '@/lib/sfx'
+import WantedPoster, { Silhouette, initialsOf } from '@/components/wanted/WantedPoster'
 
 /* youtube / drive / direct → embeddable src */
 function embedFor(url = '') {
@@ -23,8 +24,6 @@ function embedFor(url = '') {
   return null
 }
 
-/* aged tones — brass, moss, ink-blue, oxblood, bronze */
-const ACCENTS = ['#C8A951', '#5E8A6E', '#3D6E96', '#9B4B3F', '#8F7530']
 
 export default function StudentStories() {
   const [stories, setStories] = useState([])
@@ -68,74 +67,48 @@ export default function StudentStories() {
         </div>
 
         {/* the rail */}
-        <div className="flex gap-3 overflow-x-auto snap-x snap-mandatory pb-3 -mx-4 px-4 story-rail">
+        <div className="flex gap-5 overflow-x-auto snap-x snap-mandatory pt-2 pb-3 -mx-4 px-4 story-rail">
           {stories.map((s, i) => {
-            const accent = ACCENTS[i % ACCENTS.length]
             const hasVideo = !!embedFor(s.videoUrl || '')
             return (
-              <button
+              /* a poster is an <article>, which a <button> may not hold —
+                 so the card is a div, and only a playable one acts as a button */
+              <div
                 key={s.id}
                 onClick={() => { sfxPop(); if (hasVideo) setPlaying(s) }}
-                className="story-card flex-shrink-0 snap-center relative overflow-hidden rounded-xl text-left"
-                style={{ border: `1px solid ${accent}55`, cursor: hasVideo ? 'pointer' : 'default' }}
-                aria-label={`${s.name} — ${s.course || 'student story'}`}
+                onKeyDown={(e) => { if (hasVideo && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); setPlaying(s) } }}
+                role={hasVideo ? 'button' : undefined}
+                tabIndex={hasVideo ? 0 : undefined}
+                className="story-card story-card--wanted flex-shrink-0 snap-center relative text-left"
+                style={{ cursor: hasVideo ? 'pointer' : 'default' }}
+                aria-label={hasVideo ? `${s.name} — ${s.course || 'student story'}, play the episode` : undefined}
               >
-                {/* poster art */}
-                <div
-                  className="absolute inset-0"
-                  style={{ background: `linear-gradient(165deg, ${accent}2E 0%, var(--ink-3) 55%, var(--ink) 100%)` }}
+                <WantedPoster
+                  size="xs"
+                  name={s.name || 'A student'}
+                  bounty={Math.max(1, Math.min(5, s.rating || 5)) * 100_000_000}
+                  tilt={[-1.5, 1.2, -0.8, 1.6][i % 4]}
+                  sway={false}
+                  face={
+                    <>
+                      <Silhouette initials={initialsOf(s.name)} />
+                      {hasVideo && <span className="story-play" aria-hidden>▶</span>}
+                    </>
+                  }
                 />
-                {/* episode ribbon */}
-                <span
-                  className="absolute top-2 left-2 text-[8px] font-semibold px-1.5 py-0.5 rounded uppercase tracking-widest z-10"
-                  style={{ background: accent, color: 'var(--ink-2)', fontFamily: 'var(--font-ui)' }}
-                >
-                  {hasVideo ? '▶ Episode' : 'S1 · Note'}
-                </span>
-
-                <div className="relative z-10 h-full flex flex-col justify-end p-3">
-                  {hasVideo && (
-                    <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-11 h-11 rounded-full flex items-center justify-center"
-                      style={{ background: 'rgba(255,255,255,0.92)', color: 'var(--ink-2)' }}>
-                      ▶
-                    </span>
-                  )}
-                  {!hasVideo && (
-                    <p className="text-[11px] text-gray-300 leading-snug mb-2 line-clamp-4 italic">
-                      “{s.review}”
-                    </p>
-                  )}
-                  <div className="flex items-center gap-1 mb-1">
-                    {Array.from({ length: s.rating || 5 }).map((_, j) => (
-                      <span key={j} className="text-[9px]" style={{ color: accent }}>★</span>
-                    ))}
-                  </div>
-                  <div className="text-xs font-semibold text-white leading-tight" style={{ fontFamily: 'var(--font-display)' }}>
-                    {s.name}
-                  </div>
-                  <div className="text-[9px] text-gray-400 truncate">{s.course}</div>
-                  {/* progress bar — the Netflix tell */}
-                  <div className="mt-2 h-[3px] rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.15)' }}>
-                    <div className="h-full rounded-full" style={{ width: hasVideo ? '62%' : '100%', background: accent }} />
-                  </div>
-                </div>
-              </button>
+              </div>
             )
           })}
 
-          {/* the always-present invitation */}
-          <Link
-            href="/reviews"
-            className="story-card flex-shrink-0 snap-center rounded-xl flex flex-col items-center justify-center text-center p-3 relative overflow-hidden"
-            style={{ border: '1px dashed rgba(var(--accent-rgb),0.5)', background: 'rgba(var(--accent-rgb),0.05)' }}
-          >
-            <span className="text-2xl mb-1">🎬</span>
-            <span className="text-xs font-semibold text-white leading-tight" style={{ fontFamily: 'var(--font-display)' }}>
-              {stories.length === 0 ? 'Be the first story' : 'Could be you'}
-            </span>
-            <span className="text-[9px] text-gray-400 mt-1 leading-snug">
-              {stories.length === 0 ? 'Studied with us? Tell it.' : 'Next episode, your name.'}
-            </span>
+          {/* the always-present invitation — wanted: you */}
+          <Link href="/reviews" className="story-card story-card--wanted flex-shrink-0 snap-center relative" aria-label="Put up your own wanted poster">
+            <WantedPoster
+              size="xs"
+              name={stories.length === 0 ? 'First?' : 'You?'}
+              tilt={1.2}
+              sway={false}
+              face={<Silhouette mystery />}
+            />
           </Link>
         </div>
 

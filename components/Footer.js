@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { SITE, wa } from '@/lib/site'
+import { SITE, STUDIO, wa } from '@/lib/site'
 import TarunCard from '@/components/TarunCard'
 import Logo from '@/components/Logo'
 import Icon from '@/components/Icon'
@@ -206,11 +206,22 @@ export default function Footer() {
           style={{ borderTop: '1px solid rgba(var(--accent-rgb),0.08)' }}
         >
           <p>© {new Date().getFullYear()} Vision Success Coaching Institute, Una, Himachal Pradesh. All rights reserved.</p>
-          <div className="flex items-center gap-1">
-            <span>Built with</span>
-            <span className="text-red-500">❤️</span>
-            <span>for Una&apos;s future officers</span>
-          </div>
+          {/* the maker's mark — who built the site, pressed in wax */}
+          <a
+            href={STUDIO.url}
+            target="_blank"
+            rel="noopener"
+            className="maker"
+            aria-label={`Website by ${STUDIO.name}, founded by ${STUDIO.founder} — ${STUDIO.host}`}
+          >
+            <span className="maker-seal" aria-hidden><span>V&amp;A</span></span>
+            <span className="maker-text">
+              <span className="maker-line">
+                Built with <span className="text-red-500">❤️</span> for Una&apos;s future officers by <b>{STUDIO.name}</b>
+              </span>
+              <span className="maker-sub">Founded by {STUDIO.founder} · {STUDIO.host} ↗</span>
+            </span>
+          </a>
         </div>
       </div>
     </footer>

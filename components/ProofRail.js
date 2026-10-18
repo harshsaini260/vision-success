@@ -4,6 +4,8 @@ import { useEffect, useRef, useState, useCallback } from 'react'
 import Link from 'next/link'
 import { wa } from '@/lib/site'
 import Icon from '@/components/Icon'
+import { STUDENTS, PROGRAMME, filmFiles } from '@/lib/films'
+import WantedPoster, { FilmFace, Silhouette, initialsOf } from '@/components/wanted/WantedPoster'
 
 /* ─── THE PROOF RAIL ───
    Everything a real student has said about this place, in one horizontal
@@ -34,31 +36,21 @@ import Icon from '@/components/Icon'
 
 const CARD_W = 268
 
-/* Every student film. Adding another is a row here, not a component.
-   Ordered by class, ascending, so the row reads as a school rather than
-   as an upload history. */
-const FILMS = [
-  {
-    id: 'aniket', name: 'Aniket', klass: 'Class 9', len: '27 sec',
-    hi: '/video/review-720.mp4', lo: '/video/review-540.mp4', poster: '/video/review-poster.jpg',
-    line: '“We are not just preparing for exams — we are preparing for something that we are going to become.”',
-  },
-  {
-    id: 'yagyashant', name: 'Yagyashant', klass: 'Class 12 · Medical', len: '33 sec',
-    hi: '/video/yagyashant-720.mp4', lo: '/video/yagyashant-540.mp4', poster: '/video/yagyashant-poster.jpg',
-    line: '“Less students in each batch, so I get proper attention from every teacher.”',
-  },
-  {
-    id: 'aditi', name: 'Aditi', klass: 'Class 12 · Non-Medical', len: '26 sec',
-    hi: '/video/aditi-720.mp4', lo: '/video/aditi-540.mp4', poster: '/video/aditi-poster.jpg',
-    line: '“I did wonder whether it would be worth it. After joining, the fees are completely justified.”',
-  },
-]
+/* The students who reviewed us on camera now come from lib/films.js
+   (STUDENTS), the one list /reviews reads too, and each of them is
+   pinned to the rail as a wanted poster with their film playing in the
+   frame — the same poster as the board on /reviews, so the joke starts
+   here and pays off there. Their films load and play through
+   components/film/useFilm.js, which keeps the rule this rail always had:
+   nothing downloads until it is looked at. */
+const TILTS = [-1.6, 1.3, -1.1, 1.8, -1.4, 1.1]
+
+/* three posters from the screening room, fanned on the card that leads there */
+const FAN = ['parabola-board', 'einstein-paradox', 'campus-memories']
 
 export default function ProofRail() {
   const railRef = useRef(null)
   const ourRef = useRef(null)
-  const filmRefs = useRef({})
   const [vlogs, setVlogs] = useState([])
   const [reviews, setReviews] = useState([])
   const [active, setActive] = useState(0)
@@ -89,7 +81,6 @@ export default function ProofRail() {
   useEffect(() => {
     const pairs = [
       [ourRef.current, ['/video/film-720.mp4', '/video/film-480.mp4']],
-      ...FILMS.map((f) => [filmRefs.current[f.id], [f.hi, f.lo]]),
     ].filter(([el]) => el)
     if (!pairs.length) return
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
@@ -154,7 +145,7 @@ export default function ProofRail() {
   const [playing, setPlaying] = useState({})
   const [muted, setMuted] = useState({})
 
-  const refFor = (k) => (k === 'our' ? ourRef : { current: filmRefs.current[k] })
+  const refFor = () => ourRef
 
   const toggle = (k) => {
     const v = refFor(k).current
@@ -175,7 +166,7 @@ export default function ProofRail() {
     setPlaying((p) => ({ ...p, [k]: true }))
   }
 
-  const cards = 1 + FILMS.length + vlogs.length + Math.min(reviews.length, 6) + 1
+  const cards = 1 + STUDENTS.length + vlogs.length + Math.min(reviews.length, 6) + 2
 
   return (
     <section
@@ -252,39 +243,38 @@ export default function ProofRail() {
             </div>
           </article>
 
-          {/* ── 2. the students, one card each ── */}
-          {FILMS.map((f) => (
-            <article key={f.id} className="proof-card proof-card--film" style={{ width: CARD_W }}>
-              <video
-                ref={(el) => { filmRefs.current[f.id] = el }}
-                poster={f.poster}
-                muted
-                loop
-                playsInline
-                preload="none"
-                onClick={() => toggle(f.id)}
-                onPlay={() => setPlaying((p) => ({ ...p, [f.id]: true }))}
-                onPause={() => setPlaying((p) => ({ ...p, [f.id]: false }))}
-                className="proof-card-video"
-                aria-label={`${f.name}, ${f.klass} at Vision Success, on the institute`}
+          {/* ── 2. the students, on camera — wanted ── */}
+          {STUDENTS.map((f, i) => (
+            <article key={f.id} className="proof-card proof-card--wanted" style={{ width: CARD_W }}>
+              <WantedPoster
+                size="sm"
+                name={f.name}
+                sub={f.klass}
+                bounty={f.bounty}
+                crime={f.line}
+                tilt={TILTS[i]}
+                sway={false}
+                face={<FilmFace stem={f.stem} name={f.name} />}
               />
-              <button className="proof-ctl proof-ctl--play" onClick={() => toggle(f.id)}
-                aria-label={playing[f.id] === false ? 'Play' : 'Pause'}>
-                <Icon name={playing[f.id] === false ? 'play' : 'pause'} size={16} />
-              </button>
-              <button className="proof-ctl proof-ctl--sound" onClick={() => listen(f.id)}
-                aria-pressed={muted[f.id] === false}
-                aria-label={muted[f.id] === false ? 'Mute' : 'Turn sound on'}>
-                <Icon name={muted[f.id] === false ? 'speaker' : 'speakerOff'} size={17} />
-                <span className="proof-ctl-text">{muted[f.id] === false ? 'Sound on' : 'Hear them'}</span>
-              </button>
-              <div className="proof-card-foot">
-                <span className="proof-card-kicker">On film · {f.len}</span>
-                <span className="proof-card-title">{f.name}</span>
-                <span className="proof-card-line">{f.klass} — {f.line}</span>
-              </div>
             </article>
           ))}
+
+          {/* ── the door to the rest: twelve films, a quiz, a fungus ── */}
+          <Link href="/reviews" className="proof-card proof-card--screening" style={{ width: CARD_W }}>
+            <div className="proof-fan" aria-hidden>
+              {FAN.map((stem, i) => (
+                <img key={stem} src={filmFiles(stem).poster} alt="" loading="lazy" decoding="async" style={{ '--i': i - 1 }} />
+              ))}
+            </div>
+            <div className="proof-card-foot">
+              <span className="proof-card-kicker">Now showing · {PROGRAMME.length} films</span>
+              <span className="proof-card-title">The Screening Room</span>
+              <span className="proof-card-line">
+                Every review as a wanted poster, four questions to beat Sir to, NDA myths, Einstein,
+                and a fungus from The Last of Us →
+              </span>
+            </div>
+          </Link>
 
           {/* ── 3. documentary episodes, when they exist ── */}
           {vlogs.map((v) => (
@@ -303,39 +293,42 @@ export default function ProofRail() {
             </Link>
           ))}
 
-          {/* ── 4. what they wrote ── */}
-          {reviews.slice(0, 6).map((r) => (
-            <article key={r.id} className="proof-card proof-card--quote" style={{ width: CARD_W }}>
-              <span className="proof-quote-mark" aria-hidden>“</span>
-              <p className="proof-quote-text">{r.message || r.review || r.text}</p>
-              <div className="proof-card-foot">
-                <span className="proof-card-kicker">{'★'.repeat(Math.max(1, Math.min(5, r.rating || 5)))}</span>
-                <span className="proof-card-title">{r.name || 'A student'}</span>
-                {r.course && <span className="proof-card-line">{r.course}</span>}
-              </div>
+          {/* ── 4. what they wrote — wanted too ── */}
+          {reviews.slice(0, 6).map((r, i) => (
+            <article key={r.id} className="proof-card proof-card--wanted" style={{ width: CARD_W }}>
+              <WantedPoster
+                size="sm"
+                name={r.name || 'A student'}
+                sub={r.course}
+                bounty={Math.max(1, Math.min(5, r.rating || 5)) * 100_000_000}
+                crime={`“${r.message || r.review || r.text || ''}”`}
+                tilt={TILTS[(i + 3) % TILTS.length]}
+                sway={false}
+                face={<Silhouette initials={initialsOf(r.name)} />}
+              />
             </article>
           ))}
 
-          {/* ── 5. the empty seat ── */}
-          <article className="proof-card proof-card--last" style={{ width: CARD_W }}>
-            <div className="proof-last-inner">
-              <span className="proof-card-kicker">The next one</span>
-              <p className="proof-last-head" style={{ fontFamily: 'var(--font-display)' }}>
-                This card is empty on purpose.
-              </p>
-              <p className="proof-card-line">
-                One of these is going to have your name on it. Come and sit in on a class first —
-                it costs nothing and we will tell you honestly if we are wrong for you.
-              </p>
+          {/* ── 5. the empty seat — a poster with a question mark on it ── */}
+          <article className="proof-card proof-card--wanted" style={{ width: CARD_W }}>
+            <WantedPoster
+              size="sm"
+              name="You?"
+              sub="The next one"
+              crime="still deciding. One free demo class settles it."
+              tilt={1.4}
+              sway={false}
+              face={<Silhouette mystery />}
+            >
               <a
-                href={wa('I saw the student reviews on your site. Can I sit in on a free demo class?')}
+                href={wa('I saw the wanted posters on your site. I am turning myself in — can I sit in on a free demo class?')}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-gold text-xs px-5 py-3 mt-4 inline-block whatsapp-cta"
+                className="wanted-cta whatsapp-cta"
               >
-                Book a free demo
+                Turn yourself in
               </a>
-            </div>
+            </WantedPoster>
           </article>
         </div>
 

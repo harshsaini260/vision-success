@@ -29,6 +29,11 @@ const P = {
   globe: <><circle cx="12" cy="12" r="8.5" /><path d="M3.5 12h17M12 3.5c2.4 2.4 3.6 5.2 3.6 8.5s-1.2 6.1-3.6 8.5c-2.4-2.4-3.6-5.2-3.6-8.5S9.6 5.9 12 3.5z" /></>,
   repeat: <><path d="M4.5 11V9.5A3 3 0 0 1 7.5 6.5H18M15 3.5l3 3-3 3" /><path d="M19.5 13v1.5a3 3 0 0 1-3 3H6M9 20.5l-3-3 3-3" /></>,
   calendar: <><rect x="3.5" y="5" width="17" height="15" rx="2.5" /><path d="M3.5 9.5h17M8 3.5v3M16 3.5v3" /></>,
+  expand: <path d="M4.5 9.5v-5h5M14.5 4.5h5v5M19.5 14.5v5h-5M9.5 19.5h-5v-5" />,
+  close: <path d="M6.5 6.5l11 11M17.5 6.5l-11 11" />,
+  arrowUp: <path d="M12 19V5.5M6.5 11 12 5.5 17.5 11" />,
+  arrowDown: <path d="M12 5v13.5M6.5 13 12 18.5 17.5 13" />,
+  check: <path d="M5 12.5l4.5 4.5L19 7.5" />,
 }
 
 const BRAND = {

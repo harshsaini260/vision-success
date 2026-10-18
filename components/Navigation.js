@@ -23,7 +23,7 @@ const primaryLinks = [
 ]
 
 const moreLinks = [
-  { href: '/reviews', label: 'Reviews', hint: 'What families say' },
+  { href: '/reviews', label: 'Reviews', hint: 'Wanted posters & 12 films' },
   { href: '/appointment', label: 'Book Counselling', hint: 'Sit down with us' },
   { href: '/schools', label: 'For Schools', hint: 'Free seminar proposal' },
 ]

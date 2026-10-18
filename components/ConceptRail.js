@@ -119,7 +119,7 @@ export default function ConceptRail() {
         </h2>
         <p className="mt-4 text-sm md:text-base max-w-2xl mx-auto leading-relaxed" style={{ color: 'var(--bone-dim)' }}>
           Every one of these is a rule somebody made you learn by heart, animated until it
-          stops being a rule and becomes a picture. Thirty seconds each. No sound needed.
+          stops being a rule and becomes a picture. Under a minute each. No sound needed.
         </p>
       </div>
 
@@ -159,7 +159,7 @@ export default function ConceptRail() {
                 }}
               >
                 {items.map((c) => {
-                  const f = conceptFiles(c.slug)
+                  const f = conceptFiles(c.slug, c.file)
                   const isPlaying = playing[c.slug] !== false
                   return (
                     <article key={c.slug} className="proof-card concept-card" style={{ width: CARD_W }}>
@@ -212,6 +212,9 @@ export default function ConceptRail() {
         >
           Learn it like this — free demo
         </a>
+        <Link href="/reviews#pause-and-solve" className="btn-ghost text-center">
+          Beat Sir to the answer
+        </Link>
         <Link href="/materials" className="btn-ghost text-center">
           Free notes &amp; papers
         </Link>

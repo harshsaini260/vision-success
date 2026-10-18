@@ -41,7 +41,7 @@ const GROUPS = [
   {
     head: 'See the proof',
     items: [
-      ['/reviews', 'Reviews', 'What families say'],
+      ['/reviews', 'Reviews', 'Wanted posters & 12 films'],
       ['/stories', 'Documentary', 'Films from inside the room'],
       ['/blog', 'Journal', 'What we actually think'],
     ],

@@ -1098,8 +1098,19 @@ img { max-width: 100%; height: auto; }
   box-shadow: 0 14px 34px rgba(0,0,0,0.55);
 }
 .story-card:active { transform: scale(0.98); }
+/* a review in this rail is a thumbnail wanted poster (components/wanted) */
+.story-card--wanted { width: 140px; height: auto; background: transparent; padding-top: 4px; }
+.story-card--wanted:hover,
+.story-card--wanted:focus-visible { box-shadow: none; }
+.story-play {
+  position: absolute; z-index: 2; left: 50%; top: 42%;
+  width: 34px; height: 34px; margin: -17px 0 0 -17px;
+  display: grid; place-items: center; border-radius: 999px;
+  font-size: 12px; color: #2A1C10; background: rgba(242, 230, 198, 0.92);
+}
 @media (min-width: 640px) {
   .story-card { width: 150px; height: 220px; }
+  .story-card--wanted { width: 156px; height: auto; }
 }
 /* hide the scrollbar but keep the scroll */
 .story-rail { scrollbar-width: none; -ms-overflow-style: none; }
@@ -1998,6 +2009,40 @@ main label { line-height: 1.5; }
 
 .proof-card--last { border-style: dashed; border-color: rgba(var(--accent-rgb), .40); background: rgba(var(--accent-rgb), .05); }
 .proof-last-inner { padding: 20px 16px; display: flex; flex-direction: column; height: 100%; }
+
+/* A review is a wanted poster (components/wanted): no card behind it,
+   just the paper, pinned to the rail. */
+.proof-card--wanted { background: transparent; border: 0; overflow: visible; padding: 4px 3px 0; }
+.proof-card--wanted:focus-within { border: 0; }
+
+/* the door to /reviews: three of its films, fanned like a hand of cards */
+.proof-card--screening { background: rgba(var(--accent-rgb), 0.05); border-color: rgba(var(--accent-rgb), 0.38); }
+.proof-fan {
+  position: relative;
+  height: 340px;
+  overflow: hidden;
+  background: radial-gradient(70% 60% at 50% 45%, rgba(var(--accent-rgb), 0.16), transparent 70%);
+}
+.proof-fan img {
+  position: absolute;
+  left: 50%;
+  top: 34px;
+  width: 128px;
+  margin-left: -64px;
+  aspect-ratio: 9 / 16;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid rgba(var(--accent-rgb), 0.4);
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.6);
+  transform-origin: 50% 110%;
+  transform: translateX(calc(var(--i) * 58px)) rotate(calc(var(--i) * 9deg));
+  transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+.proof-fan img:nth-child(2) { z-index: 2; }
+.proof-card--screening:hover .proof-fan img,
+.proof-card--screening:focus-visible .proof-fan img {
+  transform: translateX(calc(var(--i) * 70px)) rotate(calc(var(--i) * 13deg)) translateY(-6px);
+}
 .proof-last-head { font-size: 21px; color: #fff; line-height: 1.2; margin: 8px 0 8px; }
 
 .rail-arrow {
@@ -2790,3 +2835,46 @@ main a.link-underline:hover { background-size: 100% 1px; }
   padding: 8px 12px; border-radius: 999px; background: #0D1C34; border: 1px solid rgba(37, 211, 102, 0.55); color: #E8F0F7;
   font-family: var(--font-ui); font-size: 13px; font-weight: 700; transition: opacity .2s ease, transform .2s ease; }
 .floating-whatsapp:hover .fw-name, .floating-whatsapp:focus-visible .fw-name { opacity: 1; transform: translate(0, -50%); }
+
+/* ─── THE MAKER'S MARK ───
+   Who built the site, at the foot of every page: a small wax seal
+   pressed with the studio's initials, and the line beside it. The seal
+   turns a little under the pointer, the way a stamp is pressed. */
+.maker {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 44px;
+  text-align: left;
+  color: inherit;
+}
+.maker-seal {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 46% 54% 50% 50% / 52% 48% 52% 48%;
+  background: radial-gradient(circle at 36% 30%, #C25646 0%, #8A2A21 48%, #561410 100%);
+  box-shadow:
+    0 0 0 3px rgba(138, 42, 33, 0.38),
+    0 5px 12px rgba(0, 0, 0, 0.5),
+    inset 0 -3px 6px rgba(0, 0, 0, 0.38),
+    inset 0 2px 3px rgba(255, 255, 255, 0.2);
+  transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+.maker-seal span {
+  font-family: var(--font-engrave);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  color: #F3DCA8;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.45);
+}
+.maker:hover .maker-seal,
+.maker:focus-visible .maker-seal { transform: rotate(-16deg) scale(1.07); }
+.maker-text { display: flex; flex-direction: column; line-height: 1.4; }
+.maker-line b { font-weight: 600; color: var(--accent-light); }
+.maker:hover .maker-line b { text-decoration: underline; text-underline-offset: 3px; }
+.maker-sub { font-size: 12px; color: rgba(232, 240, 247, 0.5); }
+@media (prefers-reduced-motion: reduce) { .maker-seal { transition: none; } }
