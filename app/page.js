@@ -23,7 +23,7 @@ import FreedomOffer from '@/components/FreedomOffer'
 import Creed from '@/components/Creed'
 import DefenceHero from '@/components/defence/DefenceHero'
 import BriefingRoom from '@/components/defence/BriefingRoom'
-import SurinderTeaser from '@/components/surinder/SurinderTeaser'
+import HomeOpening from '@/components/surinder/HomeOpening'
 import NdaProof from '@/components/cadets/NdaProof'
 import { BEST_NDA_FAQ } from '@/lib/cadets'
 import Motto from '@/components/Motto'
@@ -1021,16 +1021,16 @@ export default function HomePage() {
       <BattlefieldPopup />
       <Stars />
 
-      {/* ─── THE UNIFORM — NDA, Air Force, Navy, Merchant Navy (lib/defence.js) ─── */}
-      <DefenceHero />
+      {/* ─── THE FIRST THING A VISITOR SEES — the documentary's title sequence (lib/surinder.js).
+           The man, his name, the motto, and a play button. ─── */}
+      <HomeOpening />
 
       {/* ─── THE PROOF — the motto made good: the cadets and the rank (lib/cadets.js) ─── */}
       <NdaProof />
 
+      {/* ─── THE UNIFORM — NDA, Air Force, Navy, Merchant Navy (lib/defence.js) ─── */}
+      <DefenceHero motto={false} />
       <BriefingRoom />
-
-      {/* ─── THE MAN IN THOSE FILMS — the documentary's title card (lib/surinder.js) ─── */}
-      <SurinderTeaser />
 
       {/* ─── THE CREED — the words this place runs on, before anything else ─── */}
       <Creed />
@@ -1112,7 +1112,7 @@ export default function HomePage() {
                 </span>
               </motion.div>
 
-              <motion.h1
+              <motion.h2
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.1 }}
@@ -1123,7 +1123,7 @@ export default function HomePage() {
                 <br />
                 <span className="text-white">TO </span>
                 <RotatingWord />
-              </motion.h1>
+              </motion.h2>
 
               <motion.p
                 initial={{ opacity: 0, y: 20 }}

@@ -1,7 +1,9 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
-import { HERO, PHOTO, img, srcSet } from '@/lib/surinder'
+import Link from 'next/link'
+import { HERO, PHOTO, SURINDER_PATH, img, srcSet } from '@/lib/surinder'
+import { MOTTO } from '@/lib/cadets'
 import { wa } from '@/lib/site'
 import { useTheatre } from '@/components/screening/Theatre'
 import Icon from '@/components/Icon'
@@ -22,7 +24,7 @@ import Icon from '@/components/Icon'
    On a phone the photograph is the whole screen and the words sit in the
    dark under him; on a desktop he stands on the right and the black
    closes in from the left. Reduced motion gets the same composition, lit. */
-export default function Hero() {
+export default function Hero({ home = false }) {
   const open = useTheatre()
   const ref = useRef(null)
 
@@ -79,13 +81,14 @@ export default function Hero() {
           {HERO.kicker}
         </p>
 
-        <h1 id="sd-title" className="sd-title" aria-label={HERO.title}>
+        <h1 id="sd-title" className="sd-title" aria-label={home ? `${HERO.title} — ${MOTTO}` : HERO.title}>
           <span className="sd-title-the" aria-hidden>{the.toUpperCase()}</span>
           <span className="sd-title-main" aria-hidden>
             {main.split('').map((c, i) => (
               <span key={i} style={{ '--i': i }}>{c === ' ' ? ' ' : c}</span>
             ))}
           </span>
+          {home && <span className="sd-motto" aria-hidden><i>★</i> {MOTTO}</span>}
         </h1>
 
         <p className="sd-logline">{HERO.logline}</p>
@@ -114,9 +117,15 @@ export default function Hero() {
             <Icon name="whatsapp" size={18} /> {HERO.talk}
           </a>
         </div>
+
+        {home && (
+          <p className="sd-home-link">
+            <Link href={SURINDER_PATH}>Watch the full documentary <Icon name="arrowRight" size={15} /></Link>
+          </p>
+        )}
       </div>
 
-      <a href="#prologue" className="sd-scroll" aria-label="Scroll to begin">
+      <a href={home ? '#proof' : '#prologue'} className="sd-scroll" aria-label={home ? 'Scroll to the proof' : 'Scroll to begin'}>
         <span>{HERO.scroll}</span>
         <i aria-hidden />
       </a>

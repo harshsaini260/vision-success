@@ -175,6 +175,30 @@
 @keyframes sd-fade { from { opacity: 0; } to { opacity: 1; } }
 @keyframes sd-fade-up { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
 
+/* the homepage opening: the motto sits under the title, inside the same h1 */
+.sd-motto {
+  display: block; margin-top: 0.95em; max-width: 24ch; text-wrap: balance;
+  font-size: clamp(1.02rem, 4.7vw, 1.7rem); font-weight: 700; letter-spacing: 0.1em; line-height: 1.28; text-transform: uppercase;
+  color: var(--bone); text-shadow: 0 2px 14px rgba(0, 0, 0, 0.7);
+  animation: sd-fade-up 1s var(--sd-ease) both 1.7s;
+}
+.sd-motto i { font-style: normal; font-size: 0.72em; color: var(--accent-light); }
+@media (min-width: 900px) { .sd-motto { max-width: none; } .sd-hero-inner > .sd-meta { max-width: 820px; } }
+@media (max-width: 899px) {
+  /* the homepage opening has one more line than the documentary page — take it from the gaps */
+  .sd--home .sd-hero-inner { padding-bottom: 96px; }
+  .sd--home .sd-logline { margin-top: 14px; font-size: clamp(1.1rem, 4vw, 1.4rem); }
+  .sd--home .sd-meta { margin-top: 12px; }
+  .sd--home .sd-hero .sd-ctas { margin-top: 18px; }
+  .sd--home .sd-home-link { margin-top: 6px; }
+}
+.sd-home-link { margin-top: 18px; animation: sd-fade-up 1s ease both 3s; }
+.sd-home-link a {
+  display: inline-flex; align-items: center; gap: 8px; min-height: 44px;
+  font-size: 0.9rem; font-weight: 600; letter-spacing: 0.04em; color: var(--accent-light); text-decoration: none;
+  border-bottom: 1px solid rgba(var(--accent-rgb), 0.4);
+}
+@media (hover: hover) { .sd-home-link a:hover { color: #fff; border-bottom-color: var(--accent); } }
 .sd-logline {
   margin-top: 22px; max-width: 30rem;
   font-family: var(--font-display); font-style: italic; font-weight: 500;
@@ -510,7 +534,7 @@
 /* ═══════════ REDUCED MOTION — the same page, lit and still ═══════════ */
 @media (prefers-reduced-motion: reduce) {
   .sd *, .sd *::before, .sd *::after { animation: none !important; transition: none !important; }
-  .sd-hero-img, .sd-hero-glow, .sd-orig, .sd-title-the, .sd-logline, .sd-meta, .sd-tags, .sd-hero .sd-ctas, .sd-scroll { opacity: 1 !important; transform: none !important; filter: none !important; }
+  .sd-hero-img, .sd-hero-glow, .sd-orig, .sd-title-the, .sd-motto, .sd-home-link, .sd-logline, .sd-meta, .sd-tags, .sd-hero .sd-ctas, .sd-scroll { opacity: 1 !important; transform: none !important; filter: none !important; }
   .sd-title-main span { opacity: 1 !important; transform: none !important; filter: none !important; }
   .sd-rv, .sd-cert, .sd-chap-n, .sd-chap-name { opacity: 1; transform: none; }
   .sd-chap-rule { transform: scaleX(1); }
