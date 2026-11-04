@@ -9,7 +9,6 @@ import DemoPrompt from '@/components/DemoPrompt'
 import ScrollProgress from '@/components/ScrollProgress'
 import Analytics from '@/components/Analytics'
 import StickyActionBar from '@/components/StickyActionBar'
-import PortalHost from '@/components/workshop/PortalHost'
 import { SITE, OG_IMAGE, STUDIO } from '@/lib/site'
 import { DEVANAGARI_TEXT } from '@/lib/defence'
 
@@ -131,8 +130,11 @@ const jsonLd = {
       ],
       founder: {
         '@type': 'Person',
-        name: 'Founder, Vision Success Coaching Institute',
-        alumniOf: { '@type': 'CollegeOrUniversity', name: 'NIT Hamirpur' },
+        '@id': `${SITE.url}/#surinder`,
+        name: 'Surinder Singh',
+        url: `${SITE.url}/surinder`,
+        jobTitle: 'Founder and Mathematics Teacher',
+        alumniOf: { '@type': 'CollegeOrUniversity', name: 'National Institute of Technology, Hamirpur' },
       },
       hasOfferCatalog: {
         '@type': 'OfferCatalog',
@@ -231,10 +233,6 @@ export default function RootLayout({ children }) {
           <Footer />
           <FloatingButtons />
           <StickyActionBar />
-          {/* The workshop's payment portal. Holds no payment code until someone
-              asks to register; outside <main> so none of main's global form
-              rules reach into it. */}
-          <PortalHost />
           <DemoPrompt />
           <Toaster
             position="top-center"

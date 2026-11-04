@@ -73,6 +73,10 @@ body {
   color: var(--bone);
   font-family: var(--font-ui);
   overflow-x: hidden;
+  /* `hidden` on both <html> and <body> makes <body> a scroll container, which
+     silently breaks every `position: sticky` below it. `clip` blocks sideways
+     overflow without being one (older Safari keeps `hidden` from the line above). */
+  overflow-x: clip;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -2790,8 +2794,8 @@ main a.link-underline:hover { background-size: 100% 1px; }
                 and 2.3:1. Re-tuned below, still dimmer than primary text.
    TARGETS      44 × 44 points for anything tappable. The iPad takes the
                 desktop layout with a finger, so desktop controls count.
-   DEFERENCE    lives in the components: the pop-ups stand down while
-                the workshop is live and never open over another dialog.
+   DEFERENCE    lives in the components: the pop-ups never open over
+                another dialog.
 
    Hand-written rules win over Tailwind's utilities here because
    @tailwind utilities is loaded at the top of this file. */

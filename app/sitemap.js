@@ -4,6 +4,7 @@ import { SEO_PAGES } from '@/lib/seoPages'
 import { POSTS } from '@/lib/blog'
 import { MN_FILM, MN_PATH } from '@/lib/merchantNavy'
 import { FILMS } from '@/lib/defence'
+import { EPISODES, SURINDER_PATH, UPLOADED } from '@/lib/surinder'
 
 /* ─── sitemap.xml ───
    Dates are real, not "now". A sitemap that stamps every page with the
@@ -44,6 +45,19 @@ export default function sitemap() {
     { url: `${SITE.url}/`, lastModified: d('site'), changeFrequency: 'weekly', priority: 1,
       videos: FILMS.map((f) => video(f, `${f.title} — Vision Success Una`, '2026-10-10')) },
     { url: U('/about'), lastModified: d('site'), changeFrequency: 'monthly', priority: 0.9 },
+    /* The documentary: one person, fourteen films. Each is listed as a video
+       with its own cover so it can surface in video results. */
+    { url: U(SURINDER_PATH), lastModified: new Date(`${UPLOADED}T00:00:00+05:30`), changeFrequency: 'weekly', priority: 0.95,
+      images: [U('/images/surinder/surinder-hero-960.jpg')],
+      videos: EPISODES.map((e) => ({
+        title: `${e.title} — NDA question ${e.n} · Surinder Singh`,
+        thumbnail_loc: U(`/video/${e.stem}-poster.jpg`),
+        description: `${e.question} Solved by Surinder Singh at Vision Success, Una.`,
+        content_loc: U(`/video/${e.stem}-720.mp4`),
+        duration: e.secs,
+        publication_date: UPLOADED,
+        family_friendly: 'yes',
+      })) },
     { url: U('/courses'), lastModified: d('courses'), changeFrequency: 'monthly', priority: 0.9 },
     /* Fees is the page people actually search for and the one nobody else
        in this district publishes. It ranks second only to the homepage. */
@@ -52,7 +66,6 @@ export default function sitemap() {
       videos: FILMS.map((f) => video(f, `${f.title} — Vision Success Una`, '2026-10-10')) },
     { url: U(MN_PATH), lastModified: d('merchant'), changeFrequency: 'weekly', priority: 0.95,
       videos: [video(MN_FILM, 'Merchant Navy after Class 12? — Vision Success Una', '2026-10-15')] },
-    /* ON HOLD — { url: `${SITE.url}/workshop`, lastModified: now, changeFrequency: 'daily', priority: 0.95 }, */
     ...COURSES.map((c) => ({
       url: U(`/courses/${c.id}`),
       lastModified: d('courses'),

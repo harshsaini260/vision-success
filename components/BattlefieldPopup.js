@@ -7,11 +7,8 @@
    so the two never stack.
 
    Deference (Apple HIG): an interface should not get between a person
-   and what they came for. So the automatic open now stands down while
-   the workshop is live — the workshop IS the call to action on the
-   homepage for those ten days, and a second modal at 12 seconds was
-   competing with its Register button — and it never opens over another
-   dialog, the payment portal included. It also no longer plays a sound
+   and what they came for. So the automatic open never opens over another
+   dialog, and it no longer plays a sound
    when it opens by itself: sound follows a person's own tap, never a
    timer. Opened by hand, it still chimes. */
 
@@ -19,7 +16,6 @@ import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import BattlefieldQuiz from '@/components/BattlefieldQuiz'
 import { sfxChime } from '@/lib/sfx'
-import { isVisible as workshopLive } from '@/lib/workshop'
 
 const SESSION_KEY = 'vs-battlefield-shown'
 const DEMO_KEY = 'vs-demo-prompt-shown' // shared with DemoPrompt
@@ -36,7 +32,6 @@ export default function BattlefieldPopup() {
     setOpen(true)
   }
   const autoShow = () => {
-    if (workshopLive()) return
     if (document.querySelector('[data-modal-open="1"]')) return
     show(false)
   }

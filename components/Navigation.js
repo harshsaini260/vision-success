@@ -23,6 +23,7 @@ const primaryLinks = [
 ]
 
 const moreLinks = [
+  { href: '/surinder', label: 'The Surinder', hint: 'The documentary' },
   { href: '/reviews', label: 'Reviews', hint: 'Wanted posters & 12 films' },
   { href: '/appointment', label: 'Book Counselling', hint: 'Sit down with us' },
   { href: '/schools', label: 'For Schools', hint: 'Free seminar proposal' },

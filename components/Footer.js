@@ -99,7 +99,6 @@ export default function Footer() {
                 { href: '/fees', label: 'Fees' },
                 { href: '/defence', label: 'NDA · Air Force · Navy' },
                 { href: '/merchant-navy', label: 'Merchant Navy roadmap' },
-                /* ON HOLD — { href: '/workshop', label: 'Job-Ready Workshop' }, */
                 { href: '/start', label: 'Free Study Plan' },
                 { href: '/courses', label: 'Courses' },
                 { href: '/coaching-in-una', label: 'Coaching in Una' },
@@ -118,6 +117,7 @@ export default function Footer() {
                 { href: '/biology-coaching-una', label: 'Biology Coaching' },
                 { href: '/enroll', label: 'Enroll Now' },
                 { href: '/materials', label: 'Materials' },
+                { href: '/surinder', label: 'The Surinder' },
                 { href: '/reviews', label: 'Reviews' },
                 { href: '/appointment', label: 'Book Counseling' },
                 { href: '/schools', label: 'For Schools' },

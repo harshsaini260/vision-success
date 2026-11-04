@@ -9,7 +9,7 @@ import Icon from '@/components/Icon'
 import './hero.css'
 
 /* ─── THE OPENING — "The sky. The sea. The border." ───
-   The first thing on the site now that the workshop is held off. It has
+   The first thing on the site. It has
    one job: make a sixteen-year-old in Una feel that the uniform is not
    a poster on someone else's wall, and make their parent feel that the
    people here understand what that means.

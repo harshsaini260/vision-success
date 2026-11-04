@@ -21,12 +21,9 @@ import StudyAbroadFilm from '@/components/StudyAbroadFilm'
 import Opening from '@/components/Opening'
 import FreedomOffer from '@/components/FreedomOffer'
 import Creed from '@/components/Creed'
-/* ON HOLD — the workshop is held off for now (see ON_HOLD in lib/workshop.js).
-import WorkshopHero from '@/components/workshop/WorkshopHero'
-import { WorkshopTourHome } from '@/components/workshop/WorkshopTour'
-*/
 import DefenceHero from '@/components/defence/DefenceHero'
 import BriefingRoom from '@/components/defence/BriefingRoom'
+import SurinderTeaser from '@/components/surinder/SurinderTeaser'
 import Motto from '@/components/Motto'
 import { playFanfare } from '@/lib/fanfare'
 import { sfxPop, sfxNope, sfxWhoosh, sfxChime } from '@/lib/sfx'
@@ -1021,20 +1018,12 @@ export default function HomePage() {
       <BattlefieldPopup />
       <Stars />
 
-      {/* ─── THE WORKSHOP, ON TOUR ───
-           Above the creed on purpose, and only while the tour runs: it
-           removes itself when the owner ends the tour from the admin panel,
-           and the fixed order below (creed, three roads, proof) is
-           untouched. The rail under it is the tour — college by college,
-           every date sealed. ─── */}
-      {/* ON HOLD — uncomment with ON_HOLD = false in lib/workshop.js.
-      <WorkshopHero />
-      <WorkshopTourHome />
-      */}
-
       {/* ─── THE UNIFORM — NDA, Air Force, Navy, Merchant Navy (lib/defence.js) ─── */}
       <DefenceHero />
       <BriefingRoom />
+
+      {/* ─── THE MAN IN THOSE FILMS — the documentary's title card (lib/surinder.js) ─── */}
+      <SurinderTeaser />
 
       {/* ─── THE CREED — the words this place runs on, before anything else ─── */}
       <Creed />

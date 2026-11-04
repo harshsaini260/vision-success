@@ -16,8 +16,6 @@ out/
 .env*
 
 .env*
-scripts/workshop-poster/.build/
-scripts/workshop-poster/guide.html
 
 # brochure intermediates
 scripts/kit/*.html

@@ -30,7 +30,6 @@ const GROUPS = [
     items: [
       ['/defence', 'NDA · Air Force · Navy', 'The uniform — from Una'],
       ['/merchant-navy', 'Merchant Navy roadmap', 'After Class 12 · IMU-CET · free'],
-      /* ON HOLD — ['/workshop', 'Job-Ready Workshop', 'On tour · date sealed · ₹299'], */
       ['/courses', 'All courses', 'Eight doors, one screen'],
       ['/fees', 'Fees', 'Published in full'],
       ['/sat', 'SAT — study abroad', 'Taught by a 1540 scorer'],
@@ -41,6 +40,7 @@ const GROUPS = [
   {
     head: 'See the proof',
     items: [
+      ['/surinder', 'The Surinder', 'A Vision Success documentary'],
       ['/reviews', 'Reviews', 'Wanted posters & 12 films'],
       ['/stories', 'Documentary', 'Films from inside the room'],
       ['/blog', 'Journal', 'What we actually think'],

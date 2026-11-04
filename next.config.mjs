@@ -46,6 +46,10 @@ const nextConfig = {
   async redirects() {
     return [
       { source: '/online-nda-course', destination: '/courses/nda', permanent: true },
+      /* The Job-Ready Skills Workshop was removed from the site in
+         November 2026. Printed posters carried a QR code to /workshop, so
+         it goes to the homepage instead of a 404. */
+      { source: '/workshop', destination: '/', permanent: true },
     ]
   },
   images: {
