@@ -24,6 +24,8 @@ import Creed from '@/components/Creed'
 import DefenceHero from '@/components/defence/DefenceHero'
 import BriefingRoom from '@/components/defence/BriefingRoom'
 import SurinderTeaser from '@/components/surinder/SurinderTeaser'
+import NdaProof from '@/components/cadets/NdaProof'
+import { BEST_NDA_FAQ } from '@/lib/cadets'
 import Motto from '@/components/Motto'
 import { playFanfare } from '@/lib/fanfare'
 import { sfxPop, sfxNope, sfxWhoosh, sfxChime } from '@/lib/sfx'
@@ -40,6 +42,7 @@ const TRUST_STATS = [
 
 /* Homepage FAQ (brief D3) — rendered below AND emitted as FAQPage schema */
 const HOME_FAQS = [
+  BEST_NDA_FAQ,
   {
     q: 'Which courses does Vision Success Una offer?',
     a: 'NDA coaching is our flagship (written + SSB). We also run JEE Mains & Advanced, NEET, CUET, Merchant Navy (IMU CET), and Class 9–12 coaching for HPBOSE and CBSE — plus subject tuition for Maths, Physics, Chemistry, and Biology. And we are Una\'s first study-abroad desk: Digital SAT and IELTS preparation under one roof.',
@@ -1020,6 +1023,10 @@ export default function HomePage() {
 
       {/* ─── THE UNIFORM — NDA, Air Force, Navy, Merchant Navy (lib/defence.js) ─── */}
       <DefenceHero />
+
+      {/* ─── THE PROOF — the motto made good: the cadets and the rank (lib/cadets.js) ─── */}
+      <NdaProof />
+
       <BriefingRoom />
 
       {/* ─── THE MAN IN THOSE FILMS — the documentary's title card (lib/surinder.js) ─── */}

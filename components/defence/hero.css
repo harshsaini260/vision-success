@@ -116,6 +116,23 @@
   animation: dh-fade 0.9s ease both 0.25s;
 }
 
+.dh-motto {
+  display: block; max-width: 22ch; text-wrap: balance;
+  margin: 16px 0 0;
+  font-family: var(--font-engrave);
+  font-weight: 700;
+  font-size: clamp(1.2rem, 5.6vw, 2.1rem);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  line-height: 1.25;
+  background: linear-gradient(100deg, #A98A3C 0%, #EBD9A8 30%, #FFF6DC 50%, #D2B463 75%, #A98A3C 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  filter: drop-shadow(0 4px 18px rgba(var(--accent-rgb), 0.28));
+  animation: dh-fade 0.9s ease both 0.4s;
+}
+@media (min-width: 900px) { .dh-motto { max-width: none; } }
+.dh-motto span[aria-hidden] { font-size: 0.7em; -webkit-text-fill-color: var(--accent-light); color: var(--accent-light); }
+
 .dh-title {
   margin: 18px 0 0;
   font-family: var(--font-display);

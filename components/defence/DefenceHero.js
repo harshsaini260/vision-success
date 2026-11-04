@@ -97,6 +97,7 @@ export default function DefenceHero({ as: Heading = 'h2' }) {
           <i /><i /><i />
         </div>
         <p className="dh-kicker">{HERO.kicker}</p>
+        <p className="dh-motto"><span aria-hidden>★</span> {HERO.motto}</p>
 
         <Heading id="dh-title" className="dh-title">
           <span className="dh-line">

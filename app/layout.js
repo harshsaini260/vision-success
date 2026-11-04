@@ -15,19 +15,19 @@ import { DEVANAGARI_TEXT } from '@/lib/defence'
 export const metadata = {
   metadataBase: new URL(SITE.url),
   title: {
-    default: 'Vision Success, Una — NDA, Merchant Navy, JEE, NEET & SAT Coaching',
+    default: 'Himachal’s Best NDA Coaching — Vision Success, Una',
     template: '%s | Vision Success',
   },
   description:
-    'Coaching in Una, HP: NDA (7+ officers trained), Merchant Navy (IMU-CET), JEE, NEET, SAT & IELTS, Class 9–12. NIT Hamirpur faculty, published fees, free demo class.',
+    'Himachal’s best NDA coaching, in Una: taught by Surinder Singh (NIT Hamirpur), 7+ officers trained, an NDA rank of All India 184. Also Merchant Navy, JEE, NEET, SAT & IELTS. Free demo class.',
   keywords:
     'NDA coaching Una, NEET coaching Una HP, JEE coaching Una, SAT coaching Una, SAT coaching Himachal Pradesh, IELTS coaching Una, IELTS Una HP, study abroad Una, study abroad consultant Himachal, coaching institute Una, best coaching institute Una, coaching centre near me Una, physics coaching Una, chemistry coaching Una, biology coaching Una, maths coaching Una, CUET coaching Una, merchant navy coaching Una, tuition Una, coaching Amb, coaching Mehatpur, coaching Gagret, entrance exam coaching Himachal, SAT classes near Chandigarh, digital SAT prep India',
   alternates: { canonical: '/' },
   openGraph: {
     images: [OG_IMAGE],
-    title: 'Vision Success, Una — NDA · Merchant Navy · JEE · NEET · SAT · IELTS',
+    title: 'Himachal’s Best NDA Coaching — Vision Success, Una',
     description:
-      'NDA (7+ officers) · Merchant Navy (IMU-CET) · NEET · JEE · Class 9–12 · plus Una\'s study-abroad desk: SAT & IELTS. NIT Hamirpur faculty. Published fees. Free demo class.',
+      'Taught by Surinder Singh · 7+ officers trained · an NDA rank of All India 184 · plus Merchant Navy, NEET, JEE, SAT & IELTS. Published fees. Free demo class.',
     url: SITE.url,
     siteName: SITE.name,
     type: 'website',
@@ -35,9 +35,9 @@ export const metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Vision Success, Una — NDA · Merchant Navy · JEE · NEET · SAT · IELTS',
+    title: 'Himachal’s Best NDA Coaching — Vision Success, Una',
     description:
-      'NDA (7+ officers) · Merchant Navy · NEET · JEE · Class 9–12 · SAT & IELTS. Published fees. Free demo class.',
+      'Taught by Surinder Singh · 7+ officers trained · NDA rank AIR 184 · Merchant Navy · NEET · JEE · SAT & IELTS. Free demo class.',
   },
   robots: { index: true, follow: true },
   /* who built it */

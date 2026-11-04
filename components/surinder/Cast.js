@@ -1,11 +1,11 @@
 'use client'
 
 import Link from 'next/link'
-import { CHAPTER_IV as C, CAST, PHOTO, img, srcSet } from '@/lib/surinder'
+import { CHAPTER_V as C, CAST, PHOTO, img, srcSet } from '@/lib/surinder'
 import Icon from '@/components/Icon'
 import { Reveal } from './Reveal'
 
-/* ─── CHAPTER IV — THE CAST ───
+/* ─── CHAPTER V — THE CAST ───
    Where else he turns up on this site, each in its own colour: the
    uniform (the army's olive), the abroad desk (altitude blue) and the sea
    (deep water) — the same three tones the defence pages use, so a visitor

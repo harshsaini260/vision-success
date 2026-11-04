@@ -1,0 +1,97 @@
+/* ─── The Cadets stage (components/cadets/CadetsStage.js) ───
+   Homepage band + /surinder Chapter III. Black like the documentary, gold
+   like the site; the photographs are the colour. Content is never hidden
+   until the page has armed itself in JS (.is-armed), so no-JS and
+   crawlers read everything. */
+
+.cd {
+  position: relative; isolation: isolate; overflow: hidden;
+  padding: 64px 0 72px;
+  background:
+    radial-gradient(900px 420px at 82% 8%, rgba(var(--accent-rgb), 0.12), transparent 70%),
+    linear-gradient(180deg, #04070C 0%, #070C14 100%);
+  color: var(--bone);
+  --cd-ease: cubic-bezier(0.2, 0.75, 0.1, 1);
+}
+.cd--chapter { background: linear-gradient(180deg, #020407 0%, #050A11 100%); }
+.cd::before { /* a hairline of gold across the top, like a film's leader */
+  content: ''; position: absolute; left: 0; right: 0; top: 0; height: 1px; z-index: 1;
+  background: linear-gradient(90deg, transparent, rgba(var(--accent-rgb), 0.7) 30%, rgba(var(--accent-rgb), 0.7) 70%, transparent);
+}
+.cd-wrap {
+  position: relative; z-index: 2; max-width: 1180px; margin: 0 auto; padding: 0 20px;
+  display: grid; gap: 30px;
+  grid-template-areas: 'head' 'photos' 'proof';
+}
+.cd-head { grid-area: head; }
+.cd-photos { grid-area: photos; }
+.cd-proof { grid-area: proof; }
+
+.cd-kicker { font-family: var(--font-engrave); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.26em; text-transform: uppercase; color: var(--accent-light); line-height: 1.7; }
+.cd-title {
+  margin-top: 12px; font-family: var(--font-engrave); font-weight: 700; line-height: 1.12; letter-spacing: 0.02em;
+  font-size: clamp(1.7rem, 6.6vw, 3rem);
+  background: linear-gradient(100deg, #A98A3C 0%, #EBD9A8 30%, #FFF6DC 50%, #D2B463 75%, #A98A3C 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  filter: drop-shadow(0 6px 24px rgba(var(--accent-rgb), 0.22));
+  text-wrap: balance;
+}
+.cd-body { margin-top: 16px; max-width: 34rem; font-size: 1.02rem; line-height: 1.7; color: var(--bone-dim); }
+
+/* the diptych: two frames at one height */
+/* the two frames share one height: the row's own ratio is the two
+   photographs' ratios side by side (0.673 + 0.476 wide per 1 tall, less the
+   gap), and each figure simply fills its cell */
+.cd-photos { display: grid; grid-template-columns: minmax(0, 0.673fr) minmax(0, 0.476fr); gap: 10px; width: 100%; max-width: 560px; aspect-ratio: 1.17 / 1; }
+.cd-fig { position: relative; min-width: 0; height: 100%; margin: 0; overflow: hidden; border-radius: 14px; background: #0A0F18; box-shadow: 0 0 0 1px rgba(var(--accent-rgb), 0.38), 0 24px 50px -24px rgba(0, 0, 0, 0.9); }
+.cd-fig img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+.cd-fig--solo img { object-position: 50% 30%; }
+.cd-fig::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(2, 4, 7, 0) 62%, rgba(2, 4, 7, 0.88) 100%); pointer-events: none; }
+.cd-fig figcaption { position: absolute; left: 10px; right: 10px; bottom: 9px; z-index: 1; font-size: 0.66rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--bone); text-shadow: 0 1px 8px rgba(0, 0, 0, 0.8); line-height: 1.4; }
+
+/* the rank, written large */
+.cd-air { display: grid; grid-template-columns: auto 1fr; align-items: end; column-gap: 14px; }
+.cd-air-tag { font-family: var(--font-engrave); font-weight: 700; font-size: clamp(1.3rem, 5vw, 1.8rem); letter-spacing: 0.18em; color: var(--accent-light); padding-bottom: 0.55em; grid-row: 1; }
+.cd-air-n {
+  font-family: var(--font-engrave); font-weight: 700; line-height: 0.9; font-variant-numeric: tabular-nums;
+  font-size: clamp(4.4rem, 21vw, 8.4rem); letter-spacing: 0.01em; min-width: 3ch;
+  background: linear-gradient(100deg, #8A6F2C 0%, #EBD9A8 28%, #FFF6DC 48%, #D2B463 72%, #8A6F2C 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  filter: drop-shadow(0 8px 30px rgba(var(--accent-rgb), 0.3));
+}
+.cd-air-l { grid-column: 1 / -1; margin-top: 10px; font-size: 0.86rem; letter-spacing: 0.08em; color: var(--bone-dim); }
+
+.cd-facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-top: 26px; }
+.cd-facts li { padding: 14px 12px 13px; border-radius: 12px; border: 1px solid rgba(var(--accent-rgb), 0.28); background: rgba(var(--accent-rgb), 0.05); }
+.cd-facts b { display: block; font-family: var(--font-engrave); font-weight: 700; font-size: clamp(1.35rem, 5vw, 1.9rem); line-height: 1; color: var(--accent-light); }
+.cd-facts span { display: block; margin-top: 7px; font-size: 0.72rem; line-height: 1.35; color: var(--bone-dim); }
+
+.cd-ctas { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
+.cd-btn { display: inline-flex; align-items: center; justify-content: center; gap: 9px; min-height: 50px; padding: 0 24px; border-radius: 999px; font-size: 0.92rem; font-weight: 700; text-decoration: none; border: 1px solid transparent; transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s; -webkit-tap-highlight-color: transparent; }
+.cd-btn:focus-visible { outline: 2px solid var(--accent-light); outline-offset: 3px; }
+.cd-btn--gold { color: #1A1408; background: linear-gradient(135deg, var(--accent-light), var(--accent) 50%, var(--accent-dark)); box-shadow: 0 14px 34px -14px rgba(var(--accent-rgb), 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.45); }
+.cd-btn--ghost { color: var(--bone); border-color: rgba(232, 240, 247, 0.32); background: rgba(8, 20, 40, 0.4); }
+@media (hover: hover) { .cd-btn:hover { transform: translateY(-2px); } .cd-btn--ghost:hover { border-color: var(--accent); } }
+@media (max-width: 480px) { .cd-btn { flex: 1 1 100%; } }
+
+/* arrive in sequence — only once JS has armed it */
+.cd.is-armed .cd-fx { opacity: 0; transform: translateY(20px); transition: opacity 0.95s var(--cd-ease), transform 0.95s var(--cd-ease); transition-delay: calc(var(--i, 0) * 85ms); }
+.cd.is-armed.is-in .cd-fx { opacity: 1; transform: none; }
+.cd.is-armed .cd-fig { transform: translateY(26px) scale(0.97); }
+.cd.is-armed.is-in .cd-fig { transform: none; }
+
+@media (min-width: 900px) {
+  .cd { padding: 104px 0 112px; }
+  .cd-wrap { padding: 0 48px; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-areas: 'head photos' 'proof photos'; column-gap: 64px; row-gap: 34px; align-content: center; }
+  .cd-photos { max-width: none; align-self: center; }
+  .cd-title { font-size: clamp(2rem, 3.1vw, 2.75rem); }
+  .cd-air-n { font-size: clamp(6rem, 11vw, 9.6rem); }
+  .cd-body { font-size: 1.08rem; }
+  .cd-ctas { margin-top: 30px; }
+  .cd-btn { min-height: 54px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cd *, .cd *::before { transition: none !important; animation: none !important; }
+  .cd .cd-fx, .cd .cd-fig { opacity: 1 !important; transform: none !important; }
+}

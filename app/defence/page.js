@@ -9,11 +9,11 @@ import BriefingRoom from '@/components/defence/BriefingRoom'
    word). */
 
 const DESC =
-  'NDA coaching for the Army, Navy and Air Force, and IMU CET for the Merchant Navy — in Una, Himachal Pradesh. ' +
-  'Watch our 60-second NDA briefing, then talk to us.'
+  'Himachal’s best NDA coaching, in Una: Army, Navy and Air Force, taught by Surinder Singh — 7+ officers trained, an NDA rank of All India 184. ' +
+  'Also IMU CET for the Merchant Navy. Watch the 60-second briefing, then talk to us.'
 
 export const metadata = {
-  title: 'NDA, Air Force & Navy Coaching in Una, HP',
+  title: 'Himachal’s Best NDA Coaching — Army, Navy & Air Force, Una',
   description: DESC,
   alternates: { canonical: `${SITE.url}${DEFENCE_PATH}` },
   openGraph: {

@@ -3,12 +3,12 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { filmFiles } from '@/lib/films'
-import { CHAPTER_III as C, VOICES } from '@/lib/surinder'
+import { CHAPTER_IV as C, VOICES } from '@/lib/surinder'
 import { useTheatre } from '@/components/screening/Theatre'
 import Icon from '@/components/Icon'
 import { Reveal, useSeen } from './Reveal'
 
-/* ─── CHAPTER III — THE ROOM ───
+/* ─── CHAPTER IV — THE ROOM ───
    Evidence, and only evidence. The three students who reviewed the place
    on camera are here in their own words, each one a still from their own
    film that opens in the theatre; under them, every written review that
