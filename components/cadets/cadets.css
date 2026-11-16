@@ -61,6 +61,8 @@
 }
 .cd-air-l { grid-column: 1 / -1; margin-top: 10px; font-size: 0.86rem; letter-spacing: 0.08em; color: var(--bone-dim); }
 
+.cd-hand { margin-top: 10px; }
+.cd-hand span { font-size: 1.6rem !important; }
 .cd-facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-top: 26px; }
 .cd-facts li { padding: 14px 12px 13px; border-radius: 12px; border: 1px solid rgba(var(--accent-rgb), 0.28); background: rgba(var(--accent-rgb), 0.05); }
 .cd-facts b { display: block; font-family: var(--font-engrave); font-weight: 700; font-size: clamp(1.35rem, 5vw, 1.9rem); line-height: 1; color: var(--accent-light); }

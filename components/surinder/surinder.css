@@ -192,6 +192,20 @@
   .sd--home .sd-hero .sd-ctas { margin-top: 18px; }
   .sd--home .sd-home-link { margin-top: 6px; }
 }
+/* his note, handwritten: on a phone it is written on the wall beside his head; on a desktop, under the buttons */
+.sd-hand {
+  position: absolute; top: 12svh; right: 14px; width: 47vw; max-width: 230px; text-align: right;
+  font-family: var(--font-hand); font-weight: 700; font-size: 1.42rem; line-height: 1.05;
+  color: #1B1710; transform: rotate(-5deg); transform-origin: 100% 0;
+  animation: sd-fade 1.2s ease both 2.6s;
+}
+.sd-hand-sig { display: block; margin-top: 4px; font-size: 1.12rem; font-weight: 600; }
+.sd-hand-arrow { display: block; width: 64px; height: 42px; margin: 2px 0 0 auto; transform: translateX(-46px); color: #1B1710; }
+@media (min-width: 900px) {
+  .sd-hand { position: static; width: auto; max-width: none; margin-top: 26px; text-align: left; color: var(--accent-light); font-size: 1.9rem; transform: rotate(-2deg); transform-origin: 0 0; }
+  .sd-hand-sig { display: inline; margin: 0 0 0 14px; font-size: 1.45rem; opacity: 0.85; }
+  .sd-hand-arrow { display: none; }
+}
 .sd-home-link { margin-top: 18px; animation: sd-fade-up 1s ease both 3s; }
 .sd-home-link a {
   display: inline-flex; align-items: center; gap: 8px; min-height: 44px;
@@ -534,7 +548,7 @@
 /* ═══════════ REDUCED MOTION — the same page, lit and still ═══════════ */
 @media (prefers-reduced-motion: reduce) {
   .sd *, .sd *::before, .sd *::after { animation: none !important; transition: none !important; }
-  .sd-hero-img, .sd-hero-glow, .sd-orig, .sd-title-the, .sd-motto, .sd-home-link, .sd-logline, .sd-meta, .sd-tags, .sd-hero .sd-ctas, .sd-scroll { opacity: 1 !important; transform: none !important; filter: none !important; }
+  .sd-hero-img, .sd-hero-glow, .sd-orig, .sd-title-the, .sd-motto, .sd-hand, .sd-home-link, .sd-logline, .sd-meta, .sd-tags, .sd-hero .sd-ctas, .sd-scroll { opacity: 1 !important; transform: none !important; filter: none !important; }
   .sd-title-main span { opacity: 1 !important; transform: none !important; filter: none !important; }
   .sd-rv, .sd-cert, .sd-chap-n, .sd-chap-name { opacity: 1; transform: none; }
   .sd-chap-rule { transform: scaleX(1); }

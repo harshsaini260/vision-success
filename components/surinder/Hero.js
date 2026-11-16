@@ -119,6 +119,17 @@ export default function Hero({ home = false }) {
         </div>
 
         {home && (
+          <p className="sd-hand">
+            Apna sabse mushkil sawaal le aao.
+            <span className="sd-hand-sig">— Surinder</span>
+            <svg className="sd-hand-arrow" viewBox="0 0 90 60" aria-hidden>
+              <path d="M84 6 C 70 30, 44 44, 10 44" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
+              <path d="M22 34 L 9 44 L 22 53" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </p>
+        )}
+
+        {home && (
           <p className="sd-home-link">
             <Link href={SURINDER_PATH}>Watch the full documentary <Icon name="arrowRight" size={15} /></Link>
           </p>

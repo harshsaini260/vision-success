@@ -1637,7 +1637,7 @@ export default function HomePage() {
               'radial-gradient(ellipse 80% 80% at 50% 50%, rgba(var(--accent-rgb),0.08) 0%, transparent 70%)',
           }}
         />
-        <div className="max-w-2xl mx-auto relative z-10">
+        <div className="max-w-2xl mx-auto relative z-10 pt-24 sm:pt-28">
           <FadeIn>
             <div
               className="paper-note rounded-sm px-5 py-8 sm:px-10 sm:py-10 text-center relative"
@@ -1650,6 +1650,21 @@ export default function HomePage() {
               />
               <span className="ink-stamp absolute top-4 right-3 sm:right-5" style={{ fontSize: 9 }} aria-hidden>
                 BATCH Nº 001
+              </span>
+              {/* Pola peeks over the top of the notice, pointing at it */}
+              <img
+                src="/images/pola/pola-3d-left-320.webp"
+                srcSet="/images/pola/pola-3d-left-320.webp 320w, /images/pola/pola-3d-left-640.webp 640w"
+                sizes="(min-width: 640px) 132px, 104px"
+                width="132"
+                height="135"
+                alt=""
+                loading="lazy"
+                decoding="async"
+                className="cta-pola"
+              />
+              <span className="cta-pola-say" aria-hidden>
+                <Scribble color="gold" rotate={-4} size="lg">Psst… pehli class free hai!</Scribble>
               </span>
 
               <p

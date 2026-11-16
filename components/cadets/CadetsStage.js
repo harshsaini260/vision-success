@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { RANK, PHOTOS, FACTS } from '@/lib/cadets'
 import Icon from '@/components/Icon'
+import Scribble from '@/components/Scribble'
 import { useSeen } from '@/components/surinder/Reveal'
 import './cadets.css'
 
@@ -86,6 +87,9 @@ export default function CadetsStage({ copy, as: Heading = 'h2', chapter = false 
             <b className="cd-air-n" aria-hidden>{n}</b>
             <span className="cd-air-l" aria-hidden>{RANK.label}</span>
           </div>
+          <p className="cd-hand cd-fx" style={{ '--i': 5 }}>
+            <Scribble color="gold" rotate={-3} size="lg">Proud of you two. ♥ — Surinder sir</Scribble>
+          </p>
 
           <ul className="cd-facts">
             {FACTS.map((f, i) => (
