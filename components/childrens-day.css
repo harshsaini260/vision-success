@@ -1,0 +1,34 @@
+/* ─── Children's Day section (components/ChildrensDay.js) ─── */
+.kids { position: relative; overflow: hidden; padding: 72px 0 84px; color: var(--bone);
+  background: radial-gradient(800px 420px at 15% 10%, rgba(var(--accent-rgb), 0.10), transparent 70%), linear-gradient(180deg, #070C14 0%, #0A1220 100%); }
+.kids-wrap { max-width: 1180px; margin: 0 auto; padding: 0 20px; display: grid; gap: 40px; }
+.kids-kicker { font-family: var(--font-engrave); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.28em; text-transform: uppercase; color: var(--accent-light); }
+.kids-title { margin-top: 12px; font-family: var(--font-display); font-weight: 600; font-size: clamp(2rem, 7vw, 3.2rem); line-height: 1.08; color: var(--bone); text-wrap: balance; }
+.kids-body { margin-top: 16px; max-width: 34rem; font-size: 1.04rem; line-height: 1.7; color: var(--bone-dim); }
+.kids-body b { color: var(--accent-light); font-weight: 700; }
+.kids-hand { margin-top: 18px; }
+.kids-hand span { font-size: 1.7rem !important; }
+.kids-ctas { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
+.kids-btn { display: inline-flex; align-items: center; justify-content: center; min-height: 50px; padding: 0 24px; border-radius: 999px; font-size: 0.92rem; font-weight: 700; text-decoration: none; border: 1px solid transparent; transition: transform 0.25s ease; }
+.kids-btn:focus-visible { outline: 2px solid var(--accent-light); outline-offset: 3px; }
+.kids-btn--gold { color: #1A1408; background: linear-gradient(135deg, var(--accent-light), var(--accent) 50%, var(--accent-dark)); box-shadow: 0 14px 34px -14px rgba(var(--accent-rgb), 0.75); }
+.kids-btn--ghost { color: var(--bone); border-color: rgba(232, 240, 247, 0.32); background: rgba(8, 20, 40, 0.4); }
+@media (hover: hover) { .kids-btn:hover { transform: translateY(-2px); } }
+@media (max-width: 480px) { .kids-btn { flex: 1 1 100%; } }
+
+/* the film, as a polaroid with a strip of tape */
+.kids-film { position: relative; margin: 0 auto; width: min(78vw, 360px); padding: 12px 12px 46px; background: #F4F0E6; border-radius: 6px;
+  transform: rotate(2deg); box-shadow: 0 30px 60px -24px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(var(--accent-rgb), 0.4); }
+.kids-tape { position: absolute; top: -12px; left: 50%; width: 110px; height: 26px; transform: translateX(-50%) rotate(-3deg); background: rgba(var(--accent-rgb), 0.55); }
+.kids-frame { position: relative; aspect-ratio: 9 / 16; overflow: hidden; border-radius: 2px; background: #0A0F18; }
+.kids-frame video { width: 100%; height: 100%; object-fit: cover; display: block; cursor: pointer; }
+.kids-progress { position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: rgba(255, 255, 255, 0.15); }
+.kids-progress i { display: block; height: 100%; background: var(--accent); transform-origin: 0 50%; }
+.kids-film figcaption { position: absolute; left: 0; right: 0; bottom: 12px; text-align: center; font-family: var(--font-hand); font-weight: 700; font-size: 1.2rem; color: #2B2418; }
+
+@media (min-width: 900px) {
+  .kids { padding: 104px 0 112px; }
+  .kids-wrap { padding: 0 48px; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); align-items: center; gap: 64px; }
+  .kids-film { width: 380px; }
+}
+@media (prefers-reduced-motion: reduce) { .kids-btn { transition: none; } }

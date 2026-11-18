@@ -25,6 +25,7 @@ import DefenceHero from '@/components/defence/DefenceHero'
 import BriefingRoom from '@/components/defence/BriefingRoom'
 import HomeOpening from '@/components/surinder/HomeOpening'
 import NdaProof from '@/components/cadets/NdaProof'
+import ChildrensDay from '@/components/ChildrensDay'
 import { BEST_NDA_FAQ } from '@/lib/cadets'
 import Motto from '@/components/Motto'
 import { playFanfare } from '@/lib/fanfare'
@@ -1027,6 +1028,9 @@ export default function HomePage() {
 
       {/* ─── THE PROOF — the motto made good: the cadets and the rank (lib/cadets.js) ─── */}
       <NdaProof />
+
+      {/* ─── CHILDREN'S DAY — the room, on a day that wasn't about marks ─── */}
+      <ChildrensDay />
 
       {/* ─── THE UNIFORM — NDA, Air Force, Navy, Merchant Navy (lib/defence.js) ─── */}
       <DefenceHero motto={false} />
